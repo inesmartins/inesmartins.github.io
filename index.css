@@ -1,0 +1,43 @@
+body {
+    background-color: #000;
+    font-family: courier, monospace;
+}
+
+#content {
+    width: 50%;
+    margin: auto;
+}
+
+#greeting {
+	color: #fff;
+    height: 100px;
+    position: fixed;
+    top: 50px;
+	margin-left:auto;
+	margin-right:auto;
+    font-size:14px;
+}
+
+#feed {
+    position: fixed;
+    top: 150px;
+    margin: auto;
+}
+
+#feed>a {
+    display: block;
+    color: #0bc;
+	text-decoration: underline;
+}
+
+footer {
+    position: absolute;
+    bottom: 10px;
+    color: #fff;
+    font-size: 12px;
+}
+
+footer>a {
+	color: #0bc;
+	text-decoration: none;
+}
