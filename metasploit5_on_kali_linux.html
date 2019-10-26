@@ -42,7 +42,7 @@
                 </div>
                 </br>
                 <div class="code-line">
-                    <code>=[ metasploit v5.0.53-dev ]</code>
+                    <code>=[ metasploit <bold style="color: red;">v5.0.53-dev</bold> ]</code>
                 </div>
                 <div class="code-line">
                     <code>+ -- --=[ 1931 exploits - 1079 auxiliary - 331 post ]</code>
@@ -80,18 +80,122 @@
         </div>
 
         <div class="step">
-            <p>6. Search for a specific module by name or full path.</p>
-            <span class="step-note">Alternatively, you can search directly on Metasploit's <a href="https://metasploit.help.rapid7.com/docs" target="_blank">web docs</a>.</span>
+            <p>6. List available workspaces.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
-                    <code>search [module]</code>
+                    <code>workspace</code>
+                </div>
+                <div class="code-line">
+                    <code>* default</code>
                 </div>
             </div>
         </div>
 
         <div class="step">
-            <p>7. See more info about a module.</p>
+            <p>7. Add a new workspace.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>workspace -a testymcgee</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Added workspace: testymcgee</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Workspace: testymcgee</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>8. Select a workspace.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>workspace default</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Workspace: default</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>9. Delete a workspace.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>workspace -d testymcgee</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Deleted workspace: testymcgee</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Swiched to workspace: default</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>10. Search for a specific module</p>
+            <span class="step-note">Alternatively, you can search directly on Metasploit's <a href="https://metasploit.help.rapid7.com/docs" target="_blank">web docs</a>.</span>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>search <bold style="color: red;">wordpress</bold></code>
+                </div>
+                <br/>
+                <div class="code-line">
+                    <code>Matching Modules</code>
+                </div>
+                <br/>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Name</td>
+                            <td>Disclosure Date</td>
+                            <td>Rank</td>
+                            <td>Check</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>auxiliary/admin/http/wp_custom_contact_forms</td>
+                            <td>2014-08-07</td>
+                            <td>normal</td>
+                            <td>No</td>
+                            <td>WordPress custom-contact-forms Plugin SQL Upload</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>auxiliary/admin/http/wp_easycart_privilege_escalation</td>
+                            <td>2015-02-25</td>
+                            <td>normal</td>
+                            <td>Yes</td>
+                            <td>WordPress WP EasyCart Plugin Privilege Escalation</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>auxiliary/admin/http/wp_gdpr_compliance_privesc</td>
+                            <td>2018-11-08</td>
+                            <td>normal</td>
+                            <td>Yes</td>
+                            <td>WordPress WP GDPR Compliance Plugin Privilege Escalation</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="code-line">
+                    <code>...</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>11. See more info about a module.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -139,7 +243,7 @@
         </div>
 
         <div class="step">
-            <p>8. Setup the module.</p>
+            <p>12. Setup the module.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -156,7 +260,7 @@
         </div>
 
         <div class="step">
-            <p>9. List targets.</p>
+            <p>13. List targets.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -166,7 +270,7 @@
         </div>
 
         <div class="step">
-            <p>10. List available payloads for selected targets.</p>
+            <p>14. List available payloads for selected targets.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -176,7 +280,7 @@
         </div>
 
         <div class="step">
-            <p>11. Select payload.</p>
+            <p>15. Select payload.</p>
             <span class="step-note">If we don't select a payload, Metasploit uses the default.</span>
             <div class="code-block">
                 <div class="code-line">
@@ -187,7 +291,7 @@
         </div>
 
         <div class="step">
-            <p>12. Show exploit options and payload suggestions.</p>
+            <p>16. Show exploit options and payload suggestions.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -197,7 +301,7 @@
         </div>
 
         <div class="step">
-            <p>13. Run exploit.</p>
+            <p>17. Run exploit.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
