@@ -57,8 +57,11 @@ article {
     margin-bottom: 50px;
 }
 
-article .intro {
-    margin-bottom: 40px;
+article .last-update {
+    font-size: 12px;
+    color: grey;
+    margin-top: -10px;
+    margin-bottom: 50px;
 }
 
 article .step .step-note {
