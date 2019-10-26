@@ -1,9 +1,19 @@
-body {
+
+a {
+	color: #0bc;
+	text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.home {
     background-color: #000;
     font-family: courier, monospace;
 }
 
-#content {
+.home-content {
     width: 50%;
     margin: auto;
 }
@@ -24,10 +34,57 @@ body {
     margin: auto;
 }
 
-#feed>a {
+
+article {
+    background-color: #fff;
+    font-family: Helvetica;
+    width: 90%;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+article .intro {
+    margin-bottom: 40px;
+}
+
+article .step .step-note {
+    font-size: 13px;
+}
+
+article table {
+    color: white;
+    font-family: monospace;
+    border-collapse: collapse; 
+}
+
+article table thead {
+    border-bottom: 1pt solid greenyellow;
+}
+
+article table td {
+    padding-right: 15px;
+}
+
+.code-block {
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     display: block;
-    color: #0bc;
-	text-decoration: underline;
+    background-color: #000;
+}
+
+code {
+    color: #fff;
+    display: inline;
+    font-family: monospace;
+}
+
+.prompt {
+    font-size: 12px;
+    font-family: monospace;
+    color: greenyellow;
+    font-weight: bold;
 }
 
 footer {
@@ -35,9 +92,4 @@ footer {
     bottom: 10px;
     color: #fff;
     font-size: 12px;
-}
-
-footer>a {
-	color: #0bc;
-	text-decoration: none;
 }

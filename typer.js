@@ -7,7 +7,7 @@ var Typer = {
     deniedCount: 0,
     init: function () {
         accessCountimer = setInterval(function () { Typer.updLstChr(); }, 500);
-        Typer.text = "hi friend.\n\nhere's what i've been up to:";
+        Typer.text = "hi friend.\n\nhere's some useful info:";
         Typer.text = Typer.text.slice(0, Typer.text.length);
     },
 
