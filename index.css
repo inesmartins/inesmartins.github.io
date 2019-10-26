@@ -1,3 +1,9 @@
+@media 
+only screen and (max-width: 900px) {
+    .hide-mobile {
+        display: none;
+    }
+}
 
 a {
 	color: #0bc;
@@ -55,7 +61,9 @@ article .step .step-note {
 article table {
     color: white;
     font-family: monospace;
-    border-collapse: collapse; 
+    border-collapse: collapse;
+    position: relative;
+    width: 100%;
 }
 
 article table thead {
