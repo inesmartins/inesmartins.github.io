@@ -64,6 +64,15 @@ article .last-update {
     margin-bottom: 50px;
 }
 
+article .intro {
+    margin-bottom: 40px;
+}
+
+article .intro p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 article .step .step-note {
     font-size: 13px;
 }
