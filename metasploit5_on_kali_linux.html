@@ -20,7 +20,7 @@
 
         <div class="step">
             <p>2. Start the PostgreSQL server.</p>
-            <span class="step-note">From Metasploit 5's <a href="https://github.com/rapid7/metasploit-framework/wiki/Metasploit-5.0-Release-Notes" target="_blank">release notes</a>: <i>users can now run the PostgreSQL database by itself as a RESTful service, which allows for multiple Metasploit consoles and external tools to interact with it.</i></span>
+            <span class="step-note">Users can now run the PostgreSQL database by itself as a RESTful service, which allows for multiple Metasploit consoles and external tools to interact with it.</span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -195,7 +195,8 @@
         </div>
 
         <div class="step">
-            <p>11. See more info about a module.</p>
+            <p>11. See more information about a module.</p>
+            <span class="step-note">This includes the module's name, path, description, date of disclosure, <a href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking" target="_blank">rank</a>, support for the <a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-write-a-check%28%29-method" target="_blank">check command</a>, author, basic options and references.</span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -229,13 +230,7 @@
                             <td>RPORT</td>
                             <td>445</td>
                             <td>yes</td>
-                            <td>The SMB service port (TCP)</td>
-                        </tr>
-                        <tr>
-                            <td>SMBPIPE</td>
-                            <td>BROWSER</td>
-                            <td>yes</td>
-                            <td>The pipe name to use (BROWSER, SRVSVC)</td>
+                            <td>The target port (TCP)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -253,59 +248,84 @@
                     <span class="prompt">msf5 > </span>
                     <code>set RPORT [port]</code>
                 </div>
-                <div class="code-line">
-                    <code>...</code>
-                </div>
             </div>
         </div>
 
         <div class="step">
-            <p>13. List targets.</p>
+            <p>13. Select an exploit module.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
-                    <code>show targets</code>
+                    <code>use [exploit_path]</code>
                 </div>
             </div>
         </div>
-
+        
         <div class="step">
-            <p>14. List available payloads for selected targets.</p>
+            <p>14. Show options for the selected exploit.</p>
+            <span class="step-note">Shows the exploit's configuration and current target.</span>
             <div class="code-block">
                 <div class="code-line">
-                    <span class="prompt">msf5 > </span>
-                    <code>show payloads</code>
-                </div>
-            </div>
-        </div>
-
-        <div class="step">
-            <p>15. Select payload.</p>
-            <span class="step-note">If we don't select a payload, Metasploit uses the default.</span>
-            <div class="code-block">
-                <div class="code-line">
-                    <span class="prompt">msf5 > </span>
-                    <code>set payload [payload_name]</code>
-                </div>
-            </div>
-        </div>
-
-        <div class="step">
-            <p>16. Show exploit options and payload suggestions.</p>
-            <div class="code-block">
-                <div class="code-line">
-                    <span class="prompt">msf5 > </span>
+                    <span class="prompt">msf5 exploit(<bold style="color: red;">[exploit_path]</bold>) ></span>
                     <code>show options</code>
                 </div>
             </div>
         </div>
 
         <div class="step">
-            <p>17. Run exploit.</p>
+            <p>15. List the selected exploit's supported targets.</p>
             <div class="code-block">
                 <div class="code-line">
-                    <span class="prompt">msf5 > </span>
+                    <span class="prompt">msf5 exploit(<bold style="color: red;">[exploit_path]</bold>) ></span>
+                    <code>show targets</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>16. List available payloads for the exploit's supported targets.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 exploit(<bold style="color: red;">[exploit_path]</bold>) ></span>
+                    <code>show payloads</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>17. Select payload.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 exploit(<bold style="color: red;">[exploit_path]</bold>) ></span>
+                    <code>set payload [payload_path]</code>
+                </div>
+                <div class="code-line">
+                    <code>payload => [payload_path]</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>18. Run exploit.</p>
+            <span class="step-note">If we didn't select a payload, Metasploit uses the default.</span>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 exploit(<bold style="color: red;">[exploit_path]</bold>) ></span>
                     <code>exploit</code>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="step">
+            <p>19. Un-select exploit module.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 exploit([exploit_path]) ></span>
+                    <code>back</code>
+                </div>
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
                 </div>
             </div>
         </div>
