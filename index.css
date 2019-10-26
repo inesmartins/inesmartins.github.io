@@ -5,6 +5,10 @@ only screen and (max-width: 900px) {
     }
 }
 
+.article-arrow {
+	color: greenyellow;
+}
+
 a {
 	color: #0bc;
 	text-decoration: none;
@@ -40,6 +44,9 @@ a:hover {
     margin: auto;
 }
 
+#feed .article {
+    margin-bottom: 10px;
+}
 
 article {
     background-color: #fff;
