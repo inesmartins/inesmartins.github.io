@@ -23,9 +23,28 @@ a:hover {
     font-family: courier, monospace;
 }
 
-.home-content {
-    width: 70%;
-    margin: auto;
+
+@media 
+only screen and (max-width: 740px) {
+    .home-content {
+        width: 90%;
+        margin: auto;
+    }
+    #greeting {
+        font-size:18px;
+    }
+}
+
+
+@media 
+only screen and (min-width: 740px) {
+    .home-content {
+        width: 70%;
+        margin: auto;
+    }
+    #greeting {
+        font-size:14px;
+    }
 }
 
 #greeting {
@@ -35,7 +54,6 @@ a:hover {
     top: 50px;
 	margin-left:auto;
 	margin-right:auto;
-    font-size:14px;
 }
 
 #feed {
@@ -46,6 +64,13 @@ a:hover {
 
 #feed .article {
     margin-bottom: 10px;
+}
+
+@media 
+only screen and (max-width: 900px) {
+    #feed .article {
+        font-size: 24px;
+    }
 }
 
 article {
