@@ -107,6 +107,10 @@ code {
     font-family: monospace;
 }
 
+code .comment {
+    color: grey;
+}
+
 .prompt {
     font-size: 12px;
     font-family: monospace;
