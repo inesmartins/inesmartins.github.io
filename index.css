@@ -149,3 +149,12 @@ footer {
     color: #fff;
     font-size: 12px;
 }
+
+.show-hide-btn {
+    background-color: black;
+    height: 30px;
+    border-radius: 7px;
+    color: greenyellow;
+    border-color: greenyellow;
+    outline: none;
+}

@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>Pineapple Adventures on macOS</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body>
+    <article>
+        <h1>Pineapple Adventures on macOS</h1>
+        <p class="last-update">Last update on October 2019.</p>
+
+        <div class="step">
+            <p>The Pineapple expects the 172.16.42.0 subnet, while OS X uses 192.168.2.0 when enabling internet sharing.</p>
+            <p>The Pineapple expects the default gateway on 172.16.42.42 which is not a very logical address for a gateway.</p>
+        </div>
+        
+        <div class="step">
+            <p>Change network configurations on the pineapple.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">~ </span>
+                    <code>ssh root@172.16.42.1</code>
+                </div>
+                <div class="code-line">
+                    <code>...</code>
+                </div>
+                <div class="code-line">
+                    <code>root@172.16.42.1's password:</code>
+                </div>
+            </div>
+        </div>
+        <div class="step">
+            <p>Your Mac’s Pineapple network port is now set to be 192.168.2.42 and your Pineapple is now set to be 192.168.2.10 and they form a network.</p>
+            <p>The Pineapple is configured to use x.x.x.42 (192.168.2.42, as we specifically defined) as its default gateway. Your Mac is now the Pineapple’s router. The Pineapple sends it traffic through the Mac.</p>
+            <p>On your Mac, connect to new portal URL in your web browser – http://192.168.2.10:1471</p>
+            <p>On the Dashboard tab, click “Load bulletins from WiFiPineapple.com”</p>
+            <p>The loading image will animate and bulletins should load.</p>
+            <p>Any error indicates internet Sharing was not successful.</p>
+        </div>
+ </div>
+
+
+    </article>
+</body>
+</html>
