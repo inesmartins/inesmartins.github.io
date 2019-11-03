@@ -12,8 +12,13 @@
         <p class="last-update">Last update on November 2019.</p>
 
         <div class="intro">
-            <p>Before I was even done reading the amazing and classic <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires" target="_blank">Ghost in the Wires</a>, I had to start deciphering the "quizzes" that introduce each chapter.</p>
-            <p>I know there are probably millions of solutions online, but I really wanted to see if I could solve them on my own.</p>
+            <p>Before I was even done reading the amazing and classic <a
+                    href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires" target="_blank">Ghost in the
+                    Wires</a>, I had to start deciphering the "quizzes" that introduce each chapter.</p>
+            <p>Apparently they weren't included in every edition of the book, so I guess I was lucky to pick up the 2011
+                paperback.</p>
+            <p>I know there are probably millions of solutions online, but I really wanted to see if I could solve them
+                on my own.</p>
             <p>During the next few weeks I hope I can find more and more solutions.</p>
         </div>
         <div>
@@ -21,9 +26,19 @@
             <p>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution1')">Show/Hide solution</button>
             <div id="solution1" style="display: none;" class="solution">
-                <p>Cipher: ROT 7</p>
-                <p>Question: The cost of the bus driver I used to punch my own transfers.</p>
-                <p>Solution: $15</p>
+                <p>Just by looking at the text we get the feeling that it's a valid sentence:
+                    <ul>
+                        <li>it starts with an uppercase letter;</li>
+                        <li>all the characters are letters;</li>
+                        <li>there are longer words separated by shorter words, etc.</li>
+                    </ul>
+                    So, it was only natural that the cipher was a simple "rotation cipher", which I quickly checked
+                    using <a href="https://gchq.github.io/CyberChef/" target="_blank">CyberChef</a>.</p>
+                <ul>
+                    <li>Cipher: ROT 7</li>
+                    <li>Question: The cost of the bus driver I used to punch my own transfers</li>
+                    <li>Solution: $15</li>
+                </ul>
             </div>
         </div>
         <div>
@@ -31,9 +46,12 @@
             <p>Estd mzzv esle elfrse xp szh ez ncplep yph topyetetpd hspy T hld l acp-eppy</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution2')">Show/Hide solution</button>
             <div id="solution2" style="display: none;" class="solution">
-                <p>Cipher: ROT 15</p>
-                <p>Question: This book that taught me how to create new identities when I was a pre-teen.</p>
-                <p>Solution: The Paper Trip by Barry Reid.</p>
+                <p>Again, the text looks like a  valid sentence, so basically the same as the previous answer.</p>
+                <ul>
+                    <li>Cipher: ROT 15</li>
+                    <li>Question: This book that taught me how to create new identities when I was a pre-teen.</li>
+                    <li>Solution: The Paper Trip by Barry Reid.</li>
+                </ul>
             </div>
         </div>
         <div>
@@ -41,9 +59,12 @@
             <p>pbzfsobp dkfobtpkx lq pbkfi ppbkfpry aoxtolc iixz lq abpr bobt pbzfsba cl bmvq obail bpbeQ</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution3')">Show/Hide solution</button>
             <div id="solution3" style="display: none;" class="solution">
-                <p>Cipher: Reverse | ROT 3</p>
-                <p>Question: These older type of devices were used to call forward business lines to answering services.</p>
-                <p>Solution: The Paper Trip by Barry Reid.</p>
+                <p>The uppercase letter at the end of the sentence made me think the chars were reverse. After that, all it took to decipher the text was a quick "rotation cipher" once more.</p>
+                <ul>
+                    <li>Cipher: Reverse | ROT 3</li>
+                    <li>Question: These older type of devices were used to call forward business lines to answering services.</li>
+                    <li>Solution: The Paper Trip by Barry Reid.</li>
+                </ul>
             </div>
         </div>
         <div>
@@ -51,7 +72,7 @@
             <p>Estd mzzv esle elfrse xp szh ez ncplep yph topyetetpd hspy T hld l acp-eppy</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution4')">Show/Hide solution</button>
             <div id="solution4" style="display: none;" class="solution">
-                <p>Cipher: Substitution cipher: alfabeto ao contrário</p>
+                <p>Cipher: Substitution cipher: reverse alphabet</p>
                 <p>Question: The name of the mainframes I hacked at USC in the arpanet days.</p>
                 <p>Solution: COSMOS</p>
             </div>
