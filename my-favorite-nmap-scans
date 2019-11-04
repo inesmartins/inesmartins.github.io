@@ -23,9 +23,12 @@ $ nmap -sU 192.168.101.12
 nmap -sC -sV -p22,25,80,139,445 10.0.2.12
 
 9.
+nmap -sV -sC -oA nmap/initial 10.10.10.115
+
+10.
 As always we’ll start off with a simple nmap scan to see what’s out there.
 nmap --open -p- -R -T4 --max-retries 3 --min-rate 120 --max-rtt-timeout 300ms -Pn 10.10.10.51
 
-10.
+11.
 Taking the discovered ports, we’ll now run detailed scan. This will be much faster than scanning -p-.
 nmap -A -p22,25,80,110,119,4555 --open -R -T4 --max-retries 3 --min-rate 120 --max-rtt-timeout 300ms -Pn 10.10.10.51
