@@ -122,12 +122,25 @@
             </div>
         </div>
         <div>
+            <h3>Chapter 13 | The Wiretapper</h3>
+            <p>qclgjq'acrjcrlmqnyrcpgursmzyddmbcnngrgmfupceylyk</p>
+            <button class="show-hide-btn" onclick="toggleVisibility('solution13')">Show/Hide solution</button>
+            <div id="solution13" style="display: none;" class="solution">
+                <p>Pretty straightforward, <a href="https://gchq.github.io/CyberChef/" target="_blank">CyberChef</a> saves me again.</p>
+                <ul>
+                    <li>Cipher: ROT2 | Reverse</li>
+                    <li>Question: Manager who I tipped off about wiretaps on teltec's lines.</li>
+                    <li>Solution:</li>
+                </ul>
+            </div>
+        </div>
+        <div>
             <h3>Chapter 14 | You Tap Me, I Tap You</h3>
             <p>c2VuaWxzJ2RhZHltbm9zcGF0ZXJpd2VodHRjZW5ub2NlcmRuYXNlbGVnbFzb2xvHlsZm90ZGFob2h3dG5lZ2F5dGlydWNlc2xsZWJjYXBlaHQ=</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution14')">Show/Hide solution</button>
             <div id="solution14" style="display: none;" class="solution">
                 <p>The equal sign at the end of the string made me think of Base64.</p>
-                <p>Once I Base64 decoded the entire string, part of the text was immediately readable once it was reversed.</p>
+                <p>Once I Base64 decoded and reversed the entire string, part of the text was immediately readable.</p>
                 <p>I then removed the deciphered part of the string and tried the same thing with the remaining chars, and just kept tweaking the string until I could read the entire thing.</p>
                 <ul>
                     <li>Cipher: (in parts) Base64 | Reverse</li>

@@ -157,4 +157,16 @@ footer {
     color: greenyellow;
     border-color: greenyellow;
     outline: none;
+    cursor: pointer;
+}
+
+.solution {
+    font-family: courier, monospace;
+    font-size: 14px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-left: 20px;
+    background: black;
+    color: white;
+    border: 1px solid greenyellow;
 }
