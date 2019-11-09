@@ -139,10 +139,8 @@
             <p>idniidhsubrseognteiyignuhrzdalrdietfetinmeablnigorcsnuatoiecli</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution12')">Show/Hide solution</button>
             <div id="solution12" style="display: none;" class="solution">
-                <p>Pretty straightforward, <a href="https://gchq.github.io/CyberChef/" target="_blank">CyberChef</a> saves me again.</p>
                 <p><a href="https://scwf.dima.ninja" target="_blank">SCWF</a> to the rescue again.</p>
                 <p>Without much effort the site found the solution using Columnar Transposition (2  1).</p>
-                <p>However, no matter how many different ways I've tried to change the disposition of the letters into columsn I couldn't really find the solution manually.</p>
                 <ul>
                     <li>Cipher: Columnar Transposition (2  1)</li>
                     <li>Question: I identified this number as belonging to Eric using unauthorized callerID.</li>
@@ -168,8 +166,11 @@
             <p>c2VuaWxzJ2RhZHltbm9zcGF0ZXJpd2VodHRjZW5ub2NlcmRuYXNlbGVnbFzb2xvHlsZm90ZGFob2h3dG5lZ2F5dGlydWNlc2xsZWJjYXBlaHQ=</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution14')">Show/Hide solution</button>
             <div id="solution14" style="display: none;" class="solution">
+                <p>The equal sign at the end of the string made me think of Base64.</p>
+                <p>Once I Base64 decoded and reversed the entire string, part of the text was immediately readable.</p>
+                <p>I then removed the deciphered part of the string and tried the same thing with the remaining chars, and just kept tweaking the string until I could read the entire thing.</p>
                 <ul>
-                    <li>Cipher: Columnar transposition (2  1)</li>
+                    <li>Cipher: (in parts) Base64 | Reverse</li>
                     <li>Question: The Pacbell Security agent who had to fly to Los Angeles and reconnect the wiretaps on my dad's lines.</li>
                     <li>Solution:</li>
                 </ul>
@@ -194,6 +195,7 @@
             <p>hranmoafignwoeoeiettwsoeheneteelaefnbaethscvrdniyajspwrl</p>
             <button class="show-hide-btn" onclick="toggleVisibility('solution19')">Show/Hide solution</button>
             <div id="solution19" style="display: none;" class="solution">
+                <p>Pretty much the same as in Chapter 12: <a href="https://scwf.dima.ninja" target="_blank">SCWF</a> identified the cipher as Columnar Transposition in a heartbeat.</p>
                 <ul>
                     <li>Cipher: Columnar Transposition ( 2 1)</li>
                     <li>Question: This hacker we showed off SAS to while at Hamburger Hamlet.</li>
