@@ -170,6 +170,16 @@ footer {
     cursor: pointer;
 }
 
+.show-hide-btn-disabled {
+    background-color: grey;
+    color: white;
+    height: 30px;
+    border-radius: 7px;
+    border-width: 0px;
+    outline: none;
+    cursor: pointer;
+}
+
 .solution {
     font-family: courier, monospace;
     font-size: 14px;
