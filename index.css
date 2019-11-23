@@ -42,16 +42,16 @@ only screen and (min-width: 900px) {
 }
 
 .article-arrow {
-	color: greenyellow;
+	color: red;
 }
 
 a {
-	color: #0bc;
+	color: white;
 	text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+    background-color: red;
 }
 
 .home {
@@ -84,7 +84,7 @@ a:hover {
 }
 
 #feed .tag {
-    background-color: hotpink;
+    background-color: greenyellow;
     color: black;
     font-size: 10px;
     padding: 3px;
