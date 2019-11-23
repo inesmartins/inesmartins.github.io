@@ -275,7 +275,19 @@
         </div>
 
         <div class="step">
-            <p>9. Finally, we used hashcat to crack the password: <strong>kittykat1</strong></p>
+            <p>9. Finally, we used <a href="https://hashcat.net/hashcat/" target="_blank">hashcat</a> to crack the
+                password: <strong>kittykat1</strong></p>
+            <span class="step-note">
+                <ul>
+                    <li>
+                        The <strong>m flag</strong> correspondons to the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes" target="_blank">hash type</a>, which in this case is the standard
+                        Wordpress MD5 hash.
+                    </li>
+                    <li>
+                        The <strong>a flag</strong> corresponds to the attack mode, which in this case is a <a href="https://hashcat.net/wiki/doku.php?id=dictionary_attack" target="_blank">dictionary attack</a> , more specifically with the RockYou wordlist.
+                    </li>
+                </ul>
+            </span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -285,7 +297,8 @@
         </div>
 
         <div class="step">
-            <p>10. Now we have the credentials to the login to the WP <a href="http://172.16.202.21/wp-admin" target="_blank">admin console</a>: webmaster/kittykat1</p>
+            <p>10. Now we have the credentials to the login to the WP <a href="http://172.16.202.21/wp-admin"
+                    target="_blank">admin console</a>: webmaster/kittykat1</p>
         </div>
 
     </article>
