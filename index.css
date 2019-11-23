@@ -55,7 +55,7 @@ only screen and (min-width: 900px) {
 }
 
 article a {
-	color: red;
+	color: blueviolet;
 	text-decoration: underline;
 }
 
