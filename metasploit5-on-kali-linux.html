@@ -8,6 +8,11 @@
 <body>
     <article>
         <h1>Metasploit 5 on Kali Linux</h1>
+        <div class="tag-container">
+            <span class="tag">linux</span>
+            <span class="tag">tutorial</span>
+            <span class="tag">metasploit</span>
+        </div>
         <p class="last-update">Last update on October 2019.</p>
 
         <div class="step">
@@ -22,7 +27,8 @@
 
         <div class="step">
             <p>2. Start the PostgreSQL server.</p>
-            <span class="step-note">With Metasploit 5 the DB can be ran by itself, which allows for multiple Metasploit consoles and external tools to interact with it.</span>
+            <span class="step-note">With Metasploit 5 the DB can be ran by itself, which allows for multiple Metasploit
+                consoles and external tools to interact with it.</span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -141,17 +147,18 @@
 
         <div class="step">
             <p>10. Search for a specific module.</p>
-            <span class="step-note">Alternatively, you can search directly on Metasploit's <a href="https://metasploit.help.rapid7.com/docs" target="_blank">web docs</a>.</span>
+            <span class="step-note">Alternatively, you can search directly on Metasploit's <a
+                    href="https://metasploit.help.rapid7.com/docs" target="_blank">web docs</a>.</span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
                     <code>search <span style="color: red;">wordpress</span></code>
                 </div>
-                <br class="hide-mobile"/>
+                <br class="hide-mobile" />
                 <div class="code-line hide-mobile">
                     <code>Matching Modules</code>
                 </div>
-                <br class="hide-mobile"/>
+                <br class="hide-mobile" />
                 <table class="hide-mobile">
                     <thead>
                         <tr>
@@ -198,7 +205,11 @@
 
         <div class="step">
             <p>11. See more information about a module.</p>
-            <span class="step-note">This includes the module's name, path, description, date of disclosure, <a href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking" target="_blank">rank</a>, support for the <a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-write-a-check%28%29-method" target="_blank">check command</a>, author, basic options and references.</span>
+            <span class="step-note">This includes the module's name, path, description, date of disclosure, <a
+                    href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking" target="_blank">rank</a>,
+                support for the <a
+                    href="https://github.com/rapid7/metasploit-framework/wiki/How-to-write-a-check%28%29-method"
+                    target="_blank">check command</a>, author, basic options and references.</span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -265,7 +276,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="step">
             <p>14. Show options for the selected exploit.</p>
             <span class="step-note">Shows the exploit's configuration and current target.</span>

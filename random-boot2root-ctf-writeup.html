@@ -8,6 +8,15 @@
 <body>
     <article>
         <h1>Random boot2root CTF Writeup</h1>
+        <div class="tag-container">
+            <span class="tag">linux</span>
+            <span class="tag">ctf</span>
+            <span class="tag">Webmin</span>
+            <span class="tag">Wordpress</span>
+            <span class="tag">boot2root</span>
+            <span class="tag">metasploit</span>
+            <span class="tag">hashcat</span>
+        </div>
         <p class="last-update">Last update on November 2019.</p>
 
         <div class="step">
@@ -259,11 +268,15 @@
             <span class="step-note">
                 <ul>
                     <li>
-                        The <strong>m flag</strong> correspondons to the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes" target="_blank">hash type</a>, which in this case is the standard
+                        The <strong>m flag</strong> correspondons to the <a
+                            href="https://hashcat.net/wiki/doku.php?id=example_hashes" target="_blank">hash type</a>,
+                        which in this case is the standard
                         Wordpress MD5 hash.
                     </li>
                     <li>
-                        The <strong>a flag</strong> corresponds to the attack mode, which in this case is a <a href="https://hashcat.net/wiki/doku.php?id=dictionary_attack" target="_blank">dictionary attack</a> , more specifically with the Rockyou wordlist.
+                        The <strong>a flag</strong> corresponds to the attack mode, which in this case is a <a
+                            href="https://hashcat.net/wiki/doku.php?id=dictionary_attack" target="_blank">dictionary
+                            attack</a> , more specifically with the Rockyou wordlist.
                     </li>
                 </ul>
             </span>
@@ -276,7 +289,8 @@
         </div>
 
         <div class="step">
-            <p>10. With this, we can now log in to the <strong>wp-admin</strong> portal</a> with the following credentials: webmaster/kittykat1.</p>
+            <p>10. With this, we can now log in to the <strong>wp-admin</strong> portal</a> with the following
+                credentials: webmaster/kittykat1.</p>
         </div>
 
     </article>
