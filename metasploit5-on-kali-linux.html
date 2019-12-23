@@ -13,7 +13,7 @@
             <span class="tag">tutorial</span>
             <span class="tag">metasploit</span>
         </div>
-        <p class="last-update">Last update on October 2019.</p>
+        <p class="last-update">Last update on December 2019.</p>
 
         <div class="step">
             <p>1. Get the latest version of the Metasploit Framework.</p>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="step">
-            <p>2. Start the PostgreSQL server.</p>
+            <p>2. Start the PostgreSQL service.</p>
             <span class="step-note">With Metasploit 5 the DB can be ran by itself, which allows for multiple Metasploit
                 consoles and external tools to interact with it.</span>
             <div class="code-block">
@@ -38,7 +38,18 @@
         </div>
 
         <div class="step">
-            <p>3. Start Metasploit's console-based interface.</p>
+            <p>3. Creating the database.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>msfdb init</code>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="step">
+            <p>4. Start Metasploit's console-based interface.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -65,7 +76,7 @@
         </div>
 
         <div class="step">
-            <p>4. Check that Metasploit is connected to the DB.</p>
+            <p>5. Check that Metasploit is connected to the DB.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -78,7 +89,7 @@
         </div>
 
         <div class="step">
-            <p>5. List Metasploit's most relevant commands.</p>
+            <p>6. List Metasploit's most relevant commands.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -88,7 +99,7 @@
         </div>
 
         <div class="step">
-            <p>6. List the available workspaces.</p>
+            <p>7. List the available workspaces.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -101,7 +112,7 @@
         </div>
 
         <div class="step">
-            <p>7. Add a new workspace.</p>
+            <p>8. Add a new workspace.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -117,7 +128,7 @@
         </div>
 
         <div class="step">
-            <p>8. Select a workspace.</p>
+            <p>9. Select a workspace.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -130,7 +141,7 @@
         </div>
 
         <div class="step">
-            <p>9. Delete a workspace.</p>
+            <p>10. Delete a workspace.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -146,7 +157,7 @@
         </div>
 
         <div class="step">
-            <p>10. Search for a specific module.</p>
+            <p>11. Search for a specific module.</p>
             <span class="step-note">Alternatively, you can search directly on Metasploit's <a
                     href="https://metasploit.help.rapid7.com/docs" target="_blank">web docs</a>.</span>
             <div class="code-block">
@@ -204,7 +215,7 @@
         </div>
 
         <div class="step">
-            <p>11. See more information about a module.</p>
+            <p>12. See more information about a module.</p>
             <span class="step-note">This includes the module's name, path, description, date of disclosure, <a
                     href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking" target="_blank">rank</a>,
                 support for the <a
@@ -251,7 +262,7 @@
         </div>
 
         <div class="step">
-            <p>12. Setup the module.</p>
+            <p>13. Setup the module.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -267,8 +278,23 @@
             </div>
         </div>
 
+
         <div class="step">
-            <p>13. Select an exploit module.</p>
+            <p>14. Setup global options.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>set -g RHOST [ip]</code>
+                </div>
+                <div class="code-line">
+                    <span class="prompt">msf5 > </span>
+                    <code>set -g RPORT [port]</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>15. Select an exploit module.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 > </span>
@@ -278,7 +304,7 @@
         </div>
 
         <div class="step">
-            <p>14. Show options for the selected exploit.</p>
+            <p>16. Show options for the selected exploit.</p>
             <span class="step-note">Shows the exploit's configuration and current target.</span>
             <div class="code-block">
                 <div class="code-line">
@@ -289,7 +315,7 @@
         </div>
 
         <div class="step">
-            <p>15. List the targets supported by the exploit.</p>
+            <p>17. List the targets supported by the exploit.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 exploit([exploit_path]) ></span>
@@ -299,7 +325,7 @@
         </div>
 
         <div class="step">
-            <p>16. List available payloads for these targets.</p>
+            <p>18. List available payloads for these targets.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 exploit([exploit_path]) ></span>
@@ -309,7 +335,7 @@
         </div>
 
         <div class="step">
-            <p>17. Select a payload.</p>
+            <p>19. Select a payload.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 exploit([exploit_path]) ></span>
@@ -322,7 +348,7 @@
         </div>
 
         <div class="step">
-            <p>18. Run the exploit.</p>
+            <p>20. Run the exploit.</p>
             <span class="step-note">If we don't select a payload, Metasploit uses the default.</span>
             <div class="code-block">
                 <div class="code-line">
@@ -334,7 +360,7 @@
 
 
         <div class="step">
-            <p>19. Return to "main menu".</p>
+            <p>21. Return to "main menu".</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">msf5 exploit([exploit_path]) ></span>
