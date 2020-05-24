@@ -21,7 +21,7 @@
         </p>
 
         <div class="step">
-            <p>1. After doing an initial scan with nmap, we find only 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080 - BadHTTPServer.</p>
+            <p>1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -29,31 +29,10 @@
                 </div>
                 <br>
                 <div class="code-line">
-                    <code>PORT STATE SERVICE VERSION</code>
-                </div>
-                <br>
-                <div class="code-line">
                     <code>22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</code>
                 </div>
-                <br>
                 <div class="code-line">
-                    <code>80/tcp closed http</code>
-                </div>
-                <br>
-                <div class="code-line">
-                    <code>8080/tcp open http-proxy BadHTTPServer <= custom web server</code>
-                </div>
-                <div class="code-line">
-                    <code>| fingerprint-strings:</code>
-                </div>
-                <div class="code-line">
-                    <code>| GetRequest, HTTPOptions:</code>
-                </div>
-                <div class="code-line">
-                    <code>| Server: BadHTTPServer</code>
-                </div>
-                <div class="code-line">
-                    <code>|_http-title: 0bscura</code>
+                    <code>8080/tcp open http-proxy BadHTTPServer</code>
                 </div>
             </div>
         </div>
@@ -84,7 +63,7 @@
         </div>
 
         <div class="step">
-            <p>5. By exploiting this exec, we can format our request in a way that gets us a shell as wwwdata.</p>
+            <p>5. Here's our foothold: we can exploit this exec and get us a shell as wwwdata.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -94,7 +73,7 @@
         </div>
         
         <div class="step">
-            <p>7. After looking at /etc/passwd we find our user</p>
+            <p>6. Our first goal is to become robert.</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">$</span>
@@ -111,7 +90,7 @@
         
 
         <div class="step">
-            <p>7. Listing the contents of rober's home directy, we get some interesting files:</p>
+            <p>7. Listing the contents of robert's home directy, we get some interesting files:</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">$</span>
@@ -133,25 +112,56 @@
                     <code>SuperSecureCrypt.py</code>
                 </div>
                 <div class="code-line">
-                    <code>user.txt y</code>
+                    <code>user.txt</code>
+                </div>
+            </div>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>cat check.txt</code>
+                </div>
+                <div class="code-line"></div>
+                    <code>Encrypting this file with your key should result in out.txt, make sure your key is correct!</code>
+                </div>
+            </div>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>cat out.txt</code>
+                </div>
+                <div class="code-line"></div>
+                    <code>¦ÚÈêÚÞØÛÝÝ×ÐÊßÞÊÚÉæßÝËÚÛÚêÙÉëéÑÒÝÍÐêÆáÙÞãÒÑÐáÙ¦ÕæØãÊÎÍßÚêÆÝáäèÎÍÚÎëÑÓäáÛÌ×v$</code>
+                </div>
+            </div>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>cat passwordreminder.txt</code>
+                </div>
+                <div class="code-line"></div>
+                    <code>´ÑÈÌÉàÙÁÑé¯·¿</code>
                 </div>
             </div>
         </div>
 
         <div class="step">
-            <p>8. Let's create a script to find the key</p>
+            <p>
+                8. So, by encrypting check.txt with an unknown key we get out.txt.<br>
+                Also, when use we this key to encrypt robert's password we get the content of passwordreminder.txt.<br>
+                Let's create a script to find the key!
+            </p>
             <img src="./script1.png">
         </div>
 
         <div class="step">
-            <p>9. Now let's find robert's password</p>
+            <p>9. Now that we have the key, let's use it to find robert's password!</p>
             <img src="./script2.png">
         </div>
     
 
         <div class="step">
-            <p>10. Now that we have the user's password we can SSH into the machine, get the user flag and move on to root.<br>
-                We start by doing some enumeration with LinEnum</p>
+            <p>10. Now that we have the robert's password we can SSH into the machine, get the user flag and move on to root.<br>
+                We start by doing some enumeration with LinEnum:</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">$</span>
@@ -192,14 +202,17 @@
         </div>
 
         <div class="step">
-            <p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on  /tmp/SSH/.
-                So we create a script to print them as they're written:
-            </p>
+            <p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on  /tmp/SSH/.</p>
             <img src="script3.png"/>
+        </div>
+        
+        <div class="step">
+            <p>13. So we create a script to print them to a file we can read after the process is finished (/tmp/o.txt):</p>
+            <img src="script4.png"/>
         </div>
 
         <div class="step">
-            <p>13. Finally, we use JohnTheRipper to crack the hash:</p>
+            <p>14. Finally, we use JohnTheRipper to crack the hash:</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -221,7 +234,7 @@
         </div>
 
         <div class="step">
-            <p>14. That's it, hope you enjoyed it!</p>
+            <p>15. That's it, hope you enjoyed it!</p>
         </div>
     
     </article>
