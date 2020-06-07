@@ -1,0 +1,44 @@
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: posts","time":"2020-06-07T16:58:11.520Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: posts_meta","time":"2020-06-07T16:58:11.531Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: users","time":"2020-06-07T16:58:11.539Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: posts_authors","time":"2020-06-07T16:58:11.552Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: roles","time":"2020-06-07T16:58:11.558Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: roles_users","time":"2020-06-07T16:58:11.568Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: permissions","time":"2020-06-07T16:58:11.573Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: permissions_users","time":"2020-06-07T16:58:11.583Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: permissions_roles","time":"2020-06-07T16:58:11.588Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: permissions_apps","time":"2020-06-07T16:58:11.593Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: settings","time":"2020-06-07T16:58:11.598Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: tags","time":"2020-06-07T16:58:11.606Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: posts_tags","time":"2020-06-07T16:58:11.615Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: apps","time":"2020-06-07T16:58:11.620Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: app_settings","time":"2020-06-07T16:58:11.648Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: app_fields","time":"2020-06-07T16:58:11.662Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: invites","time":"2020-06-07T16:58:11.668Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: brute","time":"2020-06-07T16:58:11.708Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: webhooks","time":"2020-06-07T16:58:11.716Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: sessions","time":"2020-06-07T16:58:11.730Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: integrations","time":"2020-06-07T16:58:11.739Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: api_keys","time":"2020-06-07T16:58:11.750Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: mobiledoc_revisions","time":"2020-06-07T16:58:11.764Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: members","time":"2020-06-07T16:58:11.771Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: labels","time":"2020-06-07T16:58:11.785Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: members_labels","time":"2020-06-07T16:58:11.799Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: members_stripe_customers","time":"2020-06-07T16:58:11.804Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: members_stripe_customers_subscriptions","time":"2020-06-07T16:58:11.813Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: actions","time":"2020-06-07T16:58:11.819Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Creating table: emails","time":"2020-06-07T16:58:11.826Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Model: Tag","time":"2020-06-07T16:58:11.854Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Model: Role","time":"2020-06-07T16:58:11.882Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Model: Permission","time":"2020-06-07T16:58:11.943Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Model: User","time":"2020-06-07T16:58:12.457Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Model: Post","time":"2020-06-07T16:58:12.944Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Model: Integration","time":"2020-06-07T16:58:13.191Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Relation: Role to Permission","time":"2020-06-07T16:58:13.230Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Relation: Post to Tag","time":"2020-06-07T16:58:13.791Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Relation: User to Role","time":"2020-06-07T16:58:13.851Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Ghost is running in development...","time":"2020-06-07T16:58:16.590Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Listening on: 127.0.0.1:2369","time":"2020-06-07T16:58:16.591Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Url configured as: http://localhost:2369/","time":"2020-06-07T16:58:16.593Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Ctrl+C to shut down","time":"2020-06-07T16:58:16.595Z","v":0}
+{"name":"Log","hostname":"Iness-Air.lan","pid":20251,"level":30,"msg":"Ghost boot 7.161s","time":"2020-06-07T16:58:16.597Z","v":0}
