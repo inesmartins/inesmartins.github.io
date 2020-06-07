@@ -1,13 +1,13 @@
 {
   "url": "http://localhost:2369/",
   "server": {
-    "port": 2369,
+    "port": 4444,
     "host": "127.0.0.1"
   },
   "database": {
     "client": "sqlite3",
     "connection": {
-      "filename": "/Users/inesmartins/Desktop/inesmartins.github.io/content/data/ghost-local.db"
+      "filename": "/Users/inesmartins/Desktop/blog/ghost/content/data/ghost-local.db"
     }
   },
   "mail": {
@@ -21,6 +21,6 @@
   },
   "process": "local",
   "paths": {
-    "contentPath": "/Users/inesmartins/Desktop/inesmartins.github.io/content"
+    "contentPath": "/Users/inesmartins/Desktop/blog/ghost/content"
   }
 }
