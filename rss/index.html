@@ -1,4 +1,176 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins | Security Notes]]></title><description><![CDATA[Thoughts, stories and ideas.]]></description><link>http://localhost:2368/</link><image><url>http://localhost:2368/favicon.png</url><title>Inês Martins | Security Notes</title><link>http://localhost:2368/</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 07 Jun 2020 22:09:27 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Solving the 'Ghost in the Wires' ciphers]]></title><description><![CDATA[<p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new</p>]]></description><link>http://localhost:2368/decrypting-the-ghost-in-the-wires-ciphers/</link><guid isPermaLink="false">5edd318f64e6e34f1b3f7ffd</guid><category><![CDATA[cryptography]]></category><category><![CDATA[ghost in the wires]]></category><category><![CDATA[book]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 18:37:22 GMT</pubDate><media:content url="http://localhost:2368/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" medium="image"/><content:encoded><![CDATA[<img src="http://localhost:2368/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" alt="Solving the 'Ghost in the Wires' ciphers"><p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence:</p><ul><li>it starts with an uppercase letter;</li><li>all the characters are letters;</li><li>there are longer words separated by shorter words, etc.</li></ul><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Whatever tickles my fancy]]></description><link>http://localhost:2368/</link><image><url>http://localhost:2368/favicon.png</url><title>Inês Martins</title><link>http://localhost:2368/</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 07 Jun 2020 23:36:12 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC Steg Challenge 2019]]></title><description><![CDATA[<p>We're given <a href="https://www.dropbox.com/s/j56ojepwlo5hy31/An%C3%A1lise.eml?dl=0">an email</a> (in <a href="https://fileinfo.com/extension/eml">EML format</a>) with a banner and some text that is leading us to think that the email contains some sort of hidden data:</p><blockquote>Hi,<br>I need someone who's able to analyse a PC, could you help me?<br>PS: Let's use our usual way of exchanging</blockquote>]]></description><link>http://localhost:2368/oxopos-c-steg-challenge/</link><guid isPermaLink="false">5edd7174989b5d0f390eb953</guid><category><![CDATA[steg]]></category><category><![CDATA[steganography]]></category><category><![CDATA[oposec]]></category><category><![CDATA[volatility]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 23:14:28 GMT</pubDate><media:content url="http://localhost:2368/content/images/2020/06/highres_471963990-1.jpeg" medium="image"/><content:encoded><![CDATA[<img src="http://localhost:2368/content/images/2020/06/highres_471963990-1.jpeg" alt="ØxOPOSɆC Steg Challenge 2019"><p>We're given <a href="https://www.dropbox.com/s/j56ojepwlo5hy31/An%C3%A1lise.eml?dl=0">an email</a> (in <a href="https://fileinfo.com/extension/eml">EML format</a>) with a banner and some text that is leading us to think that the email contains some sort of hidden data:</p><blockquote>Hi,<br>I need someone who's able to analyse a PC, could you help me?<br>PS: Let's use our usual way of exchanging classified information!<br>--<br><strong>Volatility</strong> is the constant of life!</blockquote><p>And indeed, when we use an <a href="https://futureboy.us/stegano/decinput.html">online steg decoder</a> we can find a Dropbox link hidden in the image:</p><!--kg-card-begin: markdown--><p><code>0c60fd56872251909cb07a749b03a34a56e1edac  memdmp.zip</code></p>
+<p><code>https://www.dropbox.com/s/ks30qs78k18lfd0/memdmp.zip?dl=0</code></p>
+<!--kg-card-end: markdown--><p>This zip file seems to contain a memory dump created with <a href="https://www.volatilityfoundation.org">Volatility</a>'s memdmp command. </p><p>After going through the dump (see resources), we end up finding some useful data written on a Notepad doc, which we're able to extract using the <strong>notepad </strong>command.</p><p>Finally, we were able to decipher this text using a ROT13 (shift=18).</p><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://cqureacademy.com/blog/forensics/memory-dump-analysis">https://cqureacademy.com/blog/forensics/memory-dump-analysis</a></li><li><a href="https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf">https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf</a></li><li><a href="https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/">https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/</a></li></ul>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Crypto Challenge 2019]]></title><description><![CDATA[<h2 id="level-1">Level 1 </h2><p>This first level is an example of how the <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a> can be used against the AES-CTR algorithm, if incorrectly implemented.</p><p>We're given a ciphered text (C1):</p><!--kg-card-begin: markdown--><p><code>5/KIDoW4XvtTCLZQSQl9GYBmdSC+vj2wDxP4Bbg=</code></p>
+<!--kg-card-end: markdown--><p>and its plaintext equivalent (P1):</p><!--kg-card-begin: markdown--><p><code>this data is indeed important</code></p>
+<!--kg-card-end: markdown--><p>And we're asked to decipher a second cipher</p>]]></description><link>http://localhost:2368/0xoposec/</link><guid isPermaLink="false">5edd699b989b5d0f390eb8ab</guid><category><![CDATA[cryptography]]></category><category><![CDATA[ctf]]></category><category><![CDATA[aes]]></category><category><![CDATA[aes-ctr]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 22:48:24 GMT</pubDate><media:content url="http://localhost:2368/content/images/2020/06/highres_471963990.jpeg" medium="image"/><content:encoded><![CDATA[<h2 id="level-1">Level 1 </h2><img src="http://localhost:2368/content/images/2020/06/highres_471963990.jpeg" alt="ØxOPOSɆC Crypto Challenge 2019"><p>This first level is an example of how the <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a> can be used against the AES-CTR algorithm, if incorrectly implemented.</p><p>We're given a ciphered text (C1):</p><!--kg-card-begin: markdown--><p><code>5/KIDoW4XvtTCLZQSQl9GYBmdSC+vj2wDxP4Bbg=</code></p>
+<!--kg-card-end: markdown--><p>and its plaintext equivalent (P1):</p><!--kg-card-begin: markdown--><p><code>this data is indeed important</code></p>
+<!--kg-card-end: markdown--><p>And we're asked to decipher a second cipher (C2):</p><!--kg-card-begin: markdown--><p><code>9faAGt62D79tSa1GNhR2FbpgY3mnpyKAEVfrD7E=</code></p>
+<!--kg-card-end: markdown--><p>We also know that this is an implementation of the AES block cipher in CTR mode, where both plaintexts where encrypted with the same key and IV. In these conditions we know that:</p><!--kg-card-begin: markdown--><pre><code>C1 XOR C2 = P1 XOR P2
+</code></pre>
+<!--kg-card-end: markdown--><p>and as such:</p><!--kg-card-begin: markdown--><pre><code>P2 = P1 XOR (C1 XOR C2)
+</code></pre>
+<!--kg-card-end: markdown--><p>To find P2 I created a simple Python script:</p><!--kg-card-begin: markdown--><pre><code>import base64
+
+c1 = &quot;5/KIDoW4XvtTCLZQSQl9GYBmdSC+vj2wDxP4Bbg=&quot;
+c2 = &quot;9faAGt62D79tSa1GNhR2FbpgY3mnpyKAEVfrD7E=&quot;
+p1 = &quot;this data is indeed important&quot;
+
+decoded_c1 = c1.decode(&quot;base64&quot;)
+c1_byte_arr = bytearray(decoded_c1)
+decoded_c2 = c2.decode(&quot;base64&quot;)
+c2_byte_arr = bytearray(decoded_c2)
+p1_byte_arr = bytearray(p1)
+c1_xor_c2 = []
+p2 = []
+
+for i in range(len(c1_byte_arr)):
+    xored = c1_byte_arr[i] ^ c2_byte_arr[i]
+    c1_xor_c2.append(xored)
+
+print(&quot;c1 XOR c2 = &quot; + &quot; &quot;.join(map(str, c1_xor_c2)))
+print(&quot;\n&quot;)
+
+for j in range(len(c1_xor_c2)):
+    xored2 = p1_byte_arr[j] ^ c1_xor_c2[j]
+    p2.append(xored2)
+
+print(&quot;p1 XOR (c1 XOR c2) = &quot; + &quot; &quot;.join(map(str, p2)))
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="level-2">Level 2</h2><p>On this level, we're  provided with an example of a valid cipher but not its plaintext equivalent:</p><!--kg-card-begin: markdown--><pre><code>22jBDaecKR9Sn4JXzJkxXwY/cAgC9/Gg5JImfEgQLC0=
+</code></pre>
+<!--kg-card-end: markdown--><p>We also have access to a server which confirms or denies the validity of any given cipher, but it also let's us know when the error is due to invalid padding, which makes it vulnerable to <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">padding oracle attacks</a>.</p><p>Instead of creating a custom Python script, I simply adapted the following PoC: <a href="https://github.com/mpgn/Padding-oracle-attack">https://github.com/mpgn/Padding-oracle-attack</a>:</p><!--kg-card-begin: markdown--><pre><code>import os
+import sys
+
+url = [SERVER_URL]
+flag_hex = [KNOWN_VALID_FLAG_IN_HEX]
+base64_error = [INVALID_BASE64_ERROR_MSG]
+len_error = [INVALID_LENGTH_ERROR_MSG]
+padding_error = [WRONG_PADDING_ERROR_MSG]
+success_msg = [SUCCESS_MSG]
+
+import argparse
+import httplib, urllib
+import re
+import binascii
+import os
+import sys
+import time
+from binascii import unhexlify, hexlify
+from itertools import cycle, izip
+
+def call_oracle(hex_cipher):
+    unencoded = hex_cipher.decode(&quot;hex&quot;)
+    test_flag = unencoded.encode(&quot;base64&quot;)
+    request = &quot;curl -X POST -F 'encrypted=&quot; + test_flag + &quot;' --url &quot; + url
+    print(request)
+    result = os.popen(request).read()
+    if padding_error in str(result) or len_error in str(result):  #or base64_error in str(result) 
+        return 0
+    else:
+        return 1
+
+# the exploit don't need to touch this part
+# split the cipher in len of size_block
+def split_len(seq, length):
+    return [seq[i:i+length] for i in range(0, len(seq), length)]
+
+''' create custom block for the byte we search'''
+def block_search_byte(size_block, i, pos, l):
+    hex_char = hex(pos).split('0x')[1]
+    return &quot;00&quot;*(size_block-(i+1)) + (&quot;0&quot; if len(hex_char)%2 != 0 else '') + hex_char + ''.join(l)   
+
+''' create custom block for the padding'''
+def block_padding(size_block, i):
+    l = []
+    for t in range(0,i+1):
+        l.append((&quot;0&quot; if len(hex(i+1).split('0x')[1])%2 != 0 else '') + (hex(i+1).split('0x')[1]))
+    return &quot;00&quot;*(size_block-(i+1)) + ''.join(l)
+
+def hex_xor(s1,s2):
+    return hexlify(''.join(chr(ord(c1) ^ ord(c2)) for c1, c2 in zip(unhexlify(s1), cycle(unhexlify(s2)))))
+
+def run():
+    cipher       = flag_hex
+    size_block   = 16
+    found        = False
+    valide_value = []
+    result       = []
+    len_block    = size_block*2
+    cipher_block = split_len(cipher, len_block)
+
+    if len(cipher_block) == 1:
+        print &quot;[-] Abort there is only one block&quot;
+        sys.exit() 
+    #for each cipher_block
+    for block in reversed(range(1,len(cipher_block))):
+        if len(cipher_block[block]) != len_block:
+            print &quot;[-] Abort length block doesn't match the size_block&quot;
+            break
+        print &quot;[+] Search value block : &quot;, block, &quot;\n&quot;
+        #for each byte of the block
+        for i in range(0,size_block):
+            # test each byte max 255
+            for ct_pos in range(0,256):
+                # 1 xor 1 = 0 or valide padding need to be checked
+                if ct_pos != i+1 or (len(valide_value) &gt; 0  and int(valide_value[-1],16) == ct_pos):
+
+                    bk = block_search_byte(size_block, i, ct_pos, valide_value) 
+                    bp = cipher_block[block-1]
+                    bc = block_padding(size_block, i) 
+
+                    tmp = hex_xor(bk,bp)
+                    cb  = hex_xor(tmp,bc).upper()
+
+                    up_cipher  = cb + cipher_block[block]
+                    #time.sleep(0.5)
+
+                    # we call the oracle, our god
+                    valid = call_oracle(up_cipher)
+
+                    if valid == 1:
+
+                        found = True
+
+                        # data analyse and insert in rigth order
+                        value = re.findall('..',bk)
+                        valide_value.insert(0,value[size_block-(i+1)])
+                        bytes_found = ''.join(valide_value)
+                        if i == 0 and bytes_found.decode(&quot;hex&quot;) &gt; hex(size_block) and block == len(cipher_block)-1:
+                            print &quot;[-] Error decryption failed the padding is &gt; &quot;+str(size_block)
+                            sys.exit()
+
+                        print '\033[36m' + '\033[1m' + &quot;[+]&quot; + '\033[0m' + &quot; Found&quot;, i+1,  &quot;bytes :&quot;, bytes_found
+                        print ''
+
+                        break 
+            if found == False:
+                # lets say padding is 01 for the last byte of the last block (the padding block)
+                if len(cipher_block)-1 == block and i == 0:
+                    value = re.findall('..',bk)
+                    valide_value.insert(0,&quot;01&quot;)
+                else:
+                    print &quot;\n[-] Error decryption failed&quot;
+                    result.insert(0, ''.join(valide_value))
+                    hex_r = ''.join(result)
+                    print &quot;[+] Partial Decrypted value (HEX):&quot;, hex_r.upper()
+                    padding = int(hex_r[len(hex_r)-2:len(hex_r)],16)
+                    print &quot;[+] Partial Decrypted value (ASCII):&quot;, hex_r[0:-(padding*2)].decode(&quot;hex&quot;)
+                    sys.exit()
+            found = False
+
+        result.insert(0, ''.join(valide_value))
+        valide_value = []
+
+    print ''
+    hex_r = ''.join(result)
+    print &quot;[+] Decrypted value (HEX):&quot;, hex_r.upper()
+    padding = int(hex_r[len(hex_r)-2:len(hex_r)],16)
+    print &quot;[+] Decrypted value (ASCII):&quot;, hex_r[0:-(padding*2)].decode(&quot;hex&quot;)
+
+if __name__ == '__main__':                           
+    run()
+```</code></pre>
+<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[Solving the 'Ghost in the Wires' ciphers]]></title><description><![CDATA[<p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new</p>]]></description><link>http://localhost:2368/decrypting-the-ghost-in-the-wires-ciphers/</link><guid isPermaLink="false">5edd318f64e6e34f1b3f7ffd</guid><category><![CDATA[cryptography]]></category><category><![CDATA[ghost in the wires]]></category><category><![CDATA[book]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 18:37:22 GMT</pubDate><media:content url="http://localhost:2368/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" medium="image"/><content:encoded><![CDATA[<img src="http://localhost:2368/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" alt="Solving the 'Ghost in the Wires' ciphers"><p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence:</p><ul><li>it starts with an uppercase letter;</li><li>all the characters are letters;</li><li>there are longer words separated by shorter words, etc.</li></ul><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
 Question: The cost of the bus driver I used to punch my own transfers.
 Solution: $15
 </code></pre>
