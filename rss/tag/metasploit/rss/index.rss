@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="//purl.org/dc/elements/1.1/" xmlns:content="//purl.org/rss/1.0/modules/content/" xmlns:atom="//www.w3.org/2005/Atom" version="2.0" xmlns:media="//search.yahoo.com/mrss/"><channel><title><![CDATA[metasploit - Inês Martins | Security Notes]]></title><description><![CDATA[Thoughts, stories and ideas.]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>metasploit - Inês Martins | Security Notes</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 07 Jun 2020 21:23:27 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//tag/metasploit/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Metasploit 5 Tutorial]]></title><description><![CDATA[<p>1. Get the latest version of the <a href="https://www.metasploit.com/">Metasploit Framework</a>.</p><!--kg-card-begin: markdown--><pre><code>sudo apt update
+sudo apt install metasploit-framework
+</code></pre>
+<!--kg-card-end: markdown--><p>2. Create the database.</p><!--kg-card-begin: markdown--><pre><code>msfdb init
+</code></pre>
+<!--kg-card-end: markdown--><p>3. Start Metasploit's console-based interface.</p><!--kg-card-begin: markdown--><pre><code>msfconsole
+</code></pre>
+<!--kg-card-end: markdown--><p>4. Check that Metasploit is connected to the DB.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; db_status
+[*] Connected to msf. Connection type: postgresql.
+</code></pre>
+<!--kg-card-end: markdown--><p>5. List Metasploit's</p>]]></description><link>https://inesmartins.github.io//untitled/</link><guid isPermaLink="false">5edd1dc464e6e34f1b3f7e32</guid><category><![CDATA[metasploit]]></category><category><![CDATA[metasploit framework]]></category><category><![CDATA[linux]]></category><category><![CDATA[tutorial]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 17:10:38 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1.png" alt="Metasploit 5 Tutorial"><p>1. Get the latest version of the <a href="https://www.metasploit.com/">Metasploit Framework</a>.</p><!--kg-card-begin: markdown--><pre><code>sudo apt update
+sudo apt install metasploit-framework
+</code></pre>
+<!--kg-card-end: markdown--><p>2. Create the database.</p><!--kg-card-begin: markdown--><pre><code>msfdb init
+</code></pre>
+<!--kg-card-end: markdown--><p>3. Start Metasploit's console-based interface.</p><!--kg-card-begin: markdown--><pre><code>msfconsole
+</code></pre>
+<!--kg-card-end: markdown--><p>4. Check that Metasploit is connected to the DB.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; db_status
+[*] Connected to msf. Connection type: postgresql.
+</code></pre>
+<!--kg-card-end: markdown--><p>5. List Metasploit's most relevant commands.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; help
+</code></pre>
+<!--kg-card-end: markdown--><p>6. List the available workspaces.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace
+* default
+</code></pre>
+<!--kg-card-end: markdown--><p>7. Add a new workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace -a testymcgee
+[*] Added workspace: testymcgee
+[*] Workspace: testymcgee
+</code></pre>
+<!--kg-card-end: markdown--><p>8. Select a workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace default
+[*] Workspace: default
+</code></pre>
+<!--kg-card-end: markdown--><p>9. Delete a workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace -d testymcgee
+[*] Deleted workspace: testymcgee
+[*] Swiched to workspace: default
+</code></pre>
+<!--kg-card-end: markdown--><p>10. Search for a specific module. Alternatively, you can search directly on Metasploit's <a href="https://metasploit.help.rapid7.com/docs">web docs</a>.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; search wordpress
+</code></pre>
+<!--kg-card-end: markdown--><p>11. See more information about a module. This includes the module's name, path, description, date of disclosure, <a href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking">rank</a>, support for the <a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-write-a-check%28%29-method">check command</a>, author, basic options and references.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; info [module_path]
+</code></pre>
+<!--kg-card-end: markdown--><p>12. Setup the module.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; set RHOST [ip]
+msf5 &gt; set RPORT [port]
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>13. Setup global options.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; set -g RHOST [ip]
+msf5 &gt; set -g RPORT [port]
+</code></pre>
+<!--kg-card-end: markdown--><p>14. Select an exploit module.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use [exploit_path]
+</code></pre>
+<!--kg-card-end: markdown--><p>15. Show options for the selected exploit.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show options
+</code></pre>
+<!--kg-card-end: markdown--><p>16. List the targets supported by the exploit.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show options
+</code></pre>
+<!--kg-card-end: markdown--><p>17. List available payloads for these targets.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show targets
+</code></pre>
+<!--kg-card-end: markdown--><p>18. Select a payload.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; set payload [payload_path]
+payload =&gt; [payload_path]
+</code></pre>
+<!--kg-card-end: markdown--><p>19. Run the exploit.If we don't select a payload, Metasploit uses the default.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; exploit
+</code></pre>
+<!--kg-card-end: markdown--><p>20. Return to "main menu".</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; back
+msf5 &gt;
+</code></pre>
+<!--kg-card-end: markdown--><p>21. Exit the app.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; exit
+</code></pre>
+<!--kg-card-end: markdown-->]]></content:encoded></item></channel></rss>

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="//purl.org/dc/elements/1.1/" xmlns:content="//purl.org/rss/1.0/modules/content/" xmlns:atom="//www.w3.org/2005/Atom" version="2.0" xmlns:media="//search.yahoo.com/mrss/"><channel><title><![CDATA[cryptography - Inês Martins | Security Notes]]></title><description><![CDATA[Thoughts, stories and ideas.]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>cryptography - Inês Martins | Security Notes</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 07 Jun 2020 21:23:27 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//tag/cryptography/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Solving the 'Ghost in the Wires' ciphers]]></title><description><![CDATA[<p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new</p>]]></description><link>https://inesmartins.github.io//decrypting-the-ghost-in-the-wires-ciphers/</link><guid isPermaLink="false">5edd318f64e6e34f1b3f7ffd</guid><category><![CDATA[cryptography]]></category><category><![CDATA[ghost in the wires]]></category><category><![CDATA[book]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 18:37:22 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" alt="Solving the 'Ghost in the Wires' ciphers"><p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence:</p><ul><li>it starts with an uppercase letter;</li><li>all the characters are letters;</li><li>there are longer words separated by shorter words, etc.</li></ul><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
+Question: The cost of the bus driver I used to punch my own transfers.
+Solution: $15
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-2-just-visiting">Chapter 2 | Just Visiting</h3><blockquote>Estd mzzv esle elfrse xp szh ez ncplep yph topyetetpd hspy T hld l acp-eppy</blockquote><p>Again, the text looked like a valid sentence, so basically the same as the previous answer just with a different shift.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=15
+Question: This book that taught me how to create new identities when I was a pre-teen.
+Solution: The Paper Trip by Barry Reid.
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-3-original-sin">Chapter 3 | Original Sin</h3><blockquote>pbzfsobp dkfobtpkx lq pbkfi ppbkfpry aoxtolc iixz lq abpr bobt pbzfsba cl bmvq obail bpbeQ</blockquote><p>The uppercase letter at the end of the sentence made me think the chars were reversed.</p><p>After that, it was just a matter of finding the shift for the ROT13 cipher once again, which turned out to be 3, also known as <a href="https://en.wikipedia.org/wiki/ROT_cipher">Ceaser Cipher</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Reverse | Ceaser Cipher
+Question: These older type of devices were used to call forward business lines to answering services.
+Solution:
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Atbash
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th>Original</th>
+<th>Deciphered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abcdefghijklmnopqrstuwxyz</td>
+<td>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</td>
+</tr>
+<tr>
+<td>zyxwutsrqponmlkjihgfedcba</td>
+<td>thenameofthemainframesihackedatuscinthearpanetdays</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: The name of the mainframes I hacked at USC in the ARPANET days.
+Solution: COSMOS
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-5-all-your-phone-lines-belong-to-me">Chapter 5 | All Your Phone Lines Belong To Me</h3><blockquote>jbi ujt veo eco ntk iwa lhc eeo anu uir trs hae oni rfn irt toh imi ets shs !eu</blockquote><p>After much over-thinking, this one was as easy as "stacking" the words and reading the letters from top to bottom, starting from the last column.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Reading letters of each word top to bottom, from the last column.
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>j</td>
+<td>b</td>
+<td>i</td>
+<td>................</td>
+<td>i</td>
+<td>b</td>
+<td>j</td>
+</tr>
+<tr>
+<td>u</td>
+<td>j</td>
+<td>t</td>
+<td>................</td>
+<td>t</td>
+<td>j</td>
+<td>u</td>
+</tr>
+<tr>
+<td>v</td>
+<td>e</td>
+<td>o</td>
+<td>................</td>
+<td>o</td>
+<td>e</td>
+<td>v</td>
+</tr>
+<tr>
+<td>e</td>
+<td>c</td>
+<td>o</td>
+<td>................</td>
+<td>o</td>
+<td>c</td>
+<td>e</td>
+</tr>
+<tr>
+<td>n</td>
+<td>t</td>
+<td>k</td>
+<td>................</td>
+<td>k</td>
+<td>t</td>
+<td>n</td>
+</tr>
+<tr>
+<td>i</td>
+<td>w</td>
+<td>a</td>
+<td>................</td>
+<td>a</td>
+<td>w</td>
+<td>i</td>
+</tr>
+<tr>
+<td>l</td>
+<td>h</td>
+<td>c</td>
+<td>................</td>
+<td>c</td>
+<td>h</td>
+<td>l</td>
+</tr>
+<tr>
+<td>e</td>
+<td>e</td>
+<td>o</td>
+<td>................</td>
+<td>o</td>
+<td>e</td>
+<td>e</td>
+</tr>
+<tr>
+<td>a</td>
+<td>n</td>
+<td>u</td>
+<td>................</td>
+<td>u</td>
+<td>n</td>
+<td>a</td>
+</tr>
+<tr>
+<td>u</td>
+<td>i</td>
+<td>r</td>
+<td>................</td>
+<td>r</td>
+<td>i</td>
+<td>u</td>
+</tr>
+<tr>
+<td>t</td>
+<td>r</td>
+<td>s</td>
+<td>................</td>
+<td>s</td>
+<td>r</td>
+<td>t</td>
+</tr>
+<tr>
+<td>h</td>
+<td>a</td>
+<td>e</td>
+<td>................</td>
+<td>e</td>
+<td>a</td>
+<td>h</td>
+</tr>
+<tr>
+<td>o</td>
+<td>n</td>
+<td>i</td>
+<td>................</td>
+<td>i</td>
+<td>n</td>
+<td>o</td>
+</tr>
+<tr>
+<td>r</td>
+<td>f</td>
+<td>n</td>
+<td>................</td>
+<td>n</td>
+<td>f</td>
+<td>r</td>
+</tr>
+<tr>
+<td>i</td>
+<td>r</td>
+<td>t</td>
+<td>................</td>
+<td>t</td>
+<td>r</td>
+<td>i</td>
+</tr>
+<tr>
+<td>t</td>
+<td>o</td>
+<td>h</td>
+<td>................</td>
+<td>h</td>
+<td>o</td>
+<td>t</td>
+</tr>
+<tr>
+<td>i</td>
+<td>m</td>
+<td>i</td>
+<td>................</td>
+<td>i</td>
+<td>m</td>
+<td>i</td>
+</tr>
+<tr>
+<td>e</td>
+<td>t</td>
+<td>s</td>
+<td>................</td>
+<td>s</td>
+<td>t</td>
+<td>e</td>
+</tr>
+<tr>
+<td>s</td>
+<td>h</td>
+<td>s</td>
+<td>................</td>
+<td>s</td>
+<td>h</td>
+<td>s</td>
+</tr>
+<tr>
+<td>!</td>
+<td>e</td>
+<td>u</td>
+<td>................</td>
+<td>u</td>
+<td>e</td>
+<td>!</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: I took a course on this subject when I ran from the juvenile authorities!
+Solution: Criminal Justice
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-6-will-hack-for-love">Chapter 6 | Will Hack for Love</h3><blockquote>bmFtZXRoZWNvbXBhbnl3aGVyZWJvbm5pZXdhc2VtcGxveWVkd2hlbndlc3RhcnRlZGRhdGluZw==</blockquote><p>The equal signs at the end is a dead give-away for Base64.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Base64
+Question: Name the company where Bonnie was employed when we started dating.
+Solution: GTE
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-8-lex-luthor">Chapter 8 | Lex Luthor</h3><blockquote>'siass nuhmil sowsra amnapi waagoc ifinti dscisf iiiesf ahgbao staetn itmlro</blockquote><p>Pretty similar to chapter 5, found the solution by "stacking" the words and reading each character from the bottom-left to the top-right.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Stacking words | Read from bottom-left to top-right
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>'</td>
+<td>s</td>
+<td>i</td>
+<td>a</td>
+<td>s</td>
+<td>s</td>
+</tr>
+<tr>
+<td>n</td>
+<td>u</td>
+<td>h</td>
+<td>m</td>
+<td>i</td>
+<td>l</td>
+</tr>
+<tr>
+<td>s</td>
+<td>o</td>
+<td>w</td>
+<td>s</td>
+<td>r</td>
+<td>a</td>
+</tr>
+<tr>
+<td>a</td>
+<td>m</td>
+<td>n</td>
+<td>a</td>
+<td>p</td>
+<td>i</td>
+</tr>
+<tr>
+<td>w</td>
+<td>a</td>
+<td>a</td>
+<td>g</td>
+<td>o</td>
+<td>c</td>
+</tr>
+<tr>
+<td>i</td>
+<td>f</td>
+<td>i</td>
+<td>n</td>
+<td>t</td>
+<td>i</td>
+</tr>
+<tr>
+<td>d</td>
+<td>s</td>
+<td>c</td>
+<td>i</td>
+<td>s</td>
+<td>f</td>
+</tr>
+<tr>
+<td>i</td>
+<td>i</td>
+<td>i</td>
+<td>e</td>
+<td>s</td>
+<td>f</td>
+</tr>
+<tr>
+<td>a</td>
+<td>h</td>
+<td>g</td>
+<td>b</td>
+<td>a</td>
+<td>o</td>
+</tr>
+<tr>
+<td>s</td>
+<td>t</td>
+<td>a</td>
+<td>e</td>
+<td>t</td>
+<td>n</td>
+</tr>
+<tr>
+<td>i</td>
+<td>t</td>
+<td>m</td>
+<td>l</td>
+<td>r</td>
+<td>o</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: I said I wasn't this famous magician while beging a smartass to prision officials.
+Solution: Harry Houdini
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-11-foul-play">Chapter 11 | Foul Play</h3><blockquote>ow gw ty kc qb eb nm ht ud pc iy ty ik tu zo dp gl qt hd</blockquote><p>This one absolutely blew my mind, I was just playing around with some online tools and came across <a href="https://scwf.dima.ninja/">this</a> website.</p><p>To see how it worked, I entered this challenge and the answer was displayed immediately, along with the cipher: <a href="https://en.wikipedia.org/wiki/Playfair_cipher">Playfair</a>.</p><p>If I had known it before, this would be an easy challenge to break, since it's one of the most well-known techniques that <strong>encrypts pairs of letters</strong> (bigrams or digrams), instead of single letters.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Playfair Cipher
+Question: My brother Adam listened to this type of music.
+Solution: Hip Hop
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-12-you-can-never-hide">Chapter 12 | You can Never Hide</h3><blockquote>idniidhsubrseognteiyignuhrzdalrdietfetinmeablnigorcsnuatoiecli</blockquote><p><a href="https://scwf.dima.ninja/">SCWF</a> to the rescue again.</p><p>Without much effort the site found the solution using Columnar Transposition (2 1).</p><!--kg-card-begin: markdown--><pre><code>Cipher: Columnar Transposition (2 1)
+Question: I identified this number as belonging to Eric using unauthorized callerID.
+Solution: 310 837-5412
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-13-the-wiretapper">Chapter 13 | The Wiretapper</h3><blockquote>qclgjq'acrjcrlmqnyrcpgursmzyddmbcnngrgmfupceylyk</blockquote><p>Pretty straightforward, <a href="https://gchq.github.io/CyberChef/">CyberChef</a> saves me again.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=2 | Reverse
+Question: Manager who I tipped off about wiretaps on teltec's lines.
+Solution:
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-14-you-tap-me-i-tap-you">Chapter 14 | You Tap Me, I Tap You</h3><blockquote>c2VuaWxzJ2RhZHltbm9zcGF0ZXJpd2VodHRjZW5ub2NlcmRuYXNlbGVnbFzb2xvHlsZm90ZGFob2h3dG5lZ2F5dGlydWNlc2xsZWJjYXBlaHQ=</blockquote><p>The equal sign at the end of the string made me think of Base64.</p><p>Once I Base64 decoded and reversed the entire string, part of the text was immediately readable.</p><p>I then removed the deciphered part of the string and tried the same process with the remaining chars.</p><p>Then, it was just a matter of tweaking the string until I could read the entire thing.</p><!--kg-card-begin: markdown--><pre><code>Cipher: (in parts) Base64 | Reverse
+Question: The Pacbell Security agent who had to fly to Los Angeles and reconnect the wiretaps on my dad's lines.
+Solution:
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-15-how-the-fuck-did-you-get-that">Chapter 15 | "How the fuck did you get that?"</h3><blockquote>ud mn cf ub mw re lb is ba of gx ty qc qh il ea ym nx bz ub he cf th is</blockquote><p>Seeing pairs of letters made me think of the Playfair Cipher from Chapter 11.</p><p>Again, I found the solution by running the ciphered text through <a href="https://scwf.dima.ninja/">SCWF</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Playfair Cipher
+Question: This hacker we showed off SAS to while at Hamburger Hamlet.
+Solution: Eric Heinz
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-19-revelations">Chapter 19 | Revelations</h3><blockquote>hranmoafignwoeoeiettwsoeheneteelaefnbaethscvrdniyajspwrl</blockquote><p>Pretty much the same as in Chapter 12: <a href="https://scwf.dima.ninja/">SCWF</a> identified the cipher as Columnar <a href="https://en.wikipedia.org/wiki/Transposition_cipher">Transposition Cipher</a> in a heartbeat.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Columnar Transposition ( 2 1)
+Question: The real name of an FBI agent whose identity was Joseph Wernle.
+Solution: Joseph Ways
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-20-reverse-sting">Chapter 20 | Reverse Sting</h3><blockquote>yo kb pn oc ox rh oq kb oh kp ge gs yt yt hg sa li mt ob sa po po mk pl md</blockquote><p>Same as chapters 11 and 15, but with a little more manual tweaking.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Playfair Cipher
+Question: The company Teltec hacked into to get information on people.
+Solution: TRW
+</code></pre>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-25-harry-houdini">Chapter 25 | Harry Houdini</h3><blockquote>nhyitekmnryoogmwefehocttntnoauttosumooalgei</blockquote><p><a href="https://scwf.dima.ninja/">SCWF</a> helped me again by finding a pretty good solution: applying a Skip Cipher (selecting every 3rd chard) and reversing the chars.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Select every 3rd char | Reverse | Rearrange words
+
+nhyitekmnryoogmwefehocttntnoauttosumooalgei
+n__i__k__r__o__w__e__c__n__o__t__s__o__l__i
+__y__e__n__o__m__f__o__t__n__u__o__m__a__e
+_h__t__m__y__g__e__h__t__t__a__t__u__o__g
+
+goutatthegymtheamountofmoneyilostonceworkin
+g out at the gym the amount of money i lost once workin
+the amount of money i lost once working out at the gym
+
+Question: The amount of money I lost once working out at the gym.
+Solution: $11.000
+</code></pre>
+<!--kg-card-end: markdown-->]]></content:encoded></item></channel></rss>
