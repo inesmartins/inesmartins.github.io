@@ -19,11 +19,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta property="og:description" content="This tutorial assumes you already have a Ghost blog but now you want to host it on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer.Go to the directory where you have your Ghost blog," />
+    <meta property="og:description" content="This tutorial assumes you already have a Ghost blog that you want to host on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;Go to the directory where you have your Ghost blog, run ghost" />
     <meta property="og:url" content="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/" />
     <meta property="og:image" content="https://inesmartins.github.io/content/images/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg" />
     <meta property="article:published_time" content="2020-06-08T12:54:15.000Z" />
-    <meta property="article:modified_time" content="2020-06-08T13:05:48.000Z" />
+    <meta property="article:modified_time" content="2020-06-12T12:15:55.000Z" />
     <meta property="article:tag" content="ghost" />
     <meta property="article:tag" content="blog" />
     <meta property="article:tag" content="static site generator" />
@@ -31,7 +31,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta name="twitter:description" content="This tutorial assumes you already have a Ghost blog but now you want to host it on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer.Go to the directory where you have your Ghost blog," />
+    <meta name="twitter:description" content="This tutorial assumes you already have a Ghost blog that you want to host on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;Go to the directory where you have your Ghost blog, run ghost" />
     <meta name="twitter:url" content="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/" />
     <meta name="twitter:image" content="https://inesmartins.github.io/content/images/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg" />
     <meta name="twitter:label1" content="Written by" />
@@ -72,7 +72,7 @@
     "headline": "Simplest way to host your Ghost blog on GitHub Pages",
     "url": "https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/",
     "datePublished": "2020-06-08T12:54:15.000Z",
-    "dateModified": "2020-06-08T13:05:48.000Z",
+    "dateModified": "2020-06-12T12:15:55.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io/content/images/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg",
@@ -80,7 +80,7 @@
         "height": 768
     },
     "keywords": "ghost, blog, static site generator, gssg",
-    "description": "This tutorial assumes you already have a Ghost blog but now you want to host it\non Github Pages. \n\n 1. Follow these instructions [https://pages.github.com/] to create a repository\n    for your Github Pages blog, and then clone the repo somewhere on your\n    computer.\n 2. Go to the directory where you have your Ghost blog, run ghost start and take\n    note of the local port.\n 3. Install ghost-static-site-generator\n    [https://www.npmjs.com/package/ghost-static-site-generator].\n 4. If your blog i",
+    "description": "This tutorial assumes you already have a Ghost blog that you want to host on\nGithub Pages. \n\n 1. Follow these instructions [https://pages.github.com/] to create a repository\n    for your Github Pages blog, and then clone the repo somewhere on your\n    computer;\n 2. Go to the directory where you have your Ghost blog, run ghost start and take\n    note of the local port;\n 3. Install ghost-static-site-generator\n    [https://www.npmjs.com/package/ghost-static-site-generator];\n 4. If your blog is runn",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io/"
@@ -194,7 +194,7 @@
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <p>This tutorial assumes you already have a Ghost blog but now you want to host it on Github Pages. </p><ol><li>Follow <a href="https://pages.github.com/">these instructions</a> to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer.</li><li>Go to the directory where you have your Ghost blog, run <code>ghost start</code> and take note of the local port.</li><li>Install <a href="https://www.npmjs.com/package/ghost-static-site-generator">ghost-static-site-generator</a>.</li><li>If your blog is running on the default port (2368), you can simply run from your Ghost blog's directory:</li></ol><pre><code>gssg --url [your-github-pages-URL]</code></pre><p>if you're running from some other port you can add it with the domain parameter:</p><pre><code>gssg --url [your-github-pages-URL] --domain http://localhost:4444 </code></pre><p>5. If everything went smoothly you now have a directory called static inside your Ghost blog's directory. You can check if everything went well by running:</p><pre><code>gssg preview</code></pre><p>6. Copy all of the contents of the static dir to the Github Pages repo, commit + push these new files and you're done!</p><p>Note that instead of copying the files, you can set the Github Pages repo as the destination directory as such:</p><pre><code>gssg --url [your-github-pages-URL] --dest your-github-pages-repo</code></pre>
+                    <p>This tutorial assumes you already have a Ghost blog that you want to host on Github Pages. </p><ol><li>Follow <a href="https://pages.github.com/">these instructions</a> to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;</li><li>Go to the directory where you have your Ghost blog, run <code>ghost start</code> and take note of the local port;</li><li>Install <a href="https://www.npmjs.com/package/ghost-static-site-generator">ghost-static-site-generator</a>;</li><li>If your blog is running on the default port (2368), you can simply run from your Ghost blog's directory:</li></ol><pre><code>gssg --url [your-github-pages-URL]</code></pre><p>if you're running from some other port you can specify it with the <code>domain</code> parameter:</p><pre><code>gssg --url [your-github-pages-URL] --domain http://localhost:4444 </code></pre><p>5. If everything went smoothly you now have a directory called static inside your Ghost blog's directory. You can check if everything went well by running:</p><pre><code>gssg preview</code></pre><p>6. Copy all of the contents of the static dir to the Github Pages repo, commit + push these new files and you're done!</p><p>Note that instead of copying the files, you can set the Github Pages repo as the destination directory as such:</p><pre><code>gssg --url [your-github-pages-URL] --dest your-github-pages-repo</code></pre>
                 </div>
             </section>
 
