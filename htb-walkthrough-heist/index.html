@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io/htb-walkthrough-heist/" />
     <meta property="og:image" content="https://inesmartins.github.io/content/images/2020/06/heist.png" />
     <meta property="article:published_time" content="2020-06-07T18:19:05.000Z" />
-    <meta property="article:modified_time" content="2020-06-08T12:03:19.000Z" />
+    <meta property="article:modified_time" content="2020-06-09T12:23:23.000Z" />
     <meta property="article:tag" content="windows" />
     <meta property="article:tag" content="smb" />
     <meta property="article:tag" content="smbv2" />
@@ -78,7 +78,7 @@
     "headline": "HTB Write-up | Heist",
     "url": "https://inesmartins.github.io/htb-walkthrough-heist/",
     "datePublished": "2020-06-07T18:19:05.000Z",
-    "dateModified": "2020-06-08T12:03:19.000Z",
+    "dateModified": "2020-06-09T12:23:23.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io/content/images/2020/06/heist.png",
@@ -204,7 +204,7 @@
 Enter WORKGROUP\root's password:
 session setup failed: NT_STATUS_ACCESS_DENIED
 </code></pre>
-<!--kg-card-end: markdown--><p>3. Wappalyzer gives us a nice overview of this server.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/image-9.png" class="kg-image"></figure><p>4. The initial page is the <a href="http://heist.htb/login.php">login</a> page, however by clicking the "Login as guest" button we're redirected to a much more interesting <a href="http://heist.htb/issues.php">issues</a> page.</p><figure class="kg-card kg-image-card"><img src="https://www.evernote.com/shard/s246/res/2910a9ad-8c03-46f1-88ff-5fabb5eaf89d/abc.png?search=heist" class="kg-image"></figure><p>On this page, there is what looks like a conversation between a user named Hazard and a member of the support team for a Cisco router.</p><p>5. Hazard was kind enough to provide us with a configuration file for their router, which is hosted at <a href="http://heist.htb/attachments/config.txt">http://heist.htb/attachments/config.txt</a>.<br>Unfortunately, we can't access other attachments which would have been interesting, so let's go through the config file.</p><!--kg-card-begin: markdown--><pre><code>version 12.2
+<!--kg-card-end: markdown--><p>3. Wappalyzer gives us a nice overview of this server.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/image-9.png" class="kg-image"></figure><p>4. The initial page is the <a href="http://heist.htb/login.php">login</a> page, however by clicking the "Login as guest" button we're redirected to a much more interesting <a href="http://heist.htb/issues.php">issues</a> page.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/issues.png" class="kg-image"></figure><p>On this page, there is what looks like a conversation between a user named Hazard and a member of the support team for a Cisco router.</p><p>5. Hazard was kind enough to provide us with a configuration file for their router, which is hosted at <a href="http://heist.htb/attachments/config.txt">http://heist.htb/attachments/config.txt</a>.<br>Unfortunately, we can't access other attachments which would have been interesting, so let's go through the config file.</p><!--kg-card-begin: markdown--><pre><code>version 12.2
 no service pad
 service password-encryption
 !
