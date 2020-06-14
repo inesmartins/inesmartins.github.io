@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io/decrypting-the-ghost-in-the-wires-ciphers/" />
     <meta property="og:image" content="https://inesmartins.github.io/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" />
     <meta property="article:published_time" content="2020-06-07T18:37:22.000Z" />
-    <meta property="article:modified_time" content="2020-06-07T18:45:42.000Z" />
+    <meta property="article:modified_time" content="2020-06-14T10:25:03.000Z" />
     <meta property="article:tag" content="cryptography" />
     <meta property="article:tag" content="ghost in the wires" />
     <meta property="article:tag" content="book" />
@@ -67,7 +67,7 @@
     "headline": "Solving the &#x27;Ghost in the Wires&#x27; ciphers",
     "url": "https://inesmartins.github.io/decrypting-the-ghost-in-the-wires-ciphers/",
     "datePublished": "2020-06-07T18:37:22.000Z",
-    "dateModified": "2020-06-07T18:45:42.000Z",
+    "dateModified": "2020-06-14T10:25:03.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png",
@@ -118,7 +118,7 @@
             </figure>
             <section class="post-content">
 
-                <p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr></hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence:</p><ul><li>it starts with an uppercase letter;</li><li>all the characters are letters;</li><li>there are longer words separated by shorter words, etc.</li></ul><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><pre><code>Cipher: ROT13 with shift=7
+                <p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr></hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence: it starts with an uppercase letter, all the characters are letters, there are longer words separated by shorter words, etc.</p><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><pre><code>Cipher: ROT13 with shift=7
 Question: The cost of the bus driver I used to punch my own transfers.
 Solution: $15
 </code></pre>
@@ -126,42 +126,19 @@ Solution: $15
 Question: This book that taught me how to create new identities when I was a pre-teen.
 Solution: The Paper Trip by Barry Reid.
 </code></pre>
-<hr></hr><h3 id="chapter-3-original-sin">Chapter 3 | Original Sin</h3><blockquote>pbzfsobp dkfobtpkx lq pbkfi ppbkfpry aoxtolc iixz lq abpr bobt pbzfsba cl bmvq obail bpbeQ</blockquote><p>The uppercase letter at the end of the sentence made me think the chars were reversed.</p><p>After that, it was just a matter of finding the shift for the ROT13 cipher once again, which turned out to be 3, also known as <a href="https://en.wikipedia.org/wiki/ROT_cipher">Ceaser Cipher</a>.</p><pre><code>Cipher: Reverse | Ceaser Cipher
+<hr></hr><h3 id="chapter-3-original-sin">Chapter 3 | Original Sin</h3><blockquote>pbzfsobp dkfobtpkx lq pbkfi ppbkfpry aoxtolc iixz lq abpr bobt pbzfsba cl bmvq obail bpbeQ</blockquote><p>The uppercase letter at the end of the sentence made me think the chars were reversed. After that, it was just a matter of finding the shift for the ROT13 cipher once again, which turned out to be 3, also known as <a href="https://en.wikipedia.org/wiki/ROT_cipher">Ceaser Cipher</a>.</p><pre><code>Cipher: Reverse | Ceaser Cipher
 Question: These older type of devices were used to call forward business lines to answering services.
 Solution:
 </code></pre>
-<hr></hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error.</p><pre><code>Cipher: Atbash
-</code></pre>
-<table>
-<thead>
-<tr>
-<th>Original</th>
-<th>Deciphered</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>abcdefghijklmnopqrstuwxyz</td>
-<td>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</td>
-</tr>
-<tr>
-<td>zyxwutsrqponmlkjihgfedcba</td>
-<td>thenameofthemainframesihackedatuscinthearpanetdays</td>
-</tr>
-</tbody>
-</table>
-<pre><code>Question: The name of the mainframes I hacked at USC in the ARPANET days.
+<hr></hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error.</p><figure class="kg-card kg-image-card kg-card-hascaption"><figcaption><a href="https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg">https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg</a></figcaption></figure><pre><code>Cipher: Atbash
+Question: The name of the mainframes I hacked at USC in the ARPANET days.
 Solution: COSMOS
 </code></pre>
-<hr></hr><h3 id="chapter-5-all-your-phone-lines-belong-to-me">Chapter 5 | All Your Phone Lines Belong To Me</h3><blockquote>jbi ujt veo eco ntk iwa lhc eeo anu uir trs hae oni rfn irt toh imi ets shs !eu</blockquote><p>After much over-thinking, this one was as easy as "stacking" the words and reading the letters from top to bottom, starting from the last column.</p><pre><code>Cipher: Reading letters of each word top to bottom, from the last column.
+<hr></hr><h3 id="chapter-5-all-your-phone-lines-belong-to-me">Chapter 5 | All Your Phone Lines Belong To Me</h3><blockquote>jbi ujt veo eco ntk iwa lhc eeo anu uir trs hae oni rfn irt toh imi ets shs !eu</blockquote><p>After much overthinking, this one was as easy as "stacking" the words and reading the letters from top to bottom, starting from the last column.</p><pre><code>Cipher: Reading letters of each word top to bottom, from the last column.
 </code></pre>
 <table>
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
 <th></th>
 <th></th>
 <th></th>
@@ -172,151 +149,83 @@ Solution: COSMOS
 <td>j</td>
 <td>b</td>
 <td>i</td>
-<td>................</td>
-<td>i</td>
-<td>b</td>
-<td>j</td>
 </tr>
 <tr>
 <td>u</td>
 <td>j</td>
 <td>t</td>
-<td>................</td>
-<td>t</td>
-<td>j</td>
-<td>u</td>
 </tr>
 <tr>
 <td>v</td>
 <td>e</td>
 <td>o</td>
-<td>................</td>
-<td>o</td>
-<td>e</td>
-<td>v</td>
 </tr>
 <tr>
 <td>e</td>
 <td>c</td>
 <td>o</td>
-<td>................</td>
-<td>o</td>
-<td>c</td>
-<td>e</td>
 </tr>
 <tr>
 <td>n</td>
 <td>t</td>
 <td>k</td>
-<td>................</td>
-<td>k</td>
-<td>t</td>
-<td>n</td>
 </tr>
 <tr>
 <td>i</td>
 <td>w</td>
 <td>a</td>
-<td>................</td>
-<td>a</td>
-<td>w</td>
-<td>i</td>
 </tr>
 <tr>
 <td>l</td>
 <td>h</td>
 <td>c</td>
-<td>................</td>
-<td>c</td>
-<td>h</td>
-<td>l</td>
 </tr>
 <tr>
 <td>e</td>
 <td>e</td>
 <td>o</td>
-<td>................</td>
-<td>o</td>
-<td>e</td>
-<td>e</td>
 </tr>
 <tr>
 <td>a</td>
 <td>n</td>
 <td>u</td>
-<td>................</td>
-<td>u</td>
-<td>n</td>
-<td>a</td>
 </tr>
 <tr>
 <td>u</td>
 <td>i</td>
 <td>r</td>
-<td>................</td>
-<td>r</td>
-<td>i</td>
-<td>u</td>
 </tr>
 <tr>
 <td>t</td>
 <td>r</td>
 <td>s</td>
-<td>................</td>
-<td>s</td>
-<td>r</td>
-<td>t</td>
 </tr>
 <tr>
 <td>h</td>
 <td>a</td>
 <td>e</td>
-<td>................</td>
-<td>e</td>
-<td>a</td>
-<td>h</td>
 </tr>
 <tr>
 <td>o</td>
 <td>n</td>
 <td>i</td>
-<td>................</td>
-<td>i</td>
-<td>n</td>
-<td>o</td>
 </tr>
 <tr>
 <td>r</td>
 <td>f</td>
 <td>n</td>
-<td>................</td>
-<td>n</td>
-<td>f</td>
-<td>r</td>
 </tr>
 <tr>
 <td>i</td>
 <td>r</td>
 <td>t</td>
-<td>................</td>
-<td>t</td>
-<td>r</td>
-<td>i</td>
 </tr>
 <tr>
 <td>t</td>
 <td>o</td>
 <td>h</td>
-<td>................</td>
-<td>h</td>
-<td>o</td>
-<td>t</td>
 </tr>
 <tr>
-<td>i</td>
-<td>m</td>
-<td>i</td>
-<td>................</td>
 <td>i</td>
 <td>m</td>
 <td>i</td>
@@ -325,16 +234,8 @@ Solution: COSMOS
 <td>e</td>
 <td>t</td>
 <td>s</td>
-<td>................</td>
-<td>s</td>
-<td>t</td>
-<td>e</td>
 </tr>
 <tr>
-<td>s</td>
-<td>h</td>
-<td>s</td>
-<td>................</td>
 <td>s</td>
 <td>h</td>
 <td>s</td>
@@ -343,10 +244,6 @@ Solution: COSMOS
 <td>!</td>
 <td>e</td>
 <td>u</td>
-<td>................</td>
-<td>u</td>
-<td>e</td>
-<td>!</td>
 </tr>
 </tbody>
 </table>
@@ -356,6 +253,10 @@ Solution: Criminal Justice
 <hr></hr><h3 id="chapter-6-will-hack-for-love">Chapter 6 | Will Hack for Love</h3><blockquote>bmFtZXRoZWNvbXBhbnl3aGVyZWJvbm5pZXdhc2VtcGxveWVkd2hlbndlc3RhcnRlZGRhdGluZw==</blockquote><p>The equal signs at the end is a dead give-away for Base64.</p><pre><code>Cipher: Base64
 Question: Name the company where Bonnie was employed when we started dating.
 Solution: GTE
+</code></pre>
+<hr></hr><h3 id="chapter-7-hitched-in-haste">Chapter 7 | Hitched in Haste</h3><blockquote>multbqncannqenabrhfgacnqogehchetbkkebmsqgkncchebr</blockquote><p>This was one of the hardest, since I wasn't expecting that you'd need to use the answer from the previous cipher. I ended up not being able to crack this one myself, and had to check <a href="https://fabiensanglard.net/Ghost_in_the_Wires_Paperback/">Fabien Sanglard's solution</a> and then tested for myself using an <a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">online Subtitution Cipher decrypter</a>.</p><figure class="kg-card kg-image-card kg-card-hascaption"><figcaption><a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">http://practicalcryptography.com/ciphers/simple-substitution-cipher/</a></figcaption></figure><pre><code>Cipher: Substitution cipher when alphabet starts with GTE, the solution for the previous question.
+Question: Number of door codes I had for Pacific Bell central offices.
+Solution: 11
 </code></pre>
 <hr></hr><h3 id="chapter-8-lex-luthor">Chapter 8 | Lex Luthor</h3><blockquote>'siass nuhmil sowsra amnapi waagoc ifinti dscisf iiiesf ahgbao staetn itmlro</blockquote><p>Pretty similar to chapter 5, found the solution by "stacking" the words and reading each character from the bottom-left to the top-right.</p><pre><code>Cipher: Stacking words | Read from bottom-left to top-right
 </code></pre>
@@ -464,7 +365,27 @@ Solution: GTE
 <pre><code>Question: I said I wasn't this famous magician while beging a smartass to prision officials.
 Solution: Harry Houdini
 </code></pre>
-<hr></hr><h3 id="chapter-11-foul-play">Chapter 11 | Foul Play</h3><blockquote>ow gw ty kc qb eb nm ht ud pc iy ty ik tu zo dp gl qt hd</blockquote><p>This one absolutely blew my mind, I was just playing around with some online tools and came across <a href="https://scwf.dima.ninja/">this</a> website.</p><p>To see how it worked, I entered this challenge and the answer was displayed immediately, along with the cipher: <a href="https://en.wikipedia.org/wiki/Playfair_cipher">Playfair</a>.</p><p>If I had known it before, this would be an easy challenge to break, since it's one of the most well-known techniques that <strong>encrypts pairs of letters</strong> (bigrams or digrams), instead of single letters.</p><pre><code>Cipher: Playfair Cipher
+<hr></hr><h3 id="chapter-9-the-kevin-mitnick-discount-plan">Chapter  9 | The Kevin Mitnick Discount Plan</h3><blockquote>tvifafwawehes hsesoonvtlimaeloemtcagmen irnoerrldony</blockquote><p>Again, I wasn't able to crack this one by myself and had to check <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solution</a>:</p><pre><code>Cipher: Railfence Cipher
+
+t...v...i...f...a...f...w...a...w...e...h...e...s
+.h.s.e.s.o.o.n.v.t.l.i.m.a.e.l.o.e.m.t.c.a.g.m.e.n
+..i...r...n...o...e...r...r...l...d...o...n...y...
+
+Question: This version of NOVATEL firmware allowed me to change my ESN 
+Solution: 1.05
+</code></pre>
+<hr></hr><h3 id="chapter-10-mistery-hacker">Chapter 10 | Mistery Hacker</h3><blockquote>gnkusr ooursnsisti ttnotoihiec rolwaintmlk ovtgp</blockquote><p>Inspired by the previous challenge, I was able to crack this Railfence Cipher:</p><pre><code>Cipher: Railfence Cipher
+
+g........n.........k.........u.........s.........r....
+.o......o..u......r..s......n..s......i..s......t..i..
+..t....t....n....o....t....o....i....h....i....e....c.
+...r..o......l..w......a..i......n..t......m..l......k
+....o.........v.........t.........g.........p.........
+
+Question: Got root on unlv workstation using this simple trick.
+Solution: Turned on/off while repeatedly pressing Control+C
+</code></pre>
+<hr></hr><h3 id="chapter-11-foul-play">Chapter 11 | Foul Play</h3><blockquote>ow gw ty kc qb eb nm ht ud pc iy ty ik tu zo dp gl qt hd</blockquote><p>This one absolutely blew my mind, I was just playing around with some online tools and came across <a href="https://scwf.dima.ninja/">this</a> website.</p><p>To see how it worked, I entered this challenge and the answer was displayed immediately, along with the cipher: <a href="https://en.wikipedia.org/wiki/Playfair_cipher">Playfair</a>.</p><p>If I had known it before, this would be an easy challenge to break, since it's one of the most well-known techniques that encrypts pairs of letters (bigrams or digrams), instead of single letters.</p><pre><code>Cipher: Playfair Cipher
 Question: My brother Adam listened to this type of music.
 Solution: Hip Hop
 </code></pre>
@@ -484,7 +405,38 @@ Solution:
 Question: This hacker we showed off SAS to while at Hamburger Hamlet.
 Solution: Eric Heinz
 </code></pre>
-<hr></hr><h3 id="chapter-19-revelations">Chapter 19 | Revelations</h3><blockquote>hranmoafignwoeoeiettwsoeheneteelaefnbaethscvrdniyajspwrl</blockquote><p>Pretty much the same as in Chapter 12: <a href="https://scwf.dima.ninja/">SCWF</a> identified the cipher as Columnar <a href="https://en.wikipedia.org/wiki/Transposition_cipher">Transposition Cipher</a> in a heartbeat.</p><pre><code>Cipher: Columnar Transposition ( 2 1)
+<hr></hr><h3 id="chapter-16-crashing-eric-s-private-party">Chapter 16 | Crashing Eric’s Private Party</h3><blockquote>7\3|2\9|3\5|4/0/8/2|6\7/0/4\4\5/6/6\5/7/8/9|7\8/7|9\5/9\2\3\5\7/8|2/0/8|2/6|6|2|7\7\0\4\9|</blockquote><p>Definitely couldn't solve this on my own and had to go back to <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solutions</a> to crack it. It seems like this is <a href="https://www.dcode.fr/phone-keypad-cipher">Phone Keypad Cipher</a>, i.e.: each number represents a key in a phone keypad:</p><pre><code>("2", "ABC");
+("3", "DEF");
+("4", "GHI");
+("5", "JKL");
+("6", "MNO");
+("7", "PRS");
+("8", "TUV");
+("9", "WXY");
+("0", "Q Z");
+</code></pre>
+<p> and "the slashes represent which letter in the group of three it makes":</p><p><code>\: left, |: middle and /: right</code></p><p>Once we replace this, we get: <code>PEAXDKIZVBMSZGGLOMLSVXPVRWLWADJSUCZUCNNBPPQGX</code></p><p>To get the actual question we again have to use the solution to the last cipher to crack the <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Viginère cipher</a>:</p><figure class="kg-card kg-image-card"></figure><pre><code>Cipher: Phone dial key pag cipher + Vigenère
+Question: I asked Eric for the key to this phone company facility Solution: --
+</code></pre>
+<hr></hr><h3 id="chapter-17-pulling-back-the-curtain">Chapter 17 | Pulling Back the Curtain</h3><blockquote>100 0000 10 1 01 001 00 1000 1 010 11 000 0 0000 11 000 000111 00011 10000 11110 11000 00111 10000 11111 10000 11111</blockquote><p>Initially I tried a couple of approaches thinking this was binary but after a lot of failure I decided to go with morse:</p><p>Where 1=. and 0=-:</p><p><code>.-- ---- .- . -. --. -- .--- . -.- .. --- - ---- .. --- ---... ---.. .---- ....- ..--- --... .---- ..... .---- .....</code></p><p>This results in <code>W#AENGMJEKIOT#IO:814271515</code>.</p><p>Where 0=. and 1=-:</p><p><code>-.. .... -. - .- ..- .. -... - .-. -- ... . .... -- ... ...--- ...-- -.... ----. --... ..--- -.... ----- -.... -----</code></p>
+<p>This results in <code>DHNTAUIBTRMSEHMS#369726060</code>.</p><p>Using a RailCipher on the letters first:</p><pre><code>D...H...N...T...A...U...I...B...T...R...M...S...E...H...M...S...#
+W...A...E...N...G...M...J...E...K...I...O...T...#...I...O...:
+
+# Removing every other char pair:
+
+..H...T...U...B...R...S...H...S...#
+W...A...N...M...E...I...T...I...:
+
+what number is this:
+</code></pre>
+<p>And then on the numbers:</p><pre><code>S...#...3...6...9...7...2...6...0...6...0
+:...8...1...4...2...7...1...5...1...5
+</code></pre>
+<p>After some tweaking we get to the FBI's LA HQ: <code>310-477-6565</code>.</p><pre><code>Cipher: Morse code + Railway Cipher
+Question: What number is this? 310-477-6565
+Solution: The FBI's LA HQ.
+</code></pre>
+<hr></hr><h3 id="chapter-18-traffic-analysis">Chapter 18 | Traffic Analysis</h3><blockquote>6365696a647a727573697775716d6d6e736e69627a74736a6f7969706469737967647163656c6f71776c66646d63656d78626c6879746d796f6d71747765686a6a71656d756c70696b6a627965696a71</blockquote><p>TBD</p><hr></hr><h3 id="chapter-19-revelations">Chapter 19 | Revelations</h3><blockquote>hranmoafignwoeoeiettwsoeheneteelaefnbaethscvrdniyajspwrl</blockquote><p>Pretty much the same as in Chapter 12: <a href="https://scwf.dima.ninja/">SCWF</a> identified the cipher as Columnar <a href="https://en.wikipedia.org/wiki/Transposition_cipher">Transposition Cipher</a> in a heartbeat.</p><pre><code>Cipher: Columnar Transposition ( 2 1)
 Question: The real name of an FBI agent whose identity was Joseph Wernle.
 Solution: Joseph Ways
 </code></pre>
@@ -506,7 +458,7 @@ the amount of money i lost once working out at the gym
 Question: The amount of money I lost once working out at the gym.
 Solution: $11.000
 </code></pre>
-
+<hr></hr><h2 id="useful-resources">Useful Resources</h2><ul><li><a href="https://gchq.github.io/CyberChef/">CyberChef</a></li><li><a href="http://practicalcryptography.com/">Practical Cryptography</a></li><li><a href="https://scwf.dima.ninja/">Solve Crypto with Force</a></li><li><a href="https://quipqiup.com/">quipqiup</a></li></ul>
 
             </section>
 
