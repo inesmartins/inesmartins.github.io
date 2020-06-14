@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io/</link><image><url>https://inesmartins.github.io/favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io/</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 14 Jun 2020 07:18:06 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev]]></title><description><![CDATA[<p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br><em>The author's write-up can be downloaded <a href="https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl=1">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><!--kg-card-begin: markdown--><pre><code>Baby pwn tu-tu-tu-tu!
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io/</link><image><url>https://inesmartins.github.io/favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io/</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 14 Jun 2020 07:43:50 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev]]></title><description><![CDATA[<p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br><em>The author's write-up can be downloaded <a href="https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl=1">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><!--kg-card-begin: markdown--><pre><code>Baby pwn tu-tu-tu-tu!
 - Get the first two flags ({oposec}XPTO) locally;
 - For the brave ones, find a way</code></pre>]]></description><link>https://inesmartins.github.io/oposec-baby-xmas-challenge-android-rev/</link><guid isPermaLink="false">5ee51aa03d00be7291b53f47</guid><category><![CDATA[android]]></category><category><![CDATA[rev]]></category><category><![CDATA[oposec]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 13 Jun 2020 21:33:38 GMT</pubDate><media:content url="https://inesmartins.github.io/content/images/2020/06/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io/content/images/2020/06/highres_471963990-1-1.jpeg" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"><p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br><em>The author's write-up can be downloaded <a href="https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl=1">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><!--kg-card-begin: markdown--><pre><code>Baby pwn tu-tu-tu-tu!
 - Get the first two flags ({oposec}XPTO) locally;
 - For the brave ones, find a way to get the third flag
 - Yup &quot;This_is_the_flag&quot; is your friend but not the final solution.
 </code></pre>
-<!--kg-card-end: markdown--><h2 id="unzipping-the-apk">Unzipping the APK</h2><p>An APK is actually a ZIP file, by unzipping it we get to see the compressed files:</p><!--kg-card-begin: markdown--><pre><code>~ unzip app.apk
+<!--kg-card-end: markdown--><h2 id="unzipping-the-apk">Unzipping the APK</h2><p>An APK is actually just a ZIP file, by unzipping it we get to see the compressed files:</p><!--kg-card-begin: markdown--><pre><code>~ unzip app.apk
 
 ~ ls -la
 ...
@@ -34,9 +34,38 @@ This_is_not_the_flag
 This_is_the_flag
 ...
 </code></pre>
-<!--kg-card-end: markdown--><h2 id="static-analysis-with-jd-gui">Static analysis with JD-GUI</h2><p>We start by transforming the .dex files into a single .jar file using the <a href="https://sourceforge.net/projects/dex2jar/files/">dex2jar</a> script:</p><!--kg-card-begin: markdown--><pre><code>~ sh dex2jar-2.0/d2j-dex2jar.sh -f xmas_ctfzadas.apk
+<!--kg-card-end: markdown--><h2 id="decoding-the-app">Decoding the app</h2><p><a href="https://ibotpeaches.github.io/Apktool/">apktool</a> is able to rebuild some of the resources of the Android project back to their original format, which is very useful when trying to read the <code>AndroidManifest.xml</code> file:</p><!--kg-card-begin: markdown--><pre><code>~ apktool decode xmas_ctfzadas.apk
+
+~ cat xmas_ctfzadas/AndroidManifest.xml
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+          android:compileSdkVersion=&quot;23&quot;
+          android:compileSdkVersionCodename=&quot;6.0-2438415&quot;
+          package=&quot;pt.oposec.ctfzadas&quot;
+          platformBuildVersionCode=&quot;1&quot;
+          platformBuildVersionName=&quot;1.0&quot;&gt;
+    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+    &lt;application android:appComponentFactory=&quot;android.support.v4.app.CoreComponentFactory&quot;
+                 android:allowBackup=&quot;true&quot;
+                 android:debuggable=&quot;true&quot;
+                 android:exported=&quot;true&quot;
+                 android:icon=&quot;@mipmap/ic_launcher&quot;
+                 android:label=&quot;@string/app_name&quot;
+                 android:supportsRtl=&quot;true&quot;
+                 android:theme=&quot;@style/AppTheme&quot;&gt;
+        &lt;activity android:name=&quot;pt.oposec.ctfzadas.MainActivity&quot;&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.MAIN&quot;/&gt;
+                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot;/&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;
 </code></pre>
-<!--kg-card-end: markdown--><p>To go through the .jar we use <a href="http://java-decompiler.github.io/">JD-GUI</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/files-1.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><p>The <code>pt.oposec.ctfzadas</code> package contains 4 classes:</p><ul><li><code>BuildConfig.class</code> and <code>R.class</code> are both automatically generated files: the first lists the project configs and the second identifies all the project assets;</li><li>this leaves only 2 interesting files: <code>MainActivity.class</code> and <code>CTFObject.class</code>.</li></ul><h3 id="mainactivity-class">MainActivity.class</h3><p>From the manifest we know that the application has only 1 <a href="https://developer.android.com/reference/android/content/Intent">Intent</a>, which launches the MainActivity.</p><p>As we can see below, on app start the MainActivity loads the <code>opoctf-jni</code> library, then creates a <a href="https://developer.android.com/reference/android/webkit/WebView">Webview</a> that has access to an instance of the <code>CTFObject</code> class called <code>ctfObj</code>. The webview's URL depends on the Intent's <code>open_sesame</code> query string.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/main-2.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><h3 id="ctfobject-class">CTFObject.class</h3><p>This class is quite interesting:</p><ol><li>There is a function called <code>um</code> that returns the output of the <code>firstFlag</code> JNI function:</li></ol><pre><code class="language-java">public class CTFObject {
+<!--kg-card-end: markdown--><p>As you can see, this application has only one <a href="https://developer.android.com/reference/android/app/Activity">Activity</a> - MainActivity.</p><h2 id="static-analysis-with-jd-gui">Static analysis with JD-GUI</h2><p>We start by transforming the .dex files into a single .jar file using the <a href="https://sourceforge.net/projects/dex2jar/files/">dex2jar</a> script:</p><!--kg-card-begin: markdown--><pre><code>~ sh dex2jar-2.0/d2j-dex2jar.sh -f xmas_ctfzadas.apk
+</code></pre>
+<!--kg-card-end: markdown--><p>To go through the .jar we use <a href="http://java-decompiler.github.io/">JD-GUI</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/files-1.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><p>The <code>pt.oposec.ctfzadas</code> package contains 4 classes:</p><ul><li><code>BuildConfig.class</code> and <code>R.class</code> are both automatically generated files: the first lists the project configs and the second identifies all the project assets;</li><li>this leaves only 2 interesting files: <code>MainActivity.class</code> and <code>CTFObject.class</code>.</li></ul><h3 id="mainactivity-class">MainActivity.class</h3><p>As we can see below, on app start the MainActivity loads the <code>opoctf-jni</code> library, then creates a <a href="https://developer.android.com/reference/android/webkit/WebView">Webview</a> that has access to an instance of the <code>CTFObject</code> class called <code>ctfObj</code>. The webview's URL depends on the Intent's <code>open_sesame</code> query string.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io/content/images/2020/06/main-2.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><h3 id="ctfobject-class">CTFObject.class</h3><p>This class is quite interesting:</p><ol><li>There is a function called <code>um</code> that returns the output of the <code>firstFlag</code> JNI function:</li></ol><pre><code class="language-java">public class CTFObject {
 ...
 	
     public native String firstFlag();
