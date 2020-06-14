@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io/oposec-baby-xmas-challenge-android-rev/" />
     <meta property="og:image" content="https://inesmartins.github.io/content/images/2020/06/highres_471963990-1-1.jpeg" />
     <meta property="article:published_time" content="2020-06-13T21:33:38.000Z" />
-    <meta property="article:modified_time" content="2020-06-13T23:04:15.000Z" />
+    <meta property="article:modified_time" content="2020-06-14T07:17:46.000Z" />
     <meta property="article:tag" content="android" />
     <meta property="article:tag" content="rev" />
     <meta property="article:tag" content="oposec" />
@@ -67,7 +67,7 @@
     "headline": "ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev",
     "url": "https://inesmartins.github.io/oposec-baby-xmas-challenge-android-rev/",
     "datePublished": "2020-06-13T21:33:38.000Z",
-    "dateModified": "2020-06-13T23:04:15.000Z",
+    "dateModified": "2020-06-14T07:17:46.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io/content/images/2020/06/highres_471963990-1-1.jpeg",
@@ -75,7 +75,7 @@
         "height": 105
     },
     "keywords": "android, rev, oposec",
-    "description": "The APK for the original challenge can be downloaded here\n[http://sefod.eu/ctf/xmas_ctfzadas.apk].\nThe author&#x27;s write-up can be downloaded here\n[https://github.com/zezadas/0xOPOSEC_0x73_VulnApp_Android/blob/master/Low%20Hanging%20Fruit%20On%20Android.pdf]\n.\n\nWe&#x27;re given an Android Package (xmas_ctfzadas.apk) along with the following\ninstructions:\n\nBaby pwn tu-tu-tu-tu!\n- Get the first two flags ({oposec}XPTO) locally;\n- For the brave ones, find a way to get the third flag\n- Yup &quot;This_is_the_flag",
+    "description": "The APK for the original challenge can be downloaded here\n[http://sefod.eu/ctf/xmas_ctfzadas.apk].\nThe author&#x27;s write-up can be downloaded here\n[https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl&#x3D;1]\n.\n\nWe&#x27;re given an Android Package (xmas_ctfzadas.apk) along with the following\ninstructions:\n\nBaby pwn tu-tu-tu-tu!\n- Get the first two flags ({oposec}XPTO) locally;\n- For the brave ones, find a way to get the third flag\n- Yup &quot;This_is_the_flag&quot; is your",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io/"
@@ -118,7 +118,7 @@
             </figure>
             <section class="post-content">
 
-                <p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br /><em>The author's write-up can be downloaded <a href="https://github.com/zezadas/0xOPOSEC_0x73_VulnApp_Android/blob/master/Low%20Hanging%20Fruit%20On%20Android.pdf">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><pre><code>Baby pwn tu-tu-tu-tu!
+                <p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br /><em>The author's write-up can be downloaded <a href="https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl=1">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><pre><code>Baby pwn tu-tu-tu-tu!
 - Get the first two flags ({oposec}XPTO) locally;
 - For the brave ones, find a way to get the third flag
 - Yup "This_is_the_flag" is your friend but not the final solution.
@@ -237,7 +237,8 @@ class MainActivity : AppCompatActivity() {
                             val pin = "$i$j$k$l$m"
                             val res = ctfObject.secondFlag(pin)
                             if (res.contains("oposec")) {
-                                print(pin)
+                                print("Pin is: " + pin)
+                                print("Flag is: " + res)
                             }
                         }
                     }
@@ -246,7 +247,7 @@ class MainActivity : AppCompatActivity() {
         }
         print("Could not get flag")   
     }
-    ```</code></pre><h2 id="getting-the-third-flag">Getting the third flag</h2><p>To Be Continued</p><p></p><h2 id="useful-resources">Useful Resources</h2><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/questions/24357687/how-to-include-so-library-in-android-studio"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to include *.so library in Android Studio?</div><div class="kg-bookmark-description">I read many threads how to add a *.so library to Android Studio, but none of them works, especially when it comes to the point of text: This does not work with the newer xxx (Android Studio, gradle...</div><div class="kg-bookmark-metadata"><amp-img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v=c78bd457575a" width="158" height="158" layout="fixed"></amp-img><span class="kg-bookmark-author">Ronald Wiplinger</span><span class="kg-bookmark-publisher">Stack Overflow</span></div></div><div class="kg-bookmark-thumbnail"><amp-img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded" width="316" height="316" layout="responsive"></amp-img></div></a></figure>
+    ```</code></pre><h2 id="useful-resources">Useful Resources</h2><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/questions/24357687/how-to-include-so-library-in-android-studio"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to include *.so library in Android Studio?</div><div class="kg-bookmark-description">I read many threads how to add a *.so library to Android Studio, but none of them works, especially when it comes to the point of text: This does not work with the newer xxx (Android Studio, gradle...</div><div class="kg-bookmark-metadata"><amp-img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v=c78bd457575a" width="158" height="158" layout="fixed"></amp-img><span class="kg-bookmark-author">Ronald Wiplinger</span><span class="kg-bookmark-publisher">Stack Overflow</span></div></div><div class="kg-bookmark-thumbnail"><amp-img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded" width="316" height="316" layout="responsive"></amp-img></div></a></figure>
 
             </section>
 
