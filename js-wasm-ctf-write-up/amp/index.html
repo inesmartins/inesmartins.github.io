@@ -15,11 +15,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Web Assembly CTF Write-up" />
-    <meta property="og:description" content="Banner source: https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124 I&#x27;m been trying to get into Web Assembly for a while, so when I found this CTF write-up by Chiam Yj I decided to solve it by myself. The original Challenge&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;" />
+    <meta property="og:description" content="Banner source: https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124 I&#x27;m been trying to get into Web Assembly for a while, so when I found this CTF write-up by Chiam YJ I decided to give it a try. The original Challenge&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;" />
     <meta property="og:url" content="https://inesmartins.github.io//js-wasm-ctf-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" />
     <meta property="article:published_time" content="2020-06-23T22:00:44.000Z" />
-    <meta property="article:modified_time" content="2020-06-23T22:03:11.000Z" />
+    <meta property="article:modified_time" content="2020-06-23T22:20:54.000Z" />
     <meta property="article:tag" content="web-assembly" />
     <meta property="article:tag" content="wasm" />
     <meta property="article:tag" content="ctf" />
@@ -27,7 +27,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Web Assembly CTF Write-up" />
-    <meta name="twitter:description" content="Banner source: https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124 I&#x27;m been trying to get into Web Assembly for a while, so when I found this CTF write-up by Chiam Yj I decided to solve it by myself. The original Challenge&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;" />
+    <meta name="twitter:description" content="Banner source: https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124 I&#x27;m been trying to get into Web Assembly for a while, so when I found this CTF write-up by Chiam YJ I decided to give it a try. The original Challenge&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;" />
     <meta name="twitter:url" content="https://inesmartins.github.io//js-wasm-ctf-write-up/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -68,7 +68,7 @@
     "headline": "Web Assembly CTF Write-up",
     "url": "https://inesmartins.github.io//js-wasm-ctf-write-up/",
     "datePublished": "2020-06-23T22:00:44.000Z",
-    "dateModified": "2020-06-23T22:03:11.000Z",
+    "dateModified": "2020-06-23T22:20:54.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png",
@@ -76,7 +76,7 @@
         "height": 1001
     },
     "keywords": "web-assembly, wasm, ctf, write-up",
-    "description": "Banner source: \nhttps://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124\n\nI&#x27;m been trying to get into Web Assembly for a while, so when I found this CTF\nwrite-up [https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0] \nby Chiam Yj I decided to solve it by myself.\n\nThe original Challenge\n&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n    &lt;meta charset&#x3D;&quot;utf-8&quot;/&gt;\n    &lt;title&gt;crypto&lt;/title&gt;\n&lt;/head&gt;\n&lt;body&gt;\n&lt;/body&gt;\n&lt;script type&#x3D;&quot;text/javascript&quot;&gt;\n    var bin &#x3D; new Uint8Arra",
+    "description": "Banner source: \nhttps://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124\n\nI&#x27;m been trying to get into Web Assembly for a while, so when I found this CTF\nwrite-up [https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0] \nby Chiam YJ I decided to give it a try.\n\nThe original Challenge\n&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n    &lt;meta charset&#x3D;&quot;utf-8&quot;/&gt;\n    &lt;title&gt;crypto&lt;/title&gt;\n&lt;/head&gt;\n&lt;body&gt;\n&lt;/body&gt;\n&lt;script type&#x3D;&quot;text/javascript&quot;&gt;\n    var bin &#x3D; new Uint8Array([0,",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -119,7 +119,7 @@
             </figure>
             <section class="post-content">
 
-                <p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam Yj I decided to solve it by myself.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
+                <p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta charset="utf-8"/&gt;
@@ -147,17 +147,13 @@
     }
 &lt;/script&gt;
 &lt;/html&gt;
-</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into 3 sections:</p><h3 id="1-compiling-and-loading-the-original-code">1. Compiling and Loading the original Code</h3><p>The <code>WebAssembly.Module()</code> constructor creates a new Module object containing stateless WebAssembly code that has already been compiled by the browser (...). [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module">Source</a>]</p><p> In this case, we're instantiating a new Module called <code>m</code> that compiles the bytes in the <code>bin</code> byte array and then loads this stateless code.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
-var m = new WebAssembly.Instance(new WebAssembly.Module(bin));)]</code></pre><h3 id="2-encoding-transforming-the-user-input">2. Encoding/Transforming the User Input</h3><p>OK, things are getting harder. From what I understand of the code:</p><ol><li>The first 64 characters introduced by the user on the prompt are converted to bytes and stored in <code>strBuf</code>;</li><li>When the <code>Uint8Array</code> constructor "is called with a buffer, and optionally a byteOffset and a length argument, a new typed array view is created that views the specified ArrayBuffer. (...)" [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/Uint8Array">Source</a>]. So in this case, the <code>inBuf</code> is a typed array that (most likely) views the entirety of the <code>memory.buffer</code> - this depends on what the <code>getInStrOffset</code> function does.</li><li>This new <code>Uint8Array</code> is filled with the bytes from <code>strBuf</code>.</li><li>Finally, the <code>Uint8Array</code> constructor is called with <code>morph</code> as the second parameter, so it seems that the <code>inBuf</code> bytes are having some sort of transformation and are then stored in the <code>outBuf</code>.</li></ol><pre><code class="language-jsx">var offset = m.exports.getInStrOffset();
+</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into 3 sections:</p><h3 id="1-compiling-and-loading-the-binary-code">1. Compiling and Loading the binary Code</h3><p>The <code>WebAssembly.Module()</code> constructor creates a new Module object containing stateless WebAssembly code that has already been compiled by the browser (...). [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module">Source</a>]</p><p>In this case, we're instantiating a new Module called <code>m</code> that compiles the bytes in the <code>bin</code> byte array and then loads this stateless code.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
+var m = new WebAssembly.Instance(new WebAssembly.Module(bin));)]</code></pre><h3 id="2-encoding-transforming-the-user-input">2. Encoding/Transforming the User Input</h3><p>OK, things are getting harder. From what I understand, the script starts by converting the first 64 characters introduced by the user to bytes and then writes them to <code>strBuf</code> .</p><pre><code class="language-javascript">var offset = m.exports.getInStrOffset();
 var flag = prompt("teh flag?");
-var strBuf = new TextEncoder().encode(flag.slice(0, 64));
-var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
-for (let i = 0; i &lt; strBuf.length; i++) {
-	inBuf[i] = strBuf[i];
-}
-var morph = m.exports.morph(strBuf.length);	
-var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
-</code></pre><h3 id="3-string-comparison">3. String comparison</h3><p>On the final step:</p><ol><li>The bytes in the <code>outBuf</code> are decoded back into ASCII;</li><li>The ASCII is encoded using base64;</li><li>This base64-encoded string is compared with the hardcoded base64 key;</li><li>If they're equal, success!</li></ol><pre><code class="language-jsx">btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
+var strBuf = new TextEncoder().encode(flag.slice(0, 64));</code></pre><p>When the <code>Uint8Array</code> constructor "is called with a buffer, and optionally a byteOffset and a length argument, a new typed array view is created that views the specified ArrayBuffer. (...)" [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/Uint8Array">Source</a>]. </p><p>In this case, the <code>inBuf</code> variable represents a typed array that (most likely) views the entirety of the <code>memory.buffer</code> - this depends on how the <code>getInStrOffset</code> function works.</p><pre><code class="language-javascript">var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);</code></pre><p>Then, this new <code>Uint8Array</code> is filled with the bytes from <code>strBuf</code>.</p><pre><code class="language-javascript">for (let i = 0; i &lt; strBuf.length; i++) {
+    inBuf[i] = strBuf[i];
+}</code></pre><p>Finally, the <code>Uint8Array</code> constructor is called with <code>morph</code> as the second parameter, so it seems that the <code>inBuf</code> bytes are being transformed (somehow) and written to the <code>outBuf</code> array.</p><pre><code class="language-javascript">var morph = m.exports.morph(strBuf.length);	
+var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);</code></pre><h3 id="3-string-comparison">3. String comparison</h3><p>On the final step:</p><ol><li>The bytes in the <code>outBuf</code> are decoded back into ASCII;</li><li>The ASCII is encoded using base64;</li><li>This base64-encoded string is compared with the hardcoded base64 key;</li><li>If they're equal, success!</li></ol><pre><code class="language-jsx">btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
 </code></pre><h2 id="1-finding-the-uint8array-that-matches-the-flag">1. Finding the Uint8Array that matches the flag</h2><p>We start by reversing the last step in order to get the <code>outBuf</code> that when encoded matches the hardcoded key:</p><pre><code class="language-javascript">var key = "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
 var base64decoded = atob(key)
 var textEncoded = new TextEncoder().encode(base64decoded)
