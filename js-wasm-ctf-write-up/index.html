@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//js-wasm-ctf-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" />
     <meta property="article:published_time" content="2020-06-23T22:00:44.000Z" />
-    <meta property="article:modified_time" content="2020-06-23T22:20:54.000Z" />
+    <meta property="article:modified_time" content="2020-06-23T22:32:17.000Z" />
     <meta property="article:tag" content="web-assembly" />
     <meta property="article:tag" content="wasm" />
     <meta property="article:tag" content="ctf" />
@@ -72,7 +72,7 @@
     "headline": "Web Assembly CTF Write-up",
     "url": "https://inesmartins.github.io//js-wasm-ctf-write-up/",
     "datePublished": "2020-06-23T22:00:44.000Z",
-    "dateModified": "2020-06-23T22:20:54.000Z",
+    "dateModified": "2020-06-23T22:32:17.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png",
@@ -234,7 +234,7 @@ var base64decoded = atob(key)
 var textEncoded = new TextEncoder().encode(base64decoded)
 console.log(textEncoded)
 // Uint8Array(30) [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65, 124, 13, 65, 9]
-</code></pre><h2 id="2-brute-forcing-for-the-solution">2. Brute-forcing for the Solution</h2><p>In order to get the flag, we're going to brute-force the input, char by char, and then match the respective <code>outBuf</code> with the successful buffer, found in the previous step.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
+</code></pre><h2 id="2-brute-forcing-for-the-solution">2. Brute-forcing for the Solution</h2><p>In order to get the flag, we're going to brute-force the input by comparing the  <code>outBuf</code> that results from each char with the successful buffer found in the previous step, byte by byte.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
 var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
 var offset = m.exports.getInStrOffset();
 
@@ -278,8 +278,8 @@ while (pos &lt; 30) {
       }
     }
   }
-	if (!foundPos) {
-	  alert("Didn't find match!")
+  if (!foundPos) {
+    alert("Didn't find match!")
   }
 }
 </code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/res.png" class="kg-image"></figure><p>Hope you enjoyed it :)</p>
