@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//js-wasm-ctf-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" />
     <meta property="article:published_time" content="2020-06-23T22:00:44.000Z" />
-    <meta property="article:modified_time" content="2020-06-23T22:32:17.000Z" />
+    <meta property="article:modified_time" content="2020-06-24T08:48:46.000Z" />
     <meta property="article:tag" content="web-assembly" />
     <meta property="article:tag" content="wasm" />
     <meta property="article:tag" content="ctf" />
@@ -72,7 +72,7 @@
     "headline": "Web Assembly CTF Write-up",
     "url": "https://inesmartins.github.io//js-wasm-ctf-write-up/",
     "datePublished": "2020-06-23T22:00:44.000Z",
-    "dateModified": "2020-06-23T22:32:17.000Z",
+    "dateModified": "2020-06-24T08:48:46.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png",
@@ -222,7 +222,7 @@
     }
 &lt;/script&gt;
 &lt;/html&gt;
-</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into 3 sections:</p><h3 id="1-compiling-and-loading-the-binary-code">1. Compiling and Loading the binary Code</h3><p>The <code>WebAssembly.Module()</code> constructor creates a new Module object containing stateless WebAssembly code that has already been compiled by the browser (...). [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module">Source</a>]</p><p>In this case, we're instantiating a new Module called <code>m</code> that compiles the bytes in the <code>bin</code> byte array and then loads this stateless code.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
+</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into 3 sections:</p><h3 id="1-compiling-and-loading-the-binary-code">1. Compiling and Loading the binary Code</h3><p>A <code>WebAssembly.Instance</code> object is a stateful, executable instance of a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module"><code>WebAssembly.Module</code></a>. <code>Instance</code> objects contain all the <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions">Exported WebAssembly functions</a> that allow calling into WebAssembly code from JavaScript. [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance">Source</a>]</p><p>So, in this case, we're creating a new <code>WebAssembly.Instance</code> object (<code>m</code>) that contains all the Exported WebAssembly functions that derive from the compilation of the bytes in the <code>bin</code> byte array.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
 var m = new WebAssembly.Instance(new WebAssembly.Module(bin));)]</code></pre><h3 id="2-encoding-transforming-the-user-input">2. Encoding/Transforming the User Input</h3><p>OK, things are getting harder. From what I understand, the script starts by converting the first 64 characters introduced by the user to bytes and then writes them to <code>strBuf</code> .</p><pre><code class="language-javascript">var offset = m.exports.getInStrOffset();
 var flag = prompt("teh flag?");
 var strBuf = new TextEncoder().encode(flag.slice(0, 64));</code></pre><p>When the <code>Uint8Array</code> constructor "is called with a buffer, and optionally a byteOffset and a length argument, a new typed array view is created that views the specified ArrayBuffer. (...)" [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/Uint8Array">Source</a>]. </p><p>In this case, the <code>inBuf</code> variable represents a typed array that (most likely) views the entirety of the <code>memory.buffer</code> - this depends on how the <code>getInStrOffset</code> function works.</p><pre><code class="language-javascript">var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);</code></pre><p>Then, this new <code>Uint8Array</code> is filled with the bytes from <code>strBuf</code>.</p><pre><code class="language-javascript">for (let i = 0; i &lt; strBuf.length; i++) {
