@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Wed, 24 Jun 2020 08:50:14 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Web Assembly CTF Write-up]]></title><description><![CDATA[<p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Wed, 24 Jun 2020 16:38:23 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RingZer0 JavaScript Challenges Write-up | Part I]]></title><description><![CDATA[<p>I've recently come across RingZer0's <a href="https://ringzer0ctf.com/challenges">online platform</a> and decided to give the JS challenges a try. </p><h2 id="level-1-client-side-validation-is-bad-">Level 1 - Client side validation is bad!</h2><p>When we access <a href="https://ringzer0ctf.com/challenges/27">the page for this challenge</a> we're presented with the following login form:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-page.png" class="kg-image"></figure><p>On the source code we see something interesting: </p><pre><code class="language-javascript">var u = $("#cuser"</code></pre>]]></description><link>https://inesmartins.github.io//ringzer0-js-ctf-write-up-client-side-validation-is-bad/</link><guid isPermaLink="false">5ef3654a1e7da103a083e178</guid><category><![CDATA[ctf]]></category><category><![CDATA[javascript]]></category><category><![CDATA[sha1]]></category><category><![CDATA[obfuscation]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 24 Jun 2020 16:29:02 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o.jpg" alt="RingZer0 JavaScript Challenges Write-up | Part I"><p>I've recently come across RingZer0's <a href="https://ringzer0ctf.com/challenges">online platform</a> and decided to give the JS challenges a try. </p><h2 id="level-1-client-side-validation-is-bad-">Level 1 - Client side validation is bad!</h2><p>When we access <a href="https://ringzer0ctf.com/challenges/27">the page for this challenge</a> we're presented with the following login form:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-page.png" class="kg-image" alt="RingZer0 JavaScript Challenges Write-up | Part I"></figure><p>On the source code we see something interesting: </p><pre><code class="language-javascript">var u = $("#cuser").val();
+var p = $("#cpass").val();
+if(u == "admin" &amp;&amp; p == String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101)) {
+    if(document.location.href.indexOf("?p=") == -1) {
+        document.location = document.location.href + "?p=" + p;
+    }
+} else {
+    $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
+}</code></pre><p>So, in order to get the password we simply run:</p><pre><code class="language-javascript">String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101)
+// "JavaScriptIsSecure"</code></pre><h2 id="2-hashing-is-more-secure">2 - Hashing is more secure</h2><p>The <a href="https://ringzer0ctf.com/challenges/30">second level</a> is pretty much the same as the first but with a slightly different password validation:</p><pre><code class="language-javascript">if(Sha1.hash(p) == "b89356ff6151527e89c4f3e3d30c8e6586c63962") {</code></pre><p>This one is also pretty simple to decipher using an <a href="https://sha1.gromweb.com/?hash=b89356ff6151527e89c4f3e3d30c8e6586c63962">online SHA1 "reverser"</a>.</p><h2 id="3-then-obfuscation-is-more-secure">3 - Then obfuscation is more secure?</h2><p><a href="https://ringzer0ctf.com/challenges/31">Third level</a>, same format, but this time the code is obfuscated:</p><pre><code class="language-javascript">// Look's like weak JavaScript auth script :)
+var _0xc360=["\x76\x61\x6C","\x23\x63\x70\x61\x73\x73","\x61\x6C\x6B\x33","\x30\x32\x6C\x31","\x3F\x70\x3D","\x69\x6E\x64\x65\x78\x4F\x66","\x68\x72\x65\x66","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x27\x65\x72\x72\x6F\x72\x27\x3E\x57\x72\x6F\x6E\x67\x20\x70\x61\x73\x73\x77\x6F\x72\x64\x20\x73\x6F\x72\x72\x79\x2E\x3C\x2F\x64\x69\x76\x3E","\x68\x74\x6D\x6C","\x23\x63\x72\x65\x73\x70\x6F\x6E\x73\x65","\x63\x6C\x69\x63\x6B","\x2E\x63\x5F\x73\x75\x62\x6D\x69\x74"];$(_0xc360[12])[_0xc360[11]](function (){var _0xf382x1=$(_0xc360[1])[_0xc360[0]]();var _0xf382x2=_0xc360[2];if(_0xf382x1==_0xc360[3]+_0xf382x2){if(document[_0xc360[7]][_0xc360[6]][_0xc360[5]](_0xc360[4])==-1){document[_0xc360[7]]=document[_0xc360[7]][_0xc360[6]]+_0xc360[4]+_0xf382x1;} ;} else {$(_0xc360[10])[_0xc360[9]](_0xc360[8]);} ;} );</code></pre><p>Using an <a href="https://beautifier.io/">online Javascript beautifier</a> we get:</p><pre><code class="language-javascript">$('.c_submit')['click'](function() {
+    var _0xf382x1 = $('#cpass')['val']();
+    var _0xf382x2 = 'alk3';
+    if (_0xf382x1 == '02l1' + _0xf382x2) {
+        if (document['location']['href']['indexOf']('?p=') == -1) {
+            document['location'] = document['location']['href'] + '?p=' + _0xf382x1;
+        };
+    } else {
+        $('#cresponse')['html']('&lt;div class=\'error\'&gt;Wrong password sorry.&lt;/div&gt;');
+    };
+});</code></pre><p>Really all we care about the password validation:</p><pre><code class="language-javascript">var _0xf382x2 = 'alk3';
+if (_0xf382x1 == '02l1' + _0xf382x2) {</code></pre><p>So, to get the password, we simply need to do:</p><pre><code class="language-javascript">var _0xf382x2 = 'alk3';
+'02l1' + _0xf382x2 // "02l1alk3"</code></pre><h2 id="4-most-secure-crypto-algo">4 - Most Secure Crypto Algo</h2><p>Another <a href="https://ringzer0ctf.com/challenges/67">level</a>, similar format, this time the submit event handler uses <code>CryptoJS</code>'s AES algorithm to make the password harder to crack:</p><pre><code class="language-javascript">var k = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x37");
+var u = $("#cuser").val();
+var p = $("#cpass").val();
+var t = true;
+if(u == "\x68\x34\x78\x30\x72") {
+    if(!CryptoJS.AES.encrypt(
+        p, 
+        CryptoJS.enc.Hex.parse(k.toString().substring(0,32)), 
+        { iv: CryptoJS.enc.Hex.parse(k.toString().substring(32,64)) }
+    ) == "ob1xQz5ms9hRkPTx+ZHbVg==") {
+        t = false;
+    }
+}</code></pre><p>To get the user we simply run:</p><pre><code class="language-javascript">"\x68\x34\x78\x30\x72" // "h4x0r"</code></pre><p>To get the password we have to understand the signature of the <a href="https://cryptojs.gitbook.io/docs/">AES encrypt function of the CryptoJS library</a>:</p><ol><li>the message to be encrypted - <code>p</code>, the password entered by the user;</li><li>the secret passphrase - <code>k.toString().substring(0,32)</code>; </li><li>the encryption options - <code>{ iv: CryptoJS.enc.Hex.parse(k.toString().substring(32,64)) }</code></li></ol><p>So, if we do the exact reverse process, we get the original password:</p><pre><code class="language-javascript">var k = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x37");
+
+var decrypted = CryptoJS.AES.decrypt(
+    "ob1xQz5ms9hRkPTx+ZHbVg==",
+    CryptoJS.enc.Hex.parse(k.toString().substring(0,32)), 
+    { iv: CryptoJS.enc.Hex.parse(k.toString().substring(32,64)) }
+)
+
+console.log(decrypted.toString())
+
+// 50617373573052442132383925212a -&gt; (from hex) PassW0RD!289%!*</code></pre>]]></content:encoded></item><item><title><![CDATA[Web Assembly CTF Write-up]]></title><description><![CDATA[<p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;</code></pre>]]></description><link>https://inesmartins.github.io//js-wasm-ctf-write-up/</link><guid isPermaLink="false">5ef27a571e7da103a083e133</guid><category><![CDATA[web-assembly]]></category><category><![CDATA[wasm]]></category><category><![CDATA[ctf]]></category><category><![CDATA[write-up]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 23 Jun 2020 22:00:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" alt="Web Assembly CTF Write-up"><p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -1122,68 +1166,5 @@ SOURCE =&gt; [host]
 [recon-ng][default] &gt;
 </code></pre>
 <!--kg-card-end: markdown--><p>16. Exit the app.</p><!--kg-card-begin: markdown--><pre><code>[recon-ng][default] &gt; exit
-</code></pre>
-<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[Metasploit 5 | The Basics]]></title><description><![CDATA[<p><em>Tested on Kali GNU/Linux 2020.1</em></p><p>1. Get the latest version of the <a href="https://www.metasploit.com/">Metasploit Framework</a>.</p><!--kg-card-begin: markdown--><pre><code>sudo apt-get update
-sudo apt-get install metasploit-framework
-</code></pre>
-<!--kg-card-end: markdown--><p>2. Create the database.</p><!--kg-card-begin: markdown--><pre><code>sudo msfdb init
-</code></pre>
-<!--kg-card-end: markdown--><p>3. Start Metasploit's console-based interface.</p><!--kg-card-begin: markdown--><pre><code>msfconsole
-</code></pre>
-<!--kg-card-end: markdown--><p>4. Check that Metasploit is connected to the DB.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; db_status
-[*] Connected</code></pre>]]></description><link>https://inesmartins.github.io//metasploit5-the-basics/</link><guid isPermaLink="false">5edd1dc464e6e34f1b3f7e32</guid><category><![CDATA[metasploit]]></category><category><![CDATA[metasploit framework]]></category><category><![CDATA[linux]]></category><category><![CDATA[tutorial]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 17:10:38 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1.png" alt="Metasploit 5 | The Basics"><p><em>Tested on Kali GNU/Linux 2020.1</em></p><p>1. Get the latest version of the <a href="https://www.metasploit.com/">Metasploit Framework</a>.</p><!--kg-card-begin: markdown--><pre><code>sudo apt-get update
-sudo apt-get install metasploit-framework
-</code></pre>
-<!--kg-card-end: markdown--><p>2. Create the database.</p><!--kg-card-begin: markdown--><pre><code>sudo msfdb init
-</code></pre>
-<!--kg-card-end: markdown--><p>3. Start Metasploit's console-based interface.</p><!--kg-card-begin: markdown--><pre><code>msfconsole
-</code></pre>
-<!--kg-card-end: markdown--><p>4. Check that Metasploit is connected to the DB.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; db_status
-[*] Connected to msf. Connection type: postgresql.
-</code></pre>
-<!--kg-card-end: markdown--><p>5. List Metasploit's most relevant commands.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; help
-</code></pre>
-<!--kg-card-end: markdown--><p>6. List the available workspaces.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace
-* default
-</code></pre>
-<!--kg-card-end: markdown--><p>7. Add a new workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace -a testymcgee
-[*] Added workspace: testymcgee
-[*] Workspace: testymcgee
-</code></pre>
-<!--kg-card-end: markdown--><p>8. Select a workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace default
-[*] Workspace: default
-</code></pre>
-<!--kg-card-end: markdown--><p>9. Delete a workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace -d testymcgee
-[*] Deleted workspace: testymcgee
-[*] Swiched to workspace: default
-</code></pre>
-<!--kg-card-end: markdown--><p>10. Search for a specific module. Alternatively, you can search directly on Metasploit's <a href="https://metasploit.help.rapid7.com/docs">web docs</a>.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; search [search term]
-</code></pre>
-<!--kg-card-end: markdown--><p>11. See more information about a module. This includes the module's name, path, description, date of disclosure, <a href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking">rank</a>, support for the <a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-write-a-check%28%29-method">check command</a>, author, basic options and references.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; info [module_path]
-</code></pre>
-<!--kg-card-end: markdown--><p>12. Setup the module.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; set RHOST [ip]
-msf5 &gt; set RPORT [port]
-...
-</code></pre>
-<!--kg-card-end: markdown--><p>13. Setup global options.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; set -g RHOST [ip]
-msf5 &gt; set -g RPORT [port]
-</code></pre>
-<!--kg-card-end: markdown--><p>14. Select an exploit module.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use [exploit_path]
-</code></pre>
-<!--kg-card-end: markdown--><p>15. Show options for the selected exploit.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show options
-</code></pre>
-<!--kg-card-end: markdown--><p>16. List the targets supported by the exploit.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show options
-</code></pre>
-<!--kg-card-end: markdown--><p>17. List available payloads for these targets.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show targets
-</code></pre>
-<!--kg-card-end: markdown--><p>18. Select a payload.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; set payload [payload_path]
-payload =&gt; [payload_path]
-</code></pre>
-<!--kg-card-end: markdown--><p>19. Run the exploit. Note that if we don't select a payload, Metasploit uses the default.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; exploit
-</code></pre>
-<!--kg-card-end: markdown--><p>20. Return to "main menu".</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; back
-msf5 &gt;
-</code></pre>
-<!--kg-card-end: markdown--><p>21. Exit the app.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; exit
 </code></pre>
 <!--kg-card-end: markdown-->]]></content:encoded></item></channel></rss>
