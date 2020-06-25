@@ -15,11 +15,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="RingZer0 JavaScript Challenges Write-up | Part I" />
-    <meta property="og:description" content="I&#x27;ve recently come across RingZer0&#x27;s online platform and decided to give the JS challenges a try.  Level 1 - Client side validation is bad!When we access the page for this challenge we&#x27;re presented with the following login form: On the source code we see something interesting:  var u &#x3D; $(&quot;#cuser&quot;" />
+    <meta property="og:description" content="I&#x27;ve recently come across RingZer0&#x27;s online platform and decided to give the JS challenges a try.  Level 1 - Client side validation is bad!When we access the page we&#x27;re presented with the following login form: On the source code we see something interesting:  var u &#x3D; $(&quot;#cuser&quot;).val(); var p" />
     <meta property="og:url" content="https://inesmartins.github.io//ringzer0-js-ctf-write-up-client-side-validation-is-bad/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o.jpg" />
     <meta property="article:published_time" content="2020-06-24T16:29:02.000Z" />
-    <meta property="article:modified_time" content="2020-06-24T16:37:58.000Z" />
+    <meta property="article:modified_time" content="2020-06-25T21:05:01.000Z" />
     <meta property="article:tag" content="ctf" />
     <meta property="article:tag" content="javascript" />
     <meta property="article:tag" content="sha1" />
@@ -27,7 +27,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="RingZer0 JavaScript Challenges Write-up | Part I" />
-    <meta name="twitter:description" content="I&#x27;ve recently come across RingZer0&#x27;s online platform and decided to give the JS challenges a try.  Level 1 - Client side validation is bad!When we access the page for this challenge we&#x27;re presented with the following login form: On the source code we see something interesting:  var u &#x3D; $(&quot;#cuser&quot;" />
+    <meta name="twitter:description" content="I&#x27;ve recently come across RingZer0&#x27;s online platform and decided to give the JS challenges a try.  Level 1 - Client side validation is bad!When we access the page we&#x27;re presented with the following login form: On the source code we see something interesting:  var u &#x3D; $(&quot;#cuser&quot;).val(); var p" />
     <meta name="twitter:url" content="https://inesmartins.github.io//ringzer0-js-ctf-write-up-client-side-validation-is-bad/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o.jpg" />
     <meta name="twitter:label1" content="Written by" />
@@ -68,7 +68,7 @@
     "headline": "RingZer0 JavaScript Challenges Write-up | Part I",
     "url": "https://inesmartins.github.io//ringzer0-js-ctf-write-up-client-side-validation-is-bad/",
     "datePublished": "2020-06-24T16:29:02.000Z",
-    "dateModified": "2020-06-24T16:37:58.000Z",
+    "dateModified": "2020-06-25T21:05:01.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o.jpg",
@@ -76,7 +76,7 @@
         "height": 450
     },
     "keywords": "ctf, javascript, sha1, obfuscation",
-    "description": "I&#x27;ve recently come across RingZer0&#x27;s online platform\n[https://ringzer0ctf.com/challenges] and decided to give the JS challenges a\ntry. \n\nLevel 1 - Client side validation is bad!\nWhen we access the page for this challenge\n[https://ringzer0ctf.com/challenges/27] we&#x27;re presented with the following login\nform:\n\nOn the source code we see something interesting: \n\nvar u &#x3D; $(&quot;#cuser&quot;).val();\nvar p &#x3D; $(&quot;#cpass&quot;).val();\nif(u &#x3D;&#x3D; &quot;admin&quot; &amp;&amp; p &#x3D;&#x3D; String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,",
+    "description": "I&#x27;ve recently come across RingZer0&#x27;s online platform\n[https://ringzer0ctf.com/challenges] and decided to give the JS challenges a\ntry. \n\nLevel 1 - Client side validation is bad! [https://ringzer0ctf.com/challenges/27]\nWhen we access the page we&#x27;re presented with the following login form:\n\nOn the source code we see something interesting: \n\nvar u &#x3D; $(&quot;#cuser&quot;).val();\nvar p &#x3D; $(&quot;#cpass&quot;).val();\nif(u &#x3D;&#x3D; &quot;admin&quot; &amp;&amp; p &#x3D;&#x3D; String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,1",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -119,7 +119,7 @@
             </figure>
             <section class="post-content">
 
-                <p>I've recently come across RingZer0's <a href="https://ringzer0ctf.com/challenges">online platform</a> and decided to give the JS challenges a try. </p><h2 id="level-1-client-side-validation-is-bad-">Level 1 - Client side validation is bad!</h2><p>When we access <a href="https://ringzer0ctf.com/challenges/27">the page for this challenge</a> we're presented with the following login form:</p><figure class="kg-card kg-image-card"></figure><p>On the source code we see something interesting: </p><pre><code class="language-javascript">var u = $("#cuser").val();
+                <p>I've recently come across RingZer0's <a href="https://ringzer0ctf.com/challenges">online platform</a> and decided to give the JS challenges a try. </p><h2 id="level-1-client-side-validation-is-bad-">Level 1 - <a href="https://ringzer0ctf.com/challenges/27">Client side validation is bad!</a></h2><p>When we access the page we're presented with the following login form:</p><figure class="kg-card kg-image-card"></figure><p>On the source code we see something interesting: </p><pre><code class="language-javascript">var u = $("#cuser").val();
 var p = $("#cpass").val();
 if(u == "admin" &amp;&amp; p == String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101)) {
     if(document.location.href.indexOf("?p=") == -1) {
@@ -128,7 +128,7 @@ if(u == "admin" &amp;&amp; p == String.fromCharCode(74,97,118,97,83,99,114,105,1
 } else {
     $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
 }</code></pre><p>So, in order to get the password we simply run:</p><pre><code class="language-javascript">String.fromCharCode(74,97,118,97,83,99,114,105,112,116,73,115,83,101,99,117,114,101)
-// "JavaScriptIsSecure"</code></pre><h2 id="2-hashing-is-more-secure">2 - Hashing is more secure</h2><p>The <a href="https://ringzer0ctf.com/challenges/30">second level</a> is pretty much the same as the first but with a slightly different password validation:</p><pre><code class="language-javascript">if(Sha1.hash(p) == "b89356ff6151527e89c4f3e3d30c8e6586c63962") {</code></pre><p>This one is also pretty simple to decipher using an <a href="https://sha1.gromweb.com/?hash=b89356ff6151527e89c4f3e3d30c8e6586c63962">online SHA1 "reverser"</a>.</p><h2 id="3-then-obfuscation-is-more-secure">3 - Then obfuscation is more secure?</h2><p><a href="https://ringzer0ctf.com/challenges/31">Third level</a>, same format, but this time the code is obfuscated:</p><pre><code class="language-javascript">// Look's like weak JavaScript auth script :)
+// "JavaScriptIsSecure"</code></pre><h2 id="2-hashing-is-more-secure">2 - <a href="https://ringzer0ctf.com/challenges/30">Hashing is more secure</a></h2><p>Th<a href="https://ringzer0ctf.com/challenges/30">i</a>s one is pretty much the same as the first but with a slightly different password validation:</p><pre><code class="language-javascript">if(Sha1.hash(p) == "b89356ff6151527e89c4f3e3d30c8e6586c63962") {</code></pre><p>This one is also pretty simple to decipher using an <a href="https://sha1.gromweb.com/?hash=b89356ff6151527e89c4f3e3d30c8e6586c63962">online SHA1 "reverser"</a>.</p><h2 id="3-then-obfuscation-is-more-secure">3 - <a href="https://ringzer0ctf.com/challenges/31">Then obfuscation is more secure?</a></h2><p>Same format, but this time the code is obfuscated:</p><pre><code class="language-javascript">// Look's like weak JavaScript auth script :)
 var _0xc360=["\x76\x61\x6C","\x23\x63\x70\x61\x73\x73","\x61\x6C\x6B\x33","\x30\x32\x6C\x31","\x3F\x70\x3D","\x69\x6E\x64\x65\x78\x4F\x66","\x68\x72\x65\x66","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x27\x65\x72\x72\x6F\x72\x27\x3E\x57\x72\x6F\x6E\x67\x20\x70\x61\x73\x73\x77\x6F\x72\x64\x20\x73\x6F\x72\x72\x79\x2E\x3C\x2F\x64\x69\x76\x3E","\x68\x74\x6D\x6C","\x23\x63\x72\x65\x73\x70\x6F\x6E\x73\x65","\x63\x6C\x69\x63\x6B","\x2E\x63\x5F\x73\x75\x62\x6D\x69\x74"];$(_0xc360[12])[_0xc360[11]](function (){var _0xf382x1=$(_0xc360[1])[_0xc360[0]]();var _0xf382x2=_0xc360[2];if(_0xf382x1==_0xc360[3]+_0xf382x2){if(document[_0xc360[7]][_0xc360[6]][_0xc360[5]](_0xc360[4])==-1){document[_0xc360[7]]=document[_0xc360[7]][_0xc360[6]]+_0xc360[4]+_0xf382x1;} ;} else {$(_0xc360[10])[_0xc360[9]](_0xc360[8]);} ;} );</code></pre><p>Using an <a href="https://beautifier.io/">online Javascript beautifier</a> we get:</p><pre><code class="language-javascript">$('.c_submit')['click'](function() {
     var _0xf382x1 = $('#cpass')['val']();
     var _0xf382x2 = 'alk3';
@@ -141,7 +141,7 @@ var _0xc360=["\x76\x61\x6C","\x23\x63\x70\x61\x73\x73","\x61\x6C\x6B\x33","\x30\
     };
 });</code></pre><p>Really all we care about the password validation:</p><pre><code class="language-javascript">var _0xf382x2 = 'alk3';
 if (_0xf382x1 == '02l1' + _0xf382x2) {</code></pre><p>So, to get the password, we simply need to do:</p><pre><code class="language-javascript">var _0xf382x2 = 'alk3';
-'02l1' + _0xf382x2 // "02l1alk3"</code></pre><h2 id="4-most-secure-crypto-algo">4 - Most Secure Crypto Algo</h2><p>Another <a href="https://ringzer0ctf.com/challenges/67">level</a>, similar format, this time the submit event handler uses <code>CryptoJS</code>'s AES algorithm to make the password harder to crack:</p><pre><code class="language-javascript">var k = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x37");
+'02l1' + _0xf382x2 // "02l1alk3"</code></pre><h2 id="4-most-secure-crypto-algo">4 - <a href="https://ringzer0ctf.com/challenges/67">Most Secure Crypto Algo</a></h2><p>Similar format, this time the submit event handler uses <code>CryptoJS</code>'s AES algorithm to make the password harder to crack:</p><pre><code class="language-javascript">var k = CryptoJS.SHA256("\x93\x39\x02\x49\x83\x02\x82\xf3\x23\xf8\xd3\x13\x37");
 var u = $("#cuser").val();
 var p = $("#cpass").val();
 var t = true;
