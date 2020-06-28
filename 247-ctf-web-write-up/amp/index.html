@@ -3,38 +3,41 @@
 <head>
     <meta charset="utf-8">
 
-    <title>RingZer0 JavaScript Challenges Write-up | Part II</title>
+    <title>247/CTF Write-up | Web Challenges</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/" />
+    <link rel="canonical" href="https://inesmartins.github.io//247-ctf-web-write-up/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="RingZer0 JavaScript Challenges Write-up | Part II" />
-    <meta property="og:description" content="Click here for Part I. 5 - Valid Key RequiredOn this level instead of user/password form we see an input field where we&#x27;re supposed to enter a key: The source code for this one is a little more complex. Let&#x27;s start with the function that&#x27;s triggered when the user" />
-    <meta property="og:url" content="https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
-    <meta property="article:published_time" content="2020-06-24T21:49:01.000Z" />
-    <meta property="article:modified_time" content="2020-06-28T08:14:13.000Z" />
+    <meta property="og:title" content="247/CTF Write-up | Web Challenges" />
+    <meta property="og:description" content="This post will be updated as I solve more of the 247/CTF platform&#x27;s web challenges. 1. Trusted ClientDevelopers don&#x27;t always have time to setup a backend service when prototyping code. Storing credentials on the client side should be fine as long as it&#x27;s obfuscated right?snapshot from the source" />
+    <meta property="og:url" content="https://inesmartins.github.io//247-ctf-web-write-up/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/ctf.png" />
+    <meta property="article:published_time" content="2020-06-28T10:47:34.000Z" />
+    <meta property="article:modified_time" content="2020-06-28T12:26:55.000Z" />
+    <meta property="article:tag" content="jsfuck" />
+    <meta property="article:tag" content="web" />
+    <meta property="article:tag" content="247ctf" />
     <meta property="article:tag" content="ctf" />
-    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="jwt" />
     
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="RingZer0 JavaScript Challenges Write-up | Part II" />
-    <meta name="twitter:description" content="Click here for Part I. 5 - Valid Key RequiredOn this level instead of user/password form we see an input field where we&#x27;re supposed to enter a key: The source code for this one is a little more complex. Let&#x27;s start with the function that&#x27;s triggered when the user" />
-    <meta name="twitter:url" content="https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
+    <meta name="twitter:title" content="247/CTF Write-up | Web Challenges" />
+    <meta name="twitter:description" content="This post will be updated as I solve more of the 247/CTF platform&#x27;s web challenges. 1. Trusted ClientDevelopers don&#x27;t always have time to setup a backend service when prototyping code. Storing credentials on the client side should be fine as long as it&#x27;s obfuscated right?snapshot from the source" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//247-ctf-web-write-up/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/ctf.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="ctf, javascript" />
+    <meta name="twitter:data2" content="jsfuck, web, 247ctf, ctf, jwt" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="1500" />
-    <meta property="og:image:height" content="450" />
+    <meta property="og:image:width" content="1155" />
+    <meta property="og:image:height" content="225" />
     
     <script type="application/ld+json">
 {
@@ -63,18 +66,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "RingZer0 JavaScript Challenges Write-up | Part II",
-    "url": "https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/",
-    "datePublished": "2020-06-24T21:49:01.000Z",
-    "dateModified": "2020-06-28T08:14:13.000Z",
+    "headline": "247/CTF Write-up | Web Challenges",
+    "url": "https://inesmartins.github.io//247-ctf-web-write-up/",
+    "datePublished": "2020-06-28T10:47:34.000Z",
+    "dateModified": "2020-06-28T12:26:55.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg",
-        "width": 1500,
-        "height": 450
+        "url": "https://inesmartins.github.io//content/images/2020/06/ctf.png",
+        "width": 1155,
+        "height": 225
     },
-    "keywords": "ctf, javascript",
-    "description": "Click here\n[https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/] \nfor Part I.\n\n5 - Valid Key Required [https://ringzer0ctf.com/challenges/58]\nOn this level instead of user/password form we see an input field where we&#x27;re\nsupposed to enter a key:\n\nThe source code for this one is a little more complex. Let&#x27;s start with the\nfunction that&#x27;s triggered when the user clicks &quot;Validate&quot; - validatekey:\n\nvar ref &#x3D; {T: &quot;BG8&quot;, J: &quot;jep&quot;, j: &quot;M2L&quot;, K: &quot;L23&quot;, H: &quot;r1A&quot;};\n\nfunctio",
+    "keywords": "jsfuck, web, 247ctf, ctf, jwt",
+    "description": "This post will be updated as I solve more of the 247/CTF platform\n[https://247ctf.com/dashboard]&#x27;s web challenges.\n\n1. Trusted Client\n&gt; Developers don&#x27;t always have time to setup a backend service when prototyping\ncode. Storing credentials on the client side should be fine as long as it&#x27;s\nobfuscated right?\nsnapshot from the source codeYup, this is JSFuck [https://en.wikipedia.org/wiki/JSFuck]. I used an online\ndecoder [http://codertab.com/jsunfuck] to get the original JS code:\n\nfunction anonymou",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -106,103 +109,56 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">RingZer0 JavaScript Challenges Write-up | Part II</h1>
+                <h1 class="post-title">247/CTF Write-up | Web Challenges</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
-                    <time class="post-date" datetime="2020-06-24">2020-06-24</time>
+                    <time class="post-date" datetime="2020-06-28">2020-06-28</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/06/ctf.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the user clicks "Validate" - <code>validatekey</code>:</p><pre><code class="language-javascript">var ref = {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};
+                <p>This post will be updated as I solve more of the <a href="https://247ctf.com/dashboard">247/CTF platform</a>'s web challenges.</p><h2 id="1-trusted-client">1. Trusted Client</h2><blockquote>Developers don't always have time to setup a backend service when prototyping code<em>.</em> Storing credentials on the client side should be fine as long as it's obfuscated right?</blockquote><figure class="kg-card kg-image-card kg-card-hascaption"><figcaption>snapshot from the source code</figcaption></figure><p>Yup, this is <a href="https://en.wikipedia.org/wiki/JSFuck">JSFuck</a>. I used an <a href="http://codertab.com/jsunfuck">online decoder</a> to get the original JS code:</p><pre><code class="language-javascript">function anonymous() {
+	if (this.username.value == 'the_flag_is' &amp;&amp; this.password.value == '247CTF{6c91b7f7f12c852f892293d16dba0148}') { 
+        alert('Valid username and password!');
+    } else { alert('Invalid username and password!'); }
+}</code></pre><p>Note that some of the online decoders out there are a little buggy, take a look at the console, it might help.</p><hr></hr><h2 id="2-secured-session">2. Secured Session</h2><blockquote>If you can guess our random secret key, we will tell you the flag securely stored in your session.</blockquote><pre><code class="language-python">import os
+from flask import Flask, request, session
+from flag import flag
 
-function validatekey() {
-    e = false;
-    var _strKey = "";
-    try {
-        _strKey = document.getElementById("key").value;
-        
-        var a = _strKey.split("-");
-        if(a.length !== 5)
-            e = true;
-        
-        var o=a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function));
-        
-        if (!equal(o,ref))
-            e = true;
-    	} catch (e) {
-            e = true;
-        }
-    
-    	if (!e) {
-            if (document.location.href.indexOf("?p=") == -1) {
-                document.location = document.location.href + "?p=" + _strKey;
-            }
-        } else {
-            $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
-    }
-}</code></pre><p>The most important information we get from this function is that in order to reach the success case, the following condition needs to be true:</p><pre><code class="language-javascript">a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function))  ==  {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};</code></pre><p>Let's start by creating a random key (<code>"abcd-efgh-ijkl-mnop-qrst"</code>) and logging the output of the mapping function:</p><pre><code class="language-javascript">var o = a.map(genFunc).reduceRight(callback, new(genFunc(a[4]))(Function));
-console.log(o); // { d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</code></pre><p>So, now we know the transformation, let's apply the reverse process to get the key that matches the hardcoded object:</p><table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Object</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>{ d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</td>
-<td>abcd-efgh-ijkl-mnop-qrst</td>
-</tr>
-<tr>
-<td>{ T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A" }</td>
-<td>8r1T-pLXJ-LM2j-3jeK-ABGH</td>
-</tr>
-</tbody>
-</table>
-<p>Note: the order in which the parameters are logged is really important, I had to reorder them to get the correct flag.</p><table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Object</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>{ d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</td>
-<td>abcd-efgh-ijkl-mnop-qrst</td>
-</tr>
-<tr>
-<td>{ H: "r1A", K: "L23", j: "M2L", J: "jep", T: "BG8" }</td>
-<td><strong>ABGH-3jeK-LM2j-pL2J-8r1T</strong></td>
-</tr>
-</tbody>
-</table>
-<h2 id="6-why-not">6 - <a href="https://ringzer0ctf.com/challenges/34">Why not</a></h2><p>It seems we're back to the old user/password model, similar to the <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">first 5</a>: </p><pre><code class="language-javascript">var k = new Array(176,214,205,246,264,255,227,237,242,244,265,270,283);
-var u = $("#cuser").val();
-var p = $("#cpass").val();
-var t = true;
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.urandom(24)
 
-if (u == "administrator") {
-    for (i = 0; i &lt; u.length; i++) {
-        if((u.charCodeAt(i) + p.charCodeAt(i) + i * 10) != k[i]) {
-            $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
-            t = false;
-            break;
-        }
-    }
-}</code></pre><p>I think a quick script will give us the password:</p><pre><code class="language-javacript">var k = new Array(176,214,205,246,264,255,227,237,242,244,265,270,283);
-var u = "administrator"
+def secret_key_to_int(s):
+    try:
+        secret_key = int(s)
+    except ValueError:
+        secret_key = 0
+    return secret_key
 
-var charCodes = []
-for (i = 0; i &lt; u.length; i++) {
-  var code = k[i] - u.charCodeAt(i) - i * 10;
-  charCodes.push(String.fromCharCode(code));
-}
-console.log(charCodes.join("")); // "OhLord4309111"</code></pre>
+@app.route("/flag")
+def index():
+    secret_key = secret_key_to_int(request.args['secret_key']) if 'secret_key' in request.args else None
+    session['flag'] = flag
+    if secret_key == app.config['SECRET_KEY']:
+      return session['flag']
+    else:
+      return "Incorrect secret key!"
+
+@app.route('/')
+def source():
+    return "
+%s
+" % open(__file__).read()
+
+if __name__ == "__main__":
+    app.run()</code></pre><p>So, it seems that as long as we send a non-null <code>secret_key</code> parameter, the flag is written to the <code>flag</code> property of the <code>session</code> cookie. Let's confirm this:</p><figure class="kg-card kg-image-card"></figure><p>As you can see, the <code>session</code> cookie is a <a href="https://en.wikipedia.org/wiki/JSON_Web_Token">JWT</a>, which we can <a href="https://jwt.io/">reverse</a>:</p><pre><code>{
+  "flag": {
+    " b": "MjQ3Q1RGe2RhODA3OTVmOGE1Y2FiMmUwMzdkNzM4NTgwN2I5YTkxfQ=="
+  }
+}</code></pre><p>Decoding the base64 string we get: <code>247CTF{da80795f8a5cab2e037d7385807b9a91}</code>.</p>
 
             </section>
 
