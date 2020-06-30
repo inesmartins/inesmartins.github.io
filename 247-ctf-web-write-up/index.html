@@ -23,12 +23,15 @@
     <meta property="og:url" content="https://inesmartins.github.io//247-ctf-web-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/ctf.png" />
     <meta property="article:published_time" content="2020-06-28T10:47:34.000Z" />
-    <meta property="article:modified_time" content="2020-06-30T17:08:43.000Z" />
-    <meta property="article:tag" content="jsfuck" />
-    <meta property="article:tag" content="web" />
+    <meta property="article:modified_time" content="2020-06-30T17:15:47.000Z" />
     <meta property="article:tag" content="247ctf" />
     <meta property="article:tag" content="ctf" />
     <meta property="article:tag" content="jwt" />
+    <meta property="article:tag" content="jsfuck" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="md5" />
+    <meta property="article:tag" content="php" />
+    <meta property="article:tag" content="magic hashes" />
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="247/CTF Write-up | Web Challenges" />
@@ -38,7 +41,7 @@
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="jsfuck, web, 247ctf, ctf, jwt" />
+    <meta name="twitter:data2" content="247ctf, ctf, jwt, jsfuck, javascript, md5, php, magic hashes" />
     <meta name="twitter:site" content="@inesmartns" />
     <meta property="og:image:width" content="1155" />
     <meta property="og:image:height" content="225" />
@@ -73,14 +76,14 @@
     "headline": "247/CTF Write-up | Web Challenges",
     "url": "https://inesmartins.github.io//247-ctf-web-write-up/",
     "datePublished": "2020-06-28T10:47:34.000Z",
-    "dateModified": "2020-06-30T17:08:43.000Z",
+    "dateModified": "2020-06-30T17:15:47.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/ctf.png",
         "width": 1155,
         "height": 225
     },
-    "keywords": "jsfuck, web, 247ctf, ctf, jwt",
+    "keywords": "247ctf, ctf, jwt, jsfuck, javascript, md5, php, magic hashes",
     "description": "This post will be updated as I solve more of the 247/CTF platform\n[https://247ctf.com/dashboard]&#x27;s web challenges.\n\n1. Trusted Client\n&gt; Developers don&#x27;t always have time to setup a backend service when prototyping\ncode. Storing credentials on the client side should be fine as long as it&#x27;s\nobfuscated right?\nsnapshot from the source codeYup, this is JSFuck [https://en.wikipedia.org/wiki/JSFuck]. I used an online\ndecoder [http://codertab.com/jsunfuck] to get the original JS code:\n\nfunction anonymou",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -93,7 +96,7 @@
     <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
 
 </head>
-<body class="post-template tag-jsfuck tag-web tag-247ctf tag-ctf tag-jwt">
+<body class="post-template tag-247ctf tag-ctf tag-jwt tag-jsfuck tag-javascript tag-md5 tag-php tag-magic-hashes">
 
     <div class="site-wrapper">
 
@@ -132,12 +135,12 @@
 <main id="site-main" class="site-main outer">
     <div class="inner">
 
-        <article class="post-full post tag-jsfuck tag-web tag-247ctf tag-ctf tag-jwt ">
+        <article class="post-full post tag-247ctf tag-ctf tag-jwt tag-jsfuck tag-javascript tag-md5 tag-php tag-magic-hashes ">
 
             <header class="post-full-header">
 
                 <section class="post-full-tags">
-                    <a href="/tag/jsfuck/">jsfuck</a>
+                    <a href="/tag/247ctf/">247ctf</a>
                 </section>
 
                 <h1 class="post-full-title">247/CTF Write-up | Web Challenges</h1>
@@ -263,7 +266,9 @@ for ($i = 0; $i &lt; $alphabet_len; $i++) {
             }
         }
     }
-}</code></pre><p>And we find a match! <code>f789bbc328a3d1a3237701818</code>. </p><p>If we remove the salt - <code>f789bbc328a3d1a3</code> we get a password that works: <code>237701818</code>. </p><p>Let's try it out!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/final.png" class="kg-image"></figure><hr>
+}
+
+?&gt;</code></pre><p>And we find a match! <code>f789bbc328a3d1a3237701818</code>. </p><p>If we remove the salt - <code>f789bbc328a3d1a3</code> we get a password that works: <code>237701818</code>. </p><p>Let's try it out!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/final.png" class="kg-image"></figure><hr>
                 </div>
             </section>
 
