@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//247-ctf-web-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/ctf.png" />
     <meta property="article:published_time" content="2020-06-28T10:47:34.000Z" />
-    <meta property="article:modified_time" content="2020-06-30T15:21:57.000Z" />
+    <meta property="article:modified_time" content="2020-06-30T17:01:52.000Z" />
     <meta property="article:tag" content="jsfuck" />
     <meta property="article:tag" content="web" />
     <meta property="article:tag" content="247ctf" />
@@ -69,7 +69,7 @@
     "headline": "247/CTF Write-up | Web Challenges",
     "url": "https://inesmartins.github.io//247-ctf-web-write-up/",
     "datePublished": "2020-06-28T10:47:34.000Z",
-    "dateModified": "2020-06-30T15:21:57.000Z",
+    "dateModified": "2020-06-30T17:01:52.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/ctf.png",
@@ -169,42 +169,32 @@ if __name__ == "__main__":
 ?&gt;</code></pre><p>Whenever I find a <code>MD5</code> hash in the wild I google it just in case someone already found the plaintext in another context, however, with this one the only matches that came up were related to this CTF.</p><p>Since the <code>MD5</code> algorithm is not reversible, it's clear that we're not supposed to try and extract the original password logically. After some research I realised that the solution lies in exploiting the "<a href="https://www.whitehatsec.com/blog/magic-hashes/">Magic hashes</a>" vulnerability that has long been identified in PHP.</p><blockquote>Password hashes in PHP are base16 encoded and can come in the form of “0e812389…”. The problem is in <code>==</code> comparison the <code>0e</code> means that if the following characters are all digits the whole string gets treated as a float. [<a href="https://www.whitehatsec.com/blog/magic-hashes/">Source</a>]</blockquote><p>Even more strange:</p><blockquote>If PHP decides that both operands look like numbers, even if they are actually strings, it will convert them both and perform a numeric comparison:<br /> <code>TRUE: "0e12345" == "0e54321"</code><br />[<a href="https://owasp.org/www-pdf-archive/PHPMagicTricks-TypeJuggling.pdf">Source</a>]</blockquote><p>So, all we have to do is find the group of characters that when concatenated with the salt and hashed is equal to <code>0e902564435691274142490923013038</code>. Let's create a script that does exactly that:</p><pre><code class="language-php">&lt;?php
 
 $salt = "f789bbc328a3d1a3";
-$alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\\\"#$%&amp;\$";
+$alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~";
 $alphabet_len = strlen($alphabet);
-$pwd = $salt;
 
-$found_match = false;
-$pos = 0;
-while (!$found_match) {
-    for ($i = 0; $i &lt; $alphabet_len; $i++) {
-        $letter = substr($alphabet, $i, 1);
-        $tmp_pwd = $pwd . $letter;
-        $tmp_pwd_hash = md5($tmp_pwd);
-        // checks that resulting hash starts with "\0e"
-        if (substr($tmp_pwd_hash, 0, 2) == "0e") {
-            // checks that other chars and digits
-            $remaining = substr($tmp_pwd_hash, 2);
-            if (is_numeric($remaining)) {
-                echo "Match!: " . $tmp_pwd . "\n";
-                $found_match = true;
-                return;
-            } else {
-                echo "The rest of the hash is not numeric " . $remaining . "\n";
+for ($i = 0; $i &lt; $alphabet_len; $i++) {
+    for ($j = 0; $j &lt; $alphabet_len; $j++) {
+        for ($k = 0; $k &lt; $alphabet_len; $k++) {
+            for ($l = 0; $l &lt; $alphabet_len; $l++) {
+                for ($m = 0; $m &lt; $alphabet_len; $m++) {
+                    $tmp_pwd = $salt . $i . $j . $k . $l . $m;
+                    $tmp_pwd_hash = md5($tmp_pwd);
+                    // checks that resulting hash starts with "\0e"
+                    if (substr($tmp_pwd_hash, 0, 2) == "0e") {
+                        // checks that other chars and digits
+                        $remaining = substr($tmp_pwd_hash, 2);
+                        if (is_numeric($remaining)) {
+                            echo "Match!: " . $tmp_pwd . "\n";
+                            return;
+                        } else {
+                            echo "The rest of the hash is not numeric " . $remaining . "\n";
+                        }
+                    }
+                }
             }
         }
     }
-    if (!$found_match) {
-        if ($pos &gt;= $alphabet_len) {
-            $pos = 0;
-        } else {
-            $pos = $pos + 1;
-        }
-        $pwd = $pwd . substr($alphabet, $pos, 1);
-    } else {
-        return;
-    }
-}
-?&gt;</code></pre><p></p><p></p><p></p><p></p>
+}</code></pre><p>And we find a match! <code>f789bbc328a3d1a3237701818</code>. </p><p>If we remove the salt - <code>f789bbc328a3d1a3</code> we get a password that works: <code>237701818</code>. </p><p>Let's try it out!</p><figure class="kg-card kg-image-card"></figure><hr></hr>
 
             </section>
 
