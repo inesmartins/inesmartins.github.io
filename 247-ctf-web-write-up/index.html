@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//247-ctf-web-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/ctf.png" />
     <meta property="article:published_time" content="2020-06-28T10:47:34.000Z" />
-    <meta property="article:modified_time" content="2020-06-30T17:15:47.000Z" />
+    <meta property="article:modified_time" content="2020-06-30T19:25:04.000Z" />
     <meta property="article:tag" content="247ctf" />
     <meta property="article:tag" content="ctf" />
     <meta property="article:tag" content="jwt" />
@@ -76,7 +76,7 @@
     "headline": "247/CTF Write-up | Web Challenges",
     "url": "https://inesmartins.github.io//247-ctf-web-write-up/",
     "datePublished": "2020-06-28T10:47:34.000Z",
-    "dateModified": "2020-06-30T17:15:47.000Z",
+    "dateModified": "2020-06-30T19:25:04.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/ctf.png",
@@ -248,23 +248,13 @@ if __name__ == "__main__":
 
 $password_hash = "0e902564435691274142490923013038";
 $salt = "f789bbc328a3d1a3";
-$alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !\"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~";
-$alphabet_len = strlen($alphabet);
 
-for ($i = 0; $i &lt; $alphabet_len; $i++) {
-    for ($j = 0; $j &lt; $alphabet_len; $j++) {
-        for ($k = 0; $k &lt; $alphabet_len; $k++) {
-            for ($l = 0; $l &lt; $alphabet_len; $l++) {
-                for ($m = 0; $m &lt; $alphabet_len; $m++) {
-                    $tmp_pwd = $salt . $i . $j . $k . $l . $m;
-                    $tmp_pwd_hash = md5($tmp_pwd);
-                    if ($tmp_pwd_hash == $password_hash) {
-                        echo "Match!: " . $tmp_pwd . "\n";
-                        return;
-                    }
-                }
-            }
-        }
+for ($i = 0; $i &lt; 1000000000; $i++) {
+    $tmp_pwd = $salt . $i;
+    $tmp_pwd_hash = md5($tmp_pwd);
+    if ($tmp_pwd_hash == $password_hash) {
+    	echo "Match!: " . $tmp_pwd . "\n";
+        return;
     }
 }
 
