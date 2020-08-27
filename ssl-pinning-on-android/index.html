@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>SSL Pinning on Android</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=7f56cbee6c" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//ssl-pinning-on-android/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//ssl-pinning-on-android/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="SSL Pinning on Android" />
+    <meta property="og:description" content="Banner source: https://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter&#x3D;1 Typically, when an Android application wants to establish a trusted connection with a remote host, it checks whether the certificate&#x27;s &quot;chain of trust&quot; is valid and compatible with the root CAs (Certificate Authorities) that are pre-installed in the device (Settings &amp;gt;" />
+    <meta property="og:url" content="https://inesmartins.github.io//ssl-pinning-on-android/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/mitm.png" />
+    <meta property="article:published_time" content="2020-06-08T12:26:32.000Z" />
+    <meta property="article:modified_time" content="2020-06-13T21:44:59.000Z" />
+    <meta property="article:tag" content="ssl" />
+    <meta property="article:tag" content="android" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SSL Pinning on Android" />
+    <meta name="twitter:description" content="Banner source: https://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter&#x3D;1 Typically, when an Android application wants to establish a trusted connection with a remote host, it checks whether the certificate&#x27;s &quot;chain of trust&quot; is valid and compatible with the root CAs (Certificate Authorities) that are pre-installed in the device (Settings &amp;gt;" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//ssl-pinning-on-android/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/mitm.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="ssl, android" />
+    <meta name="twitter:site" content="@inesmartns" />
+    <meta property="og:image:width" content="847" />
+    <meta property="og:image:height" content="382" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "SSL Pinning on Android",
+    "url": "https://inesmartins.github.io//ssl-pinning-on-android/",
+    "datePublished": "2020-06-08T12:26:32.000Z",
+    "dateModified": "2020-06-13T21:44:59.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/06/mitm.png",
+        "width": 847,
+        "height": 382
+    },
+    "keywords": "ssl, android",
+    "description": "Banner source: \nhttps://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter&#x3D;1\n\nTypically, when an Android application wants to establish a trusted connection\nwith a remote host, it checks whether the certificate&#x27;s &quot;chain of trust&quot; is\nvalid and compatible with the root CAs (Certificate Authorities) that are\npre-installed in the device (Settings &gt; Security &gt; Trusted Credentials). \n\nHowever, this hierarchy can and is sometimes compromised, i.e.: malicious actors\nare sometimes ",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+
+</head>
+<body class="post-template tag-ssl tag-android">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">SSL Pinning on Android</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-tw" href="https://twitter.com/inesmartns" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-ssl tag-android ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="/tag/ssl/">ssl</a>
+                </section>
+
+                <h1 class="post-full-title">SSL Pinning on Android</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <h2>Inês Martins</h2>
+                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-06-08">8 Jun 2020</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2020/06/mitm.png 300w,
+                            /content/images/size/w600/2020/06/mitm.png 600w,
+                            /content/images/size/w1000/2020/06/mitm.png 1000w,
+                            /content/images/size/w2000/2020/06/mitm.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2020/06/mitm.png"
+                    alt="SSL Pinning on Android"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p><em>Banner source: <a href="https://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter=1">https://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter=1</a></em></p><p>Typically, when an Android application wants to establish a trusted connection with a remote host, it checks whether the certificate's "chain of trust" is valid and compatible with the root CAs (Certificate Authorities) that are pre-installed in the device (Settings &gt; Security &gt; Trusted Credentials). </p><p>However, this hierarchy can and <em>is</em> sometimes compromised, i.e.: malicious actors are sometimes able to generate fake certificates, which allow them to intercept encrypted communications.</p><p>SSL Pinning is a mechanism that ensures that one or more public keys or certificates that the client knows to be trustworthy are part of the chain of the host's certificate.</p><h3 id="can-ssl-pinning-be-circumvented">Can SSL Pinning be circumvented?</h3><p>Yes, <u>if the Android device is rooted</u>. See:</p><ul><li><a href="https://medium.com/@felipecsl/bypassing-certificate-pinning-on-android-for-fun-and-profit-1b0d14beab2b">Bypassing Certificate Pinning on Android for fun and profit</a></li><li><a href=" https://spenkk.github.io/bugbounty/Configuring-Frida-with-Burp-and-GenyMotion-to-bypass-SSL-Pinning/">Configuring Frida with BurpSuite and Genymotion to bypass Android SSL Pinning</a></li></ul><h3 id="certificate-pinning-vs-key-pinning">Certificate Pinning vs Key Pinning</h3><p>It's possible to pin multiple certificates from the host's certificate's chain. The application will establish the connection with the server as long as at least one of them is valid. However:</p><ul><li>Pinning only the "leaf" certificates means the application will stop working every time the server updates its certificates, unless backup certificates are configured, which is recommended. This may or may not be a problem, depending on how often these certificates are updated (typically this update occurs every 1 or 2 years).</li><li>Pinning intermediate certificates means trusting that the intermediate CAs won't generate malicious certificates for the server. However, if the "leaves" change, the app will continue to work.</li></ul><p>One very simple way to prevent the app from having to be updated every time its "leaves" are updated, is to <u>pin the certificate's public key</u> instead of the certificates themselves.</p><p>Unless the CA requires a new certificate request, updating a certificate doesn't change its public key and, as such, it's possible to use this key for a lot longer. </p><p>This solution also prevents the application from trusting any 3rd party, such as intermediate CAs.</p><h3 id="public-key-pinning-using-okhttp">Public Key Pinning using OkHttp</h3><p><a href="https://square.github.io/okhttp/">OkHttp</a> is one of the most commonly used libraries to manage network requests in Android. Parameterising this library to use SSL pining, and more specifically, public key pinning is very simple:</p><ol><li>Build an instance of <a href="https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html">CertificatePinner</a> that contains all the public keys and corresponding hostnames you want to pin: </li></ol><pre><code class="language-kotlin">val pinner = CertificatePinner
+	.Builder()
+    .add(CERT_HOSTNAME_1, CERT_PUBLIC_KEY_1)
+    .add(CERT_HOSTNAME_2, CERT_PUBLIC_KEY_2)
+    .add(CERT_HOSTNAME_N, CERT_PUBLIC_KEY_N)
+	.build()</code></pre><p>2. Pass this object as a param of the <a href="https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.Builder.html">OkHttpClient builder</a>:</p><pre><code class="language-kotlin">val okhttpClient = OkHttpClient
+	.Builder()
+    .certificatePinner(pinner)
+    .build()</code></pre><h3 id="sources"><strong>Sources</strong></h3><ul><li><a href="https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning">https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning</a></li><li><a href="https://medium.com/@appmattus/android-security-ssl-pinning-1db8acb6621e">https://medium.com/@appmattus/android-security-ssl-pinning-1db8acb6621e</a></li><li><a href="https://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter=1">https://dzone.com/refcardz/securing-mobile-applications-with-cert-pinning?chapter=1</a></li><li><a href="https://www.netguru.com/codestories/3-ways-how-to-implement-certificate-pinning-on-android">https://www.netguru.com/codestories/3-ways-how-to-implement-certificate-pinning-on-android</a></li><li><a href="https://www.raywenderlich.com/5634-securing-network-data-tutorial-for-android">https://www.raywenderlich.com/5634-securing-network-data-tutorial-for-android</a></li><li><a href="https://medium.com/@enriqueramrezmanzaneda/managing-api-keys-in-android-builds-ddf56bb3b5a5">https://medium.com/@enriqueramrezmanzaneda/managing-api-keys-in-android-builds-ddf56bb3b5a5</a></li></ul>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+                <article class="post-card post tag-ghost-tag tag-blog tag-static-site-generator tag-gssg ">
+
+    <a class="post-card-image-link" href="/simplest-way-to-host-your-ghost-site-on-gitpages/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg 300w,
+                    /content/images/size/w600/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg 600w,
+                    /content/images/size/w1000/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg 1000w,
+                    /content/images/size/w2000/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg"
+            alt="Simplest way to host your Ghost blog on GitHub Pages"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/simplest-way-to-host-your-ghost-site-on-gitpages/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">ghost</div>
+                <h2 class="post-card-title">Simplest way to host your Ghost blog on GitHub Pages</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>This tutorial assumes you already have a Ghost blog that you want to host on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-06-08">8 Jun 2020</time> <span class="bull">&bull;</span> 1 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-windows tag-htb tag-ad tag-windapsearch tag-domain-controller tag-windows-domain tag-evil-winrm ">
+
+    <a class="post-card-image-link" href="/htb-walkthrough-resolute-user/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/06/resolute.png 300w,
+                    /content/images/size/w600/2020/06/resolute.png 600w,
+                    /content/images/size/w1000/2020/06/resolute.png 1000w,
+                    /content/images/size/w2000/2020/06/resolute.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/06/resolute.png"
+            alt="HTB Write-up | Resolute"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/htb-walkthrough-resolute-user/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">windows</div>
+                <h2 class="post-card-title">HTB Write-up | Resolute</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>The retired machine can be found here. Official write-up can be downloaded here. I started with some basic scanning with nmap that found that most likely this machine was a</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-06-08">8 Jun 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/inesmartns" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=7f56cbee6c"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    
+
+</body>
+</html>
