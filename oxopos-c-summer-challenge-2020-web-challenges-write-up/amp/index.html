@@ -15,14 +15,14 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up" />
-    <meta property="og:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher.  Since I knew the first four numbers probably matched the word" />
+    <meta property="og:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }Since I knew the 4 four numbers probably corresponded to the word flag, I was able to get the rest of the flag with some &quot;leaps of logic&quot;, however, this only worked because" />
     <meta property="og:url" content="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/09/headers1.png" />
     <meta property="article:published_time" content="2020-09-25T10:30:14.000Z" />
-    <meta property="article:modified_time" content="2020-09-25T14:23:57.000Z" />
+    <meta property="article:modified_time" content="2020-09-25T17:38:14.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up" />
-    <meta name="twitter:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher.  Since I knew the first four numbers probably matched the word" />
+    <meta name="twitter:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }Since I knew the 4 four numbers probably corresponded to the word flag, I was able to get the rest of the flag with some &quot;leaps of logic&quot;, however, this only worked because" />
     <meta name="twitter:url" content="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/09/headers1.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -61,14 +61,14 @@
     "headline": "ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up",
     "url": "https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/",
     "datePublished": "2020-09-25T10:30:14.000Z",
-    "dateModified": "2020-09-25T14:23:57.000Z",
+    "dateModified": "2020-09-25T17:38:14.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/09/headers1.png",
         "width": 1704,
         "height": 966
     },
-    "description": "Knock Knock (100)\n&gt; 21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }\nThis challenge was great because I ended up solving it with some leaps of logic,\nnot knowing this was a known cipher. \n\nSince I knew the first four numbers probably matched the word flag, I was able\nto get the rest of the flag with some trial and error:\n\na &#x3D;&gt; 11\nb &#x3D;&gt; 12\nc &#x3D;&gt; 13\nd &#x3D;&gt; 14\ne &#x3D;&gt; 15\n\n// 6 number jump \n\nf &#x3D;&gt; 21\ng &#x3D;&gt; 22\nh &#x3D;&gt; 23\ni &#x3D;&gt; 24\nj &#x3D;&gt; 25\nk &#x3D;&gt; 26\n\n// 5 number jump \n\nl &#x3D;&gt; 31\nm &#x3D;&gt; 32\nn &#x3D;&gt; 33\no &#x3D;&gt; 34\np &#x3D;&gt; 35\nq &#x3D;&gt; 36\n\n//",
+    "description": "Knock Knock (100)\n&gt; 21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }\nSince I knew the 4 four numbers probably corresponded to the word flag, I was\nable to get the rest of the flag with some &quot;leaps of logic&quot;, however, this only\nworked because the flag contained words that I recognised. If that weren&#x27;t the\ncase I would&#x27;ve had to know about Tap Code\n[https://en.wikipedia.org/wiki/Tap_code], aka Knock Code.\n\nBasically, by knowing this:\n\na &#x3D;&gt; 11\nf &#x3D;&gt; 21\ng &#x3D;&gt; 22\nl &#x3D;&gt; 31\n\nI was able to get to this (with s",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -111,7 +111,10 @@
             </figure>
             <section class="post-content">
 
-                <h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher. </p><p>Since I knew the first four numbers probably matched the word <code>flag</code>, I was able to get the rest of the flag with some trial and error:</p><pre><code>a =&gt; 11
+                <h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>Since I knew the 4 four numbers probably corresponded to the word <code>flag</code>, I was able to get the rest of the flag with some "leaps of logic", however, this only worked because the flag contained words that I recognised. If that weren't the case I would've had to know about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a>, aka Knock Code.</p><p>Basically, by knowing this:</p><pre><code>a =&gt; 11
+f =&gt; 21
+g =&gt; 22
+l =&gt; 31</code></pre><p>I was able to get to this (with some tweaking):</p><pre><code>a =&gt; 11
 b =&gt; 12
 c =&gt; 13
 d =&gt; 14
@@ -140,9 +143,7 @@ q =&gt; 36
 r =&gt; 42
 s =&gt; 43
 t =&gt; 44
-u =&gt; 45
-...
-</code></pre><p>However, this method only worked because the flag contained two words that I recognised and made sense in context - <code>flag{mateusrose}</code> (<a href="https://www.mateusrose.com/pt/">Mateus Rosé</a>).  If that weren't the case I would have had to know about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a>, aka Knock Code to solve this one.</p><hr></hr><h2 id="pancetta-200-">Pancetta (200)</h2><figure class="kg-card kg-image-card"></figure><p>When I hear pancetta I think <a href="https://en.wikipedia.org/wiki/Bacon%27s_cipher">Bacon cipher</a>. I very quickly replaced every pink letter with a <code>1</code> and every black letter with a <code>0</code> and then decoded the cipher-text using <a href="https://gchq.github.io/CyberChef/#recipe=Bacon_Cipher_Decode('Standard%20(I%3DJ%20and%20U%3DV)','0/1',false)&amp;input=MTAwMDExMDAxIDEwIDExMDAwMCAwMTEwMDAgMDAwMCAxMDAwMDAxMCAwMDAwIDAxMCAwMDAwIDAwMCAwMDEwIDExMDAgMTAgMDAxMCAxMCAwMSAxMDExMSAxMDAxMTEwIDAxMTEwMDEgMTEwMDExIDEwIDAxMSAxMDAxIDExMDAxMSAxMDA">CyberChef</a>.</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="streamside-300-">Streamside (300)</h2><blockquote>No one will give you the flag this time.<br />You will find it out by yourself. Take your time.<br /><a href="https://streamside.apl3b.com/">https://streamside.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"></figure><p>This challenge consisted of a web page with an input field where we could enter and validate a flag. After some poking around I realised that just by entering <code>flag</code> it took the server a lot longer to respond that when I entered something else, which made me think this was a <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attack</a>.</p><p>Initially I created a Python script to find the complete flag automatically, but the results were unreliable so I decided to use the script to output the results for each letter of the flag, and then analyse them manually:</p><pre><code>~ cat curl-format.txt
+u =&gt; 45</code></pre><p>Which got me the flag:  <code>flag{mateusrose}</code> </p><hr></hr><h2 id="pancetta-200-">Pancetta (200)</h2><figure class="kg-card kg-image-card"></figure><p>When I heard pancetta I immediately thought of the <a href="https://en.wikipedia.org/wiki/Bacon%27s_cipher">Bacon cipher</a>. I replaced every pink letter with a <code>1</code> and every black letter with a <code>0</code> and then decoded the cipher-text using <a href="https://gchq.github.io/CyberChef/#recipe=Bacon_Cipher_Decode('Standard%20(I%3DJ%20and%20U%3DV)','0/1',false)&amp;input=MTAwMDExMDAxIDEwIDExMDAwMCAwMTEwMDAgMDAwMCAxMDAwMDAxMCAwMDAwIDAxMCAwMDAwIDAwMCAwMDEwIDExMDAgMTAgMDAxMCAxMCAwMSAxMDExMSAxMDAxMTEwIDAxMTEwMDEgMTEwMDExIDEwIDAxMSAxMDAxIDExMDAxMSAxMDA">CyberChef</a>.</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="streamside-300-">Streamside (300)</h2><blockquote>No one will give you the flag this time.<br />You will find it out by yourself. Take your time.<br /><a href="https://streamside.apl3b.com/">https://streamside.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"></figure><p>This challenge consisted of a web page with an input field where we could enter and validate a flag. After some poking around I realised that just by entering the word <code>flag</code> it took the server a lot longer to respond that when we entered something else, which made me think this was a <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attack</a>.</p><p>Initially I created a Python script to find the complete flag automatically, but the results were unreliable so I decided to use the script to output the results for each letter of the flag, and then analyse them manually:</p><pre><code>~ cat curl-format.txt
 time_total:  %{time_total}</code></pre><pre><code class="language-python">import os
 
 alphabet = "abcdefghijklmnopqrstuvxwyz0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZ!\"#$%&amp;/()=?*`|^_:;-"
@@ -175,7 +176,7 @@ for letter in alphabet:
         print("Found it! Flag is " + tmp_flag)
     
 os.system("echo '" + result_str + "' &gt; " + output_filename)
-os.system("open " + output_filename)</code></pre><p>And we get the final flag: <code>"flag{c4l1Po_de_l1M4o}"</code>.</p><hr></hr>
+os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>flag{c4l1Po_de_l1M4o}</code>.</p>
 
             </section>
 
