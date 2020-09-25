@@ -17,19 +17,19 @@
     <meta property="og:title" content="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up" />
     <meta property="og:description" content="Passive-Aggressive Flask (100)I can give you a flag, but you&#x27;ll have to be nice. Remember to say it LOUD, so I can hear you. https://passiveaggressive.apl3b.com~ curl https://passiveaggressive.apl3b.com &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang&#x3D;&quot;en&quot;&amp;gt; &amp;lt;head&amp;gt;   &amp;lt;meta charset&#x3D;&quot;utf-8&quot;" />
     <meta property="og:url" content="https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1-3.jpeg" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/09/headers2.png" />
     <meta property="article:published_time" content="2020-09-24T18:49:15.000Z" />
-    <meta property="article:modified_time" content="2020-09-25T11:13:33.000Z" />
+    <meta property="article:modified_time" content="2020-09-25T14:40:23.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up" />
     <meta name="twitter:description" content="Passive-Aggressive Flask (100)I can give you a flag, but you&#x27;ll have to be nice. Remember to say it LOUD, so I can hear you. https://passiveaggressive.apl3b.com~ curl https://passiveaggressive.apl3b.com &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang&#x3D;&quot;en&quot;&amp;gt; &amp;lt;head&amp;gt;   &amp;lt;meta charset&#x3D;&quot;utf-8&quot;" />
     <meta name="twitter:url" content="https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1-3.jpeg" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/09/headers2.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="504" />
-    <meta property="og:image:height" content="105" />
+    <meta property="og:image:width" content="1262" />
+    <meta property="og:image:height" content="682" />
     
     <script type="application/ld+json">
 {
@@ -61,12 +61,12 @@
     "headline": "ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up",
     "url": "https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/",
     "datePublished": "2020-09-24T18:49:15.000Z",
-    "dateModified": "2020-09-25T11:13:33.000Z",
+    "dateModified": "2020-09-25T14:40:23.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1-3.jpeg",
-        "width": 504,
-        "height": 105
+        "url": "https://inesmartins.github.io//content/images/2020/09/headers2.png",
+        "width": 1262,
+        "height": 682
     },
     "description": "Passive-Aggressive Flask (100)\n&gt; I can give you a flag, but you&#x27;ll have to be nice.\nRemember to say it LOUD, so I can hear you.\nhttps://passiveaggressive.apl3b.com [https://passiveaggressive.apl3b.com/]\n~ curl https://passiveaggressive.apl3b.com\n\n&lt;!DOCTYPE html&gt;\n&lt;html lang&#x3D;&quot;en&quot;&gt;\n&lt;head&gt;\n  &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;\n  &lt;title&gt;Passive-Aggressive Flask&lt;/title&gt;\n&lt;/head&gt;\n\n&lt;body&gt;\nNot so fast.\n&lt;br&gt;\nYou think you can just boss me around? 😠\n&lt;br&gt;\nBe &lt;i&gt;polite&lt;/i&gt;!\n&lt;/body&gt;\n&lt;/html&gt;%\n\nLooking at the clues I was pr",
     "mainEntityOfPage": {
@@ -107,7 +107,7 @@
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1-3.jpeg" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/09/headers2.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
@@ -169,7 +169,7 @@ app.get('/', function (req, res, next) {
       .concat(typeof(eval)).length))
     .concat(((typeof(null))
       .concat((typeof(null)))
-      .concat(typeof(eval)).length)))</code></pre><hr></hr><h2 id="extensible-risky-language-300-">Extensible Risky Language (300)</h2><blockquote>Your flag is securely stored in <code>/etc/passwd</code> .<br /><a href="https://risky.apl3b.com/">https://risky.apl3b.com</a></blockquote><p>I smell an <code>XXE</code>! </p><p>When we submit our shoe size, the size is reflected below the input field, so I immediately thought the idea was to manipulate the <code>XML</code> sent to the server in order to fetch the <code>/etc/passwd</code> file.</p><figure class="kg-card kg-image-card"></figure><p>If this wasn't enough of a clue, it looks like the devs are not great at XML.</p><figure class="kg-card kg-image-card"></figure><p>And indeed when we send a <code>POST</code> request to <a href="https://risky.apl3b.com/process">https://risky.apl3b.com/process</a> with our shoe size, the form data is sent in XML:</p><pre><code>xml: &lt;stock&gt;&lt;size&gt;34&lt;/size&gt;&lt;/stock&gt;</code></pre><figure class="kg-card kg-image-card"></figure><p>And we get our flag: <code>flag{g3lat1na_r0y4l_m0raNg0}</code></p><hr></hr>
+      .concat(typeof(eval)).length)))</code></pre><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="extensible-risky-language-300-">Extensible Risky Language (300)</h2><blockquote>Your flag is securely stored in <code>/etc/passwd</code> .<br /><a href="https://risky.apl3b.com/">https://risky.apl3b.com</a></blockquote><p>I smell an <code>XXE</code>! </p><p>When we submit our shoe size, the size is reflected below the input field, so I immediately thought the idea was to manipulate the <code>XML</code> sent to the server in order to fetch the <code>/etc/passwd</code> file.</p><figure class="kg-card kg-image-card"></figure><p>If this wasn't enough of a clue, it looks like the devs are not great at XML.</p><figure class="kg-card kg-image-card"></figure><p>And indeed when we send a <code>POST</code> request to <a href="https://risky.apl3b.com/process">https://risky.apl3b.com/process</a> with our shoe size, the form data is sent in XML:</p><pre><code>xml: &lt;stock&gt;&lt;size&gt;34&lt;/size&gt;&lt;/stock&gt;</code></pre><figure class="kg-card kg-image-card"></figure><p>And we get our flag: <code>flag{g3lat1na_r0y4l_m0raNg0}</code></p><hr></hr>
 
             </section>
 
