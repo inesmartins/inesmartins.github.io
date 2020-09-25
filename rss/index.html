@@ -1,4 +1,131 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Thu, 27 Aug 2020 12:17:43 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Magic]]></title><description><![CDATA[<h2 id="scanning"><br>Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Fri, 25 Sep 2020 10:37:29 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up]]></title><description><![CDATA[<h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher. </p><p>Since I knew the first four numbers probably matched the word</p>]]></description><link>https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/</link><guid isPermaLink="false">5f19e8b81e7da103a083f2ca</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 25 Sep 2020 10:30:14 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><img src="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1.jpeg" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"><p>This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher. </p><p>Since I knew the first four numbers probably matched the word <code>flag</code>, I was able to get the rest of the flag with some trial and error:</p><pre><code>a =&gt; 11
+b =&gt; 12
+c =&gt; 13
+d =&gt; 14
+e =&gt; 15
+
+// 6 number jump 
+
+f =&gt; 21
+g =&gt; 22
+h =&gt; 23
+i =&gt; 24
+j =&gt; 25
+k =&gt; 26
+
+// 5 number jump 
+
+l =&gt; 31
+m =&gt; 32
+n =&gt; 33
+o =&gt; 34
+p =&gt; 35
+q =&gt; 36
+
+// 6 number jump 
+
+r =&gt; 42
+s =&gt; 43
+t =&gt; 44
+u =&gt; 45
+...
+</code></pre><p>However, this method only worked because the flag contained two words that I recognised and made sense in context - <code>flag{mateusrose}</code> (<a href="https://www.mateusrose.com/pt/">Mateus Rosé</a>).  If that weren't the case I would have had to know about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a>, aka Knock Code to solve this one.</p><hr><h2 id="pancetta-200-">Pancetta (200)</h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-4.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"></figure><p>When I hear pancetta I think <a href="https://en.wikipedia.org/wiki/Bacon%27s_cipher">Bacon cipher</a>. I very quickly replaced every pink letter with a <code>1</code> and every black letter with a <code>0</code> and then decoded the cipher-text using <a href="https://gchq.github.io/CyberChef/#recipe=Bacon_Cipher_Decode('Standard%20(I%3DJ%20and%20U%3DV)','0/1',false)&amp;input=MTAwMDExMDAxIDEwIDExMDAwMCAwMTEwMDAgMDAwMCAxMDAwMDAxMCAwMDAwIDAxMCAwMDAwIDAwMCAwMDEwIDExMDAgMTAgMDAxMCAxMCAwMSAxMDExMSAxMDAxMTEwIDAxMTEwMDEgMTEwMDExIDEwIDAxMSAxMDAxIDExMDAxMSAxMDA">CyberChef</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-31.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"></figure><hr><h2 id="streamside-300-">Streamside (300)</h2><blockquote>No one will give you the flag this time.<br>You will find it out by yourself. Take your time.<br><a href="https://streamside.apl3b.com/">https://streamside.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-32.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"></figure><p>This challenge consisted of a web page with an input field where we could enter and validate a flag. After some poking around I realised that just by entering <code>flag</code> it took the server a lot longer to respond that when I entered something else, which made me think this was a <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attack</a>.</p><p>Initially I created a Python script to find the complete flag automatically, but the results were unreliable so I decided to use the script to output the results for each letter of the flag, and then analyse them manually:</p><pre><code>~ cat curl-format.txt
+time_total:  %{time_total}</code></pre><pre><code class="language-python">import os
+
+alphabet = "abcdefghijklmnopqrstuvxwyz0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZ!\"#$%&amp;/()=?*`|^_:;-"
+url = "https://streamside.apl3b.com/process"
+output_filename = "output.txt"
+format_filename = "@curl-format.txt"
+
+result_str = ""
+os.system("rm " + output_filename)
+
+for letter in alphabet:
+
+    # builds new test flag
+    tmp_flag = "flag=flag{" + letter + "}"
+
+    # executes command
+    print("Trying " + tmp_flag)
+    cmd = "curl -s -d '" + tmp_flag + "' -w '" + format_filename + "' -X POST " + url
+    result = os.popen(cmd).read()
+
+    # parses result and prints it
+    answer = result.split(" ")[0].split("\n")[0].strip()
+    time_total = result.split("time_total:")[1].strip()
+
+    # saves result to string
+    result_str += letter + "=" + str(time_total) + "\n"
+
+    # checks message
+    if "Wrong" not in answer:
+        print("Found it! Flag is " + tmp_flag)
+    
+os.system("echo '" + result_str + "' &gt; " + output_filename)
+os.system("open " + output_filename)</code></pre><p>And we get the final flag: <code>"flag{c4l1Po_de_l1M4o}"</code>.</p><hr>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up]]></title><description><![CDATA[<h2 id="passive-aggressive-flask-100-">Passive-Aggressive Flask (100)</h2><blockquote>I can give you a flag, but you'll have to be nice.<br>Remember to say it LOUD, so I can hear you.<br><a href="https://passiveaggressive.apl3b.com/">https://passiveaggressive.apl3b.com</a></blockquote><pre><code>~ curl https://passiveaggressive.apl3b.com
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"</code></pre>]]></description><link>https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/</link><guid isPermaLink="false">5f19e6891e7da103a083f2a8</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 24 Sep 2020 18:49:15 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<h2 id="passive-aggressive-flask-100-">Passive-Aggressive Flask (100)</h2><blockquote>I can give you a flag, but you'll have to be nice.<br>Remember to say it LOUD, so I can hear you.<br><a href="https://passiveaggressive.apl3b.com/">https://passiveaggressive.apl3b.com</a></blockquote><pre><code>~ curl https://passiveaggressive.apl3b.com
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Passive-Aggressive Flask&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+Not so fast.
+&lt;br&gt;
+You think you can just boss me around? 😠
+&lt;br&gt;
+Be &lt;i&gt;polite&lt;/i&gt;!
+&lt;/body&gt;
+&lt;/html&gt;%</code></pre><img src="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1-1.jpeg" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"><p>Looking at the clues I was pretty sure this challenge was going to be solved by sending some sort of specific keyword, such as "please" on all caps (because of the LOUD clue), but I wasn't sure how.</p><p>After some trial and error I finally got it:</p><pre><code>~ curl -X PLEASE https://passiveaggressive.apl3b.com
+
+...
+&lt;body&gt;
+Oh, finally someone who shows some respect. ☺️
+&lt;br&gt;
+Here, take this juicy flag: &lt;i&gt;flag{g4spach0_n0_t4ch0}&lt;/i&gt;!
+&lt;br&gt;
+(props to Pixels Camp 2020 Quiz Qualifiers &lt;3)
+&lt;/body&gt;
+&lt;/html&gt;%</code></pre><hr><h2 id="2020-200-">2020 (200)</h2><blockquote>Just represent the number 2020.<br>Easy, right? No digits allowed.<br><a href="https://2020.apl3b.com/">https://2020.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-6.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>Let's take a look at the source code to see what kind of validations are taking place:</p><pre><code class="language-javascript">...
+app.get('/', function (req, res, next) {
+  let output = '';
+  const code = req.query.code + '';
+  if (code &amp;&amp; code.length &lt; 300 &amp;&amp; !/[^a-z().]/.test(code)) {
+    try {
+      const result = vm.runInNewContext(code, {}, { timeout: 500 });
+      if (result === 2020) {
+        output = process.env.FLAG;
+      } else {
+        output = 'nope';
+      }
+    } catch (e) {
+      output = 'nope';
+    }
+  } else {
+    output = 'nope';
+  }
+  res.render('index', { title: '[a-z().]', output });
+});
+...</code></pre><p>So, basically we need to find a piece of JS code that:</p><ul><li>is under 300 characters;</li><li>matches this REGEX: <code>!/[^a-z().]/</code>;</li><li>produces the number <code>2020</code>;</li><li>uses functions and variables known to the <code>NodeJS</code> context.</li></ul><p>This last condition ended up being the hardest, and I had to rely pretty heavily on the <code>eval</code> function:</p><pre><code>eval.length.constructor(                  // Number()
+  eval.name.constructor.apply()           // String()
+    .concat(eval.name.big.apply.length)   // 2
+    .concat(eval.name.bold.length)        // 0
+    .concat(eval.name.big.apply.length)   // 2
+    .concat(eval.name.bold.length))       // 0</code></pre><p>Alternatively I found one that's a little longer:</p><pre><code>eval.length.constructor(
+  eval.name.constructor.apply()
+    .concat(((typeof(null))
+      .concat((typeof(null)))
+      .concat(typeof(eval)).length))
+    .concat(((typeof(null))
+      .concat((typeof(null)))
+      .concat(typeof(eval)).length)))</code></pre><hr><h2 id="extensible-risky-language-300-">Extensible Risky Language (300)</h2><blockquote>Your flag is securely stored in <code>/etc/passwd</code> .<br><a href="https://risky.apl3b.com/">https://risky.apl3b.com</a></blockquote><p>I smell an <code>XXE</code>! </p><p>When we submit our shoe size, the size is reflected below the input field, so I immediately thought the idea was to manipulate the <code>XML</code> sent to the server in order to fetch the <code>/etc/passwd</code> file.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-13.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>If this wasn't enough of a clue, it looks like the devs are not great at XML.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-11.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>And indeed when we send a <code>POST</code> request to <a href="https://risky.apl3b.com/process">https://risky.apl3b.com/process</a> with our shoe size, the form data is sent in XML:</p><pre><code>xml: &lt;stock&gt;&lt;size&gt;34&lt;/size&gt;&lt;/stock&gt;</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-15.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>And we get our flag: <code>flag{g3lat1na_r0y4l_m0raNg0}</code></p><hr>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Magic]]></title><description><![CDATA[<h2 id="scanning"><br>Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10</code></pre>]]></description><link>https://inesmartins.github.io//dnp-htb-write-up/</link><guid isPermaLink="false">5edf98963d00be7291b53615</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 27 Aug 2020 12:14:17 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/08/magic.png" medium="image"/><content:encoded><![CDATA[<h2 id="scanning"><br>Scanning</h2><img src="https://inesmartins.github.io//content/images/2020/08/magic.png" alt="HTB Write-up | Magic"><p>As always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST
 Nmap scan report for magic.htb (10.10.10.185)
@@ -754,510 +881,4 @@ https://bit.ly/31uALei
 NOTEPAD
 
 </code></pre>
-<!--kg-card-end: markdown--><p>This link leads us to a <a href="https://www.dropbox.com/s/tsf768x9tvnurow/isso.txt?dl=0">file</a> that contains a simple ROT13 cipher, which we were able to decipher this text using <a href="https://gchq.github.io/CyberChef/#recipe=ROT13(true,true,13)&amp;input=c3ludHtaOFolUUhaQyVFNVBYRiF9">CyberChef</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/flag.png" class="kg-image" alt="ØxOPOSɆC Steg Challenge 2019"></figure><hr><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://cqureacademy.com/blog/forensics/memory-dump-analysis">https://cqureacademy.com/blog/forensics/memory-dump-analysis</a></li><li><a href="https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf">https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf</a></li><li><a href="https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/">https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/</a></li></ul>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Crypto Challenge 2019]]></title><description><![CDATA[<h2 id="level-1">Level 1 </h2><p>This first level is an example of how the <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a> can be used against the AES-CTR algorithm, if incorrectly implemented.</p><p>We're given a ciphered text (C1):</p><!--kg-card-begin: markdown--><p><code>5/KIDoW4XvtTCLZQSQl9GYBmdSC+vj2wDxP4Bbg=</code></p>
-<!--kg-card-end: markdown--><p>and its plaintext equivalent (P1):</p><!--kg-card-begin: markdown--><p><code>this data is indeed important</code></p>
-<!--kg-card-end: markdown--><p>And we're asked to decipher a second cipher</p>]]></description><link>https://inesmartins.github.io//0xoposec/</link><guid isPermaLink="false">5edd699b989b5d0f390eb8ab</guid><category><![CDATA[cryptography]]></category><category><![CDATA[ctf]]></category><category><![CDATA[aes]]></category><category><![CDATA[aes-ctr]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 22:48:24 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/highres_471963990.jpeg" medium="image"/><content:encoded><![CDATA[<h2 id="level-1">Level 1 </h2><img src="https://inesmartins.github.io//content/images/2020/06/highres_471963990.jpeg" alt="ØxOPOSɆC Crypto Challenge 2019"><p>This first level is an example of how the <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a> can be used against the AES-CTR algorithm, if incorrectly implemented.</p><p>We're given a ciphered text (C1):</p><!--kg-card-begin: markdown--><p><code>5/KIDoW4XvtTCLZQSQl9GYBmdSC+vj2wDxP4Bbg=</code></p>
-<!--kg-card-end: markdown--><p>and its plaintext equivalent (P1):</p><!--kg-card-begin: markdown--><p><code>this data is indeed important</code></p>
-<!--kg-card-end: markdown--><p>And we're asked to decipher a second cipher (C2):</p><!--kg-card-begin: markdown--><p><code>9faAGt62D79tSa1GNhR2FbpgY3mnpyKAEVfrD7E=</code></p>
-<!--kg-card-end: markdown--><p>We also know that this is an implementation of the AES block cipher in CTR mode, where both plaintexts where encrypted with the same key and IV. In these conditions we know that:</p><!--kg-card-begin: markdown--><pre><code>C1 XOR C2 = P1 XOR P2
-</code></pre>
-<!--kg-card-end: markdown--><p>and as such:</p><!--kg-card-begin: markdown--><pre><code>P2 = P1 XOR (C1 XOR C2)
-</code></pre>
-<!--kg-card-end: markdown--><p>To find P2 I created a simple Python script:</p><pre><code class="language-python">import base64
-
-c1 = "5/KIDoW4XvtTCLZQSQl9GYBmdSC+vj2wDxP4Bbg="
-c2 = "9faAGt62D79tSa1GNhR2FbpgY3mnpyKAEVfrD7E="
-p1 = "this data is indeed important"
-
-decoded_c1 = c1.decode("base64")
-c1_byte_arr = bytearray(decoded_c1)
-decoded_c2 = c2.decode("base64")
-c2_byte_arr = bytearray(decoded_c2)
-p1_byte_arr = bytearray(p1)
-c1_xor_c2 = []
-p2 = []
-
-for i in range(len(c1_byte_arr)):
-    xored = c1_byte_arr[i] ^ c2_byte_arr[i]
-    c1_xor_c2.append(xored)
-
-print("c1 XOR c2 = " + " ".join(map(str, c1_xor_c2)))
-print("\n")
-
-for j in range(len(c1_xor_c2)):
-    xored2 = p1_byte_arr[j] ^ c1_xor_c2[j]
-    p2.append(xored2)
-
-print("p1 XOR (c1 XOR c2) = " + " ".join(map(str, p2)))</code></pre><hr><h2 id="level-2">Level 2</h2><p>On this level, we're  provided with an example of a valid cipher but not its plaintext equivalent:</p><!--kg-card-begin: markdown--><pre><code>22jBDaecKR9Sn4JXzJkxXwY/cAgC9/Gg5JImfEgQLC0=
-</code></pre>
-<!--kg-card-end: markdown--><p>We also have access to a server which confirms or denies the validity of any given cipher, but it also let's us know when the error is due to invalid padding, which makes it vulnerable to <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">padding oracle attacks</a>.</p><p>Instead of creating a custom Python script, I simply adapted the following PoC: <a href="https://github.com/mpgn/Padding-oracle-attack">https://github.com/mpgn/Padding-oracle-attack</a>:</p><pre><code class="language-python">import os
-import sys
-
-url = [SERVER_URL]
-flag_hex = [KNOWN_VALID_FLAG_IN_HEX]
-base64_error = [INVALID_BASE64_ERROR_MSG]
-len_error = [INVALID_LENGTH_ERROR_MSG]
-padding_error = [WRONG_PADDING_ERROR_MSG]
-success_msg = [SUCCESS_MSG]
-
-import argparse
-import httplib, urllib
-import re
-import binascii
-import os
-import sys
-import time
-from binascii import unhexlify, hexlify
-from itertools import cycle, izip
-
-def call_oracle(hex_cipher):
-    unencoded = hex_cipher.decode("hex")
-    test_flag = unencoded.encode("base64")
-    request = "curl -X POST -F 'encrypted=" + test_flag + "' --url " + url
-    print(request)
-    result = os.popen(request).read()
-    if padding_error in str(result) or len_error in str(result):  #or base64_error in str(result) 
-        return 0
-    else:
-        return 1
-
-# the exploit don't need to touch this part
-# split the cipher in len of size_block
-def split_len(seq, length):
-    return [seq[i:i+length] for i in range(0, len(seq), length)]
-
-''' create custom block for the byte we search'''
-def block_search_byte(size_block, i, pos, l):
-    hex_char = hex(pos).split('0x')[1]
-    return "00"*(size_block-(i+1)) + ("0" if len(hex_char)%2 != 0 else '') + hex_char + ''.join(l)   
-
-''' create custom block for the padding'''
-def block_padding(size_block, i):
-    l = []
-    for t in range(0,i+1):
-        l.append(("0" if len(hex(i+1).split('0x')[1])%2 != 0 else '') + (hex(i+1).split('0x')[1]))
-    return "00"*(size_block-(i+1)) + ''.join(l)
-
-def hex_xor(s1,s2):
-    return hexlify(''.join(chr(ord(c1) ^ ord(c2)) for c1, c2 in zip(unhexlify(s1), cycle(unhexlify(s2)))))
-
-def run():
-    cipher       = flag_hex
-    size_block   = 16
-    found        = False
-    valide_value = []
-    result       = []
-    len_block    = size_block*2
-    cipher_block = split_len(cipher, len_block)
-
-    if len(cipher_block) == 1:
-        print "[-] Abort there is only one block"
-        sys.exit() 
-    #for each cipher_block
-    for block in reversed(range(1,len(cipher_block))):
-        if len(cipher_block[block]) != len_block:
-            print "[-] Abort length block doesn't match the size_block"
-            break
-        print "[+] Search value block : ", block, "\n"
-        #for each byte of the block
-        for i in range(0,size_block):
-            # test each byte max 255
-            for ct_pos in range(0,256):
-                # 1 xor 1 = 0 or valide padding need to be checked
-                if ct_pos != i+1 or (len(valide_value) &gt; 0  and int(valide_value[-1],16) == ct_pos):
-
-                    bk = block_search_byte(size_block, i, ct_pos, valide_value) 
-                    bp = cipher_block[block-1]
-                    bc = block_padding(size_block, i) 
-
-                    tmp = hex_xor(bk,bp)
-                    cb  = hex_xor(tmp,bc).upper()
-
-                    up_cipher  = cb + cipher_block[block]
-                    #time.sleep(0.5)
-
-                    # we call the oracle, our god
-                    valid = call_oracle(up_cipher)
-
-                    if valid == 1:
-
-                        found = True
-
-                        # data analyse and insert in rigth order
-                        value = re.findall('..',bk)
-                        valide_value.insert(0,value[size_block-(i+1)])
-                        bytes_found = ''.join(valide_value)
-                        if i == 0 and bytes_found.decode("hex") &gt; hex(size_block) and block == len(cipher_block)-1:
-                            print "[-] Error decryption failed the padding is &gt; "+str(size_block)
-                            sys.exit()
-
-                        print '\033[36m' + '\033[1m' + "[+]" + '\033[0m' + " Found", i+1,  "bytes :", bytes_found
-                        print ''
-
-                        break 
-            if found == False:
-                # lets say padding is 01 for the last byte of the last block (the padding block)
-                if len(cipher_block)-1 == block and i == 0:
-                    value = re.findall('..',bk)
-                    valide_value.insert(0,"01")
-                else:
-                    print "\n[-] Error decryption failed"
-                    result.insert(0, ''.join(valide_value))
-                    hex_r = ''.join(result)
-                    print "[+] Partial Decrypted value (HEX):", hex_r.upper()
-                    padding = int(hex_r[len(hex_r)-2:len(hex_r)],16)
-                    print "[+] Partial Decrypted value (ASCII):", hex_r[0:-(padding*2)].decode("hex")
-                    sys.exit()
-            found = False
-
-        result.insert(0, ''.join(valide_value))
-        valide_value = []
-
-    print ''
-    hex_r = ''.join(result)
-    print "[+] Decrypted value (HEX):", hex_r.upper()
-    padding = int(hex_r[len(hex_r)-2:len(hex_r)],16)
-    print "[+] Decrypted value (ASCII):", hex_r[0:-(padding*2)].decode("hex")
-
-if __name__ == '__main__':                           
-    run()</code></pre><p></p>]]></content:encoded></item><item><title><![CDATA[Solving the 'Ghost in the Wires' ciphers]]></title><description><![CDATA[<p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new</p>]]></description><link>https://inesmartins.github.io//decrypting-the-ghost-in-the-wires-ciphers/</link><guid isPermaLink="false">5edd318f64e6e34f1b3f7ffd</guid><category><![CDATA[cryptography]]></category><category><![CDATA[ghost in the wires]]></category><category><![CDATA[book]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Jun 2020 18:37:22 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" alt="Solving the 'Ghost in the Wires' ciphers"><p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence: it starts with an uppercase letter, all the characters are letters, there are longer words separated by shorter words, etc.</p><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
-Question: The cost of the bus driver I used to punch my own transfers.
-Solution: $15
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-2-just-visiting">Chapter 2 | Just Visiting</h3><blockquote>Estd mzzv esle elfrse xp szh ez ncplep yph topyetetpd hspy T hld l acp-eppy</blockquote><p>Again, the text looked like a valid sentence, so basically the same as the previous answer just with a different shift.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=15
-Question: This book that taught me how to create new identities when I was a pre-teen.
-Solution: The Paper Trip by Barry Reid.
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-3-original-sin">Chapter 3 | Original Sin</h3><blockquote>pbzfsobp dkfobtpkx lq pbkfi ppbkfpry aoxtolc iixz lq abpr bobt pbzfsba cl bmvq obail bpbeQ</blockquote><p>The uppercase letter at the end of the sentence made me think the chars were reversed. After that, it was just a matter of finding the shift for the ROT13 cipher once again, which turned out to be 3, also known as <a href="https://en.wikipedia.org/wiki/ROT_cipher">Ceaser Cipher</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Reverse | Ceaser Cipher
-Question: These older type of devices were used to call forward business lines to answering services.
-Solution:
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/atbash.png" class="kg-image" alt="Solving the 'Ghost in the Wires' ciphers"><figcaption><a href="https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg">https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg</a></figcaption></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Atbash
-Question: The name of the mainframes I hacked at USC in the ARPANET days.
-Solution: COSMOS
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-5-all-your-phone-lines-belong-to-me">Chapter 5 | All Your Phone Lines Belong To Me</h3><blockquote>jbi ujt veo eco ntk iwa lhc eeo anu uir trs hae oni rfn irt toh imi ets shs !eu</blockquote><p>After much overthinking, this one was as easy as "stacking" the words and reading the letters from top to bottom, starting from the last column.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Reading letters of each word top to bottom, from the last column.
-</code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>j</td>
-<td>b</td>
-<td>i</td>
-</tr>
-<tr>
-<td>u</td>
-<td>j</td>
-<td>t</td>
-</tr>
-<tr>
-<td>v</td>
-<td>e</td>
-<td>o</td>
-</tr>
-<tr>
-<td>e</td>
-<td>c</td>
-<td>o</td>
-</tr>
-<tr>
-<td>n</td>
-<td>t</td>
-<td>k</td>
-</tr>
-<tr>
-<td>i</td>
-<td>w</td>
-<td>a</td>
-</tr>
-<tr>
-<td>l</td>
-<td>h</td>
-<td>c</td>
-</tr>
-<tr>
-<td>e</td>
-<td>e</td>
-<td>o</td>
-</tr>
-<tr>
-<td>a</td>
-<td>n</td>
-<td>u</td>
-</tr>
-<tr>
-<td>u</td>
-<td>i</td>
-<td>r</td>
-</tr>
-<tr>
-<td>t</td>
-<td>r</td>
-<td>s</td>
-</tr>
-<tr>
-<td>h</td>
-<td>a</td>
-<td>e</td>
-</tr>
-<tr>
-<td>o</td>
-<td>n</td>
-<td>i</td>
-</tr>
-<tr>
-<td>r</td>
-<td>f</td>
-<td>n</td>
-</tr>
-<tr>
-<td>i</td>
-<td>r</td>
-<td>t</td>
-</tr>
-<tr>
-<td>t</td>
-<td>o</td>
-<td>h</td>
-</tr>
-<tr>
-<td>i</td>
-<td>m</td>
-<td>i</td>
-</tr>
-<tr>
-<td>e</td>
-<td>t</td>
-<td>s</td>
-</tr>
-<tr>
-<td>s</td>
-<td>h</td>
-<td>s</td>
-</tr>
-<tr>
-<td>!</td>
-<td>e</td>
-<td>u</td>
-</tr>
-</tbody>
-</table>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: I took a course on this subject when I ran from the juvenile authorities!
-Solution: Criminal Justice
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-6-will-hack-for-love">Chapter 6 | Will Hack for Love</h3><blockquote>bmFtZXRoZWNvbXBhbnl3aGVyZWJvbm5pZXdhc2VtcGxveWVkd2hlbndlc3RhcnRlZGRhdGluZw==</blockquote><p>The equal signs at the end is a dead give-away for Base64.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Base64
-Question: Name the company where Bonnie was employed when we started dating.
-Solution: GTE
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-7-hitched-in-haste">Chapter 7 | Hitched in Haste</h3><blockquote>multbqncannqenabrhfgacnqogehchetbkkebmsqgkncchebr</blockquote><p>This was one of the hardest, since I wasn't expecting that you'd need to use the answer from the previous cipher. I ended up not being able to crack this one myself, and had to check <a href="https://fabiensanglard.net/Ghost_in_the_Wires_Paperback/">Fabien Sanglard's solution</a> and then tested for myself using an <a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">online Subtitution Cipher decrypter</a>.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/cipher.png" class="kg-image" alt="Solving the 'Ghost in the Wires' ciphers"><figcaption><a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">http://practicalcryptography.com/ciphers/simple-substitution-cipher/</a></figcaption></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Substitution cipher when alphabet starts with GTE, the solution for the previous question.
-Question: Number of door codes I had for Pacific Bell central offices.
-Solution: 11
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-8-lex-luthor">Chapter 8 | Lex Luthor</h3><blockquote>'siass nuhmil sowsra amnapi waagoc ifinti dscisf iiiesf ahgbao staetn itmlro</blockquote><p>Pretty similar to chapter 5, found the solution by "stacking" the words and reading each character from the bottom-left to the top-right.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Stacking words | Read from bottom-left to top-right
-</code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>'</td>
-<td>s</td>
-<td>i</td>
-<td>a</td>
-<td>s</td>
-<td>s</td>
-</tr>
-<tr>
-<td>n</td>
-<td>u</td>
-<td>h</td>
-<td>m</td>
-<td>i</td>
-<td>l</td>
-</tr>
-<tr>
-<td>s</td>
-<td>o</td>
-<td>w</td>
-<td>s</td>
-<td>r</td>
-<td>a</td>
-</tr>
-<tr>
-<td>a</td>
-<td>m</td>
-<td>n</td>
-<td>a</td>
-<td>p</td>
-<td>i</td>
-</tr>
-<tr>
-<td>w</td>
-<td>a</td>
-<td>a</td>
-<td>g</td>
-<td>o</td>
-<td>c</td>
-</tr>
-<tr>
-<td>i</td>
-<td>f</td>
-<td>i</td>
-<td>n</td>
-<td>t</td>
-<td>i</td>
-</tr>
-<tr>
-<td>d</td>
-<td>s</td>
-<td>c</td>
-<td>i</td>
-<td>s</td>
-<td>f</td>
-</tr>
-<tr>
-<td>i</td>
-<td>i</td>
-<td>i</td>
-<td>e</td>
-<td>s</td>
-<td>f</td>
-</tr>
-<tr>
-<td>a</td>
-<td>h</td>
-<td>g</td>
-<td>b</td>
-<td>a</td>
-<td>o</td>
-</tr>
-<tr>
-<td>s</td>
-<td>t</td>
-<td>a</td>
-<td>e</td>
-<td>t</td>
-<td>n</td>
-</tr>
-<tr>
-<td>i</td>
-<td>t</td>
-<td>m</td>
-<td>l</td>
-<td>r</td>
-<td>o</td>
-</tr>
-</tbody>
-</table>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: I said I wasn't this famous magician while beging a smartass to prision officials.
-Solution: Harry Houdini
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-9-the-kevin-mitnick-discount-plan">Chapter  9 | The Kevin Mitnick Discount Plan</h3><blockquote>tvifafwawehes hsesoonvtlimaeloemtcagmen irnoerrldony</blockquote><p>Again, I wasn't able to crack this one by myself and had to check <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solution</a>:</p><!--kg-card-begin: markdown--><pre><code>Cipher: Railfence Cipher
-
-t...v...i...f...a...f...w...a...w...e...h...e...s
-.h.s.e.s.o.o.n.v.t.l.i.m.a.e.l.o.e.m.t.c.a.g.m.e.n
-..i...r...n...o...e...r...r...l...d...o...n...y...
-
-Question: This version of NOVATEL firmware allowed me to change my ESN 
-Solution: 1.05
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-10-mistery-hacker">Chapter 10 | Mistery Hacker</h3><blockquote>gnkusr ooursnsisti ttnotoihiec rolwaintmlk ovtgp</blockquote><p>Inspired by the previous challenge, I was able to crack this Railfence Cipher:</p><!--kg-card-begin: markdown--><pre><code>Cipher: Railfence Cipher
-
-g........n.........k.........u.........s.........r....
-.o......o..u......r..s......n..s......i..s......t..i..
-..t....t....n....o....t....o....i....h....i....e....c.
-...r..o......l..w......a..i......n..t......m..l......k
-....o.........v.........t.........g.........p.........
-
-Question: Got root on unlv workstation using this simple trick.
-Solution: Turned on/off while repeatedly pressing Control+C
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-11-foul-play">Chapter 11 | Foul Play</h3><blockquote>ow gw ty kc qb eb nm ht ud pc iy ty ik tu zo dp gl qt hd</blockquote><p>This one absolutely blew my mind, I was just playing around with some online tools and came across <a href="https://scwf.dima.ninja/">this</a> website.</p><p>To see how it worked, I entered this challenge and the answer was displayed immediately, along with the cipher: <a href="https://en.wikipedia.org/wiki/Playfair_cipher">Playfair</a>.</p><p>If I had known it before, this would be an easy challenge to break, since it's one of the most well-known techniques that encrypts pairs of letters (bigrams or digrams), instead of single letters.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Playfair Cipher
-Question: My brother Adam listened to this type of music.
-Solution: Hip Hop
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-12-you-can-never-hide">Chapter 12 | You can Never Hide</h3><blockquote>idniidhsubrseognteiyignuhrzdalrdietfetinmeablnigorcsnuatoiecli</blockquote><p><a href="https://scwf.dima.ninja/">SCWF</a> to the rescue again.</p><p>Without much effort the site found the solution using Columnar Transposition (2 1).</p><!--kg-card-begin: markdown--><pre><code>Cipher: Columnar Transposition (2 1)
-Question: I identified this number as belonging to Eric using unauthorized callerID.
-Solution: 310 837-5412
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-13-the-wiretapper">Chapter 13 | The Wiretapper</h3><blockquote>qclgjq'acrjcrlmqnyrcpgursmzyddmbcnngrgmfupceylyk</blockquote><p>Pretty straightforward, <a href="https://gchq.github.io/CyberChef/">CyberChef</a> saves me again.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=2 | Reverse
-Question: Manager who I tipped off about wiretaps on teltec's lines.
-Solution:
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-14-you-tap-me-i-tap-you">Chapter 14 | You Tap Me, I Tap You</h3><blockquote>c2VuaWxzJ2RhZHltbm9zcGF0ZXJpd2VodHRjZW5ub2NlcmRuYXNlbGVnbFzb2xvHlsZm90ZGFob2h3dG5lZ2F5dGlydWNlc2xsZWJjYXBlaHQ=</blockquote><p>The equal sign at the end of the string made me think of Base64.</p><p>Once I Base64 decoded and reversed the entire string, part of the text was immediately readable.</p><p>I then removed the deciphered part of the string and tried the same process with the remaining chars.</p><p>Then, it was just a matter of tweaking the string until I could read the entire thing.</p><!--kg-card-begin: markdown--><pre><code>Cipher: (in parts) Base64 | Reverse
-Question: The Pacbell Security agent who had to fly to Los Angeles and reconnect the wiretaps on my dad's lines.
-Solution:
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-15-how-the-fuck-did-you-get-that">Chapter 15 | "How the fuck did you get that?"</h3><blockquote>ud mn cf ub mw re lb is ba of gx ty qc qh il ea ym nx bz ub he cf th is</blockquote><p>Seeing pairs of letters made me think of the Playfair Cipher from Chapter 11.</p><p>Again, I found the solution by running the ciphered text through <a href="https://scwf.dima.ninja/">SCWF</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Playfair Cipher
-Question: This hacker we showed off SAS to while at Hamburger Hamlet.
-Solution: Eric Heinz
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-16-crashing-eric-s-private-party">Chapter 16 | Crashing Eric’s Private Party</h3><blockquote>7\3|2\9|3\5|4/0/8/2|6\7/0/4\4\5/6/6\5/7/8/9|7\8/7|9\5/9\2\3\5\7/8|2/0/8|2/6|6|2|7\7\0\4\9|</blockquote><p>Definitely couldn't solve this on my own and had to go back to <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solutions</a> to crack it. It seems like this is <a href="https://www.dcode.fr/phone-keypad-cipher">Phone Keypad Cipher</a>, i.e.: each number represents a key in a phone keypad:</p><!--kg-card-begin: markdown--><pre><code>(&quot;2&quot;, &quot;ABC&quot;);
-(&quot;3&quot;, &quot;DEF&quot;);
-(&quot;4&quot;, &quot;GHI&quot;);
-(&quot;5&quot;, &quot;JKL&quot;);
-(&quot;6&quot;, &quot;MNO&quot;);
-(&quot;7&quot;, &quot;PRS&quot;);
-(&quot;8&quot;, &quot;TUV&quot;);
-(&quot;9&quot;, &quot;WXY&quot;);
-(&quot;0&quot;, &quot;Q Z&quot;);
-</code></pre>
-<!--kg-card-end: markdown--><p> and "the slashes represent which letter in the group of three it makes":</p><p><code>\: left, |: middle and /: right</code></p><p>Once we replace this, we get: <code>PEAXDKIZVBMSZGGLOMLSVXPVRWLWADJSUCZUCNNBPPQGX</code></p><p>To get the actual question we again have to use the solution to the last cipher to crack the <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Viginère cipher</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/VIGENERE-1.png" class="kg-image" alt="Solving the 'Ghost in the Wires' ciphers"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Phone dial key pag cipher + Vigenère
-Question: I asked Eric for the key to this phone company facility Solution: --
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-17-pulling-back-the-curtain">Chapter 17 | Pulling Back the Curtain</h3><blockquote>100 0000 10 1 01 001 00 1000 1 010 11 000 0 0000 11 000 000111 00011 10000 11110 11000 00111 10000 11111 10000 11111</blockquote><p>Initially I tried a couple of approaches thinking this was binary but after a lot of failure I decided to go with morse:</p><p>Where 1=. and 0=-:</p><p><code>.-- ---- .- . -. --. -- .--- . -.- .. --- - ---- .. --- ---... ---.. .---- ....- ..--- --... .---- ..... .---- .....</code></p><p>This results in <code>W#AENGMJEKIOT#IO:814271515</code>.</p><p>Where 0=. and 1=-:</p><!--kg-card-begin: markdown--><p><code>-.. .... -. - .- ..- .. -... - .-. -- ... . .... -- ... ...--- ...-- -.... ----. --... ..--- -.... ----- -.... -----</code></p>
-<!--kg-card-end: markdown--><p>This results in <code>DHNTAUIBTRMSEHMS#369726060</code>.</p><p>Using a RailCipher on the letters first:</p><!--kg-card-begin: markdown--><pre><code>D...H...N...T...A...U...I...B...T...R...M...S...E...H...M...S...#
-W...A...E...N...G...M...J...E...K...I...O...T...#...I...O...:
-
-# Removing every other char pair:
-
-..H...T...U...B...R...S...H...S...#
-W...A...N...M...E...I...T...I...:
-
-what number is this:
-</code></pre>
-<!--kg-card-end: markdown--><p>And then on the numbers:</p><!--kg-card-begin: markdown--><pre><code>S...#...3...6...9...7...2...6...0...6...0
-:...8...1...4...2...7...1...5...1...5
-</code></pre>
-<!--kg-card-end: markdown--><p>After some tweaking we get to the FBI's LA HQ: <code>310-477-6565</code>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Morse code + Railway Cipher
-Question: What number is this? 310-477-6565
-Solution: The FBI's LA HQ.
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-18-traffic-analysis">Chapter 18 | Traffic Analysis</h3><blockquote>6365696a647a727573697775716d6d6e736e69627a74736a6f7969706469737967647163656c6f71776c66646d63656d78626c6879746d796f6d71747765686a6a71656d756c70696b6a627965696a71</blockquote><p>TBD</p><hr><h3 id="chapter-19-revelations">Chapter 19 | Revelations</h3><blockquote>hranmoafignwoeoeiettwsoeheneteelaefnbaethscvrdniyajspwrl</blockquote><p>Pretty much the same as in Chapter 12: <a href="https://scwf.dima.ninja/">SCWF</a> identified the cipher as Columnar <a href="https://en.wikipedia.org/wiki/Transposition_cipher">Transposition Cipher</a> in a heartbeat.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Columnar Transposition ( 2 1)
-Question: The real name of an FBI agent whose identity was Joseph Wernle.
-Solution: Joseph Ways
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-20-reverse-sting">Chapter 20 | Reverse Sting</h3><blockquote>yo kb pn oc ox rh oq kb oh kp ge gs yt yt hg sa li mt ob sa po po mk pl md</blockquote><p>Same as chapters 11 and 15, but with a little more manual tweaking.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Playfair Cipher
-Question: The company Teltec hacked into to get information on people.
-Solution: TRW
-</code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-25-harry-houdini">Chapter 25 | Harry Houdini</h3><blockquote>nhyitekmnryoogmwefehocttntnoauttosumooalgei</blockquote><p><a href="https://scwf.dima.ninja/">SCWF</a> helped me again by finding a pretty good solution: applying a Skip Cipher (selecting every 3rd chard) and reversing the chars.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Select every 3rd char | Reverse | Rearrange words
-
-nhyitekmnryoogmwefehocttntnoauttosumooalgei
-n__i__k__r__o__w__e__c__n__o__t__s__o__l__i
-__y__e__n__o__m__f__o__t__n__u__o__m__a__e
-_h__t__m__y__g__e__h__t__t__a__t__u__o__g
-
-goutatthegymtheamountofmoneyilostonceworkin
-g out at the gym the amount of money i lost once workin
-the amount of money i lost once working out at the gym
-
-Question: The amount of money I lost once working out at the gym.
-Solution: $11.000
-</code></pre>
-<!--kg-card-end: markdown--><hr><h2 id="useful-resources">Useful Resources</h2><ul><li><a href="https://gchq.github.io/CyberChef/">CyberChef</a></li><li><a href="http://practicalcryptography.com/">Practical Cryptography</a></li><li><a href="https://scwf.dima.ninja/">Solve Crypto with Force</a></li><li><a href="https://quipqiup.com/">quipqiup</a></li></ul>]]></content:encoded></item></channel></rss>
+<!--kg-card-end: markdown--><p>This link leads us to a <a href="https://www.dropbox.com/s/tsf768x9tvnurow/isso.txt?dl=0">file</a> that contains a simple ROT13 cipher, which we were able to decipher this text using <a href="https://gchq.github.io/CyberChef/#recipe=ROT13(true,true,13)&amp;input=c3ludHtaOFolUUhaQyVFNVBYRiF9">CyberChef</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/flag.png" class="kg-image" alt="ØxOPOSɆC Steg Challenge 2019"></figure><hr><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://cqureacademy.com/blog/forensics/memory-dump-analysis">https://cqureacademy.com/blog/forensics/memory-dump-analysis</a></li><li><a href="https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf">https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf</a></li><li><a href="https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/">https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/</a></li></ul>]]></content:encoded></item></channel></rss>

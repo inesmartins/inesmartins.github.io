@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=7f56cbee6c" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up" />
+    <meta property="og:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher.  Since I knew the first four numbers probably matched the word" />
+    <meta property="og:url" content="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1.jpeg" />
+    <meta property="article:published_time" content="2020-09-25T10:30:14.000Z" />
+    <meta property="article:modified_time" content="2020-09-25T10:36:46.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up" />
+    <meta name="twitter:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher.  Since I knew the first four numbers probably matched the word" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1.jpeg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:site" content="@inesmartns" />
+    <meta property="og:image:width" content="504" />
+    <meta property="og:image:height" content="105" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up",
+    "url": "https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/",
+    "datePublished": "2020-09-25T10:30:14.000Z",
+    "dateModified": "2020-09-25T10:36:46.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/09/highres_471963990-1-1.jpeg",
+        "width": 504,
+        "height": 105
+    },
+    "description": "Knock Knock (100)\n&gt; 21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }\nThis challenge was great because I ended up solving it with some leaps of logic,\nnot knowing this was a known cipher. \n\nSince I knew the first four numbers probably matched the word flag, I was able\nto get the rest of the flag with some trial and error:\n\na &#x3D;&gt; 11\nb &#x3D;&gt; 12\nc &#x3D;&gt; 13\nd &#x3D;&gt; 14\ne &#x3D;&gt; 15\n\n// 6 number jump \n\nf &#x3D;&gt; 21\ng &#x3D;&gt; 22\nh &#x3D;&gt; 23\ni &#x3D;&gt; 24\nj &#x3D;&gt; 25\nk &#x3D;&gt; 26\n\n// 5 number jump \n\nl &#x3D;&gt; 31\nm &#x3D;&gt; 32\nn &#x3D;&gt; 33\no &#x3D;&gt; 34\np &#x3D;&gt; 35\nq &#x3D;&gt; 36\n\n//",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-tw" href="https://twitter.com/inesmartns" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post ">
+
+            <header class="post-full-header">
+
+
+                <h1 class="post-full-title">ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <h2>Inês Martins</h2>
+                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-09-25">25 Sep 2020</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2020/09/highres_471963990-1-1.jpeg 300w,
+                            /content/images/size/w600/2020/09/highres_471963990-1-1.jpeg 600w,
+                            /content/images/size/w1000/2020/09/highres_471963990-1-1.jpeg 1000w,
+                            /content/images/size/w2000/2020/09/highres_471963990-1-1.jpeg 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2020/09/highres_471963990-1-1.jpeg"
+                    alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>This challenge was great because I ended up solving it with some leaps of logic, not knowing this was a known cipher. </p><p>Since I knew the first four numbers probably matched the word <code>flag</code>, I was able to get the rest of the flag with some trial and error:</p><pre><code>a =&gt; 11
+b =&gt; 12
+c =&gt; 13
+d =&gt; 14
+e =&gt; 15
+
+// 6 number jump 
+
+f =&gt; 21
+g =&gt; 22
+h =&gt; 23
+i =&gt; 24
+j =&gt; 25
+k =&gt; 26
+
+// 5 number jump 
+
+l =&gt; 31
+m =&gt; 32
+n =&gt; 33
+o =&gt; 34
+p =&gt; 35
+q =&gt; 36
+
+// 6 number jump 
+
+r =&gt; 42
+s =&gt; 43
+t =&gt; 44
+u =&gt; 45
+...
+</code></pre><p>However, this method only worked because the flag contained two words that I recognised and made sense in context - <code>flag{mateusrose}</code> (<a href="https://www.mateusrose.com/pt/">Mateus Rosé</a>).  If that weren't the case I would have had to know about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a>, aka Knock Code to solve this one.</p><hr><h2 id="pancetta-200-">Pancetta (200)</h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-4.png" class="kg-image"></figure><p>When I hear pancetta I think <a href="https://en.wikipedia.org/wiki/Bacon%27s_cipher">Bacon cipher</a>. I very quickly replaced every pink letter with a <code>1</code> and every black letter with a <code>0</code> and then decoded the cipher-text using <a href="https://gchq.github.io/CyberChef/#recipe=Bacon_Cipher_Decode('Standard%20(I%3DJ%20and%20U%3DV)','0/1',false)&amp;input=MTAwMDExMDAxIDEwIDExMDAwMCAwMTEwMDAgMDAwMCAxMDAwMDAxMCAwMDAwIDAxMCAwMDAwIDAwMCAwMDEwIDExMDAgMTAgMDAxMCAxMCAwMSAxMDExMSAxMDAxMTEwIDAxMTEwMDEgMTEwMDExIDEwIDAxMSAxMDAxIDExMDAxMSAxMDA">CyberChef</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-31.png" class="kg-image"></figure><hr><h2 id="streamside-300-">Streamside (300)</h2><blockquote>No one will give you the flag this time.<br>You will find it out by yourself. Take your time.<br><a href="https://streamside.apl3b.com/">https://streamside.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-32.png" class="kg-image"></figure><p>This challenge consisted of a web page with an input field where we could enter and validate a flag. After some poking around I realised that just by entering <code>flag</code> it took the server a lot longer to respond that when I entered something else, which made me think this was a <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attack</a>.</p><p>Initially I created a Python script to find the complete flag automatically, but the results were unreliable so I decided to use the script to output the results for each letter of the flag, and then analyse them manually:</p><pre><code>~ cat curl-format.txt
+time_total:  %{time_total}</code></pre><pre><code class="language-python">import os
+
+alphabet = "abcdefghijklmnopqrstuvxwyz0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZ!\"#$%&amp;/()=?*`|^_:;-"
+url = "https://streamside.apl3b.com/process"
+output_filename = "output.txt"
+format_filename = "@curl-format.txt"
+
+result_str = ""
+os.system("rm " + output_filename)
+
+for letter in alphabet:
+
+    # builds new test flag
+    tmp_flag = "flag=flag{" + letter + "}"
+
+    # executes command
+    print("Trying " + tmp_flag)
+    cmd = "curl -s -d '" + tmp_flag + "' -w '" + format_filename + "' -X POST " + url
+    result = os.popen(cmd).read()
+
+    # parses result and prints it
+    answer = result.split(" ")[0].split("\n")[0].strip()
+    time_total = result.split("time_total:")[1].strip()
+
+    # saves result to string
+    result_str += letter + "=" + str(time_total) + "\n"
+
+    # checks message
+    if "Wrong" not in answer:
+        print("Found it! Flag is " + tmp_flag)
+    
+os.system("echo '" + result_str + "' &gt; " + output_filename)
+os.system("open " + output_filename)</code></pre><p>And we get the final flag: <code>"flag{c4l1Po_de_l1M4o}"</code>.</p><hr>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+
+                <article class="post-card post ">
+
+    <a class="post-card-image-link" href="/oposec-summer-challenge-2020-web-challenges-write-up/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/09/highres_471963990-1-1-1.jpeg 300w,
+                    /content/images/size/w600/2020/09/highres_471963990-1-1-1.jpeg 600w,
+                    /content/images/size/w1000/2020/09/highres_471963990-1-1-1.jpeg 1000w,
+                    /content/images/size/w2000/2020/09/highres_471963990-1-1-1.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/09/highres_471963990-1-1-1.jpeg"
+            alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/oposec-summer-challenge-2020-web-challenges-write-up/">
+
+            <header class="post-card-header">
+                <h2 class="post-card-title">ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Passive-Aggressive Flask (100)I can give you a flag, but you'll have to be nice. Remember to say it LOUD, so I can hear you. https://passiveaggressive.apl3b.com~ curl</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-09-24">24 Sep 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/inesmartns" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=7f56cbee6c"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    
+
+</body>
+</html>
