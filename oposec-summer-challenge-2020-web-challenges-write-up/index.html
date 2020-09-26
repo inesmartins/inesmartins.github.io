@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/09/header2.png" />
     <meta property="article:published_time" content="2020-09-24T18:49:15.000Z" />
-    <meta property="article:modified_time" content="2020-09-25T17:40:51.000Z" />
+    <meta property="article:modified_time" content="2020-09-26T11:22:47.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up" />
     <meta name="twitter:description" content="Passive-Aggressive Flask (100)I can give you a flag, but you&#x27;ll have to be nice. Remember to say it LOUD, so I can hear you. https://passiveaggressive.apl3b.com~ curl https://passiveaggressive.apl3b.com &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang&#x3D;&quot;en&quot;&amp;gt; &amp;lt;head&amp;gt;   &amp;lt;meta charset&#x3D;&quot;utf-8&quot;" />
@@ -65,7 +65,7 @@
     "headline": "ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up",
     "url": "https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/",
     "datePublished": "2020-09-24T18:49:15.000Z",
-    "dateModified": "2020-09-25T17:40:51.000Z",
+    "dateModified": "2020-09-26T11:22:47.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/09/header2.png",
@@ -229,7 +229,7 @@ app.get('/', function (req, res, next) {
   }
   res.render('index', { title: '[a-z().]', output });
 });
-...</code></pre><p>So, basically we need to find a piece of JS code that:</p><ul><li>is under 300 characters;</li><li>matches this REGEX: <code>!/[^a-z().]/</code>;</li><li>produces the number <code>2020</code>;</li><li>uses functions and variables known to the <code>NodeJS</code> context.</li></ul><p>This last condition ended up being the hardest, and I had to rely pretty heavily on the <code>eval</code> function:</p><pre><code>eval.length.constructor(                  // Number()
+...</code></pre><p>So, basically we needed to find a piece of JS code that:</p><ul><li>was under 300 characters;</li><li>matched this REGEX: <code>!/[^a-z().]/</code>;</li><li>produced the number <code>2020</code>;</li><li>used functions and variables known to the <code>NodeJS</code> context.</li></ul><p>This last condition ended up being the hardest, and I had to rely pretty heavily on the <code>eval</code> function:</p><pre><code>eval.length.constructor(                  // Number()
   eval.name.constructor.apply()           // String()
     .concat(eval.name.big.apply.length)   // 2
     .concat(eval.name.bold.length)        // 0
@@ -280,7 +280,7 @@ app.get('/', function (req, res, next) {
             </header>
 
             <section class="post-card-excerpt">
-                    <p>Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }Since I knew the 4 four numbers probably corresponded to the word flag,</p>
+                    <p>Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }If I had known about Tap Code (aka Knock Code) this would have</p>
             </section>
 
         </a>
