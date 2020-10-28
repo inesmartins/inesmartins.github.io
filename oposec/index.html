@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//oposec/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/10/highres_471963990-1-1.jpeg" />
     <meta property="article:published_time" content="2020-10-27T22:02:35.000Z" />
-    <meta property="article:modified_time" content="2020-10-28T09:39:16.000Z" />
+    <meta property="article:modified_time" content="2020-10-28T12:05:43.000Z" />
     <meta property="article:tag" content="crypto" />
     <meta property="article:tag" content="java" />
     <meta property="article:tag" content="ctf" />
@@ -73,7 +73,7 @@
     "headline": "ØxOPOSɆC | Underground Leaks (Crypto)",
     "url": "https://inesmartins.github.io//oposec/",
     "datePublished": "2020-10-27T22:02:35.000Z",
-    "dateModified": "2020-10-28T09:39:16.000Z",
+    "dateModified": "2020-10-28T12:05:43.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/10/highres_471963990-1-1.jpeg",
@@ -208,7 +208,7 @@
 Meanwhile, government forces tried to crack the passwords with no success. 
 We know from underground sources that Rui Tinto does cipher each file individually for higher security and privacy. 
 We manage to put our hands on his top-notch closed source software used for encrypting the information.
-Leak: https://sefod.eu/oposec/underground_leaks.tar.gz</code></pre><p>The tar file contains a java executable and 3 files that look like ciphertexts:</p><pre><code>~ ls -la ./
+Leak: https://sefod.eu/oposec/underground_leaks.tar.gz</code></pre><p>The tar contains a java executable and 3 files that look like ciphertexts:</p><pre><code>~ ls -la ./
 ...
 -rw-r--r--   1 inesmartins  staff    32 Oct 16 11:09 1
 -rw-r--r--   1 inesmartins  staff    32 Oct 16 11:09 2
@@ -231,7 +231,7 @@ this is my very secret secret
 Keep this key: E5F1F22FE01B9E10D17E3825ACE23799</code></pre><p>Once we have they key, we're then able to get the secret back using the same application:</p><pre><code>~ java HelloWorldApp decode plaintext.txt
 Please provide a key:
 E5F1F22FE01B9E10D17E3825ACE23799
-this is my very secret secret</code></pre><hr><h2 id="analysing-the-application">Analysing the application</h2><p>I started by decompiling the file using <a href="https://marketplace.visualstudio.com/publishers/tintinweb">tintinweb</a>:</p><pre><code class="language-Java">import java.io.BufferedReader;
+this is my very secret secret</code></pre><hr><h2 id="analysing-the-application">Analysing the application</h2><p>I started by decompiling the file using <a href="https://marketplace.visualstudio.com/publishers/tintinweb">tintinweb</a>:</p><pre><code class="language-java">import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -358,7 +358,7 @@ class HelloWorldApp {
     return new String(cipher.doFinal(paramArrayOfByte1));
   }
 }
-</code></pre><p>The first thing that stood out was the <code>AES/CBC/PKCS5Padding</code> encryption mode, which is vulnerable to  <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">Padding oracle attacks</a>. However, after trying and failing to follow this route, I took a closer look at to the logic behind the random number generation:</p><pre><code class="language-Java">public static void encode(String paramString) {
+</code></pre><p>The first thing that stood out was the <code>AES/CBC/PKCS5Padding</code> encryption mode, which is vulnerable to  <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">Padding oracle attacks</a>. However, after trying and failing to follow this route, I took a closer look at to the logic behind the random number generation:</p><pre><code class="language-java">public static void encode(String paramString) {
     ...
     Random random = new Random(5040508L);
     int i = (new Random()).nextInt(1000000);
@@ -381,7 +381,7 @@ class HelloWorldApp {
     	}
         ...
     }
-}</code></pre><p>It seems like:</p><ul><li><code>random</code> is an instance of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html">Random</a> (a Java pseudo-number generator), which is being initialised with a fixed seed: <code>5040508L</code>;</li><li>the AES key is being generated right after the IV.</li></ul><p>So, it's just a matter of brute-forcing the solution:</p><pre><code class="language-Java">import java.util.Random;
+}</code></pre><p>It seems like:</p><ul><li>the random numbers are being generated using a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html">Random</a> object (a Java pseudo-number generator), which is being initialised with a fixed seed: <code>5040508L</code>;</li><li>the AES key is being generated right after the IV.</li></ul><p>So, it's just a matter of brute-forcing the solution:</p><pre><code class="language-java">import java.util.Random;
 
 public class RandomBreaker {
     
