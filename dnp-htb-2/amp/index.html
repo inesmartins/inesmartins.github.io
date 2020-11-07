@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Tabby [DONE]</title>
+    <title>HTB Write-up | Tabby</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
@@ -14,18 +14,18 @@
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Tabby [DONE]" />
+    <meta property="og:title" content="HTB Write-up | Tabby" />
     <meta property="og:description" content="Retired machine can be found here.Scanning~ nmap -sC -sV -A -T4 tabby.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST Nmap scan report for tabby.htb (10.10.10.194) Host is up (0.30s latency). Not shown: 996 closed ports PORT     STATE    SERVICE" />
     <meta property="og:url" content="https://inesmartins.github.io//dnp-htb-2/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" />
     <meta property="article:published_time" content="2020-11-07T21:59:12.000Z" />
-    <meta property="article:modified_time" content="2020-11-07T21:59:12.000Z" />
+    <meta property="article:modified_time" content="2020-11-07T22:04:15.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="tomcat" />
     <meta property="article:tag" content="fcrackzip" />
     
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Tabby [DONE]" />
+    <meta name="twitter:title" content="HTB Write-up | Tabby" />
     <meta name="twitter:description" content="Retired machine can be found here.Scanning~ nmap -sC -sV -A -T4 tabby.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST Nmap scan report for tabby.htb (10.10.10.194) Host is up (0.30s latency). Not shown: 996 closed ports PORT     STATE    SERVICE" />
     <meta name="twitter:url" content="https://inesmartins.github.io//dnp-htb-2/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" />
@@ -64,10 +64,10 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Tabby [DONE]",
+    "headline": "HTB Write-up | Tabby",
     "url": "https://inesmartins.github.io//dnp-htb-2/",
     "datePublished": "2020-11-07T21:59:12.000Z",
-    "dateModified": "2020-11-07T21:59:12.000Z",
+    "dateModified": "2020-11-07T22:04:15.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png",
@@ -107,7 +107,7 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Tabby [DONE]</h1>
+                <h1 class="post-title">HTB Write-up | Tabby</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
                     <time class="post-date" datetime="2020-11-07">2020-11-07</time>
@@ -187,7 +187,7 @@ Archive:  tabby.zip
 su - ash
 Password: admin@it
 
-ash@tabby:~$ cat user.txt</code></pre><p>Finally, let's SSL into the machine after adding the public key to <code>/home/ash/.ssh/authorized_key</code>:</p><pre><code>ssh -i ash@tabby.htb</code></pre><hr></hr><h2 id="getting-root">Getting root</h2><blockquote>Relatively simple, but new to me (which was quite fun). What powers do you currently have? Linpeas will point you in the right direction.</blockquote><blockquote>Don't think outside the box, think outside the container.</blockquote><blockquote>1. Check your home folder thoroughly<br />2. Google it, you will get your attack vector. With step by step execution</blockquote><pre><code>ash@tabby:~$ ls
+ash@tabby:~$ cat user.txt</code></pre><p>Finally, let's SSL into the machine after adding the public key to <code>/home/ash/.ssh/authorized_key</code>:</p><pre><code>ssh -i ash@tabby.htb</code></pre><hr></hr><h2 id="getting-root">Getting root</h2><pre><code>ash@tabby:~$ ls
 alpine-v3.12-x86_64-20200710_0223.tar.gz  snap  user.txt</code></pre><p>Seeing the <code>alpine</code> zip file I realised the privilege escalation will probably be related to <code>lxd</code>. As always, I <a href="https://www.hackingarticles.in/lxd-privilege-escalation/">followed</a> this article and got the root flag.</p>
 
             </section>
