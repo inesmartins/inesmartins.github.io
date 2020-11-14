@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>DNP: RingZero Cryptography Challenges Write-up | Part I</title>
+    <title>RingZero Cryptography Challenges Write-up | Part I</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -18,18 +18,34 @@
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="DNP: RingZero Cryptography Challenges Write-up | Part I" />
+    <meta property="og:title" content="RingZero Cryptography Challenges Write-up | Part I" />
     <meta property="og:description" content="1 - Some Martian MessageThis is a simple ROT13 aka Caesar Cipher: FLAGCesarIsCoolButNotSecure. 2 - You&#x27;re Drunk!Solve Crypto With Force! helped me with this one.  This is a Keyboard Shift Cipher, with shift &#x3D; 1. Super secret message for you the glag is chocolate! You are welcome. 3 - File" />
     <meta property="og:url" content="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
     <meta property="article:published_time" content="2020-11-14T19:19:19.000Z" />
-    <meta property="article:modified_time" content="2020-11-14T19:19:19.000Z" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="DNP: RingZero Cryptography Challenges Write-up | Part I" />
+    <meta property="article:modified_time" content="2020-11-14T19:26:35.000Z" />
+    <meta property="article:tag" content="crypto" />
+    <meta property="article:tag" content="cryptography" />
+    <meta property="article:tag" content="ringzer0" />
+    <meta property="article:tag" content="rot" />
+    <meta property="article:tag" content="ceaser cipher" />
+    <meta property="article:tag" content="keyboard shift cipher" />
+    <meta property="article:tag" content="rsa" />
+    <meta property="article:tag" content="vigenere" />
+    <meta property="article:tag" content="bubble babble" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RingZero Cryptography Challenges Write-up | Part I" />
     <meta name="twitter:description" content="1 - Some Martian MessageThis is a simple ROT13 aka Caesar Cipher: FLAGCesarIsCoolButNotSecure. 2 - You&#x27;re Drunk!Solve Crypto With Force! helped me with this one.  This is a Keyboard Shift Cipher, with shift &#x3D; 1. Super secret message for you the glag is chocolate! You are welcome. 3 - File" />
     <meta name="twitter:url" content="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="crypto, cryptography, ringzer0, rot, ceaser cipher, keyboard shift cipher, rsa, vigenere, bubble babble" />
     <meta name="twitter:site" content="@inesmartns" />
+    <meta property="og:image:width" content="1500" />
+    <meta property="og:image:height" content="450" />
     
     <script type="application/ld+json">
 {
@@ -58,10 +74,17 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "DNP: RingZero Cryptography Challenges Write-up | Part I",
+    "headline": "RingZero Cryptography Challenges Write-up | Part I",
     "url": "https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/",
     "datePublished": "2020-11-14T19:19:19.000Z",
-    "dateModified": "2020-11-14T19:19:19.000Z",
+    "dateModified": "2020-11-14T19:26:35.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg",
+        "width": 1500,
+        "height": 450
+    },
+    "keywords": "crypto, cryptography, ringzer0, rot, ceaser cipher, keyboard shift cipher, rsa, vigenere, bubble babble",
     "description": "1 - Some Martian Message [https://ringzer0ctf.com/challenges/25]\nThis is a simple ROT13 [https://en.wikipedia.org/wiki/ROT13] aka Caesar Cipher\n[https://en.wikipedia.org/wiki/Caesar_cipher]: FLAGCesarIsCoolButNotSecure.\n\n\n--------------------------------------------------------------------------------\n\n2 - You&#x27;re Drunk! [https://ringzer0ctf.com/challenges/274]\nSolve Crypto With Force [https://scwf.dima.ninja/]! helped me with this one. \nThis is a Keyboard Shift Cipher [https://www.dcode.fr/keybo",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -83,7 +106,7 @@
 </script>
 
 </head>
-<body class="post-template">
+<body class="post-template tag-crypto tag-cryptography tag-ringzer0 tag-rot tag-ceaser-cipher tag-keyboard-shift-cipher tag-rsa tag-vigenere tag-bubble-babble">
 
     <div class="site-wrapper">
 
@@ -101,7 +124,7 @@
     <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
 </ul>
 
-                    <span class="nav-post-title dash">DNP: RingZero Cryptography Challenges Write-up | Part I</span>
+                    <span class="nav-post-title dash">RingZero Cryptography Challenges Write-up | Part I</span>
             </div>
         </div>
     </div>
@@ -122,12 +145,15 @@
 <main id="site-main" class="site-main outer">
     <div class="inner">
 
-        <article class="post-full post no-image no-image">
+        <article class="post-full post tag-crypto tag-cryptography tag-ringzer0 tag-rot tag-ceaser-cipher tag-keyboard-shift-cipher tag-rsa tag-vigenere tag-bubble-babble ">
 
             <header class="post-full-header">
 
+                <section class="post-full-tags">
+                    <a href="/tag/crypto/">crypto</a>
+                </section>
 
-                <h1 class="post-full-title">DNP: RingZero Cryptography Challenges Write-up | Part I</h1>
+                <h1 class="post-full-title">RingZero Cryptography Challenges Write-up | Part I</h1>
 
 
                 <div class="post-full-byline">
@@ -166,6 +192,19 @@
                 </div>
             </header>
 
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg 300w,
+                            /content/images/size/w600/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg 600w,
+                            /content/images/size/w1000/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg 1000w,
+                            /content/images/size/w2000/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg"
+                    alt="RingZero Cryptography Challenges Write-up | Part I"
+                />
+            </figure>
 
             <section class="post-full-content">
                 <div class="post-content">
@@ -189,7 +228,7 @@ MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDwkrxVrZ+KCl1cX27SHDI7Efgn
 FJZ0qTHUD6uEeSoZsiVkcu0/XOPbz1RtpK7xxpKMSnH6uDc5On1IEw3A127wW4Y3
 Lqqwcuhgypd3Sf/bH3z4tC25eqr5gA1sCwSaEw+yBxdnElBNOXxOQsST7aZGDyIU
 tmpouI1IXqxjrDx2SQIDAQAB
------END PUBLIC KEY-----</code></pre><p>Now let's hash the key's content (I used <a href="https://gchq.github.io/CyberChef/#recipe=MD5()&amp;input=TUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEd2tyeFZyWitLQ2wxY1gyN1NIREk3RWZnbkZKWjBxVEhVRDZ1RWVTb1pzaVZrY3UwL1hPUGJ6MVJ0cEs3eHhwS01Tbkg2dURjNU9uMUlFdzNBMTI3d1c0WTNMcXF3Y3VoZ3lwZDNTZi9iSDN6NHRDMjVlcXI1Z0Exc0N3U2FFdyt5QnhkbkVsQk5PWHhPUXNTVDdhWkdEeUlVdG1wb3VJMUlYcXhqckR4MlNRSURBUUFC">CyberChef</a> to play around with the content format until I found the expected beginning - <code>0x42f5</code>):</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-13.png" class="kg-image"></figure><p>And we get the flag!</p><hr><h2 id="5-fashion-victim">5 - <a href="https://ringzer0ctf.com/challenges/156">Fashion victim</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-14.png" class="kg-image"></figure><p>When we click the button we see the following page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-15.png" class="kg-image"></figure><p>The page source has nothing interesting, just basic HTML, the most interesting part of the page is the <code>gif</code> of the TV's static: <a href="https://ringzer0ctf.com/images/tv.gif">https://ringzer0ctf.com/images/tv.gif</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/tv.gif" class="kg-image"></figure><p>Since this is a crypto challenge I discarded the typical steganography and decided to export the gif's frames using <a href="https://imagemagick.org/index.php">ImageMagick</a>:</p><pre><code>~ convert tv.gif target.png</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-17.png" class="kg-image"></figure><p>I haven't yet cracked this one, so fat I have only a script that goes through the frames by numeric order and <code>XOR</code>s their content:</p><pre><code class="language-Python">import os
+-----END PUBLIC KEY-----</code></pre><p>Now let's hash the key's content (I used <a href="https://gchq.github.io/CyberChef/#recipe=MD5()&amp;input=TUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEd2tyeFZyWitLQ2wxY1gyN1NIREk3RWZnbkZKWjBxVEhVRDZ1RWVTb1pzaVZrY3UwL1hPUGJ6MVJ0cEs3eHhwS01Tbkg2dURjNU9uMUlFdzNBMTI3d1c0WTNMcXF3Y3VoZ3lwZDNTZi9iSDN6NHRDMjVlcXI1Z0Exc0N3U2FFdyt5QnhkbkVsQk5PWHhPUXNTVDdhWkdEeUlVdG1wb3VJMUlYcXhqckR4MlNRSURBUUFC">CyberChef</a> to play around with the content format until I found the expected beginning - <code>0x42f5</code>):</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-13.png" class="kg-image"></figure><p>And we get the flag!</p><hr><h2 id="5-fashion-victim">5 - <a href="https://ringzer0ctf.com/challenges/156">Fashion victim</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-14.png" class="kg-image"></figure><p>When we click the button we see the following page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-15.png" class="kg-image"></figure><p>The page source has nothing interesting, just basic HTML, the most interesting part of the page is the <code>gif</code> of the TV's static: <a href="https://ringzer0ctf.com/images/tv.gif">https://ringzer0ctf.com/images/tv.gif</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/tv.gif" class="kg-image"></figure><p>Since this is a crypto challenge I discarded the typical steganography and decided to export the gif's frames using <a href="https://imagemagick.org/index.php">ImageMagick</a>:</p><pre><code>~ convert tv.gif target.png</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-17.png" class="kg-image"></figure><p>I haven't yet cracked this one, so far I have a script that goes through the frames by numeric order and <code>XOR</code>s their content:</p><pre><code class="language-Python">import os
 
 arr = os.listdir("./frames")
 size = 287
@@ -215,7 +254,7 @@ for index in range(0, 31, 1):
     except FileNotFoundError:
         print("Files doesn't exist: " + file_path)
 
-open("output.gif", 'wb').write(xord_byte_array)</code></pre><hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-18.png" class="kg-image"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-19.png" class="kg-image"></figure><hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-20.png" class="kg-image"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
+open("output.gif", 'wb').write(xord_byte_array)</code></pre><p>To Be Continued ...</p><hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-18.png" class="kg-image"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-19.png" class="kg-image"></figure><hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-20.png" class="kg-image"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
 hackingbubble</code></pre><hr>
                 </div>
             </section>
@@ -230,6 +269,40 @@ hackingbubble</code></pre><hr>
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="/tag/crypto/">crypto</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="/oposec/">ØxOPOSɆC | Underground Leaks (Crypto)</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-27">27 Oct 2020</time> –
+                                        5 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge/">HTB Crypto Challenge | Bank Heist</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/oxopos-c-summer-challenge-2020-web-challenges-write-up/">ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-09-25">25 Sep 2020</time> –
+                                        2 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/crypto/">See all 3 posts
+                            →</a>
+                    </footer>
+                </article>
 
 
                 <article class="post-card post tag-htb tag-tomcat tag-fcrackzip ">
