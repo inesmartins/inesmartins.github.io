@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
     <meta property="article:published_time" content="2020-11-14T19:19:19.000Z" />
-    <meta property="article:modified_time" content="2020-11-14T21:58:57.000Z" />
+    <meta property="article:modified_time" content="2020-11-14T22:12:19.000Z" />
     <meta property="article:tag" content="crypto" />
     <meta property="article:tag" content="cryptography" />
     <meta property="article:tag" content="ringzer0" />
@@ -73,7 +73,7 @@
     "headline": "RingZero Cryptography Challenges Write-up | Part I",
     "url": "https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/",
     "datePublished": "2020-11-14T19:19:19.000Z",
-    "dateModified": "2020-11-14T21:58:57.000Z",
+    "dateModified": "2020-11-14T22:12:19.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg",
@@ -171,7 +171,7 @@ for index in range(0, 31, 1):
     except FileNotFoundError:
         print("Files doesn't exist: " + file_path)
 
-open("out", 'wb').write(xord_byte_array)</code></pre><hr></hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
+open("out", 'wb').write(xord_byte_array)</code></pre><p>Let me know if you get it!</p><hr></hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
 hackingbubble</code></pre><hr></hr>
 
             </section>
