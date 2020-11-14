@@ -3,38 +3,29 @@
 <head>
     <meta charset="utf-8">
 
-    <title>RingZer0 JavaScript Challenges Write-up | Part II</title>
+    <title>DNP: RingZero Cryptography Challenges Write-up | Part I</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/" />
+    <link rel="canonical" href="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="RingZer0 JavaScript Challenges Write-up | Part II" />
-    <meta property="og:description" content="Click here for Part I. 5 - Valid Key RequiredOn this level instead of user/password form we see an input field where we&#x27;re supposed to enter a key: The source code for this one is a little more complex. Let&#x27;s start with the function that&#x27;s triggered when the user" />
-    <meta property="og:url" content="https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
-    <meta property="article:published_time" content="2020-06-24T21:49:01.000Z" />
-    <meta property="article:modified_time" content="2020-11-14T13:37:29.000Z" />
-    <meta property="article:tag" content="ctf" />
-    <meta property="article:tag" content="javascript" />
-    
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="RingZer0 JavaScript Challenges Write-up | Part II" />
-    <meta name="twitter:description" content="Click here for Part I. 5 - Valid Key RequiredOn this level instead of user/password form we see an input field where we&#x27;re supposed to enter a key: The source code for this one is a little more complex. Let&#x27;s start with the function that&#x27;s triggered when the user" />
-    <meta name="twitter:url" content="https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
+    <meta property="og:title" content="DNP: RingZero Cryptography Challenges Write-up | Part I" />
+    <meta property="og:description" content="1 - Some Martian MessageThis is a simple ROT13 aka Caesar Cipher: FLAGCesarIsCoolButNotSecure. 2 - You&#x27;re Drunk!Solve Crypto With Force! helped me with this one.  This is a Keyboard Shift Cipher, with shift &#x3D; 1. Super secret message for you the glag is chocolate! You are welcome. 3 - File" />
+    <meta property="og:url" content="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
+    <meta property="article:published_time" content="2020-11-14T19:19:19.000Z" />
+    <meta property="article:modified_time" content="2020-11-14T19:19:19.000Z" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DNP: RingZero Cryptography Challenges Write-up | Part I" />
+    <meta name="twitter:description" content="1 - Some Martian MessageThis is a simple ROT13 aka Caesar Cipher: FLAGCesarIsCoolButNotSecure. 2 - You&#x27;re Drunk!Solve Crypto With Force! helped me with this one.  This is a Keyboard Shift Cipher, with shift &#x3D; 1. Super secret message for you the glag is chocolate! You are welcome. 3 - File" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
-    <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="ctf, javascript" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="1500" />
-    <meta property="og:image:height" content="450" />
     
     <script type="application/ld+json">
 {
@@ -63,18 +54,11 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "RingZer0 JavaScript Challenges Write-up | Part II",
-    "url": "https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/",
-    "datePublished": "2020-06-24T21:49:01.000Z",
-    "dateModified": "2020-11-14T13:37:29.000Z",
-    "image": {
-        "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg",
-        "width": 1500,
-        "height": 450
-    },
-    "keywords": "ctf, javascript",
-    "description": "Click here\n[https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/] \nfor Part I.\n\n5 - Valid Key Required [https://ringzer0ctf.com/challenges/58]\nOn this level instead of user/password form we see an input field where we&#x27;re\nsupposed to enter a key:\n\nThe source code for this one is a little more complex. Let&#x27;s start with the\nfunction that&#x27;s triggered when the user clicks &quot;Validate&quot; - validatekey:\n\nvar ref &#x3D; {T: &quot;BG8&quot;, J: &quot;jep&quot;, j: &quot;M2L&quot;, K: &quot;L23&quot;, H: &quot;r1A&quot;};\n\nfunctio",
+    "headline": "DNP: RingZero Cryptography Challenges Write-up | Part I",
+    "url": "https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/",
+    "datePublished": "2020-11-14T19:19:19.000Z",
+    "dateModified": "2020-11-14T19:19:19.000Z",
+    "description": "1 - Some Martian Message [https://ringzer0ctf.com/challenges/25]\nThis is a simple ROT13 [https://en.wikipedia.org/wiki/ROT13] aka Caesar Cipher\n[https://en.wikipedia.org/wiki/Caesar_cipher]: FLAGCesarIsCoolButNotSecure.\n\n\n--------------------------------------------------------------------------------\n\n2 - You&#x27;re Drunk! [https://ringzer0ctf.com/challenges/274]\nSolve Crypto With Force [https://scwf.dima.ninja/]! helped me with this one. \nThis is a Keyboard Shift Cipher [https://www.dcode.fr/keybo",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -91,7 +75,7 @@
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     <script async src="https://cdn.ampproject.org/v0.js"></script>
 
-    
+    <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
 
 </head>
 
@@ -106,103 +90,62 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">RingZer0 JavaScript Challenges Write-up | Part II</h1>
+                <h1 class="post-title">DNP: RingZero Cryptography Challenges Write-up | Part I</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
-                    <time class="post-date" datetime="2020-06-24">2020-06-24</time>
+                    <time class="post-date" datetime="2020-11-14">2020-11-14</time>
                 </section>
             </header>
-            <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" width="600" height="400" layout="responsive"></amp-img>
-            </figure>
             <section class="post-content">
 
-                <p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the user clicks "Validate" - <code>validatekey</code>:</p><pre><code class="language-javascript">var ref = {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};
+                <h2 id="1-some-martian-message">1 - <a href="https://ringzer0ctf.com/challenges/25">Some Martian Message</a></h2><figure class="kg-card kg-image-card"></figure><p>This is a simple <a href="https://en.wikipedia.org/wiki/ROT13">ROT13</a> aka <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>: <code>FLAGCesarIsCoolButNotSecure</code>.</p><hr></hr><h2 id="2-you-re-drunk-">2 - <a href="https://ringzer0ctf.com/challenges/274">You're Drunk!</a></h2><figure class="kg-card kg-image-card"></figure><p><a href="https://scwf.dima.ninja/">Solve Crypto With Force</a>! helped me with this one. <br />This is a <a href="https://www.dcode.fr/keyboard-shift-cipher">Keyboard Shift Cipher</a>, with shift = 1.</p><p><code>Super secret message for you the glag is chocolate! You are welcome.</code></p><hr></hr><h2 id="3-file-recovery"><a href="https://ringzer0ctf.com/challenges/49">3 - File Recovery</a></h2><figure class="kg-card kg-image-card"></figure><p>Unzipping the file we see a <code>flag</code> directory with the following:</p><pre><code>~ ls -la flag
+-rw-r--r--@ 1 inesmartins  staff  128 Feb 17  2014 flag.enc
+-rw-r--r--@ 1 inesmartins  staff  887 Feb 17  2014 private.pem
 
-function validatekey() {
-    e = false;
-    var _strKey = "";
-    try {
-        _strKey = document.getElementById("key").value;
-        
-        var a = _strKey.split("-");
-        if(a.length !== 5)
-            e = true;
-        
-        var o=a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function));
-        
-        if (!equal(o,ref))
-            e = true;
-    	} catch (e) {
-            e = true;
-        }
-    
-    	if (!e) {
-            if (document.location.href.indexOf("?p=") == -1) {
-                document.location = document.location.href + "?p=" + _strKey;
-            }
-        } else {
-            $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
-    }
-}</code></pre><p>The most important information we get from this function is that in order to reach the success case, the following condition needs to be true:</p><pre><code class="language-javascript">a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function))  ==  {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};</code></pre><p>Let's start by creating a random key (<code>"abcd-efgh-ijkl-mnop-qrst"</code>) and logging the output of the mapping function:</p><pre><code class="language-javascript">var o = a.map(genFunc).reduceRight(callback, new(genFunc(a[4]))(Function));
-console.log(o); // { d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</code></pre><p>So, now we know the transformation, let's apply the reverse process to get the key that matches the hardcoded object:</p><table>
-<thead>
-<tr>
-<th>Object</th>
-<th>Key</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>{ d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</td>
-<td>abcd-efgh-ijkl-mnop-qrst</td>
-</tr>
-<tr>
-<td>{ T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A" }</td>
-<td>8r1T-pLXJ-LM2j-3jeK-ABGH</td>
-</tr>
-</tbody>
-</table>
-<p>Note: the order in which the parameters are logged is really important, I had to reorder them to get the correct flag.</p><table>
-<thead>
-<tr>
-<th>Object</th>
-<th>Key</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>{ d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</td>
-<td>abcd-efgh-ijkl-mnop-qrst</td>
-</tr>
-<tr>
-<td>{ H: "r1A", K: "L23", j: "M2L", J: "jep", T: "BG8" }</td>
-<td><strong>ABGH-3jeK-LM2j-pL2J-8r1T</strong></td>
-</tr>
-</tbody>
-</table>
-<h2 id="6-why-not">6 - <a href="https://ringzer0ctf.com/challenges/34">Why not</a></h2><p>It seems we're back to the old user/password model, similar to the <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">first 5</a>: </p><pre><code class="language-javascript">var k = new Array(176,214,205,246,264,255,227,237,242,244,265,270,283);
-var u = $("#cuser").val();
-var p = $("#cpass").val();
-var t = true;
+~ flag file flag.enc
+flag.enc: data
 
-if (u == "administrator") {
-    for (i = 0; i &lt; u.length; i++) {
-        if((u.charCodeAt(i) + p.charCodeAt(i) + i * 10) != k[i]) {
-            $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
-            t = false;
-            break;
-        }
-    }
-}</code></pre><p>I think a quick script will give us the password:</p><pre><code class="language-javacript">var k = new Array(176,214,205,246,264,255,227,237,242,244,265,270,283);
-var u = "administrator"
+~  flag file private.pem
+private.pem: PEM RSA private key</code></pre><p>It looks like we have an encrypted flag and a private RSA key. When we use the private key to decrypt the encrypted file we get the flag:</p><pre><code>~ openssl rsautl -decrypt -in flag.enc -out output -inkey private.pem
+~ cat output
+FLAG-vOAM5ZcReMNzJqOfxLauakHx</code></pre><hr></hr><h2 id="4-public-key-recovery">4 - <a href="https://ringzer0ctf.com/challenges/50">Public key recovery</a></h2><figure class="kg-card kg-image-card"></figure><p>We're given a valid 1024-bit private RSA key:</p><pre><code>~ openssl rsa -text -noout -in private.pem
+RSA Private-Key: (1024 bit, 2 primes)</code></pre><p>And it looks like the flag should be the <code>MD5</code> hash of the public key's base64-ed blob content. So, let's start by getting the public RSA key from the private key:</p><pre><code>~ openssl rsa -in private.pem -pubout &gt; public.pub
+writing RSA key
 
-var charCodes = []
-for (i = 0; i &lt; u.length; i++) {
-  var code = k[i] - u.charCodeAt(i) - i * 10;
-  charCodes.push(String.fromCharCode(code));
-}
-console.log(charCodes.join("")); // "OhLord4309111"</code></pre><hr></hr>
+~ cat public.pub
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDwkrxVrZ+KCl1cX27SHDI7Efgn
+FJZ0qTHUD6uEeSoZsiVkcu0/XOPbz1RtpK7xxpKMSnH6uDc5On1IEw3A127wW4Y3
+Lqqwcuhgypd3Sf/bH3z4tC25eqr5gA1sCwSaEw+yBxdnElBNOXxOQsST7aZGDyIU
+tmpouI1IXqxjrDx2SQIDAQAB
+-----END PUBLIC KEY-----</code></pre><p>Now let's hash the key's content (I used <a href="https://gchq.github.io/CyberChef/#recipe=MD5()&amp;input=TUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEd2tyeFZyWitLQ2wxY1gyN1NIREk3RWZnbkZKWjBxVEhVRDZ1RWVTb1pzaVZrY3UwL1hPUGJ6MVJ0cEs3eHhwS01Tbkg2dURjNU9uMUlFdzNBMTI3d1c0WTNMcXF3Y3VoZ3lwZDNTZi9iSDN6NHRDMjVlcXI1Z0Exc0N3U2FFdyt5QnhkbkVsQk5PWHhPUXNTVDdhWkdEeUlVdG1wb3VJMUlYcXhqckR4MlNRSURBUUFC">CyberChef</a> to play around with the content format until I found the expected beginning - <code>0x42f5</code>):</p><figure class="kg-card kg-image-card"></figure><p>And we get the flag!</p><hr></hr><h2 id="5-fashion-victim">5 - <a href="https://ringzer0ctf.com/challenges/156">Fashion victim</a></h2><figure class="kg-card kg-image-card"></figure><p>When we click the button we see the following page:</p><figure class="kg-card kg-image-card"></figure><p>The page source has nothing interesting, just basic HTML, the most interesting part of the page is the <code>gif</code> of the TV's static: <a href="https://ringzer0ctf.com/images/tv.gif">https://ringzer0ctf.com/images/tv.gif</a>.</p><figure class="kg-card kg-image-card"></figure><p>Since this is a crypto challenge I discarded the typical steganography and decided to export the gif's frames using <a href="https://imagemagick.org/index.php">ImageMagick</a>:</p><pre><code>~ convert tv.gif target.png</code></pre><figure class="kg-card kg-image-card"></figure><p>I haven't yet cracked this one, so fat I have only a script that goes through the frames by numeric order and <code>XOR</code>s their content:</p><pre><code class="language-Python">import os
+
+arr = os.listdir("./frames")
+size = 287
+xord_byte_array = bytearray(size)
+
+for index in range(0, 31, 1):
+
+    file_path = "./frames/target-" + str(index) + ".png"
+    print("Reading file " + file_path)
+
+    try:
+        file_byte_arr = bytearray(open(file_path, 'rb').read())
+        if len(file_byte_arr) &lt; size:
+            print("File is too small: " + str(len(file_byte_arr)))
+            continue
+        if index == 0:
+            for i in range(size):
+                xord_byte_array[i] = file_byte_arr[i]
+        else:
+            for i in range(size):
+                xord_byte_array[i] = file_byte_arr[i] ^ xord_byte_array[i]
+
+    except FileNotFoundError:
+        print("Files doesn't exist: " + file_path)
+
+open("output.gif", 'wb').write(xord_byte_array)</code></pre><hr></hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
+hackingbubble</code></pre><hr></hr>
 
             </section>
 
