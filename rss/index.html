@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 15 Nov 2020 13:50:36 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RingZer0 Cryptography Challenges Write-up | Part I]]></title><description><![CDATA[<h2 id="1-some-martian-message">1 - <a href="https://ringzer0ctf.com/challenges/25">Some Martian Message</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-11.png" class="kg-image"></figure><p>This is a simple <a href="https://en.wikipedia.org/wiki/ROT13">ROT13</a> aka <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>: <code>FLAGCesarIsCoolButNotSecure</code>.</p><hr><h2 id="2-you-re-drunk-">2 - <a href="https://ringzer0ctf.com/challenges/274">You're Drunk!</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-12.png" class="kg-image"></figure><p><a href="https://scwf.dima.ninja/">Solve Crypto With Force</a>! helped me with this one. <br>This is a <a href="https://www.dcode.fr/keyboard-shift-cipher">Keyboard Shift Cipher</a>, with shift = 1.</p><p><code>Super secret message for you the glag is chocolate! You are welcome.</code></p><hr><h2 id="3-file-recovery"><a href="https://ringzer0ctf.com/challenges/49">3 -</a></h2>]]></description><link>https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/</link><guid isPermaLink="false">5fafdff150163139868202a7</guid><category><![CDATA[crypto]]></category><category><![CDATA[cryptography]]></category><category><![CDATA[ringzer0]]></category><category><![CDATA[rot]]></category><category><![CDATA[ceaser cipher]]></category><category><![CDATA[keyboard shift cipher]]></category><category><![CDATA[rsa]]></category><category><![CDATA[vigenere]]></category><category><![CDATA[bubble babble]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 14 Nov 2020 19:19:19 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" medium="image"/><content:encoded><![CDATA[<h2 id="1-some-martian-message">1 - <a href="https://ringzer0ctf.com/challenges/25">Some Martian Message</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-11.png" class="kg-image" alt="RingZer0 Cryptography Challenges Write-up | Part I"></figure><img src="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" alt="RingZer0 Cryptography Challenges Write-up | Part I"><p>This is a simple <a href="https://en.wikipedia.org/wiki/ROT13">ROT13</a> aka <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>: <code>FLAGCesarIsCoolButNotSecure</code>.</p><hr><h2 id="2-you-re-drunk-">2 - <a href="https://ringzer0ctf.com/challenges/274">You're Drunk!</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-12.png" class="kg-image" alt="RingZer0 Cryptography Challenges Write-up | Part I"></figure><p><a href="https://scwf.dima.ninja/">Solve Crypto With Force</a>! helped me with this one. <br>This is a <a href="https://www.dcode.fr/keyboard-shift-cipher">Keyboard Shift Cipher</a>, with shift = 1.</p><p><code>Super secret message for you the glag is chocolate! You are welcome.</code></p><hr><h2 id="3-file-recovery"><a href="https://ringzer0ctf.com/challenges/49">3 - File Recovery</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-3.png" class="kg-image" alt="RingZer0 Cryptography Challenges Write-up | Part I"></figure><p>Unzipping the file we see a <code>flag</code> directory with the following:</p><pre><code>~ ls -la flag
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 22 Nov 2020 11:45:44 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Crypto Challenge | Call]]></title><description><![CDATA[<p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being dialled on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an</p>]]></description><link>https://inesmartins.github.io//htb-crypto-challenge-call/</link><guid isPermaLink="false">5eed049e1e7da103a083dca2</guid><category><![CDATA[crypto]]></category><category><![CDATA[dtfm]]></category><category><![CDATA[prime numbers]]></category><category><![CDATA[wav]]></category><category><![CDATA[htb]]></category><category><![CDATA[mp3]]></category><category><![CDATA[ffmpeg]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 22 Nov 2020 11:36:40 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" alt="HTB Crypto Challenge | Call"><p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being dialled on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an <a href="http://dialabc.com/sound/detect/index.html">online tool</a> and also a <a href="https://github.com/ribt/dtmf-decoder">Github project</a> that were able to accurately decode DTMF from an audio file, however, these tools only support <code>.wav</code> files so I started by converting the <code>.mp3</code> into <code>.wav</code> with <code>ffmpeg</code>. </p><!--kg-card-begin: markdown--><pre><code>$ sudo apt-get install ffmpeg
+$ ffmpeg -i sound.mp3 sound.wav
+</code></pre>
+<!--kg-card-end: markdown--><p>So here's the output:</p><!--kg-card-begin: markdown--><pre><code>2331434783711923431767372331117714113
+</code></pre>
+<!--kg-card-end: markdown--><p>Then I distributed the numbers in the same cadence as the keys were pressed in the audio file:</p><!--kg-card-begin: markdown--><pre><code>23 31 43 47 83 71 19 23 43 17 67 37 23 31 11 7 71 41 13
+</code></pre>
+<!--kg-card-end: markdown--><p>At this point I was stuck. I spent a lot of time trying to find a cipher that would fit this sequence, but finally it was a tip from the <a href="https://forum.hackthebox.eu/discussion/1914/call-challenge/p1">forum</a> about looking for the "inherent mathematical properties" of these numbers to think of prime numbers, which then led me to <a href="https://www.dcode.fr/prime-numbers-cipher">an online Prime Numbers Cipher decode</a>r, which ended up giving me the flag:</p><!--kg-card-begin: markdown--><pre><code>HTB{IKNOWTHINGSLIKEDTMF}
+</code></pre>
+<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[RingZer0 Cryptography Challenges Write-up | Part I]]></title><description><![CDATA[<h2 id="1-some-martian-message">1 - <a href="https://ringzer0ctf.com/challenges/25">Some Martian Message</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-11.png" class="kg-image"></figure><p>This is a simple <a href="https://en.wikipedia.org/wiki/ROT13">ROT13</a> aka <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>: <code>FLAGCesarIsCoolButNotSecure</code>.</p><hr><h2 id="2-you-re-drunk-">2 - <a href="https://ringzer0ctf.com/challenges/274">You're Drunk!</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-12.png" class="kg-image"></figure><p><a href="https://scwf.dima.ninja/">Solve Crypto With Force</a>! helped me with this one. <br>This is a <a href="https://www.dcode.fr/keyboard-shift-cipher">Keyboard Shift Cipher</a>, with shift = 1.</p><p><code>Super secret message for you the glag is chocolate! You are welcome.</code></p><hr><h2 id="3-file-recovery"><a href="https://ringzer0ctf.com/challenges/49">3 -</a></h2>]]></description><link>https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/</link><guid isPermaLink="false">5fafdff150163139868202a7</guid><category><![CDATA[crypto]]></category><category><![CDATA[cryptography]]></category><category><![CDATA[ringzer0]]></category><category><![CDATA[rot]]></category><category><![CDATA[ceaser cipher]]></category><category><![CDATA[keyboard shift cipher]]></category><category><![CDATA[rsa]]></category><category><![CDATA[vigenere]]></category><category><![CDATA[bubble babble]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 14 Nov 2020 19:19:19 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" medium="image"/><content:encoded><![CDATA[<h2 id="1-some-martian-message">1 - <a href="https://ringzer0ctf.com/challenges/25">Some Martian Message</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-11.png" class="kg-image" alt="RingZer0 Cryptography Challenges Write-up | Part I"></figure><img src="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" alt="RingZer0 Cryptography Challenges Write-up | Part I"><p>This is a simple <a href="https://en.wikipedia.org/wiki/ROT13">ROT13</a> aka <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>: <code>FLAGCesarIsCoolButNotSecure</code>.</p><hr><h2 id="2-you-re-drunk-">2 - <a href="https://ringzer0ctf.com/challenges/274">You're Drunk!</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-12.png" class="kg-image" alt="RingZer0 Cryptography Challenges Write-up | Part I"></figure><p><a href="https://scwf.dima.ninja/">Solve Crypto With Force</a>! helped me with this one. <br>This is a <a href="https://www.dcode.fr/keyboard-shift-cipher">Keyboard Shift Cipher</a>, with shift = 1.</p><p><code>Super secret message for you the glag is chocolate! You are welcome.</code></p><hr><h2 id="3-file-recovery"><a href="https://ringzer0ctf.com/challenges/49">3 - File Recovery</a></h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-3.png" class="kg-image" alt="RingZer0 Cryptography Challenges Write-up | Part I"></figure><p>Unzipping the file we see a <code>flag</code> directory with the following:</p><pre><code>~ ls -la flag
 -rw-r--r--@ 1 inesmartins  staff  128 Feb 17  2014 flag.enc
 -rw-r--r--@ 1 inesmartins  staff  887 Feb 17  2014 private.pem
 
@@ -1474,89 +1483,4 @@ for ($i = 0; $i &lt; 1000000000; $i++) {
 
 for i in range(0, 100):
     print("Testing file descriptor " + str(i))
-    os.system("curl -s https://[custom_247ctf_subdomain].247ctf.com/?include=/dev/fd/" + str(i) + " &gt;&gt; output.txt")</code></pre><p>After looking at the output file, we get our flag!</p>]]></content:encoded></item><item><title><![CDATA[RingZer0 JavaScript Challenges Write-up | Part II]]></title><description><![CDATA[<p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/image-29.png" class="kg-image"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the</p>]]></description><link>https://inesmartins.github.io//ringzer0-javascript-challenges-write-up-part-ii/</link><guid isPermaLink="false">5ef37f721e7da103a083e372</guid><category><![CDATA[ctf]]></category><category><![CDATA[javascript]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 24 Jun 2020 21:49:01 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/94077557_2585400745052781_1404098931607994368_o-1.jpg" alt="RingZer0 JavaScript Challenges Write-up | Part II"><p><em>Click <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">here</a> for Part I.</em></p><h2 id="5-valid-key-required">5 - <a href="https://ringzer0ctf.com/challenges/58">Valid Key Required</a></h2><p>On this level instead of user/password form we see an input field where we're supposed to enter a key:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/image-29.png" class="kg-image" alt="RingZer0 JavaScript Challenges Write-up | Part II"></figure><p>The source code for this one is a little more complex. Let's start with the function that's triggered when the user clicks "Validate" - <code>validatekey</code>:</p><pre><code class="language-javascript">var ref = {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};
-
-function validatekey() {
-    e = false;
-    var _strKey = "";
-    try {
-        _strKey = document.getElementById("key").value;
-        
-        var a = _strKey.split("-");
-        if(a.length !== 5)
-            e = true;
-        
-        var o=a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function));
-        
-        if (!equal(o,ref))
-            e = true;
-    	} catch (e) {
-            e = true;
-        }
-    
-    	if (!e) {
-            if (document.location.href.indexOf("?p=") == -1) {
-                document.location = document.location.href + "?p=" + _strKey;
-            }
-        } else {
-            $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
-    }
-}</code></pre><p>The most important information we get from this function is that in order to reach the success case, the following condition needs to be true:</p><pre><code class="language-javascript">a.map(genFunc).reduceRight(callback, new (genFunc(a[4]))(Function))  ==  {T: "BG8", J: "jep", j: "M2L", K: "L23", H: "r1A"};</code></pre><p>Let's start by creating a random key (<code>"abcd-efgh-ijkl-mnop-qrst"</code>) and logging the output of the mapping function:</p><pre><code class="language-javascript">var o = a.map(genFunc).reduceRight(callback, new(genFunc(a[4]))(Function));
-console.log(o); // { d: "rsa", h: "noe", l: "jki", p: "fgm", t: "bcq" }</code></pre><p>So, now we know the transformation, let's apply the reverse process to get the key that matches the hardcoded object:</p><!--kg-card-begin: markdown--><table>
-<thead>
-<tr>
-<th>Object</th>
-<th>Key</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>{ d: &quot;rsa&quot;, h: &quot;noe&quot;, l: &quot;jki&quot;, p: &quot;fgm&quot;, t: &quot;bcq&quot; }</td>
-<td>abcd-efgh-ijkl-mnop-qrst</td>
-</tr>
-<tr>
-<td>{ T: &quot;BG8&quot;, J: &quot;jep&quot;, j: &quot;M2L&quot;, K: &quot;L23&quot;, H: &quot;r1A&quot; }</td>
-<td>8r1T-pLXJ-LM2j-3jeK-ABGH</td>
-</tr>
-</tbody>
-</table>
-<!--kg-card-end: markdown--><p>Note: the order in which the parameters are logged is really important, I had to reorder them to get the correct flag.</p><!--kg-card-begin: markdown--><table>
-<thead>
-<tr>
-<th>Object</th>
-<th>Key</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>{ d: &quot;rsa&quot;, h: &quot;noe&quot;, l: &quot;jki&quot;, p: &quot;fgm&quot;, t: &quot;bcq&quot; }</td>
-<td>abcd-efgh-ijkl-mnop-qrst</td>
-</tr>
-<tr>
-<td>{ H: &quot;r1A&quot;, K: &quot;L23&quot;, j: &quot;M2L&quot;, J: &quot;jep&quot;, T: &quot;BG8&quot; }</td>
-<td><strong>ABGH-3jeK-LM2j-pL2J-8r1T</strong></td>
-</tr>
-</tbody>
-</table>
-<!--kg-card-end: markdown--><h2 id="6-why-not">6 - <a href="https://ringzer0ctf.com/challenges/34">Why not</a></h2><p>It seems we're back to the old user/password model, similar to the <a href="https://inesmartins.github.io/ringzer0-js-ctf-write-up-client-side-validation-is-bad/">first 5</a>: </p><pre><code class="language-javascript">var k = new Array(176,214,205,246,264,255,227,237,242,244,265,270,283);
-var u = $("#cuser").val();
-var p = $("#cpass").val();
-var t = true;
-
-if (u == "administrator") {
-    for (i = 0; i &lt; u.length; i++) {
-        if((u.charCodeAt(i) + p.charCodeAt(i) + i * 10) != k[i]) {
-            $("#cresponse").html("&lt;div class='alert alert-danger'&gt;Wrong password sorry.&lt;/div&gt;");
-            t = false;
-            break;
-        }
-    }
-}</code></pre><p>I think a quick script will give us the password:</p><pre><code class="language-javacript">var k = new Array(176,214,205,246,264,255,227,237,242,244,265,270,283);
-var u = "administrator"
-
-var charCodes = []
-for (i = 0; i &lt; u.length; i++) {
-  var code = k[i] - u.charCodeAt(i) - i * 10;
-  charCodes.push(String.fromCharCode(code));
-}
-console.log(charCodes.join("")); // "OhLord4309111"</code></pre><hr>]]></content:encoded></item></channel></rss>
+    os.system("curl -s https://[custom_247ctf_subdomain].247ctf.com/?include=/dev/fd/" + str(i) + " &gt;&gt; output.txt")</code></pre><p>After looking at the output file, we get our flag!</p>]]></content:encoded></item></channel></rss>
