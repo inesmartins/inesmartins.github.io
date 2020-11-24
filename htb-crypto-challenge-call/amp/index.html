@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//htb-crypto-challenge-call/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" />
     <meta property="article:published_time" content="2020-11-22T11:36:40.000Z" />
-    <meta property="article:modified_time" content="2020-11-22T11:45:38.000Z" />
+    <meta property="article:modified_time" content="2020-11-24T19:56:19.000Z" />
     <meta property="article:tag" content="crypto" />
     <meta property="article:tag" content="dtfm" />
     <meta property="article:tag" content="prime numbers" />
@@ -71,7 +71,7 @@
     "headline": "HTB Crypto Challenge | Call",
     "url": "https://inesmartins.github.io//htb-crypto-challenge-call/",
     "datePublished": "2020-11-22T11:36:40.000Z",
-    "dateModified": "2020-11-22T11:45:38.000Z",
+    "dateModified": "2020-11-24T19:56:19.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg",
@@ -129,7 +129,7 @@ $ ffmpeg -i sound.mp3 sound.wav
 </code></pre>
 <p>Then I distributed the numbers in the same cadence as the keys were pressed in the audio file:</p><pre><code>23 31 43 47 83 71 19 23 43 17 67 37 23 31 11 7 71 41 13
 </code></pre>
-<p>At this point I was stuck. I spent a lot of time trying to find a cipher that would fit this sequence, but finally it was a tip from the <a href="https://forum.hackthebox.eu/discussion/1914/call-challenge/p1">forum</a> about looking for the "inherent mathematical properties" of these numbers to think of prime numbers, which then led me to <a href="https://www.dcode.fr/prime-numbers-cipher">an online Prime Numbers Cipher decode</a>r, which ended up giving me the flag:</p><pre><code>HTB{IKNOWTHINGSLIKEDTMF}
+<p>At this point I was stuck. <br />I spent a lot of time trying to find a cipher that would fit this sequence, but finally it was a tip from the <a href="https://forum.hackthebox.eu/discussion/1914/call-challenge/p1">forum</a> about looking for the "inherent mathematical properties" of these numbers that let me to think of <strong>prime numbers</strong>, which then led me to <a href="https://www.dcode.fr/prime-numbers-cipher">an online Prime Numbers Cipher decode</a>r, which ended up giving me the flag:</p><pre><code>HTB{IKNOWTHINGSLIKEDTMF}
 </code></pre>
 
 
