@@ -19,11 +19,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Crypto Challenge | Call" />
-    <meta property="og:description" content="Banner source: https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg Hint: The flag format is: HTB{PASSWORD}We&#x27;re given an audio file called sound.mp3 that contains the very familiar sound of numbers being dialled on a phone aka DTFM (Dual-Tone Multi-Frequency Signaling). I found an" />
+    <meta property="og:description" content="Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher." />
     <meta property="og:url" content="https://inesmartins.github.io//htb-crypto-challenge-call/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" />
     <meta property="article:published_time" content="2020-11-22T11:36:40.000Z" />
-    <meta property="article:modified_time" content="2020-11-24T19:56:19.000Z" />
+    <meta property="article:modified_time" content="2020-11-27T22:56:57.000Z" />
     <meta property="article:tag" content="crypto" />
     <meta property="article:tag" content="dtfm" />
     <meta property="article:tag" content="prime numbers" />
@@ -34,7 +34,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Crypto Challenge | Call" />
-    <meta name="twitter:description" content="Banner source: https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg Hint: The flag format is: HTB{PASSWORD}We&#x27;re given an audio file called sound.mp3 that contains the very familiar sound of numbers being dialled on a phone aka DTFM (Dual-Tone Multi-Frequency Signaling). I found an" />
+    <meta name="twitter:description" content="Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher." />
     <meta name="twitter:url" content="https://inesmartins.github.io//htb-crypto-challenge-call/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" />
     <meta name="twitter:label1" content="Written by" />
@@ -75,7 +75,7 @@
     "headline": "HTB Crypto Challenge | Call",
     "url": "https://inesmartins.github.io//htb-crypto-challenge-call/",
     "datePublished": "2020-11-22T11:36:40.000Z",
-    "dateModified": "2020-11-24T19:56:19.000Z",
+    "dateModified": "2020-11-27T22:56:57.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg",
@@ -83,7 +83,7 @@
         "height": 1500
     },
     "keywords": "crypto, dtfm, prime numbers, wav, htb, mp3, ffmpeg",
-    "description": "Banner source: \nhttps://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg\n\n&gt; Hint: The flag format is: HTB{PASSWORD}\nWe&#x27;re given an audio file called sound.mp3 that contains the very familiar sound\nof numbers being dialled on a phone aka DTFM (Dual-Tone Multi-Frequency\nSignaling) [https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling].\n\nI found an online tool [http://dialabc.com/sound/detect/index.html] and also a \nGithub project [https://github.c",
+    "description": "Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -153,6 +153,7 @@
 
                 <h1 class="post-full-title">HTB Crypto Challenge | Call</h1>
 
+                <p class="post-full-custom-excerpt">Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.</p>
 
                 <div class="post-full-byline">
 
@@ -206,14 +207,13 @@
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being dialled on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an <a href="http://dialabc.com/sound/detect/index.html">online tool</a> and also a <a href="https://github.com/ribt/dtmf-decoder">Github project</a> that were able to accurately decode DTMF from an audio file, however, these tools only support <code>.wav</code> files so I started by converting the <code>.mp3</code> into <code>.wav</code> with <code>ffmpeg</code>. </p><!--kg-card-begin: markdown--><pre><code>$ sudo apt-get install ffmpeg
-$ ffmpeg -i sound.mp3 sound.wav
+                    <p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being "dialled" on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an <a href="http://dialabc.com/sound/detect/index.html">online tool</a> and also a <a href="https://github.com/ribt/dtmf-decoder">Github project</a> that were able to accurately decode DTMF tones from an audio file, however, these tools only support <code>.wav</code> files so I started by converting the <code>.mp3</code> into <code>.wav</code> with <code>ffmpeg</code>. </p><!--kg-card-begin: markdown--><pre><code>$ ffmpeg -i sound.mp3 sound.wav
 </code></pre>
 <!--kg-card-end: markdown--><p>So here's the output:</p><!--kg-card-begin: markdown--><pre><code>2331434783711923431767372331117714113
 </code></pre>
 <!--kg-card-end: markdown--><p>Then I distributed the numbers in the same cadence as the keys were pressed in the audio file:</p><!--kg-card-begin: markdown--><pre><code>23 31 43 47 83 71 19 23 43 17 67 37 23 31 11 7 71 41 13
 </code></pre>
-<!--kg-card-end: markdown--><p>At this point I was stuck. <br>I spent a lot of time trying to find a cipher that would fit this sequence, but finally it was a tip from the <a href="https://forum.hackthebox.eu/discussion/1914/call-challenge/p1">forum</a> about looking for the "inherent mathematical properties" of these numbers that let me to think of <strong>prime numbers</strong>, which then led me to <a href="https://www.dcode.fr/prime-numbers-cipher">an online Prime Numbers Cipher decode</a>r, which ended up giving me the flag:</p><!--kg-card-begin: markdown--><pre><code>HTB{IKNOWTHINGSLIKEDTMF}
+<!--kg-card-end: markdown--><p>At this point I was stuck. <br>I spent a lot of time trying to find a cipher that would fit this sequence, but finally it was a tip from the <a href="https://forum.hackthebox.eu/discussion/1914/call-challenge/p1">forum</a> about looking for the "inherent mathematical properties" of these numbers that let me to realise <strong>that these are all prime numbers</strong>.</p><p>Finally, I used <a href="https://www.dcode.fr/prime-numbers-cipher">this</a> Prime Numbers Cipher decoder to get the flag:</p><!--kg-card-begin: markdown--><pre><code>HTB{IKNOWTHINGSLIKEDTMF}
 </code></pre>
 <!--kg-card-end: markdown-->
                 </div>
@@ -239,7 +239,7 @@ $ ffmpeg -i sound.mp3 sound.wav
                                 <h4><a href="/dnp-ringzero-cryptography-challenges/">RingZer0 Cryptography Challenges Write-up | Part I</a></h4>
                                 <div class="read-next-card-meta">
                                     <p><time datetime="2020-11-14">14 Nov 2020</time> –
-                                        5 min read</p>
+                                        4 min read</p>
                                 </div>
                             </li>
                             <li>
@@ -290,7 +290,7 @@ $ ffmpeg -i sound.mp3 sound.wav
             </header>
 
             <section class="post-card-excerpt">
-                    <p>1 - Some Martian MessageThis is a simple ROT13 aka Caesar Cipher: FLAGCesarIsCoolButNotSecure. 2 - You're Drunk!Solve Crypto With Force! helped me with this one.  This is a Keyboard</p>
+                    <p>Write-up for the first 7 Crypto challenges on RingZer0.</p>
             </section>
 
         </a>
@@ -310,7 +310,7 @@ $ ffmpeg -i sound.mp3 sound.wav
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="/author/ines/">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-11-14">14 Nov 2020</time> <span class="bull">&bull;</span> 5 min read</span>
+                <span class="post-card-byline-date"><time datetime="2020-11-14">14 Nov 2020</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
 

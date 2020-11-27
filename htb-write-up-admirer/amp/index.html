@@ -15,11 +15,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Write-up | Admirer" />
-    <meta property="og:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning, with tells us that the machine has: an FTP service (vsftp) running on port 21;an OpenSSH service running on port 22;an Apache web server running on port 80:~ nmap -sV -sC -A admirer.htb" />
+    <meta property="og:description" content="Write-up for Adminer, a retired HTB machine." />
     <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-admirer/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/10/admirer.png" />
     <meta property="article:published_time" content="2020-10-22T09:07:19.000Z" />
-    <meta property="article:modified_time" content="2020-10-22T09:07:19.000Z" />
+    <meta property="article:modified_time" content="2020-11-27T23:02:44.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="ftp" />
     <meta property="article:tag" content="adminer" />
@@ -29,7 +29,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Admirer" />
-    <meta name="twitter:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning, with tells us that the machine has: an FTP service (vsftp) running on port 21;an OpenSSH service running on port 22;an Apache web server running on port 80:~ nmap -sV -sC -A admirer.htb" />
+    <meta name="twitter:description" content="Write-up for Adminer, a retired HTB machine." />
     <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-admirer/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/10/admirer.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -70,7 +70,7 @@
     "headline": "HTB Write-up | Admirer",
     "url": "https://inesmartins.github.io//htb-write-up-admirer/",
     "datePublished": "2020-10-22T09:07:19.000Z",
-    "dateModified": "2020-10-22T09:07:19.000Z",
+    "dateModified": "2020-11-27T23:02:44.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/10/admirer.png",
@@ -78,7 +78,7 @@
         "height": 380
     },
     "keywords": "htb, ftp, adminer, mysql, privesc, python",
-    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/248].\n\nScanning\nAs always, we start with some basic scanning, with tells us that the machine\nhas:\n\n * an FTP service (vsftp) running on port 21;\n * an OpenSSH service running on port 22;\n * an Apache web server running on port 80:\n\n~ nmap -sV -sC -A admirer.htb\n\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 15:37 WEST\nNmap scan report for admirer.htb (10.10.10.187)\nHost is up (0.043s latency).\nNot shown: 9",
+    "description": "Write-up for Adminer, a retired HTB machine.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -141,7 +141,7 @@ PORT   STATE SERVICE VERSION
 |_http-title: Admirer
 Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 </code></pre>
-<p>The web application is just a very simple image gallery, there's no authentication or anything that immediately stands out, so we start by exploring the disallowed entry (<code>/admin-dir</code>) found during the basic scan.</p><figure class="kg-card kg-image-card"></figure><p>We can't directly access the admin-dir directory but the <a href="http://admirer.htb/robots.txt">robots.txt</a> file has a little clue left to us by "waldo":</p><pre><code>User-agent: *
+<p>The web application is just a very simple image gallery, there's no authentication or anything that immediately stands out, so we start by exploring the disallowed entry (<code>/admin-dir</code>) found during the scan.</p><figure class="kg-card kg-image-card"></figure><p>We can't directly access the admin-dir directory but the <a href="http://admirer.htb/robots.txt">robots.txt</a> file has a little clue left to us by "waldo":</p><pre><code>User-agent: *
 
 # This folder contains personal contacts and creds, so no one -not even robots- should see it - waldo
 Disallow: /admin-dir
@@ -267,7 +267,7 @@ Ezy]m27}OREc$
 
 </code></pre>
 <p>So, now we have 2 new credentials:</p><ul><li>one for a bank account (waldo.11);</li><li>one for a mySQL database (waldo);</li></ul><p>Going back to the deployed version of the web application, the <a href="http://admirer.htb/w4ld0s_s3cr3t_d1r/contacts.txt">w4ld0s_s3cr3t_d1r</a> doesn't seem to be available anymore, but the <a href="http://10.10.10.187/utility-scripts/">utility_scripts</a> dir does exist.</p><p>Of all the files on the backup, the <a href="http://10.10.10.187/utility-scripts/admin_tasks.php">admin-tasks page</a> is the most interesting. This page allows any user to check very simple info about the system:</p><figure class="kg-card kg-image-card kg-width-full"></figure><p>At this point I was a bit stuck but after reviewing all the previous clues I realised I missed something on the db_admin.php file:</p><pre><code>// TODO: Finish implementing this or find a better open source alternative
-</code></pre><p>After some googling, I realised that the "better open source alternative" to database administration is likely the <a href="https://www.adminer.org/">Adminer</a> tool - the name likeness was a dead giveaway. </p><p>And this brings us to the <a href="http://10.10.10.187/utility-scripts/adminer.php">adminer.php</a> page:</p><figure class="kg-card kg-image-card"></figure><h2 id="exploiting-adminer">Exploiting Adminer</h2><p>After trying (and failing) to login with all of the credentials previously found, I decided to search for Adminer vulnerabilities. </p><p>Turns out <a href="https://sansec.io/research/adminer-4.6.2-file-disclosure-vulnerability ">Adminer 4.6.2 is vulnerable to a file disclosure vulnerability</a>.</p><p>So I installed and launched an instance of mySQL server on my machine - I chose to do it on macOS since it looked simpler (read <a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">this</a> for more info):</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>And then added a new local user that can access my local mySQL server from the admirer.htb host using the password 'password':</p><pre><code>~ /usr/local/mysql/bin/mysql -u root -p
+</code></pre><p>After some googling, I realised that the "better open source alternative" to database administration is likely the <a href="https://www.adminer.org/">Adminer</a> tool - the name likeness was a dead giveaway. </p><p>And this brings us to the <a href="http://10.10.10.187/utility-scripts/adminer.php">adminer.php</a> page:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="exploiting-adminer">Exploiting Adminer</h2><p>After trying (and failing) to login with all of the credentials previously found, I decided to search for Adminer vulnerabilities. </p><p>Turns out <a href="https://sansec.io/research/adminer-4.6.2-file-disclosure-vulnerability ">Adminer 4.6.2 is vulnerable to a file disclosure vulnerability</a>.</p><p>So I installed and launched an instance of mySQL server on my machine and then <strong>added a new local user</strong> that can access this mySQL server from the admirer.htb host using the password 'password':</p><pre><code>~ /usr/local/mysql/bin/mysql -u root -p
 Enter password:
 ...
 
@@ -324,7 +324,7 @@ You have new mail.
 Last login: Mon Jun  8 21:25:38 2020 from 10.10.14.95
 waldo@admirer:~$ 
 </code></pre>
-<h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">https://www.dev2qa.com/how-to-use-mysql-on-mac/</a></li><li><a href="https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py">https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py</a></li><li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html</a></li><li><a href="https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql">https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql</a></li></ul><hr></hr><h2 id="privilege-escalation">Privilege Escalation</h2><p>Now authenticated as waldo, we started by running <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">LinPEAS</a>, which helped us find some interesting stuff:</p><pre><code>[+] Readable files belonging to root and readable by me but not world readable
+<h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">https://www.dev2qa.com/how-to-use-mysql-on-mac/</a></li><li><a href="https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py">https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py</a></li><li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html</a></li><li><a href="https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql">https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql</a></li></ul><hr></hr><h2 id="privilege-escalation">Privilege Escalation</h2><p>Now authenticated as <code>waldo</code>, we started by running <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">LinPEAS</a>, which helped us find some interesting stuff:</p><pre><code>[+] Readable files belonging to root and readable by me but not world readable
 -rwxr----- 1 root admins 198 Dec  2  2019 /opt/scripts/backup.py
 </code></pre>
 <p>On the <code>/opt/scripts/</code> directory we find the <code>admin_tasks</code> bash script which is called by the administrative interface we previously saw. </p><p>At first glance there wasn't any obvious way to exploit this script but, as you can see below, there is a "Backup web data" option which executes the <code>backup.py</code> script as root.</p><pre><code>...
@@ -353,7 +353,7 @@ dst = '/var/backups/html'
 
 make_archive(dst, 'gztar', src)
 </code></pre>
-<p>So, we need to:</p><ul><li>change the <strong>Python path</strong> to start with a directory that we control, e.g.: /home/waldo/.abc/;</li><li>create a <strong>shutil.py</strong> file inside /home/waldo/.abc/;</li><li>add a <strong>make_archive</strong> function to shutil.py that uses the same signature (3 fields) but instead of archiving the web content returns a shell as root;</li></ul><p>Let's start with our mock shutil.py:</p><pre><code>waldo@admirer:~$ nano /home/waldo/.abc/shutil.py
+<p>So, we need to:</p><ul><li>change the <strong>Python path</strong> to start with a directory that we control, e.g.: /home/waldo/.abc/;</li><li>create a <strong>shutil.py</strong> file inside /home/waldo/.abc/;</li><li>add a <strong>make_archive</strong> function to shutil.py that uses the same signature (3 fields) but instead of archiving the web content returns a shell as root;</li></ul><p>Let's start with our mock <code>shutil.py</code>:</p><pre><code>waldo@admirer:~$ nano /home/waldo/.abc/shutil.py
 
 import os
 
@@ -379,7 +379,7 @@ waldo@admirer:~$ chmod +x /home/waldo/.abc/shutil.py
 Choose an option: 6
 Running backup script in the background, it might take a while...
 </code></pre>
-<p>And we receive a shell as root which allows us to print the root flag!</p><p>Hope you enjoyed it :)</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p><br /></p>
+<p>And we receive a shell as root which allows us to print the root flag!</p><p>Hope you enjoyed it :)</p><hr></hr>
 
             </section>
 

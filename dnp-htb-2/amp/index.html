@@ -15,18 +15,18 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Write-up | Tabby" />
-    <meta property="og:description" content="Retired machine can be found here.Scanning~ nmap -sC -sV -A -T4 tabby.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST Nmap scan report for tabby.htb (10.10.10.194) Host is up (0.30s latency). Not shown: 996 closed ports PORT     STATE    SERVICE" />
+    <meta property="og:description" content="Write-up for Tabby, a retired HTB machine." />
     <meta property="og:url" content="https://inesmartins.github.io//dnp-htb-2/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" />
     <meta property="article:published_time" content="2020-11-07T21:59:12.000Z" />
-    <meta property="article:modified_time" content="2020-11-07T22:23:59.000Z" />
+    <meta property="article:modified_time" content="2020-11-27T22:58:11.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="tomcat" />
     <meta property="article:tag" content="fcrackzip" />
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Tabby" />
-    <meta name="twitter:description" content="Retired machine can be found here.Scanning~ nmap -sC -sV -A -T4 tabby.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST Nmap scan report for tabby.htb (10.10.10.194) Host is up (0.30s latency). Not shown: 996 closed ports PORT     STATE    SERVICE" />
+    <meta name="twitter:description" content="Write-up for Tabby, a retired HTB machine." />
     <meta name="twitter:url" content="https://inesmartins.github.io//dnp-htb-2/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -67,7 +67,7 @@
     "headline": "HTB Write-up | Tabby",
     "url": "https://inesmartins.github.io//dnp-htb-2/",
     "datePublished": "2020-11-07T21:59:12.000Z",
-    "dateModified": "2020-11-07T22:23:59.000Z",
+    "dateModified": "2020-11-27T22:58:11.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png",
@@ -75,7 +75,7 @@
         "height": 377
     },
     "keywords": "htb, tomcat, fcrackzip",
-    "description": "&gt; Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/259].\nScanning\n~ nmap -sC -sV -A -T4 tabby.htb\n\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST\nNmap scan report for tabby.htb (10.10.10.194)\nHost is up (0.30s latency).\nNot shown: 996 closed ports\n\nPORT     STATE    SERVICE  VERSION\n22/tcp   open     ssh      OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)\n80/tcp   open     http     Apache httpd 2.4.41 ((Ubuntu))\n|_http-server-header: Apach",
+    "description": "Write-up for Tabby, a retired HTB machine.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -138,7 +138,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 49.59 seconds</code></pre><h3 id="port-80">Port 80</h3><p>The Apache server running on port <code>80</code> seems to be the website for a hosting company called "Mega Hosting":</p><figure class="kg-card kg-image-card"></figure><p>The home page has a link for their "statement on recovering from the data breach". When we click the link we're redirected to <a href="http://megahosting.htb/news.php?file=statement">http://megahosting.htb/news.php?file=statement</a>. If we access the page on the <code>tabby.htb</code> domain (which we had previously configured on <code>/etc/hosts</code>) we see the following message:</p><pre><code>We apologise to all our customers for the previous data breach.
 
-We have changed the site to remove this tool, and have invested heavily in more secure servers</code></pre><p>So, from this statement we understand that a <em>tool </em>was removed from the site, which might be our foothold.</p><p>Also very interesting is the way that the <code>statement</code> file is being fetched, let's see if we can fetch any file we want:</p><figure class="kg-card kg-image-card"></figure><p>Bingo! </p><h3 id="port-8080">Port 8080</h3><p>When we access port <code>8080</code> we see the "default Tomcat home page".</p><figure class="kg-card kg-image-card"></figure><p>Since we've already identified a <a href="https://en.wikipedia.org/wiki/File_inclusion_vulnerability">Local File Inclusion vulnerability</a> on port <code>80</code>, the next logic step would be to try and access the credentials file on the server, however, this file was not in the typical location, in fact, it took me a couple of hours to find it hosted at <code>usr/share/tomcat9/etc/tomcat-users.xml</code>.</p><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+We have changed the site to remove this tool, and have invested heavily in more secure servers</code></pre><p>So, from this statement we understand that a <em>tool </em>was removed from the site, which will probably be of use in the future.</p><p>Also very interesting is the way that the <code>statement</code> file is being fetched, let's see if we can fetch any file we want:</p><figure class="kg-card kg-image-card"></figure><p>Bingo! </p><h3 id="port-8080">Port 8080</h3><p>When we access port <code>8080</code> we see the "default Tomcat home page".</p><figure class="kg-card kg-image-card"></figure><p>Since we've already identified a <a href="https://en.wikipedia.org/wiki/File_inclusion_vulnerability">Local File Inclusion vulnerability</a> on port <code>80</code>, the next logic step would be to try and access the credentials file on the server, however, this file was not in the typical location, in fact, it took me a couple of hours to find it hosted at <code>usr/share/tomcat9/etc/tomcat-users.xml</code>.</p><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 ...
 &lt;tomcat-users xmlns="http://tomcat.apache.org/xml"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
