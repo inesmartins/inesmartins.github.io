@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg" />
     <meta property="article:published_time" content="2020-11-14T19:19:19.000Z" />
-    <meta property="article:modified_time" content="2020-11-27T22:52:34.000Z" />
+    <meta property="article:modified_time" content="2020-12-04T20:32:59.000Z" />
     <meta property="article:tag" content="crypto" />
     <meta property="article:tag" content="cryptography" />
     <meta property="article:tag" content="ringzer0" />
@@ -73,7 +73,7 @@
     "headline": "RingZer0 Cryptography Challenges Write-up | Part I",
     "url": "https://inesmartins.github.io//dnp-ringzero-cryptography-challenges/",
     "datePublished": "2020-11-14T19:19:19.000Z",
-    "dateModified": "2020-11-27T22:52:34.000Z",
+    "dateModified": "2020-12-04T20:32:59.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/11/94077557_2585400745052781_1404098931607994368_o-1.jpg",
@@ -145,7 +145,8 @@ FJZ0qTHUD6uEeSoZsiVkcu0/XOPbz1RtpK7xxpKMSnH6uDc5On1IEw3A127wW4Y3
 Lqqwcuhgypd3Sf/bH3z4tC25eqr5gA1sCwSaEw+yBxdnElBNOXxOQsST7aZGDyIU
 tmpouI1IXqxjrDx2SQIDAQAB
 -----END PUBLIC KEY-----</code></pre><p>Now let's hash the key's content (I used <a href="https://gchq.github.io/CyberChef/#recipe=MD5()&amp;input=TUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEd2tyeFZyWitLQ2wxY1gyN1NIREk3RWZnbkZKWjBxVEhVRDZ1RWVTb1pzaVZrY3UwL1hPUGJ6MVJ0cEs3eHhwS01Tbkg2dURjNU9uMUlFdzNBMTI3d1c0WTNMcXF3Y3VoZ3lwZDNTZi9iSDN6NHRDMjVlcXI1Z0Exc0N3U2FFdyt5QnhkbkVsQk5PWHhPUXNTVDdhWkdEeUlVdG1wb3VJMUlYcXhqckR4MlNRSURBUUFC">CyberChef</a> to play around with the content format until I found the expected beginning - <code>0x42f5</code>):</p><figure class="kg-card kg-image-card"></figure><p>And we get the flag!</p><hr></hr><h2 id="5-fashion-victim">5 - <a href="https://ringzer0ctf.com/challenges/156">Fashion victim</a></h2><figure class="kg-card kg-image-card"></figure><p>When we click the button we see the following page:</p><figure class="kg-card kg-image-card"></figure><p>The page source has nothing interesting, just basic HTML, the most interesting part of the page is the <code>gif</code> of the TV's static: <a href="https://ringzer0ctf.com/images/tv.gif">https://ringzer0ctf.com/images/tv.gif</a>.</p><figure class="kg-card kg-image-card"></figure><p>Since this is a crypto challenge I discarded the typical steganography and decided to export the gif's frames using <a href="https://imagemagick.org/index.php">ImageMagick</a>:</p><pre><code>~ mkdir frames
-~ convert -coalesce tv.gif target.png</code></pre><p>I used he <code>-coalesce</code> option to make sure I got each frame in its entirety.</p><p>At this point I was <em>very</em> stuck. I ended up stumbling upon <a href="https://www.reddit.com/r/HowToHack/comments/adspf1/ringzero_ctf_cryptography_fashion_victim/">this reddit thread</a> where someone claimed to have solved this challenge using <code>XOR</code>, so I created a script that <code>XOR</code>ed all of the GIF frames by numeric order:</p><pre><code class="language-Python">import os
+~ cd frames
+~ convert -coalesce ../tv.gif frame.png</code></pre><p>I used he <code>-coalesce</code> option to make sure I got each frame in its entirety.</p><p>At this point I was <em>very</em> stuck. I ended up stumbling upon <a href="https://www.reddit.com/r/HowToHack/comments/adspf1/ringzero_ctf_cryptography_fashion_victim/">this reddit thread</a> where someone claimed to have solved this challenge using <code>XOR</code>, so I created a script that <code>XOR</code>ed all of the GIF frames by numeric order:</p><pre><code class="language-Python">import os
 
 arr = os.listdir("./frames")
 size = 14563 // smallest frame size
@@ -153,7 +154,7 @@ xord_byte_array = bytearray(size)
 
 for index in range(0, 31, 1):
 
-    file_path = "./frames/target-" + str(index) + ".png"
+    file_path = "./frames/frame-" + str(index) + ".png"
     print("Reading file " + file_path)
 
     try:
@@ -174,7 +175,7 @@ for index in range(0, 31, 1):
 open("out", 'wb').write(xord_byte_array)</code></pre><p>I tried reversing the order and using only partial frames but that didn't work either, so I was stuck again.</p><p>After some more Googling I came across <a href="https://blog.circusmonkeysecurity.com/2019/10/ringzer0-cryptography-fashion-victim.html">this</a> write-up, which had solved the challenge by brute-forcing all frame pair combinations and blending the pair using <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">Pillow's Image module</a>.</p><p>I adapted my original script to achieve this:</p><pre><code>import os
 
 out_dir = "results"
-frame_name_prefix = "./frames/target-"
+frame_name_prefix = "./frames/frame-"
 arr = os.listdir("./frames")
 
 def blend_two_frames(i, j):
@@ -199,7 +200,7 @@ def main():
             new_img.save(i_dir + "/" + str(j), "PNG")
     print("Finished!")
 
-main()</code></pre><p>I got the answer by combining frame 17 with frame 25.</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
+main()</code></pre><p>I got the answer by combining frame 17 with frame 25.</p><figure class="kg-card kg-image-card"></figure><p>I actually created <a href="https://github.com/inesmartins/gif-frame-pair-blender">a repo</a> with the script I used to solve this challenge.</p><hr></hr><h2 id="6-martian-message-part-2">6 - <a href="https://ringzer0ctf.com/challenges/63">Martian message part 2</a></h2><figure class="kg-card kg-image-card"></figure><p>Since we're given a key, I decided to test <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenère Cipher</a> using <a href="https://gchq.github.io/CyberChef/#recipe=Vigen%C3%A8re_Decode('fselkladfklklakl')&amp;input=S0RFUkUyVU5YMVcxSDk2R1lRTlVTUVQxS1BHQg">CyberChef</a> and got the flag:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="7-can-you-understand-this-sentence">7 - <a href="https://ringzer0ctf.com/challenges/23">Can you understand this sentence?</a></h2><figure class="kg-card kg-image-card"></figure><p>I ended up googling this string to get some ideas and ended up on a forum about Bubble Babble:</p><blockquote>Bubble Babble is a binary data encoding designed by Antti Huima. This encoding uses alternation of consonants and vowels to encode binary data to pseudowords that can be pronounced more easily than arbitrary lists of hexadecimal digits.</blockquote><p>To decode this I used <a href="http://bohwaz.net/static/bubblebabble.php">this</a> PHP decoder:</p><pre><code>~ php bubble_babble.php -d cipher
 hackingbubble</code></pre><hr></hr>
 
             </section>
