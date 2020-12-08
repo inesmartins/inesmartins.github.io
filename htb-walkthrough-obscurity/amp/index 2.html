@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
     <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="article:modified_time" content="2020-12-08T09:53:02.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Obscurity" />
     <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
@@ -61,7 +61,7 @@
     "headline": "HTB Write-up | Obscurity",
     "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
     "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "dateModified": "2020-12-08T09:53:02.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
@@ -141,62 +141,7 @@ $ cat out.txt
 $ cat passwordreminder.txt
 ´ÑÈÌÉàÙÁÑé¯·¿
 </code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
+<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><figure class="kg-card kg-image-card"></figure><p>Now that we have the key (<code>alexandrovich</code>), let's use it to find <code>robert</code>'s password!</p><figure class="kg-card kg-image-card"></figure><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
 User robert may run the following commands on obscure:
 (ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
 -e

