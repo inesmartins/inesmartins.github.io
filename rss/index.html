@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sat, 05 Dec 2020 16:20:11 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Crypto Challenge | Call]]></title><description><![CDATA[Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.]]></description><link>https://inesmartins.github.io//htb-crypto-challenge-call/</link><guid isPermaLink="false">5eed049e1e7da103a083dca2</guid><category><![CDATA[crypto]]></category><category><![CDATA[dtfm]]></category><category><![CDATA[prime numbers]]></category><category><![CDATA[wav]]></category><category><![CDATA[htb]]></category><category><![CDATA[mp3]]></category><category><![CDATA[ffmpeg]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 22 Nov 2020 11:36:40 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" alt="HTB Crypto Challenge | Call"><p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being "dialled" on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an <a href="http://dialabc.com/sound/detect/index.html">online tool</a> and also a <a href="https://github.com/ribt/dtmf-decoder">Github project</a> that were able to accurately decode DTMF tones from an audio file, however, these tools only support <code>.wav</code> files so I started by converting the <code>.mp3</code> into <code>.wav</code> with <code>ffmpeg</code>. </p><!--kg-card-begin: markdown--><pre><code>$ ffmpeg -i sound.mp3 sound.wav
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Dev & Security]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Thu, 10 Dec 2020 19:42:48 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC | Underground Leaks (Crypto) - Part II]]></title><description><![CDATA[<blockquote>The last mission was a success, and the government forces gave us another project, the information is short, but we know that we are on the path of the 0xOPOLEAKS. We think this is somehow related to mobile communications, can you help us? <br><a href="http://sefod.eu/ctf/signal.wav">http://sefod.eu/ctf/signal.wav</a></blockquote><p>The</p>]]></description><link>https://inesmartins.github.io//oposec-baby-challenge/</link><guid isPermaLink="false">5fb2be5f501631398682068b</guid><category><![CDATA[crypto]]></category><category><![CDATA[cryptography]]></category><category><![CDATA[oposec]]></category><category><![CDATA[dtmf]]></category><category><![CDATA[phone keypad cipher]]></category><category><![CDATA[multitap phone cipher]]></category><category><![CDATA[phone keypad]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 09 Dec 2020 22:00:00 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/0xOPOLEAKS-2020-11-16-18-16-53.png" medium="image"/><content:encoded><![CDATA[<blockquote>The last mission was a success, and the government forces gave us another project, the information is short, but we know that we are on the path of the 0xOPOLEAKS. We think this is somehow related to mobile communications, can you help us? <br><a href="http://sefod.eu/ctf/signal.wav">http://sefod.eu/ctf/signal.wav</a></blockquote><img src="https://inesmartins.github.io//content/images/2020/11/0xOPOLEAKS-2020-11-16-18-16-53.png" alt="ØxOPOSɆC | Underground Leaks (Crypto) - Part II"><p>The <code>.wav</code> file contains a sequence of what sounds like keys being dialled on a phone, aka DTMF (<a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">Dual-tone multi-frequency signaling</a>). <br>Luckily, <a href="https://github.com/ribt/dtmf-decoder">this library</a> does all of the hard work of decoding the tones:</p><pre><code>~ sudo pip3 install numpy matplotlib scipy
+~ git clone https://github.com/ribt/dtmf-decoder/
+~ cd dtmf-decoder
+~ chmod +x dtmf.py
+~ ./dtmf.py [path_to_file]/signal.wav
+2244485559990666766699627777</code></pre><p>So, it seems like we have another cipher to crack. Since this cipher includes numbers being repeated, but never more than 4 times, this is clearly a <a href="https://www.dcode.fr/phone-keypad-cipher">Phone Keypad/Multi-Tap Cipher</a><a href="https://www.dcode.fr/multitap-abc-cipher">,</a> aka what you get when you use an older phone to text someone.</p><p>After decoding that message we get: <code>bitly.opoxmas</code>.</p><p>So we go to <a href="http://bitly.com/opoxmas">http://bitly.com/opoxmas</a> and we're redirected to <a href="https://sefod.eu/flag_xmas_1337.html">the page with the flag</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-42.png" class="kg-image" alt="ØxOPOSɆC | Underground Leaks (Crypto) - Part II"></figure>]]></content:encoded></item><item><title><![CDATA[HTB Crypto Challenge | Call]]></title><description><![CDATA[Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.]]></description><link>https://inesmartins.github.io//htb-crypto-challenge-call/</link><guid isPermaLink="false">5eed049e1e7da103a083dca2</guid><category><![CDATA[crypto]]></category><category><![CDATA[dtfm]]></category><category><![CDATA[prime numbers]]></category><category><![CDATA[wav]]></category><category><![CDATA[htb]]></category><category><![CDATA[mp3]]></category><category><![CDATA[ffmpeg]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 22 Nov 2020 11:36:40 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/11/66a3aDTMFpad.jpg" alt="HTB Crypto Challenge | Call"><p>Banner source: <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg">https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling#/media/File:66a3aDTMFpad.jpg</a></p><blockquote>Hint: The flag format is: HTB{PASSWORD}</blockquote><p>We're given an audio file called <code>sound.mp3</code> that contains the very familiar sound of numbers being "dialled" on a phone aka <a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">DTFM (Dual-Tone Multi-Frequency Signaling)</a>.</p><p>I found an <a href="http://dialabc.com/sound/detect/index.html">online tool</a> and also a <a href="https://github.com/ribt/dtmf-decoder">Github project</a> that were able to accurately decode DTMF tones from an audio file, however, these tools only support <code>.wav</code> files so I started by converting the <code>.mp3</code> into <code>.wav</code> with <code>ffmpeg</code>. </p><!--kg-card-begin: markdown--><pre><code>$ ffmpeg -i sound.mp3 sound.wav
 </code></pre>
 <!--kg-card-end: markdown--><p>So here's the output:</p><!--kg-card-begin: markdown--><pre><code>2331434783711923431767372331117714113
 </code></pre>
@@ -1366,94 +1371,4 @@ for ($i = 0; $i &lt; 1000000000; $i++) {
 
 for i in range(0, 100):
     print("Testing file descriptor " + str(i))
-    os.system("curl -s https://[custom_247ctf_subdomain].247ctf.com/?include=/dev/fd/" + str(i) + " &gt;&gt; output.txt")</code></pre><p>After looking at the output file, we get our flag!</p>]]></content:encoded></item><item><title><![CDATA[Web Assembly CTF Write-up]]></title><description><![CDATA[<p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;</code></pre>]]></description><link>https://inesmartins.github.io//js-wasm-ctf-write-up/</link><guid isPermaLink="false">5ef27a571e7da103a083e133</guid><category><![CDATA[web-assembly]]></category><category><![CDATA[wasm]]></category><category><![CDATA[ctf]]></category><category><![CDATA[write-up]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 23 Jun 2020 22:00:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/1_f__SEWRvsNwt4B-u8-85Bw.png" alt="Web Assembly CTF Write-up"><p><em>Banner source: <a href="https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124">https://medium.com/trainingcenter/webassembly-a-jornada-o-que-%C3%A9-wasm-75e3f0f03124</a></em></p><p>I'm been trying to get into Web Assembly for a while, so when I found <a href="https://medium.com/@cyjien/misc-js-scripting-ctf-writeup-ae74b45cb2c0">this CTF write-up</a> by Chiam YJ I decided to give it a try.</p><h1 id="the-original-challenge">The original Challenge</h1><pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8"/&gt;
-    &lt;title&gt;crypto&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;/body&gt;
-&lt;script type="text/javascript"&gt;
-    var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,138,128,128,128,0,2,96,0,1,127,96,1,127,1,127,3,131,128,128,128,0,2,0,1,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,163,128,128,128,0,3,6,109,101,109,111,114,121,2,0,14,103,101,116,73,110,83,116,114,79,102,102,115,101,116,0,0,5,109,111,114,112,104,0,1,10,148,129,128,128,0,2,132,128,128,128,0,0,65,16,11,133,129,128,128,0,1,6,127,2,64,32,0,65,1,72,13,0,65,0,33,3,3,64,32,3,65,208,0,106,34,1,32,3,65,16,106,45,0,0,34,4,58,0,0,2,64,32,3,65,1,72,13,0,65,0,33,5,32,3,33,6,2,64,3,64,32,4,32,6,65,15,106,45,0,0,115,33,4,32,6,65,2,72,13,1,32,6,65,127,106,33,6,32,5,65,4,72,33,2,32,5,65,1,106,33,5,32,2,13,0,11,11,32,1,32,4,58,0,0,11,32,3,65,1,106,34,3,32,0,71,13,0,11,11,65,208,0,11]);
-    var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
-    var offset = m.exports.getInStrOffset();
-    var flag = prompt("teh flag?");
-	  var strBuf = new TextEncoder().encode(flag.slice(0, 64));
-	  var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
-	  for (let i = 0; i &lt; strBuf.length; i++) {
-        inBuf[i] = strBuf[i];
-    }
-	  var morph = m.exports.morph(strBuf.length);	
-    var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
-
-    if (btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ") {
-        document.write("congratz!");
-    } else {
-        document.write("nope!");
-    }
-&lt;/script&gt;
-&lt;/html&gt;
-</code></pre><h1 id="static-code-analysis">Static Code Analysis</h1><p>We can divide the code into major sections:</p><h3 id="1-compiling-and-loading-the-binary-code">1. Compiling and Loading the binary Code</h3><p>A <code>WebAssembly.Instance</code> object is a stateful, executable instance of a <code>WebAssembly.Module</code> that contains all the <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions">Exported WebAssembly functions</a>. </p><p>In this case, we're creating a new <code>WebAssembly.Instance</code> object (<code>m</code>) that contains all the Exported WebAssembly functions that derive from the compilation of the bytes in the <code>bin</code> byte array.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
-var m = new WebAssembly.Instance(new WebAssembly.Module(bin));)]</code></pre><h3 id="2-encoding-transforming-the-user-input">2. Encoding/Transforming the User Input</h3><p>First, this script starts by converting the first 64 characters introduced by the user into bytes and then writes them to <code>strBuf</code> .</p><pre><code class="language-javascript">var offset = m.exports.getInStrOffset();
-var flag = prompt("teh flag?");
-var strBuf = new TextEncoder().encode(flag.slice(0, 64));</code></pre><p>When the <code>Uint8Array</code> constructor "is called with a buffer, and optionally a byteOffset and a length argument, a new typed array view is created that views the specified ArrayBuffer. (...)" [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/Uint8Array">Source</a>]. </p><p>In this case, the <code>inBuf</code> variable represents a typed array that (most likely) views the entirety of the <code>memory.buffer</code> (this depends on how the <code>getInStrOffset</code> function works and we don't have access to it).</p><pre><code class="language-javascript">var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);</code></pre><p>Then, this new <code>Uint8Array</code> is filled with the bytes from <code>strBuf</code>.</p><pre><code class="language-javascript">for (let i = 0; i &lt; strBuf.length; i++) {
-    inBuf[i] = strBuf[i];
-}</code></pre><p>Finally, the <code>Uint8Array</code> constructor is called with <code>morph</code> as the second parameter. We don't really know what <code>morph</code> does but it seems that the <code>inBuf</code> bytes are being transformed (somehow) and written to the <code>outBuf</code> array.</p><pre><code class="language-javascript">var morph = m.exports.morph(strBuf.length);	
-var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);</code></pre><h3 id="3-string-comparison">3. String comparison</h3><p>Finally the bytes in the <code>outBuf</code> are decoded back into ASCII, then encoded using Base64, and then compared with the hardcoded base64 key: if they're equal, success!</p><pre><code class="language-jsx">btoa(new TextDecoder().decode(outBuf)) === "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
-</code></pre><h2 id="1-finding-the-uint8array-that-matches-the-flag">1. Finding the Uint8Array that matches the flag</h2><p>We start by reversing the last step in order to get the <code>outBuf</code> that when encoded matches the hardcoded key:</p><pre><code class="language-javascript">var key = "dxB9BH8RVRMKG1NPI3UyOFRIJyJObAZdXkF8DUEJ"
-var base64decoded = atob(key)
-var textEncoded = new TextEncoder().encode(base64decoded)
-console.log(textEncoded)
-// Uint8Array(30) [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65, 124, 13, 65, 9]
-</code></pre><h2 id="2-brute-forcing-for-the-solution">2. Brute-forcing for the Solution</h2><p>In order to get the flag, we're going to brute-force the solution by comparing the  <code>outBuf</code> that results from each char with the successful buffer found in the previous step, byte by byte.</p><pre><code class="language-javascript">var bin = new Uint8Array([0,97,115,109,1,0,0,0,1,...]);
-var m = new WebAssembly.Instance(new WebAssembly.Module(bin));
-var offset = m.exports.getInStrOffset();
-
-var successOutBuf = [119, 16, 125, 4, 127, 17, 85, 19, 10, 27, 83, 79, 35, 117, 50, 56, 84, 72, 39, 34, 78, 108, 6, 93, 94, 65,  124, 13, 65, 9];
-
-var alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\\"#$%&amp;\\'()*+,-./:;&lt;=&gt;?@[\\\\]^_`{|}~";
-
-var match = function(flag, pos) {
-	console.log("Test flag: " + flag)
-	var strBuf = new TextEncoder().encode(flag.slice(0, 64));
-	var inBuf = new Uint8Array(m.exports.memory.buffer, offset, strBuf.length);
-  for (var i = 0; i &lt; strBuf.length; i++) {
-		inBuf[i] = strBuf[i];
-  }
-  var morph = m.exports.morph(strBuf.length);	
-  var outBuf = new Uint8Array(m.exports.memory.buffer, morph, strBuf.length);
-  console.log("Comparing " + outBuf[pos] + " with " + successOutBuf[pos])
-  if (outBuf[pos] == successOutBuf[pos]) {
-	  return true;
-  }
-  return false;
-}
-  
-
-var pos = 0;
-var flag = "";
-var letter = 0;
-var foundPos = false;
-
-while (pos &lt; 30) {
-	foundPos = false
-  for (var letter = 0; letter &lt; alphabet.length; letter++) {
-	  if (!foundPos) {
-	    var tmpLetter = alphabet[letter];
-      var testFlag = flag + tmpLetter;
-      var foundPos = match(testFlag, pos);
-      if (foundPos) {
-	      flag += tmpLetter;
-        console.log("Found match! Updated flag: " + flag);
-        pos++;
-      }
-    }
-  }
-  if (!foundPos) {
-    alert("Didn't find match!")
-  }
-}
-</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/res.png" class="kg-image" alt="Web Assembly CTF Write-up"></figure><p>Hope you enjoyed it :)</p>]]></content:encoded></item></channel></rss>
+    os.system("curl -s https://[custom_247ctf_subdomain].247ctf.com/?include=/dev/fd/" + str(i) + " &gt;&gt; output.txt")</code></pre><p>After looking at the output file, we get our flag!</p>]]></content:encoded></item></channel></rss>
