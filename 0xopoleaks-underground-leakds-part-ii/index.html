@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//0xopoleaks-underground-leakds-part-ii/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2021/01/image-22-1.png" />
     <meta property="article:published_time" content="2021-01-30T17:27:10.000Z" />
-    <meta property="article:modified_time" content="2021-01-30T19:48:25.000Z" />
+    <meta property="article:modified_time" content="2021-02-14T12:52:04.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ØxOPOSɆC | Underground Leaks - Part III" />
     <meta name="twitter:description" content="This level starts with the email message where the last level ended: When we go to the link at the end of the message we see a simple HTML page that contains a &amp;lt;meta&amp;gt; tag that uses the http-equiv attribute: &amp;lt;html&amp;gt;    &amp;lt;body&amp;gt;       &amp;lt;b&amp;" />
@@ -64,7 +64,7 @@
     "headline": "ØxOPOSɆC | Underground Leaks - Part III",
     "url": "https://inesmartins.github.io//0xopoleaks-underground-leakds-part-ii/",
     "datePublished": "2021-01-30T17:27:10.000Z",
-    "dateModified": "2021-01-30T19:48:25.000Z",
+    "dateModified": "2021-02-14T12:52:04.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2021/01/image-22-1.png",
@@ -147,8 +147,11 @@
                                 <div class="author-card">
                                     <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
                                     <div class="author-info">
-                                        <h2>Inês Martins</h2>
-                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
+                                        <div class="bio">
+                                            <h2>Inês Martins</h2>
+                                            <p>Pentester and Software Developer.</p>
+                                            <p><a href="/author/ines/">More posts</a> by Inês Martins.</p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -255,7 +258,7 @@ Disassembly of section .text:
 08049000 &lt;.text&gt;:
  8049000:	b4 0e                	mov    $0xe,%ah
  8049002:	a0 37 13 00 00       	mov    0x1337,%al
- 8049007:	cd 10                	int    $0x10</code></pre><p>The shellcode is <code>b40ea037130000cd10</code>, let's see what happens when we enter it on the program:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-35.png" class="kg-image"></figure><p>By repeating the process for the following addresses I got the complete flag: <code>FLAG{filhoses_will not keep_you_fit}</code>.</p><hr><h2 id="taking-the-hint">Taking the hint</h2><p>A short while after the challenge was published, a new hint was released, a Portuguese sketch show that uses the word <code>kunami</code>. </p><p>With a bit of Googling I found something interesting, the <a href="https://en.wikipedia.org/wiki/Konami_Code">Konami Code</a>. After trying the sequence <code>↑↑↓↓←→←→BA</code> on the menu I got:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/01/image-25.png" class="kg-image"></figure><hr><p>Unfortunately, I didn't get all of the flags, you can check out the official write-up <a href="https://sefod.eu/">here</a>.</p>
+ 8049007:	cd 10                	int    $0x10</code></pre><p>The shellcode is <code>b40ea037130000cd10</code>, let's see what happens when we enter it on the program:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-35.png" class="kg-image"></figure><p>By repeating the process for the following addresses I got the complete flag: <code>FLAG{filhoses_will not keep_you_fit}</code>.</p><hr><h2 id="taking-the-hint">Taking the hint</h2><p>A short while after the challenge was published, a new hint was released, a Portuguese sketch show that uses the word <code>kunami</code>. </p><p>With a bit of Googling I found something interesting, the <a href="https://en.wikipedia.org/wiki/Konami_Code">Konami Code</a>. After trying the sequence <code>↑↑↓↓←→←→BA</code> on the menu I got:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/01/image-25.png" class="kg-image"></figure><hr><p>Unfortunately, I didn't get all of the flags, but you can check out the Github project and official write-up <a href="https://github.com/zezadas/0xOPOSEC_0x0F_Polyglot_PDF_MBR_Bootloader">here</a>.</p>
                 </div>
             </section>
 
