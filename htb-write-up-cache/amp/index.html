@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-cache/" />
     <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/10/cache.png" />
     <meta property="article:published_time" content="2020-10-22T08:51:40.000Z" />
-    <meta property="article:modified_time" content="2020-11-27T23:04:41.000Z" />
+    <meta property="article:modified_time" content="2021-02-19T15:04:38.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="linux" />
     <meta property="article:tag" content="cache" />
@@ -70,7 +70,7 @@
     "headline": "HTB Write-up | Cache",
     "url": "https://inesmartins.github.io//htb-write-up-cache/",
     "datePublished": "2020-10-22T08:51:40.000Z",
-    "dateModified": "2020-11-27T23:04:41.000Z",
+    "dateModified": "2021-02-19T15:04:38.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "https://inesmartins.github.io//content/images/2020/10/cache.png",
@@ -147,7 +147,7 @@ password: H@v3_fun
   &lt;p class="title"&gt;CEO &amp; Founder, CACHE&lt;/p&gt;
   &lt;a href="http://cache.htb"&gt;cache.htb&lt;/a&gt;
   &lt;h3&gt;&lt;font color="Grey"&gt;ASH is a Security Researcher (Threat Research Labs), Security Engineer. Hacker, Penetration Tester and Security blogger. He is Editor-in-Chief, Author &amp; Creator of Cache. Check out his other projects like Cache:&lt;p&gt; HMS(Hospital Management System)
-&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it. That is until I realised that it's possible to <strong>host multiple domains on the same Apache server </strong>which are accessible only when you navigate to the correct URL. So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><pre><code>10.10.10.188 hms.htb
+&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it, until I realised that it was an alternative <a href="https://httpd.apache.org/docs/2.4/vhosts/examples.html">virtual host</a>.<strong> </strong>So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><pre><code>10.10.10.188 hms.htb
 </code></pre>
 <hr></hr><h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default">login page</a> for <a href="https://www.open-emr.org/">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&amp;v=DJSQ8Pk_7hc&amp;feature=emb_logo">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php">portal page</a> with <a href="https://portswigger.net/burp">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><pre><code>~ sudo nano openemr.req
 
