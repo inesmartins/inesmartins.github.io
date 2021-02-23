@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ØxOPOSɆC | Neuromancer</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=f0bcea0819" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//oposec-neuromancer/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//oposec-neuromancer/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="ØxOPOSɆC | Neuromancer" />
+    <meta property="og:description" content="This month, I was responsible for putting together the ØxOPOSɆC monthly challenge.  Even though the competition is done, if you want to try it yourself the application is still available here.  So, if you don&#x27;t want spoilers, stop reading! Onto the solutions!The challenge consisted of a Heroku app with" />
+    <meta property="og:url" content="https://inesmartins.github.io//oposec-neuromancer/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2021/02/image-26-1.png" />
+    <meta property="article:published_time" content="2021-02-23T20:14:29.000Z" />
+    <meta property="article:modified_time" content="2021-02-23T20:19:49.000Z" />
+    <meta property="article:tag" content="ctf" />
+    <meta property="article:tag" content="oposec" />
+    <meta property="article:tag" content="neuromancer" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ØxOPOSɆC | Neuromancer" />
+    <meta name="twitter:description" content="This month, I was responsible for putting together the ØxOPOSɆC monthly challenge.  Even though the competition is done, if you want to try it yourself the application is still available here.  So, if you don&#x27;t want spoilers, stop reading! Onto the solutions!The challenge consisted of a Heroku app with" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//oposec-neuromancer/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2021/02/image-26-1.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="ctf, oposec, neuromancer" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1060" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "ØxOPOSɆC | Neuromancer",
+    "url": "https://inesmartins.github.io//oposec-neuromancer/",
+    "datePublished": "2021-02-23T20:14:29.000Z",
+    "dateModified": "2021-02-23T20:19:49.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2021/02/image-26-1.png",
+        "width": 2000,
+        "height": 1060
+    },
+    "keywords": "ctf, oposec, neuromancer",
+    "description": "This month, I was responsible for putting together the ØxOPOSɆC\n[https://www.meetup.com/pt-BR/0xOPOSEC/] monthly challenge.  Even though the\ncompetition is done, if you want to try it yourself the application is still\navailable here [https://neuromancer.herokuapp.com/]. \n\nSo, if you don&#x27;t want spoilers, stop reading!\n\n\n--------------------------------------------------------------------------------\n\nOnto the solutions!\nThe challenge consisted of a Heroku app [https://neuromancer.herokuapp.com/] ",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180659126-1');
+</script>
+
+</head>
+<body class="post-template tag-ctf tag-oposec tag-neuromancer">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">ØxOPOSɆC | Neuromancer</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-ctf tag-oposec tag-neuromancer ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="/tag/ctf/">ctf</a>
+                </section>
+
+                <h1 class="post-full-title">ØxOPOSɆC | Neuromancer</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <div class="bio">
+                                            <h2>Inês Martins</h2>
+                                            <p>Pentester and Software Developer.</p>
+                                            <p><a href="/author/ines/">More posts</a> by Inês Martins.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2021-02-23">23 Feb 2021</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2021/02/image-26-1.png 300w,
+                            /content/images/size/w600/2021/02/image-26-1.png 600w,
+                            /content/images/size/w1000/2021/02/image-26-1.png 1000w,
+                            /content/images/size/w2000/2021/02/image-26-1.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2021/02/image-26-1.png"
+                    alt="ØxOPOSɆC | Neuromancer"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge.  Even though the competition is done, if you want to try it yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a> with a very simple interface. If you took a closer look at the source code you'd see only an <code>&lt;img&gt;</code> sourced from Wikipedia (to prevent you from straying into steg territory) and an interesting comment:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-27.png" class="kg-image"></figure><p>By googling the entire thing, you'd see that <a href="https://www.goodreads.com/quotes/14638-cyberspace-a-consensual-hallucination-experienced-daily-by-billions-of-legitimate">this is a quote from the book "Neuromancer"</a>, but with a slight difference:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2021/02/image-29.png" class="kg-image"></figure><p>So, your first official hint was "how do you get in?", which should get you thinking about authentication and point you in the direction of <a href="https://neuromancer.herokuapp.com/login">the login page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-30.png" class="kg-image"></figure><p>If this page is under development, maybe the developers have already implemented the authentication mechanism ...</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-31.png" class="kg-image"></figure><p>Yup, now we're getting somewhere.</p><hr><h2 id="how-much-do-you-know-about-neuromancer">How much do you know about Neuromancer?</h2><p>Just in case you thought this authentication feature had some interesting vulnerability, I released a helpful hint to lure you in the right direction - <a href="https://en.wikipedia.org/wiki/Open-source_intelligence">OSINT</a>.</p><p>At this point, you could either solve this by brute-forcing or by googling.</p><h3 id="option-1-brute-force">Option 1 - Brute-force</h3><p>You could use a wordlist generator like <a href="https://tools.kali.org/password-attacks/cewl">cewl</a>, which (depending on the source you used) would most likely output the username and password on the top 50 words.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-32.png" class="kg-image"></figure><p>If you then removed "common" words, this list would shrink down to 20, which means you could easily go through all of the possible combinations for both fields and solve the challenge:</p><h3 id="option-2-googling">Option 2 - Googling</h3><p>You could start by searching for the book's character list:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-33.png" class="kg-image"></figure><p>Neuromancer doesn't have a lot of characters in general, and the username - <code>case</code> - is the main character, so this was pretty straightforward. </p><p>Also, as soon as you tried <code>case</code> as the username, you'd see that the response was now different: </p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-34.png" class="kg-image"></figure><p>From this point on, you could again brute-force for the password or you could google "Neuromancer password", which would take you to <a href="https://scifi.stackexchange.com/questions/6433/what-is-the-password-at-the-end-of-neuromancer">this</a> stackexchange question:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-35.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-36.png" class="kg-image"></figure><p>Although not the password in the book, <code>wintermute</code> was indeed the password for this challenge:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-37.png" class="kg-image"></figure><p>That's it, hope you enjoyed it!</p>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="/tag/ctf/">ctf</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="/oposec/">ØxOPOSɆC | Underground Leaks (Crypto)</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-27">27 Oct 2020</time> –
+                                        5 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge/">HTB Crypto Challenge | Bank Heist</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/oposec-summer-challenge-2020/">ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-09-25">25 Sep 2020</time> –
+                                        3 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/ctf/">See all 7 posts
+                            →</a>
+                    </footer>
+                </article>
+
+
+                <article class="post-card post ">
+
+    <a class="post-card-image-link" href="/0xopoleaks-underground-leakds-part-ii/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/01/image-22-1.png 300w,
+                    /content/images/size/w600/2021/01/image-22-1.png 600w,
+                    /content/images/size/w1000/2021/01/image-22-1.png 1000w,
+                    /content/images/size/w2000/2021/01/image-22-1.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2021/01/image-22-1.png"
+            alt="ØxOPOSɆC | Underground Leaks - Part III"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/0xopoleaks-underground-leakds-part-ii/">
+
+            <header class="post-card-header">
+                <h2 class="post-card-title">ØxOPOSɆC | Underground Leaks - Part III</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>This level starts with the email message where the last level ended: When we go to the link at the end of the message we see a simple HTML page</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-01-30">30 Jan 2021</time> <span class="bull">&bull;</span> 5 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2021</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=f0bcea0819"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    <div class="site-footer outer" style="background:#090a0b;margin-top:-60px;">
+    <div class="site-footer-content footer inner" style="margin-bottom:-20px">
+        <script src="https://www.hackthebox.eu/badge/172261"></script>
+    </div>
+</div>
+
+</body>
+</html>
