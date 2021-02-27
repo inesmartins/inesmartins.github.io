@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ØxOPOSɆC | Underground Leaks (Crypto) - Part II</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=f07ef405c6" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//oposec-underground-leaks-part-ii/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//oposec-underground-leaks-part-ii/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="ØxOPOSɆC | Underground Leaks (Crypto) - Part II" />
+    <meta property="og:description" content="Write-up for the second part of the Underground Leaks saga, that includes DTMF and Multi-tap Cipher." />
+    <meta property="og:url" content="https://inesmartins.github.io//oposec-underground-leaks-part-ii/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2020/12/banner.png" />
+    <meta property="article:published_time" content="2020-12-09T22:00:00.000Z" />
+    <meta property="article:modified_time" content="2021-02-27T19:09:49.000Z" />
+    <meta property="article:tag" content="crypto" />
+    <meta property="article:tag" content="cryptography" />
+    <meta property="article:tag" content="oposec" />
+    <meta property="article:tag" content="dtmf" />
+    <meta property="article:tag" content="phone keypad cipher" />
+    <meta property="article:tag" content="multitap phone cipher" />
+    <meta property="article:tag" content="phone keypad" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ØxOPOSɆC | Underground Leaks (Crypto) - Part II" />
+    <meta name="twitter:description" content="Write-up for the second part of the Underground Leaks saga, that includes DTMF and Multi-tap Cipher." />
+    <meta name="twitter:url" content="https://inesmartins.github.io//oposec-underground-leaks-part-ii/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2020/12/banner.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="crypto, cryptography, oposec, dtmf, phone keypad cipher, multitap phone cipher, phone keypad" />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="685" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "ØxOPOSɆC | Underground Leaks (Crypto) - Part II",
+    "url": "https://inesmartins.github.io//oposec-underground-leaks-part-ii/",
+    "datePublished": "2020-12-09T22:00:00.000Z",
+    "dateModified": "2021-02-27T19:09:49.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2020/12/banner.png",
+        "width": 1440,
+        "height": 685
+    },
+    "keywords": "crypto, cryptography, oposec, dtmf, phone keypad cipher, multitap phone cipher, phone keypad",
+    "description": "Write-up for the second part of the Underground Leaks saga, that includes DTMF and Multi-tap Cipher.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180659126-1');
+</script>
+
+</head>
+<body class="post-template tag-crypto tag-cryptography tag-oposec tag-dtmf tag-phone-keypad-cipher tag-multitap-phone-cipher tag-phone-keypad">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">ØxOPOSɆC | Underground Leaks (Crypto) - Part II</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-crypto tag-cryptography tag-oposec tag-dtmf tag-phone-keypad-cipher tag-multitap-phone-cipher tag-phone-keypad ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="/tag/crypto/">crypto</a>
+                </section>
+
+                <h1 class="post-full-title">ØxOPOSɆC | Underground Leaks (Crypto) - Part II</h1>
+
+                <p class="post-full-custom-excerpt">Write-up for the second part of the Underground Leaks saga, that includes DTMF and Multi-tap Cipher.</p>
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <div class="bio">
+                                            <h2>Inês Martins</h2>
+                                            <p>Pentester and Software Developer.</p>
+                                            <p><a href="/author/ines/">More posts</a> by Inês Martins.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-12-09">9 Dec 2020</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 1 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2020/12/banner.png 300w,
+                            /content/images/size/w600/2020/12/banner.png 600w,
+                            /content/images/size/w1000/2020/12/banner.png 1000w,
+                            /content/images/size/w2000/2020/12/banner.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2020/12/banner.png"
+                    alt="ØxOPOSɆC | Underground Leaks (Crypto) - Part II"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <blockquote>The last mission was a success, and the government forces gave us another project, the information is short, but we know that we are on the path of the 0xOPOLEAKS. We think this is somehow related to mobile communications, can you help us? <br><a href="http://sefod.eu/ctf/signal.wav">http://sefod.eu/ctf/signal.wav</a></blockquote><p>The <code>.wav</code> file contains a sequence of what sounds like keys being dialled on a phone, aka DTMF (<a href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling">Dual-tone multi-frequency signaling</a>). <br>Luckily, <a href="https://github.com/ribt/dtmf-decoder">this library</a> does all of the hard work of decoding the tones:</p><pre><code>~ sudo pip3 install numpy matplotlib scipy
+~ git clone https://github.com/ribt/dtmf-decoder/
+~ cd dtmf-decoder
+~ chmod +x dtmf.py
+~ ./dtmf.py [path_to_file]/signal.wav
+2244485559990666766699627777</code></pre><p>So, it seems like we have another cipher to crack. Since this cipher includes numbers being repeated, but never more than 4 times, this is clearly a <a href="https://www.dcode.fr/phone-keypad-cipher">Phone Keypad/Multi-Tap Cipher</a><a href="https://www.dcode.fr/multitap-abc-cipher">,</a> aka what you get when you use an older phone to text someone.</p><p>After decoding that message we get: <code>bitly.opoxmas</code>.</p><p>So we go to <a href="http://bitly.com/opoxmas">http://bitly.com/opoxmas</a> and we're redirected to <a href="https://sefod.eu/flag_xmas_1337.html">the page with the flag</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/11/image-42.png" class="kg-image"></figure>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="/tag/crypto/">crypto</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge-call/">HTB Crypto Challenge | Call</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-11-22">22 Nov 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/oposec-underground-leaks/">ØxOPOSɆC | Underground Leaks (Crypto)</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-27">27 Oct 2020</time> –
+                                        5 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge/">HTB Crypto Challenge | Bank Heist</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/crypto/">See all 4 posts
+                            →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post ">
+
+    <a class="post-card-image-link" href="/opoleaks-underground-leaks-part-iii/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/01/image-22-1.png 300w,
+                    /content/images/size/w600/2021/01/image-22-1.png 600w,
+                    /content/images/size/w1000/2021/01/image-22-1.png 1000w,
+                    /content/images/size/w2000/2021/01/image-22-1.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2021/01/image-22-1.png"
+            alt="ØxOPOSɆC | Underground Leaks - Part III"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/opoleaks-underground-leaks-part-iii/">
+
+            <header class="post-card-header">
+                <h2 class="post-card-title">ØxOPOSɆC | Underground Leaks - Part III</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>This level starts with the email message where the last level ended: When we go to the link at the end of the message we see a simple HTML page</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-01-30">30 Jan 2021</time> <span class="bull">&bull;</span> 5 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-crypto tag-dtfm tag-prime-numbers tag-wav tag-htb tag-mp3 tag-ffmpeg ">
+
+    <a class="post-card-image-link" href="/htb-crypto-challenge-call/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/11/66a3aDTMFpad.jpg 300w,
+                    /content/images/size/w600/2020/11/66a3aDTMFpad.jpg 600w,
+                    /content/images/size/w1000/2020/11/66a3aDTMFpad.jpg 1000w,
+                    /content/images/size/w2000/2020/11/66a3aDTMFpad.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2020/11/66a3aDTMFpad.jpg"
+            alt="HTB Crypto Challenge | Call"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/htb-crypto-challenge-call/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">crypto</div>
+                <h2 class="post-card-title">HTB Crypto Challenge | Call</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-11-22">22 Nov 2020</time> <span class="bull">&bull;</span> 1 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2021</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=f07ef405c6"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    <div class="site-footer outer" style="background:#090a0b;margin-top:-60px;">
+    <div class="site-footer-content footer inner" style="margin-bottom:-20px">
+        <script src="https://www.hackthebox.eu/badge/172261"></script>
+    </div>
+</div>
+
+</body>
+</html>
