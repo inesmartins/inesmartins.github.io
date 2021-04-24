@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
 
+    <title>Solving the &#x27;Ghost in the Wires&#x27; ciphers</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <title>Solving the &#x27;Ghost in the Wires&#x27; ciphers</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=07034698ec" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=236ea5fb87" />
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="canonical" href="https://inesmartins.github.io//decrypting-the-ghost-in-the-wires-ciphers/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     <link rel="amphtml" href="https://inesmartins.github.io//decrypting-the-ghost-in-the-wires-ciphers/amp/" />
@@ -86,120 +84,155 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 3.18" />
+    <meta name="generator" content="Ghost 4.3" />
     <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="https://inesmartins.github.io//rss/" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.1.0/umd/portal.min.js" data-ghost="https://inesmartins.github.io//"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
 
-  gtag('config', 'UA-180659126-1');
-</script>
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style><style>:root {--ghost-accent-color: #FF1A75;}</style>
 
 </head>
 <body class="post-template tag-cryptography tag-ghost-in-the-wires tag-book">
+<div class="viewport">
 
-    <div class="site-wrapper">
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
 
-        
-
-<header class="site-header">
-    <div class="outer site-nav-main">
-    <div class="inner">
-        <nav class="site-nav">
-    <div class="site-nav-left-wrapper">
-        <div class="site-nav-left">
-                <a class="site-nav-logo" href="https://inesmartins.github.io/">Inês Martins</a>
-            <div class="site-nav-content">
-                    <ul class="nav">
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="https://inesmartins.github.io/">
+                        Inês Martins
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
     <li class="nav-home"><a href="https://inesmartins.github.io//">Home</a></li>
 </ul>
 
-                    <span class="nav-post-title dash">Solving the &#x27;Ghost in the Wires&#x27; ciphers</span>
             </div>
-        </div>
-    </div>
-    <div class="site-nav-right">
-            <div class="social-links">
-            </div>
-                <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://inesmartins.github.io//rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
-</a>
-
-    </div>
-</nav>
-    </div>
-</div></header>
-
-
-<main id="site-main" class="site-main outer">
-    <div class="inner">
-
-        <article class="post-full post tag-cryptography tag-ghost-in-the-wires tag-book ">
-
-            <header class="post-full-header">
-
-                <section class="post-full-tags">
-                    <a href="/tag/cryptography/">cryptography</a>
-                </section>
-
-                <h1 class="post-full-title">Solving the &#x27;Ghost in the Wires&#x27; ciphers</h1>
-
-
-                <div class="post-full-byline">
-
-                    <section class="post-full-byline-content">
-
-                        <ul class="author-list">
-                            <li class="author-list-item">
-
-                                <div class="author-card">
-                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
-                                    <div class="author-info">
-                                        <h2>Inês Martins</h2>
-                                        <p>Read <a href="/author/ines/">more posts</a> by this author.</p>
-                                    </div>
-                                </div>
-
-                                <a href="/author/ines/" class="author-avatar">
-                                    <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
-                                </a>
-
-                            </li>
-                        </ul>
-
-                        <section class="post-full-byline-meta">
-                            <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
-                            <div class="byline-meta-content">
-                                <time class="byline-meta-date" datetime="2020-06-07">7 Jun 2020</time>
-                                <span class="byline-reading-time"><span class="bull">&bull;</span> 8 min read</span>
-                            </div>
-                        </section>
-
-                    </section>
-
-
+            <div class="gh-head-actions">
+                <div class="gh-social">
                 </div>
-            </header>
 
-            <figure class="post-full-image">
-                <img
-                    srcset="/content/images/size/w300/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 300w,
-                            /content/images/size/w600/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 600w,
-                            /content/images/size/w1000/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 1000w,
-                            /content/images/size/w2000/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 2000w"
-                    sizes="(max-width: 800px) 400px,
-                        (max-width: 1170px) 1170px,
-                            2000px"
-                    src="/content/images/size/w2000/2020/06/buy-ghost.png-width-600-name-buy-ghost.png"
-                    alt="Solving the &#x27;Ghost in the Wires&#x27; ciphers"
-                />
-            </figure>
+                    <a class="gh-head-button" href="#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
 
-            <section class="post-full-content">
-                <div class="post-content">
-                    <p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence: it starts with an uppercase letter, all the characters are letters, there are longer words separated by shorter words, etc.</p><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
+    <main>
+        
+
+
+
+<article class="article post tag-cryptography tag-ghost-in-the-wires tag-book">
+
+    <header class="article-header gh-canvas">
+
+        <section class="article-tag">
+            <a href="https://inesmartins.github.io//tag/cryptography/">cryptography</a>
+        </section>
+
+        <h1 class="article-title">Solving the &#x27;Ghost in the Wires&#x27; ciphers</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="/author/ines/" class="author-avatar">
+                            <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="/author/ines/">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2020-06-07">Jun 7, 2020</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 8 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="/content/images/size/w300/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 300w,
+                        /content/images/size/w600/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 600w,
+                        /content/images/size/w1000/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 1000w,
+                        /content/images/size/w2000/2020/06/buy-ghost.png-width-600-name-buy-ghost.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="/content/images/size/w2000/2020/06/buy-ghost.png-width-600-name-buy-ghost.png"
+                alt="Solving the &#x27;Ghost in the Wires&#x27; ciphers"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence: it starts with an uppercase letter, all the characters are letters, there are longer words separated by shorter words, etc.</p><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
 Question: The cost of the bus driver I used to punch my own transfers.
 Solution: $15
 </code></pre>
@@ -211,7 +244,7 @@ Solution: The Paper Trip by Barry Reid.
 Question: These older type of devices were used to call forward business lines to answering services.
 Solution:
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error <a href="https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg">using CiberChef</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/atbash.png" class="kg-image"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Atbash
+<!--kg-card-end: markdown--><hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error <a href="https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg">using CiberChef</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/atbash.png" class="kg-image" alt loading="lazy"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Atbash
 Question: The name of the mainframes I hacked at USC in the ARPANET days.
 Solution: COSMOS
 </code></pre>
@@ -335,7 +368,7 @@ Solution: Criminal Justice
 Question: Name the company where Bonnie was employed when we started dating.
 Solution: GTE
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-7-hitched-in-haste">Chapter 7 | Hitched in Haste</h3><blockquote>multbqncannqenabrhfgacnqogehchetbkkebmsqgkncchebr</blockquote><p>This was one of the hardest, since I wasn't expecting that you'd need to use the answer from the previous cipher. </p><p>I ended up not being able to crack this one myself, and had to check <a href="https://fabiensanglard.net/Ghost_in_the_Wires_Paperback/">Fabien Sanglard's solution</a> and then tested for myself using an <a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">online Subtitution Cipher decrypter</a>.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/cipher.png" class="kg-image"><figcaption><a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">http://practicalcryptography.com/ciphers/simple-substitution-cipher/</a></figcaption></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Substitution cipher when alphabet starts with GTE, the solution for the previous question.
+<!--kg-card-end: markdown--><hr><h3 id="chapter-7-hitched-in-haste">Chapter 7 | Hitched in Haste</h3><blockquote>multbqncannqenabrhfgacnqogehchetbkkebmsqgkncchebr</blockquote><p>This was one of the hardest, since I wasn't expecting that you'd need to use the answer from the previous cipher. </p><p>I ended up not being able to crack this one myself, and had to check <a href="https://fabiensanglard.net/Ghost_in_the_Wires_Paperback/">Fabien Sanglard's solution</a> and then tested for myself using an <a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">online Subtitution Cipher decrypter</a>.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://inesmartins.github.io//content/images/2020/06/cipher.png" class="kg-image" alt loading="lazy"><figcaption><a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">http://practicalcryptography.com/ciphers/simple-substitution-cipher/</a></figcaption></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Substitution cipher when alphabet starts with GTE, the solution for the previous question.
 Question: Number of door codes I had for Pacific Bell central offices.
 Solution: 11
 </code></pre>
@@ -496,7 +529,7 @@ Solution: Eric Heinz
 (&quot;9&quot;, &quot;WXY&quot;);
 (&quot;0&quot;, &quot;Q Z&quot;);
 </code></pre>
-<!--kg-card-end: markdown--><p> and "the slashes represent which letter in the group of three it makes":</p><p><code>\: left, |: middle and /: right</code></p><p>Once we replace this, we get: <code>PEAXDKIZVBMSZGGLOMLSVXPVRWLWADJSUCZUCNNBPPQGX</code></p><p>To get the actual question we again have to use the solution to the last cipher to crack the <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Viginère cipher</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/VIGENERE-1.png" class="kg-image"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Phone dial key pag cipher + Vigenère
+<!--kg-card-end: markdown--><p> and "the slashes represent which letter in the group of three it makes":</p><p><code>\: left, |: middle and /: right</code></p><p>Once we replace this, we get: <code>PEAXDKIZVBMSZGGLOMLSVXPVRWLWADJSUCZUCNNBPPQGX</code></p><p>To get the actual question we again have to use the solution to the last cipher to crack the <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Viginère cipher</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/VIGENERE-1.png" class="kg-image" alt loading="lazy"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Phone dial key pag cipher + Vigenère
 Question: I asked Eric for the key to this phone company facility Solution: --
 </code></pre>
 <!--kg-card-end: markdown--><hr><h3 id="chapter-17-pulling-back-the-curtain">Chapter 17 | Pulling Back the Curtain</h3><blockquote>100 0000 10 1 01 001 00 1000 1 010 11 000 0 0000 11 000 000111 00011 10000 11110 11000 00111 10000 11111 10000 11111</blockquote><p>Initially I tried a couple of approaches thinking this was binary but after a lot of failure I decided to go with morse:</p><p>Where 1=. and 0=-:</p><p><code>.-- ---- .- . -. --. -- .--- . -.- .. --- - ---- .. --- ---... ---.. .---- ....- ..--- --... .---- ..... .---- .....</code></p><p>This results in <code>W#AENGMJEKIOT#IO:814271515</code>.</p><p>Where 0=. and 1=-:</p><!--kg-card-begin: markdown--><p><code>-.. .... -. - .- ..- .. -... - .-. -- ... . .... -- ... ...--- ...-- -.... ----. --... ..--- -.... ----- -.... -----</code></p>
@@ -517,7 +550,7 @@ what number is this:
 Question: What number is this? 310-477-6565
 Solution: The FBI's LA HQ.
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-18-traffic-analysis">Chapter 18 | Traffic Analysis</h3><blockquote>6365696a647a727573697775716d6d6e736e69627a74736a6f7969706469737967647163656c6f71776c66646d63656d78626c6879746d796f6d71747765686a6a71656d756c70696b6a627965696a71</blockquote><p>If we organize the numbers by pair, they look like valid hex, so I started with converting the data from hex to ASCII:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image.png" class="kg-image"></figure><p>At this point I was stuck, turns out this was again a Vigenère Cipher using the last challenge's solution - <code>LAFBI</code> - and then reversed:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-1.png" class="kg-image"></figure><p>I can again thank <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne</a> for the solution:</p><pre><code>Cipher: Plaintext ~&gt; Reversed ~&gt; Vigenère with LAFBI ~&gt; Hex
+<!--kg-card-end: markdown--><hr><h3 id="chapter-18-traffic-analysis">Chapter 18 | Traffic Analysis</h3><blockquote>6365696a647a727573697775716d6d6e736e69627a74736a6f7969706469737967647163656c6f71776c66646d63656d78626c6879746d796f6d71747765686a6a71656d756c70696b6a627965696a71</blockquote><p>If we organize the numbers by pair, they look like valid hex, so I started with converting the data from hex to ASCII:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image.png" class="kg-image" alt loading="lazy"></figure><p>At this point I was stuck, turns out this was again a Vigenère Cipher using the last challenge's solution - <code>LAFBI</code> - and then reversed:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/02/image-1.png" class="kg-image" alt loading="lazy"></figure><p>I can again thank <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne</a> for the solution:</p><pre><code>Cipher: Plaintext ~&gt; Reversed ~&gt; Vigenère with LAFBI ~&gt; Hex
 Question: I identified the FBI cell phones that where calling Eric by hacking to this cellular provider
 Solution: PacTel Cellular</code></pre><hr><h3 id="chapter-19-revelations">Chapter 19 | Revelations</h3><blockquote>hranmoafignwoeoeiettwsoeheneteelaefnbaethscvrdniyajspwrl</blockquote><p>Pretty much the same as in Chapter 12: <a href="https://scwf.dima.ninja/">SCWF</a> identified the cipher as Columnar <a href="https://en.wikipedia.org/wiki/Transposition_cipher">Transposition Cipher</a> in a heartbeat.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Columnar Transposition ( 2 1)
 Question: The real name of an FBI agent whose identity was Joseph Wernle.
@@ -542,92 +575,56 @@ Question: The amount of money I lost once working out at the gym.
 Solution: $11.000
 </code></pre>
 <!--kg-card-end: markdown--><hr>
-                </div>
-            </section>
+    </section>
 
 
+</article>
 
-        </article>
-
-    </div>
-</main>
-
-<aside class="read-next outer">
+<section class="footer-cta">
     <div class="inner">
-        <div class="read-next-feed">
-                <article class="read-next-card">
-                    <header class="read-next-card-header">
-                        <h3><span>More in</span> <a href="/tag/cryptography/">cryptography</a></h3>
-                    </header>
-                    <div class="read-next-card-content">
-                        <ul>
-                            <li>
-                                <h4><a href="/oposec-secrets/">ØxOPOSɆC - Secrets [Crypto]</a></h4>
-                                <div class="read-next-card-meta">
-                                    <p><time datetime="2021-03-24">24 Mar 2021</time> –
-                                        3 min read</p>
-                                </div>
-                            </li>
-                            <li>
-                                <h4><a href="/oposec-underground-leaks-part-ii/">ØxOPOSɆC | Underground Leaks (Crypto) - Part II</a></h4>
-                                <div class="read-next-card-meta">
-                                    <p><time datetime="2020-12-09">9 Dec 2020</time> –
-                                        1 min read</p>
-                                </div>
-                            </li>
-                            <li>
-                                <h4><a href="/htb-crypto-challenge/">HTB Crypto Challenge | Bank Heist</a></h4>
-                                <div class="read-next-card-meta">
-                                    <p><time datetime="2020-10-22">22 Oct 2020</time> –
-                                        1 min read</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <footer class="read-next-card-footer">
-                        <a href="/tag/cryptography/">See all 4 posts
-                            →</a>
-                    </footer>
-                </article>
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
 
-                <article class="post-card post tag-cryptography tag-ctf tag-aes tag-aes-ctr ">
 
-    <a class="post-card-image-link" href="/0xoposec/">
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/htb-write-up-time/">
         <img class="post-card-image"
-            srcset="/content/images/size/w300/2020/06/highres_471963990.jpeg 300w,
-                    /content/images/size/w600/2020/06/highres_471963990.jpeg 600w,
-                    /content/images/size/w1000/2020/06/highres_471963990.jpeg 1000w,
-                    /content/images/size/w2000/2020/06/highres_471963990.jpeg 2000w"
-            sizes="(max-width: 1000px) 400px, 700px"
+            srcset="/content/images/size/w300/2021/04/banner.png 300w,
+                    /content/images/size/w600/2021/04/banner.png 600w,
+                    /content/images/size/w1000/2021/04/banner.png 1000w,
+                    /content/images/size/w2000/2021/04/banner.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/04/banner.png"
+            alt="HTB Write-up | Time"
             loading="lazy"
-            src="/content/images/size/w600/2020/06/highres_471963990.jpeg"
-            alt="ØxOPOSɆC Crypto Challenge 2019"
         />
     </a>
 
     <div class="post-card-content">
 
-        <a class="post-card-content-link" href="/0xoposec/">
-
+        <a class="post-card-content-link" href="/htb-write-up-time/">
             <header class="post-card-header">
-                    <div class="post-card-primary-tag">cryptography</div>
-                <h2 class="post-card-title">ØxOPOSɆC Crypto Challenge 2019</h2>
+                <h2 class="post-card-title">HTB Write-up | Time</h2>
             </header>
-
             <section class="post-card-excerpt">
-                    <p>Write-up for ØxOPOSɆC crypto challenge that involves AES in CTR mode.</p>
+                <p>Retired machine can be found here.ScanningIt seems like this machine is running OpenSSH on port 22 and an Apache web server on port 80: ~ nmap -sC -sV time.htb PORT   STATE SERVICE VERSION PORT     STATE    SERVICE        VERSION 22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux;</p>
             </section>
-
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
-            
-                    <div class="author-name-tooltip">
-                        Inês Martins
-                    </div>
-            
                     <a href="/author/ines/" class="static-avatar">
                         <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
                     </a>
@@ -635,52 +632,43 @@ Solution: $11.000
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="/author/ines/">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-06-07">7 Jun 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+                <span class="post-card-byline-date"><time datetime="2021-04-03">Apr 3, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
 
     </div>
 
 </article>
+                    
+<article class="post-card post ">
 
-                <article class="post-card post tag-nessus tag-macos tag-vulnerability-scanner ">
-
-    <a class="post-card-image-link" href="/vulnerability-assessment-on-macos-with-nessus/">
+    <a class="post-card-image-link" href="/oposec-secrets/">
         <img class="post-card-image"
-            srcset="/content/images/size/w300/2020/06/img5.png 300w,
-                    /content/images/size/w600/2020/06/img5.png 600w,
-                    /content/images/size/w1000/2020/06/img5.png 1000w,
-                    /content/images/size/w2000/2020/06/img5.png 2000w"
-            sizes="(max-width: 1000px) 400px, 700px"
+            srcset="/content/images/size/w300/2021/03/highres_471963990-1-1.jpeg 300w,
+                    /content/images/size/w600/2021/03/highres_471963990-1-1.jpeg 600w,
+                    /content/images/size/w1000/2021/03/highres_471963990-1-1.jpeg 1000w,
+                    /content/images/size/w2000/2021/03/highres_471963990-1-1.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/03/highres_471963990-1-1.jpeg"
+            alt="ØxOPOSɆC - Secrets [Crypto]"
             loading="lazy"
-            src="/content/images/size/w600/2020/06/img5.png"
-            alt="Vulnerability Assessment on macOS with Nessus"
         />
     </a>
 
     <div class="post-card-content">
 
-        <a class="post-card-content-link" href="/vulnerability-assessment-on-macos-with-nessus/">
-
+        <a class="post-card-content-link" href="/oposec-secrets/">
             <header class="post-card-header">
-                    <div class="post-card-primary-tag">nessus</div>
-                <h2 class="post-card-title">Vulnerability Assessment on macOS with Nessus</h2>
+                <h2 class="post-card-title">ØxOPOSɆC - Secrets [Crypto]</h2>
             </header>
-
             <section class="post-card-excerpt">
-                    <p>1. Installation Download your version of choice from the Tenable website and follow the installation wizard. By the end a new browser tab should open up automatically with the address</p>
+                <p>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!" URL: https://secret.mbie.meWhen you access the website you see the following page: Entering random data on the input field</p>
             </section>
-
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
-            
-                    <div class="author-name-tooltip">
-                        Inês Martins
-                    </div>
-            
                     <a href="/author/ines/" class="static-avatar">
                         <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
                     </a>
@@ -688,115 +676,95 @@ Solution: $11.000
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="/author/ines/">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-06-07">7 Jun 2020</time> <span class="bull">&bull;</span> 2 min read</span>
+                <span class="post-card-byline-date"><time datetime="2021-03-24">Mar 24, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
 
     </div>
 
 </article>
-        </div>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/htb-passage/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/03/passage.png 300w,
+                    /content/images/size/w600/2021/03/passage.png 600w,
+                    /content/images/size/w1000/2021/03/passage.png 1000w,
+                    /content/images/size/w2000/2021/03/passage.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/03/passage.png"
+            alt="HTB Write-up | Passage"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/htb-passage/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Passage</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Write-up for Passage, a retired HTB machine.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/ines/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/ines/">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-03-07">Mar 7, 2021</time> <span class="bull">&bull;</span> 5 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
     </div>
 </aside>
 
 
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
 
 
-        <footer class="site-footer outer">
-            <div class="site-footer-content inner">
-                <section class="copyright"><a href="https://inesmartins.github.io/">Inês Martins</a> &copy; 2021</section>
-                <nav class="site-footer-nav">
-                    <a href="https://inesmartins.github.io/">Latest Posts</a>
-                    
-                    
-                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
-                </nav>
-            </div>
-        </footer>
-
-    </div>
-
-
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous">
-    </script>
-    <script src="/assets/built/casper.js?v=07034698ec"></script>
-
-    <script>
-        // Parse the URL parameter
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-
-        // Give the parameter a variable name
-        var action = getParameterByName('action');
-
-        $(document).ready(function () {
-            if (action == 'subscribe') {
-                $('body').addClass("subscribe-success");
-            }
-
-            $('.subscribe-success-message .subscribe-close').click(function () {
-                $('.subscribe-success-message').addClass('close');
-            });
-
-            // Reset form on opening subscrion overlay
-            $('.subscribe-button').click(function() {
-                $('.subscribe-overlay form').removeClass();
-                $('.subscribe-email').val('');
-            });
-        });
-    </script>
-
-    <script>
-    $(document).ready(function () {
-        // FitVids - start
-        var $postContent = $(".post-full-content");
-        $postContent.fitVids();
-        // FitVids - end
-
-        // Replace nav with title on scroll - start
-        Casper.stickyNavTitle({
-            navSelector: '.site-nav-main',
-            titleSelector: '.post-full-title',
-            activeClass: 'nav-post-title-active'
-        });
-        // Replace nav with title on scroll - end
-
-        // Hover on avatar
-        var hoverTimeout;
-        $('.author-list-item').hover(function () {
-            var $this = $(this);
-
-            clearTimeout(hoverTimeout);
-
-            $('.author-card').removeClass('hovered');
-            $(this).children('.author-card').addClass('hovered');
-
-        }, function () {
-            var $this = $(this);
-
-            hoverTimeout = setTimeout(function () {
-                $this.children('.author-card').removeClass('hovered');
-            }, 800);
-        });
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="/assets/built/casper.js?v=236ea5fb87"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
     });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
 </script>
 
 
-    <div class="site-footer outer" style="background:#090a0b;margin-top:-60px;">
-    <div class="site-footer-content footer inner" style="margin-bottom:-20px">
-        <script src="https://www.hackthebox.eu/badge/172261"></script>
-    </div>
-</div>
 
 </body>
 </html>
