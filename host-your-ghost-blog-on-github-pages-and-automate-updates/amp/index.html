@@ -16,7 +16,7 @@
     <meta property="og:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
     <meta property="og:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
     <meta property="article:published_time" content="2021-06-13T10:38:48.000Z" />
-    <meta property="article:modified_time" content="2021-06-13T11:09:30.000Z" />
+    <meta property="article:modified_time" content="2021-06-21T21:22:38.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
     <meta name="twitter:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after resetting my computer, and having to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink" />
@@ -57,7 +57,7 @@
     "headline": "Update: Simplest way to host your Ghost blog on GitHub Pages",
     "url": "inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/",
     "datePublished": "2021-06-13T10:38:48.000Z",
-    "dateModified": "2021-06-13T11:09:30.000Z",
+    "dateModified": "2021-06-21T21:22:38.000Z",
     "description": "Last year I created a post\n[https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/] \nabout how to get a Ghost blog up and running on Github Pages without much\neffort.\n\nThis worked well, but after resetting my computer, and having to update \nghost-cli [https://www.npmjs.com/package/ghost-cli] to version 1.17.3 I ran into\na few issues and had to rethink the process.\n\nLuckily, I found an even simpler way to do it.\n\nAssuming you have a local instance of Ghost running on the ",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -676,8 +676,11 @@ wget --recursive --no-host-directories --directory-prefix=static --adjust-extens
 wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-authors.xml
 wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-tags.xml
 
-# Small fix for images' srcset property
+# Fixes issue with images
 LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,srcset="../content,srcset="../content,g' {} +; 
+LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
+LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpg,jpg,g' {} +;
+LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
 
 # Replace localhost with real domain
 LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,http://${from_url},https://${to_url},g" {} +; 
