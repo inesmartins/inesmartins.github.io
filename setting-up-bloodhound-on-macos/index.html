@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>Update: Simplest way to host your Ghost blog on GitHub Pages</title>
+    <title>Setting up Bloodhound on macOS</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
@@ -16,28 +16,30 @@
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta property="og:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after resetting my computer, and having to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink" />
-    <meta property="og:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
-    <meta property="og:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
-    <meta property="article:published_time" content="2021-06-13T10:38:48.000Z" />
-    <meta property="article:modified_time" content="2021-06-22T15:48:56.000Z" />
-    <meta property="article:tag" content="ghost" />
-    <meta property="article:tag" content="github pages" />
-    <meta property="article:tag" content="blog" />
-    <meta property="article:tag" content="static site generator" />
+    <meta property="og:title" content="Setting up Bloodhound on macOS" />
+    <meta property="og:description" content="On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8. handles multiprocessing in macOS you need to downgrade to Python 3.7.3. to" />
+    <meta property="og:url" content="inesmartins.github.io/setting-up-bloodhound-on-macos/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" />
+    <meta property="article:published_time" content="2021-07-11T13:37:13.000Z" />
+    <meta property="article:modified_time" content="2021-07-11T13:59:15.000Z" />
+    <meta property="article:tag" content="bloodhound" />
+    <meta property="article:tag" content="windows" />
+    <meta property="article:tag" content="ad" />
+    <meta property="article:tag" content="macOS" />
+    <meta property="article:tag" content="tips" />
+    <meta property="article:tag" content="troubleshooting" />
     
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta name="twitter:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after resetting my computer, and having to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink" />
-    <meta name="twitter:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
-    <meta name="twitter:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta name="twitter:title" content="Setting up Bloodhound on macOS" />
+    <meta name="twitter:description" content="On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8. handles multiprocessing in macOS you need to downgrade to Python 3.7.3. to" />
+    <meta name="twitter:url" content="inesmartins.github.io/setting-up-bloodhound-on-macos/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="ghost, github pages, blog, static site generator" />
-    <meta property="og:image:width" content="2709" />
-    <meta property="og:image:height" content="938" />
+    <meta name="twitter:data2" content="bloodhound, windows, ad, macOS, tips, troubleshooting" />
+    <meta property="og:image:width" content="1000" />
+    <meta property="og:image:height" content="1000" />
     
     <script type="application/ld+json">
 {
@@ -66,12 +68,18 @@
         "url": "inesmartins.github.io/author/ines/",
         "sameAs": []
     },
-    "headline": "Update: Simplest way to host your Ghost blog on GitHub Pages",
-    "url": "inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/",
-    "datePublished": "2021-06-13T10:38:48.000Z",
-    "dateModified": "2021-06-22T15:48:56.000Z",
-    "keywords": "ghost, github pages, blog, static site generator",
-    "description": "Last year I created a post\n[https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/] \nabout how to get a Ghost blog up and running on Github Pages without much\neffort.\n\nThis worked well, but after resetting my computer, and having to update \nghost-cli [https://www.npmjs.com/package/ghost-cli] to version 1.17.3 I ran into\na few issues and had to rethink the process.\n\nLuckily, I found an even simpler way to do it.\n\nAssuming you have a local instance of Ghost running on the ",
+    "headline": "Setting up Bloodhound on macOS",
+    "url": "inesmartins.github.io/setting-up-bloodhound-on-macos/",
+    "datePublished": "2021-07-11T13:37:13.000Z",
+    "dateModified": "2021-07-11T13:59:15.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/07/bloodhound-logo.png",
+        "width": 1000,
+        "height": 1000
+    },
+    "keywords": "bloodhound, windows, ad, macOS, tips, troubleshooting",
+    "description": "On a recent CTF I needed to set up Bloodhound on macOS and came across some\nissues. Hope this helps someone in need. :)\n\n\n--------------------------------------------------------------------------------\n\nInstalling a compatible Python version\nBecause of the way in which Python 3.8. handles multiprocessing in macOS you\nneed to downgrade to Python 3.7.3. to be able to use Bloodhound.py.\n\nHere&#x27;s a great StackOverflow answer that explains how to do this downgrade using \npyenv:\n\nHow to downgrade pyth",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -166,7 +174,7 @@
 </style><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
-<body class="post-template tag-ghost-tag tag-github-pages tag-blog tag-static-site-generator">
+<body class="post-template tag-bloodhound tag-windows tag-ad tag-macos tag-tips tag-troubleshooting">
 <div class="viewport">
 
     <header id="gh-head" class="gh-head has-cover">
@@ -202,15 +210,15 @@
 
 
 
-<article class="article post tag-ghost-tag tag-github-pages tag-blog tag-static-site-generator no-image">
+<article class="article post tag-bloodhound tag-windows tag-ad tag-macos tag-tips tag-troubleshooting">
 
     <header class="article-header gh-canvas">
 
         <section class="article-tag">
-            <a href="../tag/ghost-tag/index.html">ghost</a>
+            <a href="../tag/bloodhound/index.html">bloodhound</a>
         </section>
 
-        <h1 class="article-title">Update: Simplest way to host your Ghost blog on GitHub Pages</h1>
+        <h1 class="article-title">Setting up Bloodhound on macOS</h1>
 
 
         <div class="article-byline">
@@ -225,49 +233,50 @@
                 <div class="article-byline-meta">
                     <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
                     <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2021-06-13">Jun 13, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                        <time class="byline-meta-date" datetime="2021-07-11">Jul 11, 2021</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
                     </div>
                 </div>
             </section>
         </div>
 
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2021/07/bloodhound-logo.png 300w,
+                       ../content/images/size/w600/2021/07/bloodhound-logo.pngg 600w,
+                      ../content/images/size/w1000/2021/07/bloodhound-logo.png 1000w,
+                     ../content/images/size/w2000/2021/07/bloodhound-logo.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2021/07/bloodhound-logo.png"
+                alt="Setting up Bloodhound on macOS"
+            />
+        </figure>
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after resetting my computer, and having to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
+        <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8.</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3.</code> to be able to use <code>Bloodhound.py</code>.</p><p>Here's a great StackOverflow answer that explains how to do this downgrade using <code>pyenv</code>:</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/a/62899833"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to downgrade python version from 3.8 to 3.7 (mac)</div><div class="kg-bookmark-description">I’m using Python &amp;amp; okta-aws tools and in order to fetch correct credentials on aws I need to run okta-aws init. But got an error message of Could not read roles from Okta and the system prompte...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v&#x3D;c78bd457575a"><span class="kg-bookmark-author">Stack Overflow</span><span class="kg-bookmark-publisher">user13902742</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v&#x3D;73d79a89bded"></div></a></figure><p>After this process you should now have something like:</p><pre><code>~ python3 --version
+Python 3.7.3</code></pre><hr><h2 id="collecting-the-data">Collecting the data</h2><p>On Windows, data collection is done with <a href="https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound.html">SharpHound</a>:</p><blockquote>SharpHound is the official data collector for BloodHound. It is written in C# and uses native Windows API functions and LDAP namespace functions to collect data from domain controllers and domain-joined Windows systems.</blockquote><p>On macOS, you can use <code>Bloodhoud.py</code>, but you also need an additional tool that resolves the AD domain to its IP. I went with <code>DNSChef</code> but you can choose whatever works best.</p><p>So, start by cloning the <a href="https://github.com/fox-it/BloodHound.py">Bloodhound<a href="https://github.com/fox-it/BloodHound.py">.</a>py</a> and <a href="https://github.com/iphelix/dnschef">dnschef.py</a> projects and install the requirements as specified on the <code>README.md</code> files.</p><p>Once both projects are correctly installed, you need to set up <a href="https://github.com/iphelix/dnschef">dnschef.py</a> so that it resolves your AD domain to its corresponding IP, as previously mentioned:</p><pre><code>~ sudo sh -c 'python3 dnschef.py --fakeip x.x.x.x --fakedomains abc.local -q'
 
-# Define urls and https
-from_url=inesmartins.github.io
-to_url=inesmartins.github.io
+(20:14:25) [*] DNSChef started on interface: 127.0.0.1
+(20:14:25) [*] Using the following nameservers: 8.8.8.8
+(20:14:25) [*] Cooking A replies to point to x.x.x.x matching: abc.local
+</code></pre><p>Next, you can run the Bloodhound script, but make sure to point to your "fake" nameserver:</p><pre><code>~ python3 ../bloodhound.py -d abc.local -u theusername -p 'thepassword' -dc abc.local -c all -ns 127.0.0.1
 
-# Copy blog content
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/
-
-# Copy 404 page
-wget --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links --content-on-error --timestamping ${from_url}/404.html
-
-# Copy sitemaps
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap.xsl
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-pages.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-posts.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-authors.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-tags.xml
-
-# Small fix for images' srcset property
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,srcset="../content,srcset="../content,g' {} +; 
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpg,jpg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
-
-# Replace localhost with real domain
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,http://${from_url},https://${to_url},g" {} +; 
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,${from_url},${to_url},g" {} +
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,https://www.gravatar.com,https://www.gravatar.com,g' {} +
-</code></pre><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><ul><li>Run the script</li><li>You should now have a <code>static</code> directory with the entire content of your Ghost instance as a static website</li><li>You can check that everything is OK by opening the <code>index.html</code> file under this directory</li><li>Add the entire content of the <code>static</code> directory to the Github Pages repo and you're done!</li></ul>
+INFO: Connecting to LDAP server: abc.local
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 2 computers
+INFO: Connecting to LDAP server: abc.local
+INFO: Found 7 users
+INFO: Found 53 groups
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: XXX1.abc.local
+INFO: Querying computer: XXX2.abc.local
+INFO: Ignoring host XXX1.abc.local since its hostname does not match: Supplied hostname XXX1.abc.local does not match reported hostnames dc1 or dc1.abc.local
+INFO: Done in 00M 08S</code></pre><p>This process should outputs some <code>.json</code> files to the local directory. You'll be able to import and visualise the data on the next step.</p><hr><h2 id="visualising-the-data">Visualising the data</h2><p>Start by downloading the macOS versions of both <a href="https://neo4j.com/download-center/#community">neo4j Community Edition Server</a> and <a href="https://github.com/BloodHoundAD/BloodHound/releases">Bloodhound GUI</a>.</p><p>Then, go to the directory where you downloaded <code>neo4j</code> and run:</p><pre><code>~ tar -xf neo4j-community-x.x.x-unix.tar
+~ cd neo4j-community-x.x.x/bin
+~ ./neo4j console</code></pre><p>Once the <code>neo4j</code> console application is running, go to <a href="http://localhost:7474">http://localhost:7474</a> and authenticate with credentials: <code>neo4j/neo4j</code>. </p><p>You'll be prompted to change the password, so make sure to save these new creds, you'll need for the next step.</p><p>Now, go to the directory where you downloaded <code>Bloodhound GUI</code> and launch the app. </p><p>Leave the default DB URL and enter the same credentials you just set up for <code>neo4j</code>.</p><p>After logging in, on the right side, you'll see an icon to upload data. Click on the icon and import the <code>.json</code> files outputted on the previous step.</p><p>You should now have everything you need to visualise your AD info using Bloodhound! </p>
     </section>
 
 
@@ -289,29 +298,17 @@ LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,http
 
 
                     
-<article class="post-card post ">
+<article class="post-card post no-image ">
 
-    <a class="post-card-image-link" href="../setting-up-bloodhound-on-macos/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/07/bloodhound-logo.png 300w,
-                   ../content/images/size/w600/2021/07/bloodhound-logo.pngg 600w,
-                  ../content/images/size/w1000/2021/07/bloodhound-logo.png 1000w,
-                 ../content/images/size/w2000/2021/07/bloodhound-logo.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/07/bloodhound-logo.png"
-            alt="Setting up Bloodhound on macOS"
-            loading="lazy"
-        />
-    </a>
 
     <div class="post-card-content">
 
-        <a class="post-card-content-link" href="../setting-up-bloodhound-on-macos/index.html">
+        <a class="post-card-content-link" href="../host-your-ghost-blog-on-github-pages-and-automate-updates/index.html">
             <header class="post-card-header">
-                <h2 class="post-card-title">Setting up Bloodhound on macOS</h2>
+                <h2 class="post-card-title">Update: Simplest way to host your Ghost blog on GitHub Pages</h2>
             </header>
             <section class="post-card-excerpt">
-                <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8. handles multiprocessing in macOS you need to downgrade to Python 3.7.3. to</p>
+                <p>Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after resetting my computer, and having to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink</p>
             </section>
         </a>
 
@@ -325,7 +322,7 @@ LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,http
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-07-11">Jul 11, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+                <span class="post-card-byline-date"><time datetime="2021-06-13">Jun 13, 2021</time> <span class="bull">&bull;</span> 2 min read</span>
             </div>
         </footer>
 
