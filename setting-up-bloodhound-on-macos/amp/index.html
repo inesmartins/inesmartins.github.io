@@ -16,7 +16,7 @@
     <meta property="og:url" content="inesmartins.github.io/setting-up-bloodhound-on-macos/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" />
     <meta property="article:published_time" content="2021-07-11T13:37:13.000Z" />
-    <meta property="article:modified_time" content="2021-07-11T13:59:15.000Z" />
+    <meta property="article:modified_time" content="2021-07-11T14:06:53.000Z" />
     <meta property="article:tag" content="bloodhound" />
     <meta property="article:tag" content="windows" />
     <meta property="article:tag" content="ad" />
@@ -66,7 +66,7 @@
     "headline": "Setting up Bloodhound on macOS",
     "url": "inesmartins.github.io/setting-up-bloodhound-on-macos/",
     "datePublished": "2021-07-11T13:37:13.000Z",
-    "dateModified": "2021-07-11T13:59:15.000Z",
+    "dateModified": "2021-07-11T14:06:53.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/07/bloodhound-logo.png",
@@ -695,7 +695,7 @@ INFO: Starting computer enumeration with 10 workers
 INFO: Querying computer: XXX1.abc.local
 INFO: Querying computer: XXX2.abc.local
 INFO: Ignoring host XXX1.abc.local since its hostname does not match: Supplied hostname XXX1.abc.local does not match reported hostnames dc1 or dc1.abc.local
-INFO: Done in 00M 08S</code></pre><p>This process should outputs some <code>.json</code> files to the local directory. You'll be able to import and visualise the data on the next step.</p><hr></hr><h2 id="visualising-the-data">Visualising the data</h2><p>Start by downloading the macOS versions of both <a href="https://neo4j.com/download-center/#community">neo4j Community Edition Server</a> and <a href="https://github.com/BloodHoundAD/BloodHound/releases">Bloodhound GUI</a>.</p><p>Then, go to the directory where you downloaded <code>neo4j</code> and run:</p><pre><code>~ tar -xf neo4j-community-x.x.x-unix.tar
+INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json</code> files to your local directory. You'll be able to import and visualise the data on the next step.</p><hr></hr><h2 id="visualising-the-data">Visualising the data</h2><p>Start by downloading the macOS versions of both <a href="https://neo4j.com/download-center/#community">neo4j Community Edition Server</a> and <a href="https://github.com/BloodHoundAD/BloodHound/releases">Bloodhound GUI</a>.</p><p>Then, go to the directory where you downloaded <code>neo4j</code> and run:</p><pre><code>~ tar -xf neo4j-community-x.x.x-unix.tar
 ~ cd neo4j-community-x.x.x/bin
 ~ ./neo4j console</code></pre><p>Once the <code>neo4j</code> console application is running, go to <a href="http://localhost:7474">http://localhost:7474</a> and authenticate with credentials: <code>neo4j/neo4j</code>. </p><p>You'll be prompted to change the password, so make sure to save these new creds, you'll need for the next step.</p><p>Now, go to the directory where you downloaded <code>Bloodhound GUI</code> and launch the app. </p><p>Leave the default DB URL and enter the same credentials you just set up for <code>neo4j</code>.</p><p>After logging in, on the right side, you'll see an icon to upload data. Click on the icon and import the <code>.json</code> files outputted on the previous step.</p><p>You should now have everything you need to visualise your AD info using Bloodhound! </p>
 

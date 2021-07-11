@@ -17,11 +17,11 @@
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta property="og:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after resetting my computer, and having to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink" />
+    <meta property="og:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after being forced to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink the entire process." />
     <meta property="og:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" />
     <meta property="article:published_time" content="2021-06-13T10:38:48.000Z" />
-    <meta property="article:modified_time" content="2021-07-11T14:02:48.000Z" />
+    <meta property="article:modified_time" content="2021-07-11T14:11:40.000Z" />
     <meta property="article:tag" content="ghost" />
     <meta property="article:tag" content="github pages" />
     <meta property="article:tag" content="blog" />
@@ -29,7 +29,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta name="twitter:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after resetting my computer, and having to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink" />
+    <meta name="twitter:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after being forced to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink the entire process." />
     <meta name="twitter:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
     <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -69,7 +69,7 @@
     "headline": "Update: Simplest way to host your Ghost blog on GitHub Pages",
     "url": "inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/",
     "datePublished": "2021-06-13T10:38:48.000Z",
-    "dateModified": "2021-07-11T14:02:48.000Z",
+    "dateModified": "2021-07-11T14:11:40.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png",
@@ -77,7 +77,7 @@
         "height": 843
     },
     "keywords": "ghost, github pages, blog, static site generator",
-    "description": "Last year I created a post\n[https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/] \nabout how to get a Ghost blog up and running on Github Pages without much\neffort.\n\nThis worked well, but after resetting my computer, and having to update \nghost-cli [https://www.npmjs.com/package/ghost-cli] to version 1.17.3 I ran into\na few issues and had to rethink the process.\n\nLuckily, I found an even simpler way to do it.\n\nAssuming you have a local instance of Ghost running on the ",
+    "description": "Last year I created a post\n[https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/] \nabout how to get a Ghost blog up and running on Github Pages without much\neffort.\n\nThis worked well, but after being forced to update ghost-cli\n[https://www.npmjs.com/package/ghost-cli] to version 1.17.3 I ran into a few\nissues and had to rethink the entire process.\n\nLuckily, I found an even simpler way to do it.\n\nAssuming you have a local instance of Ghost running on the default port 23",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -252,7 +252,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after resetting my computer, and having to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
+        <p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
 
 # Define urls and https
 from_url=inesmartins.github.io
