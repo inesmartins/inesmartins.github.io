@@ -14,9 +14,9 @@
     <meta property="og:title" content="Fixing keyboard type on macOS" />
     <meta property="og:description" content="It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings.  What to do?Apparently, the only thing to do is to force the OS to re-configure the keyboard: Go" />
     <meta property="og:url" content="inesmartins.github.io/having-issues-with-your-keyboard-type-on-macos/" />
-    <meta property="og:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/1-1.png" />
     <meta property="article:published_time" content="2021-05-15T14:56:08.000Z" />
-    <meta property="article:modified_time" content="2021-05-15T21:50:28.000Z" />
+    <meta property="article:modified_time" content="2021-07-11T14:03:22.000Z" />
     <meta property="article:tag" content="macOS" />
     <meta property="article:tag" content="troubleshooting" />
     <meta property="article:tag" content="keyboard type" />
@@ -25,13 +25,13 @@
     <meta name="twitter:title" content="Fixing keyboard type on macOS" />
     <meta name="twitter:description" content="It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings.  What to do?Apparently, the only thing to do is to force the OS to re-configure the keyboard: Go" />
     <meta name="twitter:url" content="inesmartins.github.io/having-issues-with-your-keyboard-type-on-macos/" />
-    <meta name="twitter:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/1-1.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:label2" content="Filed under" />
     <meta name="twitter:data2" content="macOS, troubleshooting, keyboard type" />
-    <meta property="og:image:width" content="2709" />
-    <meta property="og:image:height" content="938" />
+    <meta property="og:image:width" content="700" />
+    <meta property="og:image:height" content="510" />
     
     <script type="application/ld+json">
 {
@@ -63,7 +63,13 @@
     "headline": "Fixing keyboard type on macOS",
     "url": "inesmartins.github.io/having-issues-with-your-keyboard-type-on-macos/",
     "datePublished": "2021-05-15T14:56:08.000Z",
-    "dateModified": "2021-05-15T21:50:28.000Z",
+    "dateModified": "2021-07-11T14:03:22.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/07/1-1.png",
+        "width": 700,
+        "height": 510
+    },
     "keywords": "macOS, troubleshooting, keyboard type",
     "description": "It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for\nsome weird reason, Apple has removed the ability to change this directly on the\nkeyboard settings. \n\nWhat to do?\nApparently, the only thing to do is to force the OS to re-configure the\nkeyboard:\n\n * Go to /Library/Preferences and see if you can find \n   com.apple.keyboardtype.plist\n\n~ cd /Library/Preferences\n~ ls | grep keyboard\n\n * Either remove it or move it somewhere else (if you want to have a backup)\n\n~ sudo rm ",
     "mainEntityOfPage": {
@@ -661,6 +667,9 @@
                     <time class="post-date" datetime="2021-05-15">15 May 2021</time>
                 </section>
             </header>
+            <figure class="post-image">
+                <amp-img src="inesmartins.github.io/content/images/2021/07/1-1.png" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
             <section class="post-content">
 
                 <p>It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings. </p><h3 id="what-to-do">What to do?</h3><p>Apparently, the only thing to do is to force the OS to re-configure the keyboard:</p><ul><li>Go to <code>/Library/Preferences</code> and see if you can find <code>com.apple.keyboardtype.plist</code></li></ul><pre><code>~ cd /Library/Preferences
