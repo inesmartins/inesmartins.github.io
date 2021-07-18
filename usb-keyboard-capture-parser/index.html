@@ -21,7 +21,7 @@
     <meta property="og:url" content="inesmartins.github.io/usb-keyboard-capture-parser/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-18-at-12.24.09.png" />
     <meta property="article:published_time" content="2021-07-18T11:20:39.000Z" />
-    <meta property="article:modified_time" content="2021-07-18T11:29:01.000Z" />
+    <meta property="article:modified_time" content="2021-07-18T18:18:03.000Z" />
     <meta property="article:tag" content="tshark" />
     <meta property="article:tag" content="pcap" />
     <meta property="article:tag" content="usb keyboard" />
@@ -68,7 +68,7 @@
     "headline": "USB Keyboard capture parser",
     "url": "inesmartins.github.io/usb-keyboard-capture-parser/",
     "datePublished": "2021-07-18T11:20:39.000Z",
-    "dateModified": "2021-07-18T11:29:01.000Z",
+    "dateModified": "2021-07-18T18:18:03.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-18-at-12.24.09.png",
@@ -76,7 +76,7 @@
         "height": 525
     },
     "keywords": "tshark, pcap, usb keyboard",
-    "description": "During a recent CTF I had to extract keys from a USB Keyboard capture, and (as\nusual) decided to create a simple Python 3 script to parse the original keys.\n\nAs shown on the Gist below, this script takes any .pcap file and optionally the\npath to the tshark executable, and:\n\n 1. extracts the relevant data from the capture file to a temporary .txt file;\n 2. parses all the lines from this file and extracts the relevant data, namely\n    the key value and whether or not the Shift key was pressed;\n 3.",
+    "description": "During a recent CTF I had to extract keys from a USB Keyboard capture, and (as\nusual) decided to create a simple Python 3 script to parse the original keys.\n\nAs shown on the Gist below\n[https://gist.github.com/inesmartins/662442da446c3f79e19bca9bd82ea7d1.js], this\nscript takes any .pcap file and optionally the path to the tshark executable,\nand:\n\n 1. extracts the relevant data from the capture file to a temporary .txt file,\n    using tshark [https://www.wireshark.org/docs/man-pages/tshark.html]\n",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -251,7 +251,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys.</p><p>As shown on the Gist below, this script takes any <code>.pcap</code> file and optionally the path to the <code>tshark</code> executable, and:</p><ol><li>extracts the relevant data from the capture file to a temporary <code>.txt</code> file;</li><li>parses all the lines from this file and extracts the relevant data, namely the key value and whether or not the <code>Shift</code> key was pressed;</li><li>maps the key value and shift to the corresponding symbol</li><li>prints the resulting string</li></ol><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/662442da446c3f79e19bca9bd82ea7d1.js"></script><!--kg-card-end: html--><p>As an example:</p><pre><code>~ python3 mousejack.py -f mousejack.pcapng -t /Applications/Wireshark.app/Contents/MacOS/tshark
+        <p>During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys.</p><p>As shown on the <a href="https://gist.github.com/inesmartins/662442da446c3f79e19bca9bd82ea7d1.js">Gist below</a>, this script takes any <code>.pcap</code> file and optionally the path to the <code>tshark</code> executable, and:</p><ol><li>extracts the relevant data from the capture file to a temporary <code>.txt</code> file, using <a href="https://www.wireshark.org/docs/man-pages/tshark.html">tshark</a></li><li>parses each line from this file and extracts the relevant data, namely the key value and whether or not the <code>Shift</code> key was pressed</li><li>maps the key value and shift to the corresponding symbol on the keyboard</li><li>removes the temporary file</li><li>prints the resulting string</li></ol><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/662442da446c3f79e19bca9bd82ea7d1.js"></script><!--kg-card-end: html--><p>As an example:</p><pre><code>~ python3 mousejack.py -f mousejack.pcapng -t /Applications/Wireshark.app/Contents/MacOS/tshark
 
 &gt; flag{usb_sniff_sniff}</code></pre>
     </section>
