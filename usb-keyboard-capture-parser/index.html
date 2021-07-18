@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>Simplest way to host your Ghost blog on GitHub Pages</title>
+    <title>USB Keyboard capture parser</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
@@ -16,28 +16,27 @@
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta property="og:description" content="This tutorial assumes you already have a Ghost blog that you want to host on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;Go to the directory where you have your Ghost blog, run ghost" />
-    <meta property="og:url" content="inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/" />
-    <meta property="og:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
-    <meta property="article:published_time" content="2020-06-08T12:54:15.000Z" />
-    <meta property="article:modified_time" content="2021-06-13T11:08:26.000Z" />
-    <meta property="article:tag" content="ghost" />
-    <meta property="article:tag" content="blog" />
-    <meta property="article:tag" content="static site generator" />
-    <meta property="article:tag" content="gssg" />
+    <meta property="og:title" content="USB Keyboard capture parser" />
+    <meta property="og:description" content="During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys. As shown on the Gist below, this script takes any .pcap file and optionally the path to the tshark executable," />
+    <meta property="og:url" content="inesmartins.github.io/usb-keyboard-capture-parser/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-18-at-12.24.09.png" />
+    <meta property="article:published_time" content="2021-07-18T11:20:39.000Z" />
+    <meta property="article:modified_time" content="2021-07-18T11:29:01.000Z" />
+    <meta property="article:tag" content="tshark" />
+    <meta property="article:tag" content="pcap" />
+    <meta property="article:tag" content="usb keyboard" />
     
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta name="twitter:description" content="This tutorial assumes you already have a Ghost blog that you want to host on Github Pages.  Follow these instructions to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;Go to the directory where you have your Ghost blog, run ghost" />
-    <meta name="twitter:url" content="inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/" />
-    <meta name="twitter:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta name="twitter:title" content="USB Keyboard capture parser" />
+    <meta name="twitter:description" content="During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys. As shown on the Gist below, this script takes any .pcap file and optionally the path to the tshark executable," />
+    <meta name="twitter:url" content="inesmartins.github.io/usb-keyboard-capture-parser/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-18-at-12.24.09.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="ghost, blog, static site generator, gssg" />
-    <meta property="og:image:width" content="2709" />
-    <meta property="og:image:height" content="938" />
+    <meta name="twitter:data2" content="tshark, pcap, usb keyboard" />
+    <meta property="og:image:width" content="1118" />
+    <meta property="og:image:height" content="525" />
     
     <script type="application/ld+json">
 {
@@ -66,12 +65,18 @@
         "url": "inesmartins.github.io/author/ines/",
         "sameAs": []
     },
-    "headline": "Simplest way to host your Ghost blog on GitHub Pages",
-    "url": "inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/",
-    "datePublished": "2020-06-08T12:54:15.000Z",
-    "dateModified": "2021-06-13T11:08:26.000Z",
-    "keywords": "ghost, blog, static site generator, gssg",
-    "description": "This tutorial assumes you already have a Ghost blog that you want to host on\nGithub Pages. \n\n 1. Follow these instructions [https://pages.github.com/] to create a repository\n    for your Github Pages blog, and then clone the repo somewhere on your\n    computer;\n 2. Go to the directory where you have your Ghost blog, run ghost start and take\n    note of the local port;\n 3. Install ghost-static-site-generator\n    [https://www.npmjs.com/package/ghost-static-site-generator];\n 4. If your blog is runn",
+    "headline": "USB Keyboard capture parser",
+    "url": "inesmartins.github.io/usb-keyboard-capture-parser/",
+    "datePublished": "2021-07-18T11:20:39.000Z",
+    "dateModified": "2021-07-18T11:29:01.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-18-at-12.24.09.png",
+        "width": 1118,
+        "height": 525
+    },
+    "keywords": "tshark, pcap, usb keyboard",
+    "description": "During a recent CTF I had to extract keys from a USB Keyboard capture, and (as\nusual) decided to create a simple Python 3 script to parse the original keys.\n\nAs shown on the Gist below, this script takes any .pcap file and optionally the\npath to the tshark executable, and:\n\n 1. extracts the relevant data from the capture file to a temporary .txt file;\n 2. parses all the lines from this file and extracts the relevant data, namely\n    the key value and whether or not the Shift key was pressed;\n 3.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -166,7 +171,7 @@
 </style><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
-<body class="post-template tag-ghost-tag tag-blog tag-static-site-generator tag-gssg">
+<body class="post-template tag-tshark tag-pcap tag-usb-keyboard">
 <div class="viewport">
 
     <header id="gh-head" class="gh-head has-cover">
@@ -202,15 +207,15 @@
 
 
 
-<article class="article post tag-ghost-tag tag-blog tag-static-site-generator tag-gssg no-image">
+<article class="article post tag-tshark tag-pcap tag-usb-keyboard">
 
     <header class="article-header gh-canvas">
 
         <section class="article-tag">
-            <a href="../tag/ghost-tag/index.html">ghost</a>
+            <a href="../tag/tshark/index.html">tshark</a>
         </section>
 
-        <h1 class="article-title">Simplest way to host your Ghost blog on GitHub Pages</h1>
+        <h1 class="article-title">USB Keyboard capture parser</h1>
 
 
         <div class="article-byline">
@@ -225,17 +230,30 @@
                 <div class="article-byline-meta">
                     <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
                     <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2020-06-08">Jun 8, 2020</time>
+                        <time class="byline-meta-date" datetime="2021-07-18">Jul 18, 2021</time>
                         <span class="byline-reading-time"><span class="bull">&bull;</span> 1 min read</span>
                     </div>
                 </div>
             </section>
         </div>
 
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2021/07/Screenshot-2021-07-18-at-12.24.09.png 300w,
+                       ../content/images/size/w600/2021/07/Screenshot-2021-07-18-at-12.24.09.pngg 600w,
+                      ../content/images/size/w1000/2021/07/Screenshot-2021-07-18-at-12.24.09.png 1000w,
+                     ../content/images/size/w2000/2021/07/Screenshot-2021-07-18-at-12.24.09.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2021/07/Screenshot-2021-07-18-at-12.24.09.png"
+                alt="USB Keyboard capture parser"
+            />
+        </figure>
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>This tutorial assumes you already have a Ghost blog that you want to host on Github Pages. </p><ol><li>Follow <a href="https://pages.github.com/">these instructions</a> to create a repository for your Github Pages blog, and then clone the repo somewhere on your computer;</li><li>Go to the directory where you have your Ghost blog, run <code>ghost start</code> and take note of the local port;</li><li>Install <a href="https://www.npmjs.com/package/ghost-static-site-generator">ghost-static-site-generator</a>;</li><li>If your blog is running on the default port (2368), you can simply run from your Ghost blog's directory:</li></ol><pre><code>gssg --url [your-github-pages-URL]</code></pre><p>if you're running from some other port you can specify it with the <code>domain</code> parameter:</p><pre><code>gssg --url [your-github-pages-URL] --domain http://localhost:4444 </code></pre><p>5. If everything went smoothly you now have a directory called static inside your Ghost blog's directory. You can check if everything went well by running:</p><pre><code>gssg preview</code></pre><p>6. Copy all of the contents of the static dir to the Github Pages repo, commit + push these new files and you're done!</p><p>Note that instead of copying the files, you can set the Github Pages repo as the destination directory as such:</p><pre><code>gssg --url [your-github-pages-URL] --dest your-github-pages-repo</code></pre>
+        <p>During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys.</p><p>As shown on the Gist below, this script takes any <code>.pcap</code> file and optionally the path to the <code>tshark</code> executable, and:</p><ol><li>extracts the relevant data from the capture file to a temporary <code>.txt</code> file;</li><li>parses all the lines from this file and extracts the relevant data, namely the key value and whether or not the <code>Shift</code> key was pressed;</li><li>maps the key value and shift to the corresponding symbol</li><li>prints the resulting string</li></ol><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/662442da446c3f79e19bca9bd82ea7d1.js"></script><!--kg-card-end: html--><p>As an example:</p><pre><code>~ python3 mousejack.py -f mousejack.pcapng -t /Applications/Wireshark.app/Contents/MacOS/tshark
+
+&gt; flag{usb_sniff_sniff}</code></pre>
     </section>
 
 
@@ -256,50 +274,6 @@
     <div class="read-more inner">
 
 
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../usb-keyboard-capture-parser/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/07/Screenshot-2021-07-18-at-12.24.09.png 300w,
-                   ../content/images/size/w600/2021/07/Screenshot-2021-07-18-at-12.24.09.pngg 600w,
-                  ../content/images/size/w1000/2021/07/Screenshot-2021-07-18-at-12.24.09.png 1000w,
-                 ../content/images/size/w2000/2021/07/Screenshot-2021-07-18-at-12.24.09.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/07/Screenshot-2021-07-18-at-12.24.09.png"
-            alt="USB Keyboard capture parser"
-            loading="lazy"
-        />
-    </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../usb-keyboard-capture-parser/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">USB Keyboard capture parser</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys. As shown on the Gist below, this script takes any .pcap file and optionally the path to the tshark executable,</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-07-18">Jul 18, 2021</time> <span class="bull">&bull;</span> 1 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
-</article>
                     
 <article class="post-card post ">
 
@@ -382,6 +356,50 @@
             <div class="post-card-byline-content">
                 <span><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-06-13">Jun 13, 2021</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../http3/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/06/highres_471963990-1-1.jpeg 300w,
+                   ../content/images/size/w600/2021/06/highres_471963990-1-1.jpegg 600w,
+                  ../content/images/size/w1000/2021/06/highres_471963990-1-1.jpeg 1000w,
+                 ../content/images/size/w2000/2021/06/highres_471963990-1-1.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/06/highres_471963990-1-1.jpeg"
+            alt="ØxOPOSɆC - HTTP2"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../http3/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">ØxOPOSɆC - HTTP2</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>URL: https://20.56.49.147/ | Keep calm and get the flag :)When you enter the IP directly on the browser you see only an image sourced from Github and a hidden clue: "Lost? It's evolution, baby...": The image shows the evolution of the HTTP protocol, so it makes sense</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-05-28">May 28, 2021</time> <span class="bull">&bull;</span> 2 min read</span>
             </div>
         </footer>
 
