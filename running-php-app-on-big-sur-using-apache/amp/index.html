@@ -4,35 +4,35 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-    <title>Update: Simplest way to host your Ghost blog on GitHub Pages</title>
+    <title>Running a PHP application on Big Sur using Apache</title>
 
     <link rel="canonical" href="../index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta property="og:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after being forced to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink the entire process." />
-    <meta property="og:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
-    <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" />
-    <meta property="article:published_time" content="2021-06-13T10:38:48.000Z" />
-    <meta property="article:modified_time" content="2021-07-11T14:11:40.000Z" />
-    <meta property="article:tag" content="ghost" />
-    <meta property="article:tag" content="github pages" />
-    <meta property="article:tag" content="blog" />
-    <meta property="article:tag" content="static site generator" />
+    <meta property="og:title" content="Running a PHP application on Big Sur using Apache" />
+    <meta property="og:description" content="If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful. Testing and launching the Apache serverBig Sur already comes with Apache installed. You can check the current version by running: ~ httpd -v" />
+    <meta property="og:url" content="inesmartins.github.io/running-php-app-on-big-sur-using-apache/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png" />
+    <meta property="article:published_time" content="2021-07-23T10:18:15.000Z" />
+    <meta property="article:modified_time" content="2021-07-23T10:27:12.000Z" />
+    <meta property="article:tag" content="php" />
+    <meta property="article:tag" content="apache" />
+    <meta property="article:tag" content="big sur" />
+    <meta property="article:tag" content="macOS" />
     
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Update: Simplest way to host your Ghost blog on GitHub Pages" />
-    <meta name="twitter:description" content="Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after being forced to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink the entire process." />
-    <meta name="twitter:url" content="inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/" />
-    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" />
+    <meta name="twitter:title" content="Running a PHP application on Big Sur using Apache" />
+    <meta name="twitter:description" content="If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful. Testing and launching the Apache serverBig Sur already comes with Apache installed. You can check the current version by running: ~ httpd -v" />
+    <meta name="twitter:url" content="inesmartins.github.io/running-php-app-on-big-sur-using-apache/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="ghost, github pages, blog, static site generator" />
-    <meta property="og:image:width" content="1907" />
-    <meta property="og:image:height" content="843" />
+    <meta name="twitter:data2" content="php, apache, big sur, macOS" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
     
     <script type="application/ld+json">
 {
@@ -61,18 +61,18 @@
         "url": "inesmartins.github.io/author/ines/",
         "sameAs": []
     },
-    "headline": "Update: Simplest way to host your Ghost blog on GitHub Pages",
-    "url": "inesmartins.github.io/host-your-ghost-blog-on-github-pages-and-automate-updates/",
-    "datePublished": "2021-06-13T10:38:48.000Z",
-    "dateModified": "2021-07-11T14:11:40.000Z",
+    "headline": "Running a PHP application on Big Sur using Apache",
+    "url": "inesmartins.github.io/running-php-app-on-big-sur-using-apache/",
+    "datePublished": "2021-07-23T10:18:15.000Z",
+    "dateModified": "2021-07-23T10:27:12.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png",
-        "width": 1907,
-        "height": 843
+        "url": "inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png",
+        "width": 1200,
+        "height": 675
     },
-    "keywords": "ghost, github pages, blog, static site generator",
-    "description": "Last year I created a post\n[https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/] \nabout how to get a Ghost blog up and running on Github Pages without much\neffort.\n\nThis worked well, but after being forced to update ghost-cli\n[https://www.npmjs.com/package/ghost-cli] to version 1.17.3 I ran into a few\nissues and had to rethink the entire process.\n\nLuckily, I found an even simpler way to do it.\n\nAssuming you have a local instance of Ghost running on the default port 23",
+    "keywords": "php, apache, big sur, macOS",
+    "description": "If you have a PHP application and want a quick approach for running it on a mac\nwith the latest OS version, then this tutorial might be useful.\n\n\n--------------------------------------------------------------------------------\n\nTesting and launching the Apache server\nBig Sur already comes with Apache installed. You can check the current version\nby running:\n\n~ httpd -v \nServer version: Apache/2.4.46 (Unix)\nServer built:   May  8 2021 03:38:34\n\nIn order to start the server you can run:\n\n~ sudo apa",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -662,50 +662,25 @@
         <article class="post">
 
             <header class="post-header">
-                <h1 class="post-title">Update: Simplest way to host your Ghost blog on GitHub Pages</h1>
+                <h1 class="post-title">Running a PHP application on Big Sur using Apache</h1>
                 <section class="post-meta">
                     Inês Martins -
-                    <time class="post-date" datetime="2021-06-13">13 Jun 2021</time>
+                    <time class="post-date" datetime="2021-07-23">23 Jul 2021</time>
                 </section>
             </header>
             <figure class="post-image">
-                <amp-img src="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" width="600" height="340" layout="responsive"></amp-img>
+                <amp-img src="inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png" width="600" height="340" layout="responsive"></amp-img>
             </figure>
             <section class="post-content">
 
-                <p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
-
-# Define urls and https
-from_url=inesmartins.github.io
-to_url=inesmartins.github.io
-
-# Copy blog content
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/
-
-# Copy 404 page
-wget --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links --content-on-error --timestamping ${from_url}/404.html
-
-# Copy sitemaps
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap.xsl
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-pages.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-posts.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-authors.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-tags.xml
-
-# Small fix for images' srcset property
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,srcset="../content,srcset="../content,g' {} +; 
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpg,jpg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
-
-# Replace localhost with real domain
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,http://${from_url},https://${to_url},g" {} +; 
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,${from_url},${to_url},g" {} +
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,https://www.gravatar.com,https://www.gravatar.com,g' {} +
-</code></pre><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><ul><li>Run the script</li><li>You should now have a <code>static</code> directory with the entire content of your Ghost instance as a static website</li><li>You can check that everything is OK by opening the <code>index.html</code> file under this directory</li><li>Add the entire content of the <code>static</code> directory to the Github Pages repo and you're done!</li></ul>
+                <p>If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful.</p><hr></hr><h3 id="testing-and-launching-the-apache-server">Testing and launching the Apache server</h3><p>Big Sur already comes with <code>Apache</code> installed. You can check the current version by running:</p><pre><code>~ httpd -v 
+Server version: Apache/2.4.46 (Unix)
+Server built:   May  8 2021 03:38:34</code></pre><p>In order to start the server you can run:</p><pre><code>~ sudo apachectl start</code></pre><p>Open  <code>localhost</code> in any browser and you should see:</p><figure class="kg-card kg-image-card"></figure><h3 id="configuring-apache-to-run-php-7">Configuring Apache to run PHP 7</h3><p>Big Sur also comes with PHP installed, but the local Apache configs may not support running PHP by default. </p><p>In order to activate this setting, open <code>/etc/apache2/httpd.conf</code> with <code>nano</code> or any other text editor and uncomment the following line:</p><pre><code>LoadModule php7_module libexec/apache2/libphp7.so</code></pre><p>PHP is now enabled, all you need to do is restart the Apache web server for the changes to take effect:</p><pre><code>~ sudo apachectl restart</code></pre><h3 id="setting-up-mysql">Setting up mySQL</h3><p>Ensure that you have mySQL correctly installed and running on your machine.</p><ul><li>you can download the <code>.dmg</code> from <a href="https://dev.mysql.com/downloads/mysql/">here</a>, then follow the instructions on the wizard. </li><li>once the wizard is done go to <code>System Preferences</code> &gt; <code>MySQL</code> and ensure that the server is running as shown below:</li></ul><figure class="kg-card kg-image-card"></figure><p>In order to have mySQL binaries available via command line, you can also add <code>/usr/local/mysql/bin/</code> to the <code>PATH</code>. In my case I did:</p><pre><code>~ nano ~/.zshrc
+...
+export PATH=/usr/local/mysql/bin:$PATH</code></pre><p>Finally, you need to ensure PHP and MySQL can communicate with one another, which you can achieve by running:</p><pre><code>~ cd /var
+~ sudo mkdir mysql
+~ cd mysql
+~ sudo ln -s /tmp/mysql.sock mysql.sock</code></pre><h3 id="serving-the-application">Serving the application</h3><p>Check Apache's default <code>DocumentRoot</code> on <code>/etc/apache2/httpd.conf</code>:</p><figure class="kg-card kg-image-card"></figure><p>As you can see, in my case it's <code>/Library/WebServer/Documents</code>.</p><p>This means that this is the <strong>directory where you should put your PHP application</strong>.</p><p>Once the app is inside this directory you'll be able to see it running by going to  <a href="../../app/web/index.html">http://localhost/&lt;</a>path-to-your-initial-file&gt;.</p>
 
             </section>
 

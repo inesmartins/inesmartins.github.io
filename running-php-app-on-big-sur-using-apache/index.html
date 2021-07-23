@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Running a PHP application on Big Sur using Apache</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=16a629e235.css" />
+
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Running a PHP application on Big Sur using Apache" />
+    <meta property="og:description" content="If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful. Testing and launching the Apache serverBig Sur already comes with Apache installed. You can check the current version by running: ~ httpd -v" />
+    <meta property="og:url" content="inesmartins.github.io/running-php-app-on-big-sur-using-apache/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png" />
+    <meta property="article:published_time" content="2021-07-23T10:18:15.000Z" />
+    <meta property="article:modified_time" content="2021-07-23T10:27:12.000Z" />
+    <meta property="article:tag" content="php" />
+    <meta property="article:tag" content="apache" />
+    <meta property="article:tag" content="big sur" />
+    <meta property="article:tag" content="macOS" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Running a PHP application on Big Sur using Apache" />
+    <meta name="twitter:description" content="If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful. Testing and launching the Apache serverBig Sur already comes with Apache installed. You can check the current version by running: ~ httpd -v" />
+    <meta name="twitter:url" content="inesmartins.github.io/running-php-app-on-big-sur-using-apache/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="php, apache, big sur, macOS" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2020/07/0PFUtbOg_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": []
+    },
+    "headline": "Running a PHP application on Big Sur using Apache",
+    "url": "inesmartins.github.io/running-php-app-on-big-sur-using-apache/",
+    "datePublished": "2021-07-23T10:18:15.000Z",
+    "dateModified": "2021-07-23T10:27:12.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/07/screen-shot-2020_-macos-big-sur.png",
+        "width": 1200,
+        "height": 675
+    },
+    "keywords": "php, apache, big sur, macOS",
+    "description": "If you have a PHP application and want a quick approach for running it on a mac\nwith the latest OS version, then this tutorial might be useful.\n\n\n--------------------------------------------------------------------------------\n\nTesting and launching the Apache server\nBig Sur already comes with Apache installed. You can check the current version\nby running:\n\n~ httpd -v \nServer version: Apache/2.4.46 (Unix)\nServer built:   May  8 2021 03:38:34\n\nIn order to start the server you can run:\n\n~ sudo apa",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="../rss/index.html" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-180659126-1');
+</script>
+<!-- Styles -->
+<style>
+    .gh-head-actions,
+    .footer-cta {
+        display: none;
+    }
+    .article-image img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
+
+</head>
+<body class="post-template tag-php tag-apache tag-big-sur tag-macos">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        Inês Martins
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                </div>
+
+                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post tag-php tag-apache tag-big-sur tag-macos">
+
+    <header class="article-header gh-canvas">
+
+        <section class="article-tag">
+            <a href="../tag/php/index.html">php</a>
+        </section>
+
+        <h1 class="article-title">Running a PHP application on Big Sur using Apache</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="../author/ines/index.html" class="author-avatar">
+                            <img class="author-profile-image" src="../content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2021-07-23">Jul 23, 2021</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2021/07/screen-shot-2020_-macos-big-sur.png 300w,
+                       ../content/images/size/w600/2021/07/screen-shot-2020_-macos-big-sur.pngg 600w,
+                      ../content/images/size/w1000/2021/07/screen-shot-2020_-macos-big-sur.png 1000w,
+                     ../content/images/size/w2000/2021/07/screen-shot-2020_-macos-big-sur.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2021/07/screen-shot-2020_-macos-big-sur.png"
+                alt="Running a PHP application on Big Sur using Apache"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p>If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful.</p><hr><h3 id="testing-and-launching-the-apache-server">Testing and launching the Apache server</h3><p>Big Sur already comes with <code>Apache</code> installed. You can check the current version by running:</p><pre><code>~ httpd -v 
+Server version: Apache/2.4.46 (Unix)
+Server built:   May  8 2021 03:38:34</code></pre><p>In order to start the server you can run:</p><pre><code>~ sudo apachectl start</code></pre><p>Open  <code>localhost</code> in any browser and you should see:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/07/Screenshot-2021-07-22-at-10.38.05.png" class="kg-image" alt loading="lazy" width="413" height="105"></figure><h3 id="configuring-apache-to-run-php-7">Configuring Apache to run PHP 7</h3><p>Big Sur also comes with PHP installed, but the local Apache configs may not support running PHP by default. </p><p>In order to activate this setting, open <code>/etc/apache2/httpd.conf</code> with <code>nano</code> or any other text editor and uncomment the following line:</p><pre><code>LoadModule php7_module libexec/apache2/libphp7.so</code></pre><p>PHP is now enabled, all you need to do is restart the Apache web server for the changes to take effect:</p><pre><code>~ sudo apachectl restart</code></pre><h3 id="setting-up-mysql">Setting up mySQL</h3><p>Ensure that you have mySQL correctly installed and running on your machine.</p><ul><li>you can download the <code>.dmg</code> from <a href="https://dev.mysql.com/downloads/mysql/">here</a>, then follow the instructions on the wizard. </li><li>once the wizard is done go to <code>System Preferences</code> &gt; <code>MySQL</code> and ensure that the server is running as shown below:</li></ul><figure class="kg-card kg-image-card"><img src="../content/images/2021/07/Screenshot-2021-07-22-at-11.43.55.png" class="kg-image" alt loading="lazy" width="671" height="564" srcset="../content/images/size/w600/2021/07/Screenshot-2021-07-22-at-11.43.55.png 600w, ../content/images/2021/07/Screenshot-2021-07-22-at-11.43.55.png 671w"></figure><p>In order to have mySQL binaries available via command line, you can also add <code>/usr/local/mysql/bin/</code> to the <code>PATH</code>. In my case I did:</p><pre><code>~ nano ~/.zshrc
+...
+export PATH=/usr/local/mysql/bin:$PATH</code></pre><p>Finally, you need to ensure PHP and MySQL can communicate with one another, which you can achieve by running:</p><pre><code>~ cd /var
+~ sudo mkdir mysql
+~ cd mysql
+~ sudo ln -s /tmp/mysql.sock mysql.sock</code></pre><h3 id="serving-the-application">Serving the application</h3><p>Check Apache's default <code>DocumentRoot</code> on <code>/etc/apache2/httpd.conf</code>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/07/image-1.png" class="kg-image" alt loading="lazy" width="592" height="135"></figure><p>As you can see, in my case it's <code>/Library/WebServer/Documents</code>.</p><p>This means that this is the <strong>directory where you should put your PHP application</strong>.</p><p>Once the app is inside this directory you'll be able to see it running by going to  <a href="../app/web/index.html">http://localhost/&lt;</a>path-to-your-initial-file&gt;.</p>
+    </section>
+
+
+</article>
+
+<section class="footer-cta">
+    <div class="inner">
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="index.html#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../usb-keyboard-capture-parser/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/07/Screenshot-2021-07-18-at-12.24.09.png 300w,
+                   ../content/images/size/w600/2021/07/Screenshot-2021-07-18-at-12.24.09.pngg 600w,
+                  ../content/images/size/w1000/2021/07/Screenshot-2021-07-18-at-12.24.09.png 1000w,
+                 ../content/images/size/w2000/2021/07/Screenshot-2021-07-18-at-12.24.09.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/07/Screenshot-2021-07-18-at-12.24.09.png"
+            alt="USB Keyboard capture parser"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../usb-keyboard-capture-parser/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">USB Keyboard capture parser</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys. As shown on the Gist below, this script takes any .pcap file and optionally the path to the tshark executable,</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-07-18">Jul 18, 2021</time> <span class="bull">&bull;</span> 1 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../setting-up-bloodhound-on-macos/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/07/bloodhound-logo.png 300w,
+                   ../content/images/size/w600/2021/07/bloodhound-logo.pngg 600w,
+                  ../content/images/size/w1000/2021/07/bloodhound-logo.png 1000w,
+                 ../content/images/size/w2000/2021/07/bloodhound-logo.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/07/bloodhound-logo.png"
+            alt="Setting up Bloodhound on macOS"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../setting-up-bloodhound-on-macos/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Setting up Bloodhound on macOS</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8 handles multiprocessing in macOS you need to downgrade to Python 3.7.3 to</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-07-11">Jul 11, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../simplest-way-to-host-your-ghost-blog-on-github-pages/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/07/Screenshot-2021-07-11-at-15.02.38.png 300w,
+                   ../content/images/size/w600/2021/07/Screenshot-2021-07-11-at-15.02.38.pngg 600w,
+                  ../content/images/size/w1000/2021/07/Screenshot-2021-07-11-at-15.02.38.png 1000w,
+                 ../content/images/size/w2000/2021/07/Screenshot-2021-07-11-at-15.02.38.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/07/Screenshot-2021-07-11-at-15.02.38.png"
+            alt="Update: Simplest way to host your Ghost blog on GitHub Pages"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../simplest-way-to-host-your-ghost-blog-on-github-pages/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Update: Simplest way to host your Ghost blog on GitHub Pages</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after being forced to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink the entire process.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/07/0PFUtbOg_400x400.jpg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-06-13">Jun 13, 2021</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html">Inês Martins</a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=16a629e235"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
