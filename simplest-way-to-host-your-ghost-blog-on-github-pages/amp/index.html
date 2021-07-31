@@ -16,7 +16,7 @@
     <meta property="og:url" content="inesmartins.github.io/simplest-way-to-host-your-ghost-blog-on-github-pages/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" />
     <meta property="article:published_time" content="2021-06-13T10:38:48.000Z" />
-    <meta property="article:modified_time" content="2021-07-23T10:21:49.000Z" />
+    <meta property="article:modified_time" content="2021-07-31T15:13:05.000Z" />
     <meta property="article:tag" content="ghost" />
     <meta property="article:tag" content="github pages" />
     <meta property="article:tag" content="blog" />
@@ -66,7 +66,7 @@
     "headline": "Update: Simplest way to host your Ghost blog on GitHub Pages",
     "url": "inesmartins.github.io/simplest-way-to-host-your-ghost-blog-on-github-pages/",
     "datePublished": "2021-06-13T10:38:48.000Z",
-    "dateModified": "2021-07-23T10:21:49.000Z",
+    "dateModified": "2021-07-31T15:13:05.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png",
@@ -707,7 +707,40 @@ LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,
 LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,http://${from_url},https://${to_url},g" {} +; 
 LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,${from_url},${to_url},g" {} +
 LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,https://www.gravatar.com,https://www.gravatar.com,g' {} +
-</code></pre><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><ul><li>Run the script</li><li>You should now have a <code>static</code> directory with the entire content of your Ghost instance as a static website</li><li>You can check that everything is OK by opening the <code>index.html</code> file under this directory</li><li>Add the entire content of the <code>static</code> directory to the Github Pages repo and you're done!</li></ul>
+</code></pre><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><p>This script generate a <code>static</code> directory with the entire content of your Ghost instance as a static website. Just copy this content to the Github Pages repository, and your website will be instantly updated.</p><p>In order to make this process even easier, I created an NPM script, which makes this as easy as running: <code>npm run publish</code> on your original repository:</p><pre><code>{
+  "name": "ines-martins-blog",
+  "version": "1.0.0",
+  "description": "Inês Martins",
+  "homepage": "https://github.com/inesmartins/ghost-blog-src#readme",
+  "author": "Inês Martins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inesmartins/ghost-blog-src/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inesmartins/ghost-blog-src.git"
+  },
+  "keywords": [
+    "blog",
+    "ghost",
+    "dev",
+    "security"
+  ],
+  "src_dir": "/Users/inesmartins/Desktop/ghost",
+  "dest_dir": "/Users/inesmartins/Desktop/ghost_publish",
+  "scripts": {
+    "reset": "rm -f -R $npm_package_dest_dir/* and rm -rf $npm_package_src_dir/static/",
+    "paste-static-files": "cp -R $npm_package_src_dir/static/* $npm_package_dest_dir",
+    "preview": "open $npm_package_dest_dir/index.html",
+    "push-to-origin-src": "cd $npm_package_src_dir &amp;&amp; git add . &amp;&amp; git commit -m 'automatic commit' &amp;&amp; git push",
+    "push-to-origin-dest": "cd $npm_package_dest_dir &amp;&amp; git add . &amp;&amp; git commit -m 'automatic commit' &amp;&amp; git push",
+    "generate-static-files": "./gssg.sh",
+    "prepublish": "npm run reset",
+    "publish": "npm run generate-static-files &amp;&amp; npm run paste-static-files &amp;&amp; npm run preview",
+    "postpublish": "npm run push-to-origin-src &amp;&amp; npm run push-to-origin-dest"
+  }
+}</code></pre>
 
             </section>
 
