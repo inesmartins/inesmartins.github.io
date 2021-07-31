@@ -21,7 +21,7 @@
     <meta property="og:url" content="inesmartins.github.io/simplest-way-to-host-your-ghost-blog-on-github-pages/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" />
     <meta property="article:published_time" content="2021-06-13T10:38:48.000Z" />
-    <meta property="article:modified_time" content="2021-07-31T15:23:06.000Z" />
+    <meta property="article:modified_time" content="2021-07-31T15:25:58.000Z" />
     <meta property="article:tag" content="ghost" />
     <meta property="article:tag" content="github pages" />
     <meta property="article:tag" content="blog" />
@@ -71,7 +71,7 @@
     "headline": "Update: Simplest way to host your Ghost blog on GitHub Pages",
     "url": "inesmartins.github.io/simplest-way-to-host-your-ghost-blog-on-github-pages/",
     "datePublished": "2021-06-13T10:38:48.000Z",
-    "dateModified": "2021-07-31T15:23:06.000Z",
+    "dateModified": "2021-07-31T15:25:58.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png",
@@ -234,7 +234,7 @@
                     <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
                     <div class="byline-meta-content">
                         <time class="byline-meta-date" datetime="2021-06-13">Jun 13, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 1 min read</span>
                     </div>
                 </div>
             </section>
@@ -254,39 +254,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><pre><code>#!/bin/bash
-
-# Define urls and https
-from_url=inesmartins.github.io
-to_url=inesmartins.github.io
-
-# Copy blog content
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/
-
-# Copy 404 page
-wget --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links --content-on-error --timestamping ${from_url}/404.html
-
-# Copy sitemaps
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap.xsl
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-pages.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-posts.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-authors.xml
-wget --recursive --no-host-directories --directory-prefix=static --adjust-extension --timeout=30 --no-parent --convert-links ${from_url}/sitemap-tags.xml
-
-# Small fix for images' srcset property
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,srcset="../content,srcset="../content,g' {} +; 
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpeg,jpeg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,jpg,jpg,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,png,png,g' {} +;
-
-# Replace localhost with real domain
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,http://${from_url},https://${to_url},g" {} +; 
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e "s,${from_url},${to_url},g" {} +
-LC_ALL=C find ./static -type f -not -wholename *.git* -exec sed -i '' -e 's,https://www.gravatar.com,https://www.gravatar.com,g' {} +
-</code></pre><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><p>This script generate a <code>static</code> directory with the entire content of your Ghost instance as a static website. Just copy this content to the Github Pages repository, and your website will be instantly updated.</p><p>In order to make this process even easier, I created an NPM script, which makes this as easy as running: <code>npm run publish</code> on your original repository:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/7fbd5dc9ed1cc418d27386559581cd43.js"></script><!--kg-card-end: html-->
+        <p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/6f90f6a2812c7727d25ae3f9a3771b35.js"></script><!--kg-card-end: html--><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><p>This script generate a <code>static</code> directory with the entire content of your Ghost instance as a static website. Just copy this content to the Github Pages repository, and your website will be instantly updated.</p><p>In order to make this process even easier, I created an NPM script, which makes this as easy as running: <code>npm run publish</code> on your original repository:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/7fbd5dc9ed1cc418d27386559581cd43.js"></script><!--kg-card-end: html-->
     </section>
 
 
