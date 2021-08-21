@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation</title>
+    <title>MobSF &quot;IPA Binary Analysis&quot; | Step by Step</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
@@ -16,21 +16,30 @@
     
     <meta property="og:site_name" content="Inês Martins" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation" />
+    <meta property="og:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" />
     <meta property="og:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa the &quot;IPA Binary Analysis&quot; can report multiple issues that can be hard to interpret.  Hopefully this article will help" />
-    <meta property="og:url" content="inesmartins.github.io/fixing-mobsf-ipa-binary-analysis/" />
-    <meta property="og:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta property="og:url" content="inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/note_8.png" />
     <meta property="article:published_time" content="2021-08-21T21:57:25.000Z" />
-    <meta property="article:modified_time" content="2021-08-21T21:57:25.000Z" />
+    <meta property="article:modified_time" content="2021-08-21T21:59:07.000Z" />
+    <meta property="article:tag" content="ipa" />
+    <meta property="article:tag" content="mobsf" />
+    <meta property="article:tag" content="binary analysis" />
+    <meta property="article:tag" content="rev" />
+    <meta property="article:tag" content="apple" />
+    <meta property="article:tag" content="binary exploitation" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation" />
+    <meta name="twitter:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" />
     <meta name="twitter:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa the &quot;IPA Binary Analysis&quot; can report multiple issues that can be hard to interpret.  Hopefully this article will help" />
-    <meta name="twitter:url" content="inesmartins.github.io/fixing-mobsf-ipa-binary-analysis/" />
-    <meta name="twitter:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta name="twitter:url" content="inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/08/note_8.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
-    <meta property="og:image:width" content="2709" />
-    <meta property="og:image:height" content="938" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="ipa, mobsf, binary analysis, rev, apple, binary exploitation" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="352" />
     
     <script type="application/ld+json">
 {
@@ -61,10 +70,17 @@
             "https://gist.github.com/inesmartins/"
         ]
     },
-    "headline": "MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation",
-    "url": "inesmartins.github.io/fixing-mobsf-ipa-binary-analysis/",
+    "headline": "MobSF &quot;IPA Binary Analysis&quot; | Step by Step",
+    "url": "inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/",
     "datePublished": "2021-08-21T21:57:25.000Z",
-    "dateModified": "2021-08-21T21:57:25.000Z",
+    "dateModified": "2021-08-21T21:59:07.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/08/note_8.png",
+        "width": 600,
+        "height": 352
+    },
+    "keywords": "ipa, mobsf, binary analysis, rev, apple, binary exploitation",
     "description": "MobSF [https://github.com/MobSF/Mobile-Security-Framework-MobSF] is an open\nsource static and dynamic analysis tool for Android and iOS, which can be used\nto quickly detect major issues on your mobile application.\n\nWhen scanning an .ipa the &quot;IPA Binary Analysis&quot; can report multiple issues that\ncan be hard to interpret. \n\nHopefully this article will help you understand why each vulnerability was\nreported and how to fix it.\n\n\n------------------------------------------------------------------------",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -160,7 +176,7 @@
 </style><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
-<body class="post-template">
+<body class="post-template tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation">
 <div class="viewport">
 
     <header id="gh-head" class="gh-head has-cover">
@@ -196,12 +212,15 @@
 
 
 
-<article class="article post no-image">
+<article class="article post tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation">
 
     <header class="article-header gh-canvas">
 
+        <section class="article-tag">
+            <a href="../tag/ipa/index.html">ipa</a>
+        </section>
 
-        <h1 class="article-title">MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation</h1>
+        <h1 class="article-title">MobSF &quot;IPA Binary Analysis&quot; | Step by Step</h1>
 
 
         <div class="article-byline">
@@ -223,6 +242,17 @@
             </section>
         </div>
 
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2021/08/note_8.png 300w,
+                       ../content/images/size/w600/2021/08/note_8.png 600w,
+                      ../content/images/size/w1000/2021/08/note_8.png 1000w,
+                     ../content/images/size/w2000/2021/08/note_8.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2021/08/note_8.png"
+                alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step"
+            />
+        </figure>
     </header>
 
     <section class="gh-content gh-canvas">
