@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation</title>
+
+    <link rel="canonical" href="../index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Inês Martins" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation" />
+    <meta property="og:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa the &quot;IPA Binary Analysis&quot; can report multiple issues that can be hard to interpret.  Hopefully this article will help" />
+    <meta property="og:url" content="inesmartins.github.io/fixing-mobsf-ipa-binary-analysis/" />
+    <meta property="og:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta property="article:published_time" content="2021-08-21T21:57:25.000Z" />
+    <meta property="article:modified_time" content="2021-08-21T21:57:25.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation" />
+    <meta name="twitter:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa the &quot;IPA Binary Analysis&quot; can report multiple issues that can be hard to interpret.  Hopefully this article will help" />
+    <meta name="twitter:url" content="inesmartins.github.io/fixing-mobsf-ipa-binary-analysis/" />
+    <meta name="twitter:image" content="https://static.ghost.org/v3.0.0/images/publication-cover.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta property="og:image:width" content="2709" />
+    <meta property="og:image:height" content="938" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Inês Martins",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2021/07/750px-Black_flag.svg.png",
+            "width": 750,
+            "height": 450
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": [
+            "https://gist.github.com/inesmartins/"
+        ]
+    },
+    "headline": "MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation",
+    "url": "inesmartins.github.io/fixing-mobsf-ipa-binary-analysis/",
+    "datePublished": "2021-08-21T21:57:25.000Z",
+    "dateModified": "2021-08-21T21:57:25.000Z",
+    "description": "MobSF [https://github.com/MobSF/Mobile-Security-Framework-MobSF] is an open\nsource static and dynamic analysis tool for Android and iOS, which can be used\nto quickly detect major issues on your mobile application.\n\nWhen scanning an .ipa the &quot;IPA Binary Analysis&quot; can report multiple issues that\ncan be hard to interpret. \n\nHopefully this article will help you understand why each vulnerability was\nreported and how to fix it.\n\n\n------------------------------------------------------------------------",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="Inês Martins" href="../../rss/index.html" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #000000;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="../../index.html">
+                Inês Martins
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">MobSF &quot;IPA Binary Analysis&quot; | Step by Step Explanation</h1>
+                <section class="post-meta">
+                    Inês Martins -
+                    <time class="post-date" datetime="2021-08-21">21 Aug 2021</time>
+                </section>
+            </header>
+            <section class="post-content">
+
+                <p><a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">MobSF</a> is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.</p><p>When scanning an <code>.ipa</code> the "IPA Binary Analysis" can report multiple issues that can be hard to interpret. </p><p>Hopefully this article will help you understand why each vulnerability was reported and how to fix it.</p><hr></hr><h2 id="getting-to-the-good-stuff">Getting to the good stuff</h2><p><code>.ipa</code> files are actually just packages that include the application executable and a bunch of other files. </p><p>When we talk about binary analysis, we're actually just talking about analysing this executable file, so the first thing we need to do is to find it:</p><pre><code>~ unzip MyApp.ipa
+~ cd Payload/
+~ cd MyApp.app/
+~ file MyApp
+MyApp: Mach-O 64-bit executable arm64</code></pre><p>Note that if you don't have access to the <code>.ipa</code> you can extract it from the App Store using <a href="https://github.com/majd/ipatool">ipatool</a>:</p><pre><code>~ brew tap majd/repo
+~ brew install ipatool
+~ ipatool download --bundle-identifier &lt;app-bundle-id&gt; --email &lt;appstore-account-email&gt; --password &lt;appstore-account-password&gt;
+</code></pre><hr></hr><h2 id="arc">ARC</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>If you're used to working with Swift, then you most likely know <code>ARC</code> simply as <a href="https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html">one of the core features</a> of the language. </p><p>However, <code>ARC</code> is actually a feature of the Clang compiler, and unlike with Swift, you <em>can </em>(but <a href="https://stackoverflow.com/questions/8760431/to-arc-or-not-to-arc-what-are-the-pros-and-cons/8760820#8760820">shouldn't</a>) use Objective-C without using Automatic Reference Counting.</p><p>So, if your application is using Objective-C, you should first make sure that the project is configured to use <code>ARC</code> by checking the <code>Objective-C Automatic Reference Counting</code> under the "Build Settings" tab:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><figcaption>https://advancetechtutorial.blogspot.com/2016/07/xcode-arc-automatic-reference-counting.html</figcaption></figure><p>If this property is set to <code>No</code>, you should convert it, as shown below:</p><figure class="kg-card kg-image-card kg-card-hascaption"><figcaption>https://stackoverflow.com/questions/8969644/tool-for-transitioning-to-arc/8969662</figcaption></figure><p>You can also check for the <code>-fno-objc-arc</code> flag, which can be used to exclude specific files from using ARC:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><figcaption>https://thomashanning.com/how-to-disable-arc-for-objective-c-files/</figcaption></figure><p>Since there are limitations that come with using <code>ARC</code> the adequacy of these exceptions should be evaluated on a case by case basis.</p><h2 id="code-signature">Code Signature</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>From the <a href="https://developer.apple.com/support/code-signing/">Apple docs on Code Signing</a> we can read:</p><blockquote>Before your app can integrate app services, be installed on a device, or be submitted to the App Store, it must be signed with a <a href="https://developer.apple.com/support/certificates/">certificate</a> issued by Apple.</blockquote><p>Also, from the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">iOS Security Guide</a>:</p><blockquote>In order to develop and install apps on iOS devices, developers must register with Apple and join the iOS Developer Program. The real-world identity of each developer, whether an individual or a business, is verified by Apple before their certificate is issued. This certificate enables developers to sign apps and submit them to the App Store for distribution. <br />[...]<br />At runtime, code signature checks of all executable memory pages are made as they are loaded to ensure that an app has not been modified since it was installed or last updated.</blockquote><p>So, code signing is simply the process of signing an application with an appropriate certificate that ensures the author's identity and the app content's integrity.</p><p>Since this process is required by Apple for most operations, including to generate <code>.ipa</code> files, then if this section is flagged as "False" by MobSF, it's likely that the file you're analysing was generated via some non-traditional method, which seems worth investigating.</p><h2 id="encrypted">Encrypted</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Similarly to the previous section, encryption shouldn't be a concern for most iOS developers, since the App Store takes care of it during the distribution process.</p><p>When it comes to the MobSF analysis you should keep in mind the origin of the <code>.ipa</code> you're testing:</p><ul><li>if you simply download it from the <code>App Store</code> (using <code>ipatool</code> for example), then the binary should be encrypted;</li><li>if you get the <code>.ipa</code> in any other way, then most likely it's not encrypted.</li></ul><p>To confirm the binary's encryption you can use <a href="https://www.manpagez.com/man/1/otool/">otool</a> with the <code>-l</code> flag and check if the <code>cryptid</code> value is <code>1</code>: </p><figure class="kg-card kg-image-card"></figure><p>Note that the <code>cryptsize</code> matches the size of the encrypted segment.</p><h2 id="nx">NX</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Although the <code>NX bit</code> is specific to the <code>AMD</code> architecture, people tend to use <code>NX</code> as a  generic way of referring to the feature that enables you to <strong>specify non-executable memory pages</strong>. </p><p>So, in this case, the <code>NX</code> section actually refers to the <code>XN</code> or "eXecute never" feature, since we're dealing with an <code>ARM</code> binary.</p><p>In the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">iOS Security Guide</a>, under "Runtime process security" we can read:</p><blockquote>Further protection is provided by iOS using ARM’s Execute Never (XN) feature, which marks memory pages as non-executable. Memory pages marked as both writable and executable can be used only by apps under tightly controlled conditions: The kernel checks for the presence of the Apple-only dynamic code-signing entitlement. Even then, only a single mmap call can be made to request an executable and writable page, which is given a randomized address. </blockquote><p>So, this section should never be flagged by MobSF, as long as Apple continues to use <code>XN</code> by default.</p><h2 id="pie">PIE</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Each time you run a "Position Independent Executable" (<code>PIE</code>), the binary and all of its dependencies are loaded into random locations within virtual memory, which make ROP attacks much more difficult to execute reliably, as explained above.</p><p>We can "manually" check for the presence of the <code>PIE</code> flag in our executable with <code>otool</code>: </p><figure class="kg-card kg-image-card kg-width-wide"></figure><pre><code>~ otool --help
+...
+-h print the mach header
+-v print verbosely (symbolically) when possible</code></pre><h2 id="stack-canary">Stack Canary</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>You can see a good description of what a stack canary does in the image above.</p><p>As a rule, you should ensure that the <code>-fstack-protector-all</code> is set under "Other C Flags", on your project's Build Settings:</p><figure class="kg-card kg-image-card"></figure><h2 id="rpath">Rpath</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>The "Runpath Search Path" instructs the dynamic linker to search for a dynamic library (dylib) on an ordered list of paths ... sort of like how Unix looks for binaries on <code>$PATH</code>.</p><p>This is an issue because it makes it possible for an attacker to place a malicious dylib in one of the first paths that doesn't contain the library that the linker is trying to locate, therefore hijacking it.</p><p>A simple way to check whether or not your application's libraries were compiled using <code>rpath</code> is to run <code>otool</code> with the <code>-L</code> flag, which lists all Mach-O Shared Libraries:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Note that some of the libraries are prefixed with <code>@rpath</code>, while others are prefixed by the absolute path.</p><p>Also, if you already have access to the full MobSF Static Analysis report, you can simply scroll down to the "Libraries" section and check which are prefixed by <code>@rpath</code>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>In order to compile the libraries without <code>rpath</code> you need to use some hidden build flags. On your local command line run:</p><figure class="kg-card kg-image-card"></figure><p>Note the swift compiler option <code>no-stdlib-rpath</code> which disables <code>rpath</code> entries during compilation.</p><p>Configure your build settings so that the application is built with this configuration flag, e.g.: <code>swift build -c release -Xswiftc -no-toolchain-stdlib-rpath</code>.</p><h2 id="symbols-stripped">Symbols Stripped</h2><figure class="kg-card kg-image-card kg-width-wide"></figure><p>A simple way to check whether or not your application was compiled with debug symbols is to run <a href="https://www.manpagez.com/man/1/otool/">otool</a> with the <code>-Iv</code> flags.</p><p>Note that the <code>-I</code> flag prints the indirect symbol table while the <code>-v</code> flag prints verbosely (symbolically) when possible.</p><p>Alternatively, if you have <a href="https://h3adsh0tzz.com/projects/htool/">htool</a> installed you can run:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Note that <code>htool</code>'s <code>--symbols</code> flag lists all Mach-O Symbols.</p><p>Observe the symbols outputted by the tool.</p><hr></hr>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+        <h3>Inês Martins</h3>
+        <p><a href="../../index.html">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>
