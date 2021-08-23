@@ -20,7 +20,7 @@
     <meta property="og:url" content="inesmartins.github.io/decrypting-the-ghost-in-the-wires-ciphers/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png" />
     <meta property="article:published_time" content="2020-06-07T18:37:22.000Z" />
-    <meta property="article:modified_time" content="2021-06-24T11:16:55.000Z" />
+    <meta property="article:modified_time" content="2021-08-23T22:39:16.000Z" />
     <meta property="article:tag" content="cryptography" />
     <meta property="article:tag" content="ghost in the wires" />
     <meta property="article:tag" content="book" />
@@ -69,7 +69,7 @@
     "headline": "Solving the &#x27;Ghost in the Wires&#x27; ciphers",
     "url": "inesmartins.github.io/decrypting-the-ghost-in-the-wires-ciphers/",
     "datePublished": "2020-06-07T18:37:22.000Z",
-    "dateModified": "2021-06-24T11:16:55.000Z",
+    "dateModified": "2021-08-23T22:39:16.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2020/06/buy-ghost.png-width-600-name-buy-ghost.png",
@@ -77,7 +77,7 @@
         "height": 803
     },
     "keywords": "cryptography, ghost in the wires, book",
-    "description": "Before I was even done reading Ghost in the Wires\n[https://www.goodreads.com/book/show/10256723-ghost-in-the-wires], I had to\nstart solving the little ciphers that introduce each chapter.\n\nI know there are probably hundreds of solutions online, but I really wanted to\nsee if I could solve them on my own and learn a few new ciphers along the way.\n\nDuring the next few weeks I hope I can find more and more solutions.\n\n\n--------------------------------------------------------------------------------\n",
+    "description": "Before I was even done reading Ghost in the Wires\n[https://www.goodreads.com/book/show/10256723-ghost-in-the-wires], I had to\nstart solving the little ciphers that introduce each chapter.\n\nI know there are probably hundreds of solutions online, but I really wanted to\nsee if I could solve them on my own and learn a few new ciphers along the way.\n\nAs you&#x27;ll see, this article is a work in progress, and it mostly serves to\nregister my approach to solving each challenge, if you&#x27;re interested in all t",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -240,7 +240,7 @@
                     <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
                     <div class="byline-meta-content">
                         <time class="byline-meta-date" datetime="2020-06-07">Jun 7, 2020</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 8 min read</span>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 9 min read</span>
                     </div>
                 </div>
             </section>
@@ -260,7 +260,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>During the next few weeks I hope I can find more and more solutions.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence: it starts with an uppercase letter, all the characters are letters, there are longer words separated by shorter words, etc.</p><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
+        <p>Before I was even done reading <a href="https://www.goodreads.com/book/show/10256723-ghost-in-the-wires">Ghost in the Wires</a>, I had to start solving the little ciphers that introduce each chapter.</p><p>I know there are probably hundreds of solutions online, but I really wanted to see if I could solve them on my own and learn a few new ciphers along the way.</p><p>As you'll see, this article is a work in progress, and it mostly serves to register my approach to solving each challenge, if you're interested in all the solutions, you can check <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's blog</a>.</p><hr><h3 id="chapter-1-rough-start">Chapter 1 | Rough Start</h3><blockquote>Max vhlm hy max unl wkboxk B nlxw mh ingva fr hpg mktglyxkl</blockquote><p>Just by looking at the text we get the feeling that it's a valid sentence: it starts with an uppercase letter, all the characters are letters, there are longer words separated by shorter words, etc.</p><p>So, it was only natural that the cipher was a simple ROT13, which I quickly checked using <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=7
 Question: The cost of the bus driver I used to punch my own transfers.
 Solution: $15
 </code></pre>
@@ -272,13 +272,11 @@ Solution: The Paper Trip by Barry Reid.
 Question: These older type of devices were used to call forward business lines to answering services.
 Solution:
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error <a href="https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg">using CiberChef</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/atbash.png" class="kg-image" alt loading="lazy"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Atbash
+<!--kg-card-end: markdown--><hr><h3 id="chapter-4-escape-artist">Chapter 4 | Escape Artist</h3><blockquote>gsvmznvlugsvnzrmuiznvhrszxpvwzgfhxrmgsvzikzmvgwzbh</blockquote><p>This one was pure trial and error <a href="https://gchq.github.io/CyberChef/#recipe=Atbash_Cipher()&amp;input=Z3N2bXpudmx1Z3N2bnpybXVpem52aHJzenhwdnd6Z2ZoeHJtZ3N2emlrem12Z3d6Ymg">using CyberChef</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/atbash.png" class="kg-image" alt loading="lazy"></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Atbash
 Question: The name of the mainframes I hacked at USC in the ARPANET days.
 Solution: COSMOS
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-5-all-your-phone-lines-belong-to-me">Chapter 5 | All Your Phone Lines Belong To Me</h3><blockquote>jbi ujt veo eco ntk iwa lhc eeo anu uir trs hae oni rfn irt toh imi ets shs !eu</blockquote><p>After much overthinking, this one was as easy as "stacking" the words and reading the letters from top to bottom, starting from the last column.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Reading letters of each word top to bottom, from the last column.
-</code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-5-all-your-phone-lines-belong-to-me">Chapter 5 | All Your Phone Lines Belong To Me</h3><blockquote>jbi ujt veo eco ntk iwa lhc eeo anu uir trs hae oni rfn irt toh imi ets shs !eu</blockquote><p>After much overthinking, this one was as easy as "stacking" the words and reading the letters from top to bottom, starting from the last column:</p><!--kg-card-begin: markdown--><table>
 <thead>
 <tr>
 <th></th>
@@ -389,20 +387,19 @@ Solution: COSMOS
 </tr>
 </tbody>
 </table>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: I took a course on this subject when I ran from the juvenile authorities!
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Cipher: Reading letters of each word top to bottom, from the last column.
+Question: I took a course on this subject when I ran from the juvenile authorities!
 Solution: Criminal Justice
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-6-will-hack-for-love">Chapter 6 | Will Hack for Love</h3><blockquote>bmFtZXRoZWNvbXBhbnl3aGVyZWJvbm5pZXdhc2VtcGxveWVkd2hlbndlc3RhcnRlZGRhdGluZw==</blockquote><p>The equal signs at the end is a dead give-away for Base64.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Base64
+<!--kg-card-end: markdown--><hr><h3 id="chapter-6-will-hack-for-love">Chapter 6 | Will Hack for Love</h3><blockquote>bmFtZXRoZWNvbXBhbnl3aGVyZWJvbm5pZXdhc2VtcGxveWVkd2hlbndlc3RhcnRlZGRhdGluZw==</blockquote><p>The equal signs at the end is a dead giveaway for Base64.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Base64
 Question: Name the company where Bonnie was employed when we started dating.
 Solution: GTE
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-7-hitched-in-haste">Chapter 7 | Hitched in Haste</h3><blockquote>multbqncannqenabrhfgacnqogehchetbkkebmsqgkncchebr</blockquote><p>This was one of the hardest, since I wasn't expecting that you'd need to use the answer from the previous cipher. </p><p>I ended up not being able to crack this one myself, and had to check <a href="https://fabiensanglard.net/Ghost_in_the_Wires_Paperback/">Fabien Sanglard's solution</a> and then tested for myself using an <a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">online Subtitution Cipher decrypter</a>.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/06/cipher.png" class="kg-image" alt loading="lazy"><figcaption><a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">http://practicalcryptography.com/ciphers/simple-substitution-cipher/</a></figcaption></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Substitution cipher when alphabet starts with GTE, the solution for the previous question.
+<!--kg-card-end: markdown--><hr><h3 id="chapter-7-hitched-in-haste">Chapter 7 | Hitched in Haste</h3><blockquote>multbqncannqenabrhfgacnqogehchetbkkebmsqgkncchebr</blockquote><p>This was one of the hardest, since I wasn't expecting that you'd need to use the answer from the previous cipher. </p><p>I ended up not being able to crack this one myself, and had to check <a href="https://fabiensanglard.net/Ghost_in_the_Wires_Paperback/">Fabien Sanglard's solution</a> and then tested it for myself using an <a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">online Subtitution Cipher decrypter</a>.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/06/cipher.png" class="kg-image" alt loading="lazy"><figcaption><a href="http://practicalcryptography.com/ciphers/simple-substitution-cipher/">http://practicalcryptography.com/ciphers/simple-substitution-cipher/</a></figcaption></figure><!--kg-card-begin: markdown--><pre><code>Cipher: Substitution cipher when alphabet starts with 'GTE', the solution for the previous question.
 Question: Number of door codes I had for Pacific Bell central offices.
 Solution: 11
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-8-lex-luthor">Chapter 8 | Lex Luthor</h3><blockquote>'siass nuhmil sowsra amnapi waagoc ifinti dscisf iiiesf ahgbao staetn itmlro</blockquote><p>Pretty similar to chapter 5, found the solution by "stacking" the words and reading each character from the bottom-left to the top-right.</p><!--kg-card-begin: markdown--><pre><code>Cipher: Stacking words | Read from bottom-left to top-right
-</code></pre>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
+<!--kg-card-end: markdown--><hr><h3 id="chapter-8-lex-luthor">Chapter 8 | Lex Luthor</h3><blockquote>'siass nuhmil sowsra amnapi waagoc ifinti dscisf iiiesf ahgbao staetn itmlro</blockquote><p>Pretty similar to chapter 5, found the solution by "stacking" the words and reading each character from the bottom-left to the top-right:</p><!--kg-card-begin: markdown--><table>
 <thead>
 <tr>
 <th></th>
@@ -504,10 +501,11 @@ Solution: 11
 </tr>
 </tbody>
 </table>
-<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Question: I said I wasn't this famous magician while beging a smartass to prision officials.
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>Cipher: Stacking words | Read from bottom-left to top-right
+Question: I said I wasn't this famous magician while beging a smartass to prision officials.
 Solution: Harry Houdini
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-9-the-kevin-mitnick-discount-plan">Chapter  9 | The Kevin Mitnick Discount Plan</h3><blockquote>tvifafwawehes hsesoonvtlimaeloemtcagmen irnoerrldony</blockquote><p>Again, I wasn't able to crack this one by myself and had to check <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solution</a>:</p><!--kg-card-begin: markdown--><pre><code>Cipher: Railfence Cipher
+<!--kg-card-end: markdown--><hr><h3 id="chapter-9-the-kevin-mitnick-discount-plan">Chapter  9 | The Kevin Mitnick Discount Plan</h3><blockquote>tvifafwawehes hsesoonvtlimaeloemtcagmen irnoerrldony</blockquote><p>Again, wasn't able to crack this one by myself and had to check <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solution</a>, but this turned out to be a simple <a href="https://en.wikipedia.org/wiki/Rail_fence_cipher">Rail fence Cipher</a> ... should've guessed it :/</p><!--kg-card-begin: markdown--><pre><code>Cipher: Rail fence Cipher
 
 t...v...i...f...a...f...w...a...w...e...h...e...s
 .h.s.e.s.o.o.n.v.t.l.i.m.a.e.l.o.e.m.t.c.a.g.m.e.n
@@ -516,7 +514,7 @@ t...v...i...f...a...f...w...a...w...e...h...e...s
 Question: This version of NOVATEL firmware allowed me to change my ESN 
 Solution: 1.05
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-10-mistery-hacker">Chapter 10 | Mistery Hacker</h3><blockquote>gnkusr ooursnsisti ttnotoihiec rolwaintmlk ovtgp</blockquote><p>Inspired by the previous challenge, I was able to crack this Railfence Cipher:</p><!--kg-card-begin: markdown--><pre><code>Cipher: Railfence Cipher
+<!--kg-card-end: markdown--><hr><h3 id="chapter-10-mistery-hacker">Chapter 10 | Mistery Hacker</h3><blockquote>gnkusr ooursnsisti ttnotoihiec rolwaintmlk ovtgp</blockquote><p>Inspired by the previous challenge, I was able to crack this Rail fence Cipher:</p><!--kg-card-begin: markdown--><pre><code>Cipher: Railfence Cipher
 
 g........n.........k.........u.........s.........r....
 .o......o..u......r..s......n..s......i..s......t..i..
@@ -535,7 +533,7 @@ Solution: Hip Hop
 Question: I identified this number as belonging to Eric using unauthorized callerID.
 Solution: 310 837-5412
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-13-the-wiretapper">Chapter 13 | The Wiretapper</h3><blockquote>qclgjq'acrjcrlmqnyrcpgursmzyddmbcnngrgmfupceylyk</blockquote><p>Pretty straightforward, <a href="https://gchq.github.io/CyberChef/">CyberChef</a> saves me again.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=2 | Reverse
+<!--kg-card-end: markdown--><hr><h3 id="chapter-13-the-wiretapper">Chapter 13 | The Wiretapper</h3><blockquote>qclgjq'acrjcrlmqnyrcpgursmzyddmbcnngrgmfupceylyk</blockquote><p>Pretty straightforward, got it by playing around on <a href="https://gchq.github.io/CyberChef/">CyberChef</a>.</p><!--kg-card-begin: markdown--><pre><code>Cipher: ROT13 with shift=2 | Reverse
 Question: Manager who I tipped off about wiretaps on teltec's lines.
 Solution:
 </code></pre>
@@ -547,7 +545,7 @@ Solution:
 Question: This hacker we showed off SAS to while at Hamburger Hamlet.
 Solution: Eric Heinz
 </code></pre>
-<!--kg-card-end: markdown--><hr><h3 id="chapter-16-crashing-eric-s-private-party">Chapter 16 | Crashing Eric’s Private Party</h3><blockquote>7\3|2\9|3\5|4/0/8/2|6\7/0/4\4\5/6/6\5/7/8/9|7\8/7|9\5/9\2\3\5\7/8|2/0/8|2/6|6|2|7\7\0\4\9|</blockquote><p>Definitely couldn't solve this on my own and had to go back to <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solutions</a> to crack it. It seems like this is <a href="https://www.dcode.fr/phone-keypad-cipher">Phone Keypad Cipher</a>, i.e.: each number represents a key in a phone keypad:</p><!--kg-card-begin: markdown--><pre><code>(&quot;2&quot;, &quot;ABC&quot;);
+<!--kg-card-end: markdown--><hr><h3 id="chapter-16-crashing-eric-s-private-party">Chapter 16 | Crashing Eric’s Private Party</h3><blockquote>7\3|2\9|3\5|4/0/8/2|6\7/0/4\4\5/6/6\5/7/8/9|7\8/7|9\5/9\2\3\5\7/8|2/0/8|2/6|6|2|7\7\0\4\9|</blockquote><p>Definitely couldn't solve this on my own and had to go back to <a href="https://www.drewdunne.com/2016/07/29/ghost-in-the-wires.html">Drew Dunne's solutions</a> to crack it. </p><p>This cipher starts with a <a href="https://www.dcode.fr/phone-keypad-cipher">Phone Keypad Cipher</a>, i.e.: each number represents a key in a phone keypad:</p><!--kg-card-begin: markdown--><pre><code>(&quot;2&quot;, &quot;ABC&quot;);
 (&quot;3&quot;, &quot;DEF&quot;);
 (&quot;4&quot;, &quot;GHI&quot;);
 (&quot;5&quot;, &quot;JKL&quot;);
@@ -561,7 +559,7 @@ Solution: Eric Heinz
 Question: I asked Eric for the key to this phone company facility Solution: --
 </code></pre>
 <!--kg-card-end: markdown--><hr><h3 id="chapter-17-pulling-back-the-curtain">Chapter 17 | Pulling Back the Curtain</h3><blockquote>100 0000 10 1 01 001 00 1000 1 010 11 000 0 0000 11 000 000111 00011 10000 11110 11000 00111 10000 11111 10000 11111</blockquote><p>Initially I tried a couple of approaches thinking this was binary but after a lot of failure I decided to go with morse:</p><p>Where 1=. and 0=-:</p><p><code>.-- ---- .- . -. --. -- .--- . -.- .. --- - ---- .. --- ---... ---.. .---- ....- ..--- --... .---- ..... .---- .....</code></p><p>This results in <code>W#AENGMJEKIOT#IO:814271515</code>.</p><p>Where 0=. and 1=-:</p><!--kg-card-begin: markdown--><p><code>-.. .... -. - .- ..- .. -... - .-. -- ... . .... -- ... ...--- ...-- -.... ----. --... ..--- -.... ----- -.... -----</code></p>
-<!--kg-card-end: markdown--><p>This results in <code>DHNTAUIBTRMSEHMS#369726060</code>.</p><p>Using a RailCipher on the letters first:</p><!--kg-card-begin: markdown--><pre><code>D...H...N...T...A...U...I...B...T...R...M...S...E...H...M...S...#
+<!--kg-card-end: markdown--><p>This results in <code>DHNTAUIBTRMSEHMS#369726060</code>.</p><p>Using a Rail fence cipher on the letters first:</p><!--kg-card-begin: markdown--><pre><code>D...H...N...T...A...U...I...B...T...R...M...S...E...H...M...S...#
 W...A...E...N...G...M...J...E...K...I...O...T...#...I...O...:
 
 # Removing every other char pair:
@@ -602,7 +600,7 @@ the amount of money i lost once working out at the gym
 Question: The amount of money I lost once working out at the gym.
 Solution: $11.000
 </code></pre>
-<!--kg-card-end: markdown--><hr>
+<!--kg-card-end: markdown--><hr><h2 id="useful-links">Useful Links</h2><ul><li><a href="https://gchq.github.io/CyberChef/">CyberChef</a></li><li><a href="https://scwf.dima.ninja/">Solve Crypto with Force!</a></li><li><a href="https://quipqiup.com/">quipqiup</a></li><li><a href="https://www.dcode.fr/">dCode.fr</a></li></ul>
     </section>
 
 
