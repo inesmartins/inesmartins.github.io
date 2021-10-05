@@ -11,20 +11,29 @@
     
     <meta property="og:type" content="article" />
     <meta property="og:title" content="How to deploy your website to a Web Disk with Github Actions" />
-    <meta property="og:description" content="A Web Disk is basically just a protocol that allows you to access files stored on a server - it&#x27;s basically an alternative to FTP that is provided by some hosting services. Some time ago I was given the task to deploy a website using a WebDisk and was eager" />
+    <meta property="og:description" content="A Web Disk (aka: WebDav) is a protocol that provides a simple interface to manage files stored on a server - it&#x27;s basically an alternative to FTP that is provided by some hosting services. Some time ago I was given the task to deploy a website using a WebDisk and" />
     <meta property="og:url" content="inesmartins.github.io/how-to-deploy-your-website-to-webdav-web-disk-using-github-actions/" />
-    <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/jo-san-archivist2.jpg" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-05-at-18.36.41.png" />
     <meta property="article:published_time" content="2021-10-05T17:28:40.000Z" />
-    <meta property="article:modified_time" content="2021-10-05T17:28:40.000Z" />
+    <meta property="article:modified_time" content="2021-10-05T17:36:53.000Z" />
+    <meta property="article:tag" content="webdisk" />
+    <meta property="article:tag" content="webdav" />
+    <meta property="article:tag" content="docker" />
+    <meta property="article:tag" content="github action" />
+    <meta property="article:tag" content="deploy" />
+    <meta property="article:tag" content="github pages" />
+    
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="How to deploy your website to a Web Disk with Github Actions" />
-    <meta name="twitter:description" content="A Web Disk is basically just a protocol that allows you to access files stored on a server - it&#x27;s basically an alternative to FTP that is provided by some hosting services. Some time ago I was given the task to deploy a website using a WebDisk and was eager" />
+    <meta name="twitter:description" content="A Web Disk (aka: WebDav) is a protocol that provides a simple interface to manage files stored on a server - it&#x27;s basically an alternative to FTP that is provided by some hosting services. Some time ago I was given the task to deploy a website using a WebDisk and" />
     <meta name="twitter:url" content="inesmartins.github.io/how-to-deploy-your-website-to-webdav-web-disk-using-github-actions/" />
-    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/08/jo-san-archivist2.jpg" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-05-at-18.36.41.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
-    <meta property="og:image:width" content="1920" />
-    <meta property="og:image:height" content="1359" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="webdisk, webdav, docker, github action, deploy, github pages" />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="660" />
     
     <script type="application/ld+json">
 {
@@ -56,8 +65,15 @@
     "headline": "How to deploy your website to a Web Disk with Github Actions",
     "url": "inesmartins.github.io/how-to-deploy-your-website-to-webdav-web-disk-using-github-actions/",
     "datePublished": "2021-10-05T17:28:40.000Z",
-    "dateModified": "2021-10-05T17:28:40.000Z",
-    "description": "A Web Disk is basically just a protocol that allows you to access files stored\non a server - it&#x27;s basically an alternative to FTP that is provided by some\nhosting services.\n\nSome time ago I was given the task to deploy a website using a WebDisk and was\neager to make the process automatic with a Github Action, but could not find\nwhat I was looking for.\n\nThere was however a very handy Docker image\n[https://hub.docker.com/r/qautomatron/docker-webdav-disk] with everything we\nneed to automatically mo",
+    "dateModified": "2021-10-05T17:36:53.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-05-at-18.36.41.png",
+        "width": 1440,
+        "height": 660
+    },
+    "keywords": "webdisk, webdav, docker, github action, deploy, github pages",
+    "description": "A Web Disk (aka: WebDav) is a protocol that provides a simple interface to\nmanage files stored on a server - it&#x27;s basically an alternative to FTP that is\nprovided by some hosting services.\n\nSome time ago I was given the task to deploy a website using a WebDisk and was\neager to make the process automatic with a Github Action\n[https://github.com/features/actions], but could not find one that matched my\nneeds.\n\nThere was, however, a very handy Docker image\n[https://hub.docker.com/r/qautomatron/dock",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -653,9 +669,12 @@
                     <time class="post-date" datetime="2021-10-05">05 Oct 2021</time>
                 </section>
             </header>
+            <figure class="post-image">
+                <amp-img src="inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-05-at-18.36.41.png" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
             <section class="post-content">
 
-                <p>A Web Disk is basically just a protocol that allows you to access files stored on a server - it's basically an alternative to FTP that is provided by some hosting services.</p><p>Some time ago I was given the task to deploy a website using a WebDisk and was eager to make the process automatic with a Github Action, but could not find what I was looking for.</p><p>There was however a very handy <a href="https://hub.docker.com/r/qautomatron/docker-webdav-disk">Docker image</a> with everything we need to automatically mount a disk, so I took it and built this action, which might help you out:</p><p>Hope this helps someone out there :)</p>
+                <p>A Web Disk (aka: WebDav) is a protocol that provides a simple interface to manage files stored on a server - it's basically an alternative to FTP that is provided by some hosting services.</p><p>Some time ago I was given the task to deploy a website using a WebDisk and was eager to make the process automatic with a <a href="https://github.com/features/actions">Github Action</a>, but could not find one that matched my needs.</p><p>There was, however, a very handy <a href="https://hub.docker.com/r/qautomatron/docker-webdav-disk">Docker image</a> that helped me mount the disk, so I took it and built this action, which might help you out:</p><p>Hope this helps someone out there :)</p>
 
             </section>
 
