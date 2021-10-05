@@ -8,7 +8,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css%3Fv=12d63162c0.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css%3Fv=72c7da9036.css" />
 
     <meta name="description" content="Application Security Analyst @Farfetch" />
     <link rel="canonical" href="index.html" />
@@ -29,7 +29,7 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "sameAs": [
-        "https://gist.github.com/inesmartins/"
+        "https://github.com/inesmartins/"
     ],
     "name": "Inês Martins",
     "url": "inesmartins.github.io/author/ines/",
@@ -122,6 +122,8 @@
 	    var copyrightElement = document.getElementsByClassName('copyright')[0];
     	copyrightElement.innerHTML = '<p>Inês Martins © 2021</p>'
 	    copyrightElement.innerHTML += '<p>Banner by Josan Gonzalez aka <a href="https://www.artstation.com/josan">Death Burger</a>'
+        var footerNav = document.getElementsByClassName('site-footer-nav')[0];
+        footerNav.innerHTML = '<img src="http://www.hackthebox.eu/badge/image/172261" alt="Hack The Box">'
 	}
 </script>
 <!-- Styles -->
@@ -134,6 +136,14 @@
     .article-image img {
         max-height: 400px;
         object-fit: contain;
+    }
+    .site-footer-nav {
+        display: block;
+    }
+    @media (max-width: 800px) {    
+	    .site-footer-nav {
+    	    margin: 20px auto;
+	    }
     }
 </style><style>:root {--ghost-accent-color: #000000;}</style>
 
@@ -188,7 +198,7 @@
 
                 <div class="author-profile-meta">
                     <div class="author-profile-location">📍 Porto, Portugal</div>
-                    <span ></span><a class="author-profile-social-link" href="https://gist.github.com/inesmartins/" target="_blank" rel="noopener">https://gist.github.com/inesmartins/</a></span>
+                    <span ></span><a class="author-profile-social-link" href="https://github.com/inesmartins/" target="_blank" rel="noopener">https://github.com/inesmartins/</a></span>
                 </div>
 
             </div>
@@ -1344,7 +1354,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../../assets/built/casper.js%3Fv=12d63162c0"></script>
+<script src="../../assets/built/casper.js%3Fv=72c7da9036"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
