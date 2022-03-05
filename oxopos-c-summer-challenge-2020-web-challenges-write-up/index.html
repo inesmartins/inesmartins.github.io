@@ -8,7 +8,14 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=67a0b9d52b.css" />
+    <style>
+        :root {
+            --button-bg-color: #ffffff;
+            --button-text-color: var(--color-darkgrey);
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=49f7696012.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -86,9 +93,9 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
+    <meta name="generator" content="Ghost 4.38" />
     <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.15.0/umd/portal.min.js" data-ghost="inesmartins.github.io/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -152,6 +159,8 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="../public/cards.min.js%3Fv=49f7696012"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=49f7696012.css">
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -220,61 +229,62 @@
                 <div class="gh-social">
                 </div>
 
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+                    <a class="gh-head-button" href="index.html#/portal/signup" data-portal="signup">Subscribe</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <div class="site-content">
         
 
 
 
-<article class="article post tag-tap-code tag-bacon-cipher tag-timing-attack tag-crypto tag-ctf tag-oposec">
+<main id="site-main" class="site-main">
+    <article class="article post tag-tap-code tag-bacon-cipher tag-timing-attack tag-crypto tag-ctf tag-oposec ">
 
-    <header class="article-header gh-canvas">
+        <header class="article-header gh-canvas">
 
-        <section class="article-tag">
-            <a href="../tag/tap-code/index.html">tap code</a>
-        </section>
-
-        <h1 class="article-title">ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</h1>
-
-
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2020-09-25">Sep 25, 2020</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
-                    </div>
-                </div>
+            <section class="article-tag">
+                <a href="../tag/tap-code/index.html">tap code</a>
             </section>
-        </div>
 
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2020/09/headers1.png 300w,
-                       ../content/images/size/w600/2020/09/headers1.png 600w,
-                      ../content/images/size/w1000/2020/09/headers1.png 1000w,
-                     ../content/images/size/w2000/2020/09/headers1.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2020/09/headers1.png"
-                alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"
-            />
-        </figure>
-    </header>
+            <h1 class="article-title">ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up</h1>
 
-    <section class="gh-content gh-canvas">
-        <h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>If I had known about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a> (aka Knock Code) this would have been straightforward. I ended up getting the flag with some "leaps of logic". </p><p>Basically, by knowing that the first 4 numbers probably matched the word <code>flag</code>:</p><pre><code>a =&gt; 11
+
+            <div class="article-byline">
+                <section class="article-byline-content">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <a href="../author/ines/index.html" class="author-avatar">
+                                <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="article-byline-meta">
+                        <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                        <div class="byline-meta-content">
+                            <time class="byline-meta-date" datetime="2020-09-25">Sep 25, 2020</time>
+                            <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <figure class="article-image">
+                <img
+                    srcset="../content/images/size/w300/2020/09/headers1.png 300w,
+                           ../content/images/size/w600/2020/09/headers1.png 600w,
+                          ../content/images/size/w1000/2020/09/headers1.png 1000w,
+                         ../content/images/size/w2000/2020/09/headers1.png 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="../content/images/size/w2000/2020/09/headers1.png"
+                    alt="ØxOPOSɆC Summer Challenge 2020 | Crypto Challenges Write-up"
+                />
+            </figure>
+        </header>
+
+        <section class="gh-content gh-canvas">
+            <h2 id="knock-knock-100-">Knock Knock (100)</h2><blockquote><code>21 31 11 22 { 32 11 44 15 45 43 42 34 43 15 }</code></blockquote><p>If I had known about <a href="https://en.wikipedia.org/wiki/Tap_code">Tap Code</a> (aka Knock Code) this would have been straightforward. I ended up getting the flag with some "leaps of logic". </p><p>Basically, by knowing that the first 4 numbers probably matched the word <code>flag</code>:</p><pre><code>a =&gt; 11
 f =&gt; 21
 g =&gt; 22
 l =&gt; 31</code></pre><p>I was able to infer the rest of the letters:</p><pre><code>a =&gt; 11
@@ -340,27 +350,73 @@ for letter in alphabet:
     
 os.system("echo '" + result_str + "' &gt; " + output_filename)
 os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>flag{c4l1Po_de_l1M4o}</code>.</p>
+        </section>
+
+
+    </article>
+</main>
+
+
+    <section class="footer-cta ">
+        <div class="inner">
+            <h2>Sign up for more like this.</h2>
+            <a class="footer-cta-button" href="index.html#/portal" data-portal>
+                <div class="footer-cta-input">Enter your email</div>
+                <span>Subscribe</span>
+            </a>
+        </div>
     </section>
 
 
-</article>
 
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
+
+            <aside class="read-more-wrap">
+                <div class="read-more inner">
+                        
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/03/android-image.png 300w,
+                   ../content/images/size/w600/2022/03/android-image.png 600w,
+                  ../content/images/size/w1000/2022/03/android-image.png 1000w,
+                 ../content/images/size/w2000/2022/03/android-image.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/03/android-image.png"
+            alt="Exploiting a vulnerable WebView to steal all the files (Android)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting a vulnerable WebView to steal all the files (Android)</h2>
+            </header>
+            <div class="post-card-excerpt">
+                <p>During a recent research project, I came across an application that contained a vulnerable WebView, which enabled an attacker to access non-exported activities and content providers, as well as steal all of its files. Some of these files included contact information, photos, search history and even third-party cookies, so the</p>
+            </div>
         </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-03-05">Mar 5, 2022</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
     </div>
-</section>
 
-
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
+</article>
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-previse/index.html">
@@ -382,21 +438,21 @@ os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>f
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | Previse</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -404,7 +460,7 @@ os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>f
     </div>
 
 </article>
-                    
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
@@ -426,21 +482,21 @@ os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>f
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -448,56 +504,12 @@ os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>f
     </div>
 
 </article>
-                    
-<article class="post-card post ">
+                </div>
+            </aside>
 
-    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
-                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
-                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
-                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
-            alt="HTB Write-up | Explore"
-            loading="lazy"
-        />
-    </a>
 
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Explore</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
 
     </div>
-
-</article>
-
-    </div>
-</aside>
-
-
-    </main>
 
     <footer class="site-footer outer">
         <div class="inner">
@@ -517,7 +529,7 @@ os.system("open " + output_filename)</code></pre><p>And we get the flag: <code>f
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script src="../assets/built/casper.js%3Fv=49f7696012"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger

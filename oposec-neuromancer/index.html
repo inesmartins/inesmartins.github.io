@@ -8,7 +8,14 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=67a0b9d52b.css" />
+    <style>
+        :root {
+            --button-bg-color: #ffffff;
+            --button-text-color: var(--color-darkgrey);
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=49f7696012.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -83,9 +90,9 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
+    <meta name="generator" content="Ghost 4.38" />
     <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.15.0/umd/portal.min.js" data-ghost="inesmartins.github.io/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -149,6 +156,8 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="../public/cards.min.js%3Fv=49f7696012"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=49f7696012.css">
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -217,82 +226,129 @@
                 <div class="gh-social">
                 </div>
 
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+                    <a class="gh-head-button" href="index.html#/portal/signup" data-portal="signup">Subscribe</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <div class="site-content">
         
 
 
 
-<article class="article post tag-ctf tag-oposec tag-neuromancer">
+<main id="site-main" class="site-main">
+    <article class="article post tag-ctf tag-oposec tag-neuromancer ">
 
-    <header class="article-header gh-canvas">
+        <header class="article-header gh-canvas">
 
-        <section class="article-tag">
-            <a href="../tag/ctf/index.html">ctf</a>
+            <section class="article-tag">
+                <a href="../tag/ctf/index.html">ctf</a>
+            </section>
+
+            <h1 class="article-title">ØxOPOSɆC | Neuromancer</h1>
+
+
+            <div class="article-byline">
+                <section class="article-byline-content">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <a href="../author/ines/index.html" class="author-avatar">
+                                <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="article-byline-meta">
+                        <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                        <div class="byline-meta-content">
+                            <time class="byline-meta-date" datetime="2021-02-23">Feb 23, 2021</time>
+                            <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <figure class="article-image">
+                <img
+                    srcset="../content/images/size/w300/2021/02/image-26-1.png 300w,
+                           ../content/images/size/w600/2021/02/image-26-1.png 600w,
+                          ../content/images/size/w1000/2021/02/image-26-1.png 1000w,
+                         ../content/images/size/w2000/2021/02/image-26-1.png 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="../content/images/size/w2000/2021/02/image-26-1.png"
+                    alt="ØxOPOSɆC | Neuromancer"
+                />
+            </figure>
+        </header>
+
+        <section class="gh-content gh-canvas">
+            <p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge. </p><p>Even though the competition is done, if you want to try it out yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a> with a very simple interface. If you took a closer look at the source code you'd see only an <code>&lt;img&gt;</code> sourced from Wikipedia (to prevent you from straying into steg territory) and an interesting comment:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-27.png" class="kg-image" alt loading="lazy"></figure><p>By googling the entire thing, you'd see that <a href="https://www.goodreads.com/quotes/14638-cyberspace-a-consensual-hallucination-experienced-daily-by-billions-of-legitimate">this is a quote from the book "Neuromancer"</a>, but with a slight difference:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/02/image-29.png" class="kg-image" alt loading="lazy"></figure><p>So, your first official hint was "how do you get in?", which should get you thinking about authentication and point you in the direction of <a href="https://neuromancer.herokuapp.com/login">the login page</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-30.png" class="kg-image" alt loading="lazy"></figure><p>If this page is under development, maybe the developers have already implemented the authentication mechanism ...</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-31.png" class="kg-image" alt loading="lazy"></figure><p>Yup, now we're getting somewhere.</p><hr><h2 id="hint-2-how-much-do-you-know-about-neuromancer">Hint 2: How much do you know about Neuromancer?</h2><p>Just in case you thought this authentication feature had some interesting vulnerability, I released another hint to lure you in the right direction - <a href="https://en.wikipedia.org/wiki/Open-source_intelligence">OSINT</a>.</p><p>At this point, you could either solve this by brute-forcing or by googling.</p><h3 id="option-1-brute-force">Option 1 - Brute-force</h3><p>You could use a wordlist generator like <a href="https://tools.kali.org/password-attacks/cewl">cewl</a>, which (depending on the source you used) would most likely output the username and password on the top 50 words.</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-32.png" class="kg-image" alt loading="lazy"></figure><p>If you then removed "common" words, this list would shrink down to 20, which means you could easily go through all of the possible combinations for both fields and solve the challenge:</p><h3 id="option-2-googling">Option 2 - Googling</h3><p>You could start by searching for the book's character list:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-33.png" class="kg-image" alt loading="lazy"></figure><p>Neuromancer doesn't have a lot of characters in general, and the username - <code>case</code> - is the main character, so this was pretty straightforward. </p><p>Also, as soon as you tried <code>case</code> as the username, you'd see that the response was now different: </p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-34.png" class="kg-image" alt loading="lazy"></figure><p>From this point on, you could again brute-force for the password or you could google "Neuromancer password", which would take you to <a href="https://scifi.stackexchange.com/questions/6433/what-is-the-password-at-the-end-of-neuromancer">this</a> stackexchange question:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-35.png" class="kg-image" alt loading="lazy"></figure><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-36.png" class="kg-image" alt loading="lazy"></figure><p>Although not the password in the book, <code>wintermute</code> was indeed the password for this challenge:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-37.png" class="kg-image" alt loading="lazy"></figure><p>That's it, hope you enjoyed it!</p>
         </section>
 
-        <h1 class="article-title">ØxOPOSɆC | Neuromancer</h1>
+
+    </article>
+</main>
 
 
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2021-02-23">Feb 23, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
-                    </div>
-                </div>
-            </section>
+    <section class="footer-cta ">
+        <div class="inner">
+            <h2>Sign up for more like this.</h2>
+            <a class="footer-cta-button" href="index.html#/portal" data-portal>
+                <div class="footer-cta-input">Enter your email</div>
+                <span>Subscribe</span>
+            </a>
         </div>
-
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2021/02/image-26-1.png 300w,
-                       ../content/images/size/w600/2021/02/image-26-1.png 600w,
-                      ../content/images/size/w1000/2021/02/image-26-1.png 1000w,
-                     ../content/images/size/w2000/2021/02/image-26-1.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2021/02/image-26-1.png"
-                alt="ØxOPOSɆC | Neuromancer"
-            />
-        </figure>
-    </header>
-
-    <section class="gh-content gh-canvas">
-        <p>This month, I was responsible for putting together the <a href="https://www.meetup.com/pt-BR/0xOPOSEC/">ØxOPOSɆC</a> monthly challenge. </p><p>Even though the competition is done, if you want to try it out yourself the application is still available <a href="https://neuromancer.herokuapp.com/">here</a>. </p><p>So, <strong>if you don't want spoilers, stop reading!</strong></p><hr><h2 id="onto-the-solutions-">Onto the solutions!</h2><p>The challenge consisted of <a href="https://neuromancer.herokuapp.com/">a Heroku app</a> with a very simple interface. If you took a closer look at the source code you'd see only an <code>&lt;img&gt;</code> sourced from Wikipedia (to prevent you from straying into steg territory) and an interesting comment:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-27.png" class="kg-image" alt loading="lazy"></figure><p>By googling the entire thing, you'd see that <a href="https://www.goodreads.com/quotes/14638-cyberspace-a-consensual-hallucination-experienced-daily-by-billions-of-legitimate">this is a quote from the book "Neuromancer"</a>, but with a slight difference:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/02/image-29.png" class="kg-image" alt loading="lazy"></figure><p>So, your first official hint was "how do you get in?", which should get you thinking about authentication and point you in the direction of <a href="https://neuromancer.herokuapp.com/login">the login page</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-30.png" class="kg-image" alt loading="lazy"></figure><p>If this page is under development, maybe the developers have already implemented the authentication mechanism ...</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-31.png" class="kg-image" alt loading="lazy"></figure><p>Yup, now we're getting somewhere.</p><hr><h2 id="hint-2-how-much-do-you-know-about-neuromancer">Hint 2: How much do you know about Neuromancer?</h2><p>Just in case you thought this authentication feature had some interesting vulnerability, I released another hint to lure you in the right direction - <a href="https://en.wikipedia.org/wiki/Open-source_intelligence">OSINT</a>.</p><p>At this point, you could either solve this by brute-forcing or by googling.</p><h3 id="option-1-brute-force">Option 1 - Brute-force</h3><p>You could use a wordlist generator like <a href="https://tools.kali.org/password-attacks/cewl">cewl</a>, which (depending on the source you used) would most likely output the username and password on the top 50 words.</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-32.png" class="kg-image" alt loading="lazy"></figure><p>If you then removed "common" words, this list would shrink down to 20, which means you could easily go through all of the possible combinations for both fields and solve the challenge:</p><h3 id="option-2-googling">Option 2 - Googling</h3><p>You could start by searching for the book's character list:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-33.png" class="kg-image" alt loading="lazy"></figure><p>Neuromancer doesn't have a lot of characters in general, and the username - <code>case</code> - is the main character, so this was pretty straightforward. </p><p>Also, as soon as you tried <code>case</code> as the username, you'd see that the response was now different: </p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-34.png" class="kg-image" alt loading="lazy"></figure><p>From this point on, you could again brute-force for the password or you could google "Neuromancer password", which would take you to <a href="https://scifi.stackexchange.com/questions/6433/what-is-the-password-at-the-end-of-neuromancer">this</a> stackexchange question:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-35.png" class="kg-image" alt loading="lazy"></figure><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-36.png" class="kg-image" alt loading="lazy"></figure><p>Although not the password in the book, <code>wintermute</code> was indeed the password for this challenge:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/02/image-37.png" class="kg-image" alt loading="lazy"></figure><p>That's it, hope you enjoyed it!</p>
     </section>
 
 
-</article>
 
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
+
+            <aside class="read-more-wrap">
+                <div class="read-more inner">
+                        
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/03/android-image.png 300w,
+                   ../content/images/size/w600/2022/03/android-image.png 600w,
+                  ../content/images/size/w1000/2022/03/android-image.png 1000w,
+                 ../content/images/size/w2000/2022/03/android-image.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/03/android-image.png"
+            alt="Exploiting a vulnerable WebView to steal all the files (Android)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting a vulnerable WebView to steal all the files (Android)</h2>
+            </header>
+            <div class="post-card-excerpt">
+                <p>During a recent research project, I came across an application that contained a vulnerable WebView, which enabled an attacker to access non-exported activities and content providers, as well as steal all of its files. Some of these files included contact information, photos, search history and even third-party cookies, so the</p>
+            </div>
         </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-03-05">Mar 5, 2022</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
     </div>
-</section>
 
-
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
+</article>
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-previse/index.html">
@@ -314,21 +370,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | Previse</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -336,7 +392,7 @@
     </div>
 
 </article>
-                    
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
@@ -358,21 +414,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -380,56 +436,12 @@
     </div>
 
 </article>
-                    
-<article class="post-card post ">
+                </div>
+            </aside>
 
-    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
-                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
-                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
-                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
-            alt="HTB Write-up | Explore"
-            loading="lazy"
-        />
-    </a>
 
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Explore</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
 
     </div>
-
-</article>
-
-    </div>
-</aside>
-
-
-    </main>
 
     <footer class="site-footer outer">
         <div class="inner">
@@ -449,7 +461,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script src="../assets/built/casper.js%3Fv=49f7696012"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger

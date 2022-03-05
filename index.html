@@ -8,7 +8,14 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="assets/built/screen.css%3Fv=67a0b9d52b.css" />
+    <style>
+        :root {
+            --button-bg-color: #ffffff;
+            --button-text-color: var(--color-darkgrey);
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="assets/built/screen.css%3Fv=49f7696012.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -54,9 +61,9 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
+    <meta name="generator" content="Ghost 4.38" />
     <link rel="alternate" type="application/rss+xml" title="" href="rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.15.0/umd/portal.min.js" data-ghost="inesmartins.github.io/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -120,6 +127,8 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="public/cards.min.js%3Fv=49f7696012"></script>
+    <link rel="stylesheet" type="text/css" href="public/cards.min.css%3Fv=49f7696012.css">
     <link rel="icon" type="image/png" href="content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -188,28 +197,28 @@
                 <div class="gh-social">
                 </div>
 
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+                    <a class="gh-head-button" href="index.html#/portal/signup" data-portal="signup">Subscribe</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <div class="site-content">
         
-<div class="site-header-content">
-        <img class="site-header-cover"
-            srcset="content/images/size/w300/2021/08/jo-san-archivist2.jpg 300w,
-                   content/images/size/w600/2021/08/jo-san-archivist2.jpg 600w,
-                  content/images/size/w1000/2021/08/jo-san-archivist2.jpg 1000w,
-                 content/images/size/w2000/2021/08/jo-san-archivist2.jpg 2000w"
-            sizes="100vw"
-            src="content/images/size/w2000/2021/08/jo-san-archivist2.jpg"
-            alt=""
-        />
-    <h1 class="site-title">
-            
-    </h1>
-    <p></p>
-</div>
+    <div class="site-header-content">
+            <img class="site-header-cover"
+                srcset="content/images/size/w300/2021/08/jo-san-archivist2.jpg 300w,
+                       content/images/size/w600/2021/08/jo-san-archivist2.jpg 600w,
+                      content/images/size/w1000/2021/08/jo-san-archivist2.jpg 1000w,
+                     content/images/size/w2000/2021/08/jo-san-archivist2.jpg 2000w"
+                sizes="100vw"
+                src="content/images/size/w2000/2021/08/jo-san-archivist2.jpg"
+                alt=""
+            />
+        <h1 class="site-title">
+                
+        </h1>
+        <p></p>
+    </div>
 
 <main id="site-main" class="site-main outer">
     <div class="inner posts">
@@ -217,7 +226,54 @@
         <div class="post-feed">
 
                 
-<article class="post-card post post-card-large">
+<article class="post-card post tag-android tag-webview tag-kotlin post-card-large">
+
+    <a class="post-card-image-link" href="exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+        <img class="post-card-image"
+            srcset="content/images/size/w300/2022/03/android-image.png 300w,
+                   content/images/size/w600/2022/03/android-image.png 600w,
+                  content/images/size/w1000/2022/03/android-image.png 1000w,
+                 content/images/size/w2000/2022/03/android-image.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="content/images/size/w600/2022/03/android-image.png"
+            alt="Exploiting a vulnerable WebView to steal all the files (Android)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">android</div>
+                <h2 class="post-card-title">Exploiting a vulnerable WebView to steal all the files (Android)</h2>
+            </header>
+            <div class="post-card-excerpt">
+                <p>During a recent research project, I came across an application that contained a vulnerable WebView, which enabled an attacker to access non-exported activities and content providers, as well as steal all of its files. Some of these files included contact information, photos, search history and even third-party cookies, so the</p>
+            </div>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-03-05">Mar 5, 2022</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+
+                
+<article class="post-card post ">
 
     <a class="post-card-image-link" href="htb-write-up-previse/index.html">
         <img class="post-card-image"
@@ -238,21 +294,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | Previse</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -284,21 +340,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -331,21 +387,21 @@
                     <div class="post-card-primary-tag">android</div>
                 <h2 class="post-card-title">HTB Write-up | Explore</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -377,21 +433,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">Exploiting Deep Links in Android - Part 5 (Testing)</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>EnumerationEnumeration should always start with the App Manifest, which can be extracted from any .apk with a tool such as apktool, e.g.: ~ apktool d com.twitter.android_2021-10-22.apk  I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk I: Loading resource table... I: Decoding AndroidManifest.xml</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
@@ -424,21 +480,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Monitors</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLet's start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-10-09">Oct 9, 2021</time> <span class="bull">&bull;</span> 9 min read</span>
             </div>
         </footer>
@@ -471,21 +527,21 @@
                     <div class="post-card-primary-tag">webdisk</div>
                 <h2 class="post-card-title">Automatic Web Disk deployment with Github Actions</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>A Web Disk (aka: WebDav) is a protocol that provides a simple interface to manage files stored on a server - it's basically an alternative to FTP that is provided by some hosting services. Some time ago I was given the task to deploy a website using a WebDisk and</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-10-05">Oct 5, 2021</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
@@ -518,21 +574,21 @@
                     <div class="post-card-primary-tag">deep links</div>
                 <h2 class="post-card-title">Exploiting Deep Links in Android - Part 4 (Mitigation)</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Preventing Deep Link HijackingWhen it comes to preventing Deep Link Hijacking, the message is simple: stop using Scheme URLs and start using (properly verified) App Links or Intent URLs. [If you're lost maybe you should go back to Part 1] As of August 2021 only about 6% of Android devices</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-09-23">Sep 23, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -565,21 +621,21 @@
                     <div class="post-card-primary-tag">android</div>
                 <h2 class="post-card-title">Exploiting Deep Links in Android - Part 3</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>So .. what else can we do with deep links? Local File Inclusion (LFI)In part 2 we saw how to achieve LFI via the WebView.loadUrl method. In this part we'll explore an alternative that doesn't require the application to contain a WebView.  Let's continue using the ABC Bank Android</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-09-04">Sep 4, 2021</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
@@ -590,7 +646,7 @@
 
 
                 
-<article class="post-card post tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation ">
+<article class="post-card post tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation featured ">
 
     <a class="post-card-image-link" href="mobsf-ipa-binary-analysis-step-by-step/index.html">
         <img class="post-card-image"
@@ -612,21 +668,21 @@
                     <div class="post-card-primary-tag">ipa</div>
                 <h2 class="post-card-title">MobSF &quot;IPA Binary Analysis&quot; | Step by Step</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa, the "IPA Binary Analysis" section can report multiple issues that can be hard to interpret.  Hopefully this article will</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-08-21">Aug 21, 2021</time> <span class="bull">&bull;</span> 9 min read</span>
             </div>
         </footer>
@@ -659,21 +715,21 @@
                     <div class="post-card-primary-tag">android</div>
                 <h2 class="post-card-title">Exploiting Deep Links in Android - Part 2</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>In this part, we're going to start to answer the question: "What can you do if you can trick a user into clicking a malicious deep link?" Let's go back to the ABC Bank example. ABC Bank has both a web and an Android application, and they use deep links</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-08-15">Aug 15, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -706,21 +762,21 @@
                     <div class="post-card-primary-tag">android</div>
                 <h2 class="post-card-title">Exploiting Deep Links in Android - Part 1</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Deep links are an often overlooked way to exploit Android applications. In this series I hope to do a deep dive into their history, common vulnerabilities with real-life examples, possible mitigations, and testing techniques for pentesters and researchers. In this first part, we do a quick overview of the supported</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-08-13">Aug 13, 2021</time> <span class="bull">&bull;</span> 6 min read</span>
             </div>
         </footer>
@@ -753,21 +809,21 @@
                     <div class="post-card-primary-tag">php</div>
                 <h2 class="post-card-title">Running a PHP application on Big Sur using Apache</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>If you have a PHP application and want a quick approach for running it on a mac with the latest OS version, then this tutorial might be useful. Testing and launching the Apache serverBig Sur already comes with Apache installed. You can check the current version by running: ~ httpd -v</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-07-23">Jul 23, 2021</time> <span class="bull">&bull;</span> 2 min read</span>
             </div>
         </footer>
@@ -800,21 +856,21 @@
                     <div class="post-card-primary-tag">tshark</div>
                 <h2 class="post-card-title">USB Keyboard capture parser</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>During a recent CTF I had to extract keys from a USB Keyboard capture, and (as usual) decided to create a simple Python 3 script to parse the original keys. As shown on the Gist below, this script takes any .pcap file and optionally the path to the tshark executable,</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-07-18">Jul 18, 2021</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
@@ -847,21 +903,21 @@
                     <div class="post-card-primary-tag">bloodhound</div>
                 <h2 class="post-card-title">Setting up Bloodhound on macOS</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8 handles multiprocessing in macOS you need to downgrade to Python 3.7.3 to</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-07-11">Jul 11, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -894,21 +950,21 @@
                     <div class="post-card-primary-tag">ghost</div>
                 <h2 class="post-card-title">Update: Simplest way to host your Ghost blog on GitHub Pages</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Last year I created a post about how to get a Ghost blog up and running on Github Pages without much effort. This worked well, but after being forced to update ghost-cli to version 1.17.3 I ran into a few issues and had to rethink the entire process.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-06-13">Jun 13, 2021</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
@@ -941,21 +997,21 @@
                     <div class="post-card-primary-tag">oposec</div>
                 <h2 class="post-card-title">ØxOPOSɆC - HTTP2</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>URL: https://20.56.49.147/ | Keep calm and get the flag :)When you enter the IP directly on the browser you see only an image sourced from Github and a hidden clue: "Lost? It's evolution, baby...": The image shows the evolution of the HTTP protocol, so it makes sense</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-05-28">May 28, 2021</time> <span class="bull">&bull;</span> 2 min read</span>
             </div>
         </footer>
@@ -988,21 +1044,21 @@
                     <div class="post-card-primary-tag">macOS</div>
                 <h2 class="post-card-title">Fixing keyboard type on Big Sur</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>It seems like Big Sur is randomly defaulting the keyboard type to ANSI and, for some weird reason, Apple has removed the ability to change this directly on the keyboard settings.  What to do?Apparently, the only thing to do is to force the OS to re-configure the keyboard: Go</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-05-15">May 15, 2021</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
@@ -1035,21 +1091,21 @@
                     <div class="post-card-primary-tag">crypto</div>
                 <h2 class="post-card-title">ØxOPOSɆC - Don Joe [Crypto]</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Don Joe insists his site is as secure as can be! Can you prove that the best web dev of all time is wrong?" URL: https://don-joes-blog.herokuapp.com/  There are two flagsDon Joe's Blog has a very simple interface and lists only 4 blog posts: Clicking on the articles</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-05-01">May 1, 2021</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
@@ -1082,21 +1138,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Time</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningIt seems like this machine is running OpenSSH on port 22 and an Apache web server on port 80: ~ nmap -sC -sV time.htb PORT   STATE SERVICE VERSION PORT     STATE    SERVICE        VERSION 22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux;</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-04-03">Apr 3, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -1129,21 +1185,21 @@
                     <div class="post-card-primary-tag">cryptography</div>
                 <h2 class="post-card-title">ØxOPOSɆC - Secrets [Crypto]</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>We all have secrets! And sometimes we need to share them with our online friends, safely... That's easy! - Just implement a very secure, hackerproof™ secret sharing web application!" URL: https://secret.mbie.meWhen you access the website you see the following page: Entering random data on the input field</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-03-24">Mar 24, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -1175,21 +1231,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | Passage</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for Passage, a retired HTB machine.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-03-07">Mar 7, 2021</time> <span class="bull">&bull;</span> 5 min read</span>
             </div>
         </footer>
@@ -1222,21 +1278,21 @@
                     <div class="post-card-primary-tag">ctf</div>
                 <h2 class="post-card-title">ØxOPOSɆC | Neuromancer</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>This month, I was responsible for putting together the ØxOPOSɆC monthly challenge.  Even though the competition is done, if you want to try it out yourself the application is still available here.  So, if you don't want spoilers, stop reading! Onto the solutions!The challenge consisted of a Heroku app</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-02-23">Feb 23, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -1268,21 +1324,21 @@
             <header class="post-card-header">
                 <h2 class="post-card-title">ØxOPOSɆC | Underground Leaks - Part III</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>This level starts with the email message where the last level ended: When we go to the link at the end of the message we see a simple HTML page that contains a &lt;meta&gt; tag that uses the http-equiv attribute: &lt;html&gt;    &lt;body&gt;       &lt;b&</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-01-30">Jan 30, 2021</time> <span class="bull">&bull;</span> 5 min read</span>
             </div>
         </footer>
@@ -1315,69 +1371,22 @@
                     <div class="post-card-primary-tag">crypto</div>
                 <h2 class="post-card-title">ØxOPOSɆC | Underground Leaks (Crypto) - Part II</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for the second part of the Underground Leaks saga, that includes DTMF and Multi-tap Cipher.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-12-09">Dec 9, 2020</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
-        </footer>
-
-    </div>
-
-</article>
-
-
-                
-<article class="post-card post tag-crypto tag-dtfm tag-prime-numbers tag-wav tag-htb tag-mp3 tag-ffmpeg ">
-
-    <a class="post-card-image-link" href="htb-crypto-challenge-call/index.html">
-        <img class="post-card-image"
-            srcset="content/images/size/w300/2021/07/800px-66a3aDTMFpad.jpeg 300w,
-                   content/images/size/w600/2021/07/800px-66a3aDTMFpad.jpeg 600w,
-                  content/images/size/w1000/2021/07/800px-66a3aDTMFpad.jpeg 1000w,
-                 content/images/size/w2000/2021/07/800px-66a3aDTMFpad.jpeg 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="content/images/size/w600/2021/07/800px-66a3aDTMFpad.jpeg"
-            alt="HTB Crypto Challenge | Call"
-            loading="lazy"
-        />
-    </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="htb-crypto-challenge-call/index.html">
-            <header class="post-card-header">
-                    <div class="post-card-primary-tag">crypto</div>
-                <h2 class="post-card-title">HTB Crypto Challenge | Call</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.</p>
-            </section>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-11-22">Nov 22, 2020</time> <span class="bull">&bull;</span> 1 min read</span>
+                <span class="post-card-byline-author"><a href="author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-12-09">Dec 9, 2020</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
 
@@ -1390,7 +1399,7 @@
     </div>
 </main>
 
-    </main>
+    </div>
 
     <footer class="site-footer outer">
         <div class="inner">
@@ -1410,7 +1419,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script src="assets/built/casper.js%3Fv=49f7696012"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger

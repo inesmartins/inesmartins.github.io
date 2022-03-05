@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
 
-    <title>htb - null</title>
+    <title>htb</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css%3Fv=67a0b9d52b.css" />
+    <style>
+        :root {
+            --button-bg-color: #ffffff;
+            --button-text-color: var(--color-darkgrey);
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css%3Fv=49f7696012.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="htb - null" />
+    <meta property="og:title" content="htb" />
     <meta property="og:url" content="inesmartins.github.io/tag/htb/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/jo-san-archivist2.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="htb - null" />
+    <meta name="twitter:title" content="htb" />
     <meta name="twitter:url" content="inesmartins.github.io/tag/htb/" />
     <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/08/jo-san-archivist2.jpg" />
     <meta property="og:image:width" content="1920" />
@@ -48,9 +55,9 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
+    <meta name="generator" content="Ghost 4.38" />
     <link rel="alternate" type="application/rss+xml" title="" href="../../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.15.0/umd/portal.min.js" data-ghost="inesmartins.github.io/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -114,6 +121,8 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="../../public/cards.min.js%3Fv=49f7696012"></script>
+    <link rel="stylesheet" type="text/css" href="../../public/cards.min.css%3Fv=49f7696012.css">
     <link rel="icon" type="image/png" href="../../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -182,34 +191,34 @@
                 <div class="gh-social">
                 </div>
 
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+                    <a class="gh-head-button" href="index.html#/portal/signup" data-portal="signup">Subscribe</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <div class="site-content">
         
 
-<section class="outer">
+<main id="site-main" class="site-main outer">
     <div class="inner posts">
         <div class="post-feed">
 
-            <header class="post-card post-card-large">
+            <section class="post-card post-card-large">
                 <div class="post-card-content">
                     <div class="post-card-content-link">
                         <header class="post-card-header">
                             <div class="post-card-primary-tag">Tagged</div>
                             <h2 class="post-card-title">htb</h2>
                         </header>
-                        <section class="post-card-excerpt">
+                        <div class="post-card-excerpt">
                             <p>
                                 A collection of 11 posts
                             </p>
-                        </section>
+                        </div>
                     </div>
                 </div>
 
-            </header>
+            </section>
 
 
                 
@@ -235,21 +244,21 @@
                     <div class="post-card-primary-tag">android</div>
                 <h2 class="post-card-title">HTB Write-up | Explore</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -282,21 +291,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Monitors</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLet's start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-10-09">Oct 9, 2021</time> <span class="bull">&bull;</span> 9 min read</span>
             </div>
         </footer>
@@ -329,21 +338,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Time</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningIt seems like this machine is running OpenSSH on port 22 and an Apache web server on port 80: ~ nmap -sC -sV time.htb PORT   STATE SERVICE VERSION PORT     STATE    SERVICE        VERSION 22/tcp   open     ssh            OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux;</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-04-03">Apr 3, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -376,21 +385,21 @@
                     <div class="post-card-primary-tag">crypto</div>
                 <h2 class="post-card-title">HTB Crypto Challenge | Call</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for retired HTB crypto challenge that involves DTFM and Prime Numbers Cipher.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-11-22">Nov 22, 2020</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
@@ -423,21 +432,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Tabby</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for Tabby, a retired HTB machine.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-11-07">Nov 7, 2020</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
@@ -470,21 +479,21 @@
                     <div class="post-card-primary-tag">crypto</div>
                 <h2 class="post-card-title">HTB Crypto Challenge | Bank Heist</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for retired HTB crypto challenge that involves Multi-tap code and Atbash Cipher.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-10-22">Oct 22, 2020</time> <span class="bull">&bull;</span> 1 min read</span>
             </div>
         </footer>
@@ -517,21 +526,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Admirer</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for Adminer, a retired HTB machine.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-10-22">Oct 22, 2020</time> <span class="bull">&bull;</span> 9 min read</span>
             </div>
         </footer>
@@ -564,21 +573,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Cache</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Write-up for Cache, a retired HTB machine.</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-10-22">Oct 22, 2020</time> <span class="bull">&bull;</span> 9 min read</span>
             </div>
         </footer>
@@ -611,21 +620,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up  | Blunder</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here. ScanningScanning with nmap only retrieved an Apache web server running on port 80. ~ nmap -sV -sC -A blunder.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-12 10:13 WEST Nmap scan report for blunder.htb (10.10.10.191) Host is up</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-10-22">Oct 22, 2020</time> <span class="bull">&bull;</span> 5 min read</span>
             </div>
         </footer>
@@ -658,21 +667,21 @@
                     <div class="post-card-primary-tag">htb</div>
                 <h2 class="post-card-title">HTB Write-up | Traceback</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here. ScanningThe scanning gives us very little: an instance of OpenSSH running on port 22 and an Apache server running on port 80 with the title "Help us". ~ nmap -sV -sC -A traceback.htb Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-13 22:58</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-08-27">Aug 27, 2020</time> <span class="bull">&bull;</span> 4 min read</span>
             </div>
         </footer>
@@ -705,21 +714,21 @@
                     <div class="post-card-primary-tag">windows</div>
                 <h2 class="post-card-title">HTB Write-up | Resolute</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>The retired machine can be found here. Official write-up can be downloaded here. I started with some basic scanning with nmap that found that most likely this machine was a Domain Controller, since it had all the required ports open.  $ nmap -sC -sV 10.10.10.169 -Pn 53/tcp</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2020-06-08">Jun 8, 2020</time> <span class="bull">&bull;</span> 3 min read</span>
             </div>
         </footer>
@@ -731,9 +740,9 @@
 
         </div>
     </div>
-</section>
+</main>
 
-    </main>
+    </div>
 
     <footer class="site-footer outer">
         <div class="inner">
@@ -753,7 +762,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../../assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script src="../../assets/built/casper.js%3Fv=49f7696012"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger

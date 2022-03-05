@@ -8,7 +8,14 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=67a0b9d52b.css" />
+    <style>
+        :root {
+            --button-bg-color: #ffffff;
+            --button-text-color: var(--color-darkgrey);
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=49f7696012.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -86,9 +93,9 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
+    <meta name="generator" content="Ghost 4.38" />
     <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.15.0/umd/portal.min.js" data-ghost="inesmartins.github.io/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -152,6 +159,8 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="../public/cards.min.js%3Fv=49f7696012"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=49f7696012.css">
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -220,61 +229,62 @@
                 <div class="gh-social">
                 </div>
 
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+                    <a class="gh-head-button" href="index.html#/portal/signup" data-portal="signup">Subscribe</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <div class="site-content">
         
 
 
 
-<article class="article post tag-bloodhound tag-windows tag-ad tag-macos tag-tips tag-troubleshooting">
+<main id="site-main" class="site-main">
+    <article class="article post tag-bloodhound tag-windows tag-ad tag-macos tag-tips tag-troubleshooting ">
 
-    <header class="article-header gh-canvas">
+        <header class="article-header gh-canvas">
 
-        <section class="article-tag">
-            <a href="../tag/bloodhound/index.html">bloodhound</a>
-        </section>
-
-        <h1 class="article-title">Setting up Bloodhound on macOS</h1>
-
-
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2021-07-11">Jul 11, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
-                    </div>
-                </div>
+            <section class="article-tag">
+                <a href="../tag/bloodhound/index.html">bloodhound</a>
             </section>
-        </div>
 
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2021/07/bloodhound-logo.png 300w,
-                       ../content/images/size/w600/2021/07/bloodhound-logo.png 600w,
-                      ../content/images/size/w1000/2021/07/bloodhound-logo.png 1000w,
-                     ../content/images/size/w2000/2021/07/bloodhound-logo.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2021/07/bloodhound-logo.png"
-                alt="Setting up Bloodhound on macOS"
-            />
-        </figure>
-    </header>
+            <h1 class="article-title">Setting up Bloodhound on macOS</h1>
 
-    <section class="gh-content gh-canvas">
-        <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3</code> to be able to use <code>Bloodhound.py</code>.</p><p>Here's a great StackOverflow answer that explains how to do this downgrade using <code>pyenv</code>:</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/a/62899833"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to downgrade python version from 3.8 to 3.7 (mac)</div><div class="kg-bookmark-description">I’m using Python &amp;amp; okta-aws tools and in order to fetch correct credentials on aws I need to run okta-aws init. But got an error message of Could not read roles from Okta and the system prompte...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v&#x3D;c78bd457575a"><span class="kg-bookmark-author">Stack Overflow</span><span class="kg-bookmark-publisher">user13902742</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v&#x3D;73d79a89bded"></div></a></figure><p>After this process you should now have something like:</p><pre><code>~ python3 --version
+
+            <div class="article-byline">
+                <section class="article-byline-content">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <a href="../author/ines/index.html" class="author-avatar">
+                                <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="article-byline-meta">
+                        <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                        <div class="byline-meta-content">
+                            <time class="byline-meta-date" datetime="2021-07-11">Jul 11, 2021</time>
+                            <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <figure class="article-image">
+                <img
+                    srcset="../content/images/size/w300/2021/07/bloodhound-logo.png 300w,
+                           ../content/images/size/w600/2021/07/bloodhound-logo.png 600w,
+                          ../content/images/size/w1000/2021/07/bloodhound-logo.png 1000w,
+                         ../content/images/size/w2000/2021/07/bloodhound-logo.png 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="../content/images/size/w2000/2021/07/bloodhound-logo.png"
+                    alt="Setting up Bloodhound on macOS"
+                />
+            </figure>
+        </header>
+
+        <section class="gh-content gh-canvas">
+            <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3</code> to be able to use <code>Bloodhound.py</code>.</p><p>Here's a great StackOverflow answer that explains how to do this downgrade using <code>pyenv</code>:</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/a/62899833"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to downgrade python version from 3.8 to 3.7 (mac)</div><div class="kg-bookmark-description">I’m using Python &amp;amp; okta-aws tools and in order to fetch correct credentials on aws I need to run okta-aws init. But got an error message of Could not read roles from Okta and the system prompte...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v&#x3D;c78bd457575a"><span class="kg-bookmark-author">Stack Overflow</span><span class="kg-bookmark-publisher">user13902742</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v&#x3D;73d79a89bded"></div></a></figure><p>After this process you should now have something like:</p><pre><code>~ python3 --version
 Python 3.7.3</code></pre><hr><h2 id="collecting-the-data">Collecting the data</h2><p>On Windows, data collection is done with <a href="https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound.html">SharpHound</a>:</p><blockquote>SharpHound is the official data collector for BloodHound. It is written in C# and uses native Windows API functions and LDAP namespace functions to collect data from domain controllers and domain-joined Windows systems.</blockquote><p>On macOS, you can use <code>Bloodhoud.py</code>, but you also need an additional tool that resolves the AD domain to its IP. I went with <code>DNSChef</code> but you can choose whatever works best.</p><p>So, start by cloning the <a href="https://github.com/fox-it/BloodHound.py">Bloodhound<a href="https://github.com/fox-it/BloodHound.py">.</a>py</a> and <a href="https://github.com/iphelix/dnschef">dnschef.py</a> projects and install the requirements as specified on the <code>README.md</code> files.</p><p>Once both projects are correctly installed, you need to set up <a href="https://github.com/iphelix/dnschef">dnschef.py</a> so that it resolves your AD domain to its corresponding IP, as previously mentioned:</p><pre><code>~ sudo sh -c 'python3 dnschef.py --fakeip x.x.x.x --fakedomains abc.local -q'
 
 (20:14:25) [*] DNSChef started on interface: 127.0.0.1
@@ -297,27 +307,73 @@ INFO: Ignoring host XXX1.abc.local since its hostname does not match: Supplied h
 INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json</code> files to your local directory. You'll be able to import and visualise the data on the next step.</p><hr><h2 id="visualising-the-data">Visualising the data</h2><p>Start by downloading the macOS versions of both <a href="https://neo4j.com/download-center/#community">neo4j Community Edition Server</a> and <a href="https://github.com/BloodHoundAD/BloodHound/releases">Bloodhound GUI</a>.</p><p>Then, go to the directory where you downloaded <code>neo4j</code> and run:</p><pre><code>~ tar -xf neo4j-community-x.x.x-unix.tar
 ~ cd neo4j-community-x.x.x/bin
 ~ ./neo4j console</code></pre><p>Once the <code>neo4j</code> console application is running, go to <a href="http://localhost:7474">http://localhost:7474</a> and authenticate with credentials: <code>neo4j/neo4j</code>. </p><p>You'll be prompted to change the password, so make sure to save these new creds, you'll need for the next step.</p><p>Now, go to the directory where you downloaded <code>Bloodhound GUI</code> and launch the app. </p><p>Leave the default DB URL and enter the same credentials you just set up for <code>neo4j</code>.</p><p>After logging in, on the right side, you'll see an icon to upload data. Click on the icon and import the <code>.json</code> files outputted on the previous step.</p><p>You should now have everything you need to visualise your AD info using Bloodhound! </p>
+        </section>
+
+
+    </article>
+</main>
+
+
+    <section class="footer-cta ">
+        <div class="inner">
+            <h2>Sign up for more like this.</h2>
+            <a class="footer-cta-button" href="index.html#/portal" data-portal>
+                <div class="footer-cta-input">Enter your email</div>
+                <span>Subscribe</span>
+            </a>
+        </div>
     </section>
 
 
-</article>
 
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
+
+            <aside class="read-more-wrap">
+                <div class="read-more inner">
+                        
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/03/android-image.png 300w,
+                   ../content/images/size/w600/2022/03/android-image.png 600w,
+                  ../content/images/size/w1000/2022/03/android-image.png 1000w,
+                 ../content/images/size/w2000/2022/03/android-image.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/03/android-image.png"
+            alt="Exploiting a vulnerable WebView to steal all the files (Android)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting a vulnerable WebView to steal all the files (Android)</h2>
+            </header>
+            <div class="post-card-excerpt">
+                <p>During a recent research project, I came across an application that contained a vulnerable WebView, which enabled an attacker to access non-exported activities and content providers, as well as steal all of its files. Some of these files included contact information, photos, search history and even third-party cookies, so the</p>
+            </div>
         </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-03-05">Mar 5, 2022</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
     </div>
-</section>
 
-
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
+</article>
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-previse/index.html">
@@ -339,21 +395,21 @@ INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | Previse</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -361,7 +417,7 @@ INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json
     </div>
 
 </article>
-                    
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
@@ -383,21 +439,21 @@ INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -405,56 +461,12 @@ INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json
     </div>
 
 </article>
-                    
-<article class="post-card post ">
+                </div>
+            </aside>
 
-    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
-                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
-                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
-                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
-            alt="HTB Write-up | Explore"
-            loading="lazy"
-        />
-    </a>
 
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Explore</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
 
     </div>
-
-</article>
-
-    </div>
-</aside>
-
-
-    </main>
 
     <footer class="site-footer outer">
         <div class="inner">
@@ -474,7 +486,7 @@ INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script src="../assets/built/casper.js%3Fv=49f7696012"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger

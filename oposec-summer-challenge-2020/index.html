@@ -8,7 +8,14 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=67a0b9d52b.css" />
+    <style>
+        :root {
+            --button-bg-color: #ffffff;
+            --button-text-color: var(--color-darkgrey);
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=49f7696012.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -86,9 +93,9 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
+    <meta name="generator" content="Ghost 4.38" />
     <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.15.0/umd/portal.min.js" data-ghost="inesmartins.github.io/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -152,6 +159,8 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="../public/cards.min.js%3Fv=49f7696012"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=49f7696012.css">
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -220,61 +229,62 @@
                 <div class="gh-social">
                 </div>
 
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+                    <a class="gh-head-button" href="index.html#/portal/signup" data-portal="signup">Subscribe</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <div class="site-content">
         
 
 
 
-<article class="article post tag-sstv tag-piet tag-esolang tag-misc tag-ctf tag-oposec">
+<main id="site-main" class="site-main">
+    <article class="article post tag-sstv tag-piet tag-esolang tag-misc tag-ctf tag-oposec ">
 
-    <header class="article-header gh-canvas">
+        <header class="article-header gh-canvas">
 
-        <section class="article-tag">
-            <a href="../tag/sstv/index.html">sstv</a>
-        </section>
-
-        <h1 class="article-title">ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up</h1>
-
-
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2020-09-25">Sep 25, 2020</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
-                    </div>
-                </div>
+            <section class="article-tag">
+                <a href="../tag/sstv/index.html">sstv</a>
             </section>
-        </div>
 
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2020/09/heading3.png 300w,
-                       ../content/images/size/w600/2020/09/heading3.png 600w,
-                      ../content/images/size/w1000/2020/09/heading3.png 1000w,
-                     ../content/images/size/w2000/2020/09/heading3.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2020/09/heading3.png"
-                alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"
-            />
-        </figure>
-    </header>
+            <h1 class="article-title">ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up</h1>
 
-    <section class="gh-content gh-canvas">
-        <h2 id="1-my-paste-100">1 . My Paste | 100</h2><blockquote>Oh no! I forgot where I left my paste. 🗑<br>Perhaps you can help me find it?</blockquote><p>The source code has a little hidden clue:</p><pre><code>&lt;span class="challenge-desc"&gt;&lt;br&gt;
+
+            <div class="article-byline">
+                <section class="article-byline-content">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <a href="../author/ines/index.html" class="author-avatar">
+                                <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="article-byline-meta">
+                        <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                        <div class="byline-meta-content">
+                            <time class="byline-meta-date" datetime="2020-09-25">Sep 25, 2020</time>
+                            <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <figure class="article-image">
+                <img
+                    srcset="../content/images/size/w300/2020/09/heading3.png 300w,
+                           ../content/images/size/w600/2020/09/heading3.png 600w,
+                          ../content/images/size/w1000/2020/09/heading3.png 1000w,
+                         ../content/images/size/w2000/2020/09/heading3.png 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="../content/images/size/w2000/2020/09/heading3.png"
+                    alt="ØxOPOSɆC Summer Challenge 2020 | Misc Challenges Write-up"
+                />
+            </figure>
+        </header>
+
+        <section class="gh-content gh-canvas">
+            <h2 id="1-my-paste-100">1 . My Paste | 100</h2><blockquote>Oh no! I forgot where I left my paste. 🗑<br>Perhaps you can help me find it?</blockquote><p>The source code has a little hidden clue:</p><pre><code>&lt;span class="challenge-desc"&gt;&lt;br&gt;
 Oh no! I forgot where I left my paste.  🗑
 &lt;p&gt;Perhaps you can help me find it?&lt;/p&gt;
 &lt;p style="color: white"&gt;2WvYM5Qx&lt;/p&gt;&lt;/span&gt;</code></pre><p>Since <code>2WvYM5Qx</code> is not the correct flag, it was a matter of thinking outside the box to get to the final answer:  <a href="https://pastebin.com/2WvYM5Qx">https://pastebin.com/2WvYM5Qx</a>.</p><pre><code>Good job!
@@ -299,27 +309,73 @@ Channel(s)                               : 1 channel
 Sampling rate                            : 48.0 kHz
 Bit depth                                : 16 bits
 Stream size                              : 10.6 MiB (100%)</code></pre><p>After discarding the usual audio steganography I decided to take a look at the audio's spectrogram using <a href="https://www.sonicvisualiser.org/">Sonic Visualiser</a>. </p><figure class="kg-card kg-image-card"><img src="../content/images/2020/07/image-5.png" class="kg-image" alt loading="lazy"></figure><p>Because I'm not an expert on audio signals, I decided to Google Image search for signals that looked similar to the one shown on the spectrogram. It didn't take long until I came across <a href="https://bolek42.github.io/ctf/2017-PlaidCTF/terebeep/README.html">this write-up</a> with an eerily similar signal, that corresponds to a <a href="https://en.wikipedia.org/wiki/Slow-scan_television">SSTV (Slow Scan TeleVision)</a> transmission.</p><blockquote>Slow Scan television (SSTV) is a picture transmission method used mainly by amateur radio operators, to transmit and receive static pictures via radio in monochrome or color.</blockquote><p>This plus the hint let me know I was on the right track (however I later found out I should really be using <a href="inesmartins.github.io/p/e400ca1f-a8ad-467c-aecb-2103a5dde81e/www.sigidwiki.co">sigid</a> to identify the signal).</p><p>After spending <em>a lot </em>of time trying to make some Linux tools work for this task I had to use Windows <a href="http://rxsstv.cqsstv.com/">RX-SSTV</a> to finally decode the message:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/07/WhatsApp-Image-2020-07-26-at-10.56.50--1-.jpeg" class="kg-image" alt loading="lazy"></figure><hr><h2 id="3-run-300-">3. Run (300)</h2><figure class="kg-card kg-image-card"><img src="../content/images/2020/07/image-26.png" class="kg-image" alt loading="lazy"></figure><p>This was the only challenge I wasn't able to finish. It turns out this image is actually a program "written" in the the <a href="https://esolangs.org/wiki/Piet">Piet esolang</a>. </p><blockquote>Piet is a <a href="https://esolangs.org/wiki/Stack">stack-based</a><a href="https://esolangs.org/wiki/Esoteric_programming_language">esoteric programming language</a> in which programs look like abstract paintings. It uses 20 colors, of which 18 are related cyclically through a lightness cycle and a hue cycle. [<a href="https://esolangs.org/wiki/Piet">Source</a>]</blockquote><p>There's a handy utility called <a href="https://www.bertnase.de/npiet/">npiet</a> that we could use to get the flag from the file (I had to convert it to PPM first).</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/09/image-37.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="helpful-sources">Helpful Sources</h2><ul><li><a href="https://bolek42.github.io/ctf/2017-PlaidCTF/terebeep/README.html">https://bolek42.github.io/ctf/2017-PlaidCTF/terebeep/README.html</a></li><li><a href="https://wiki.gnuradio.org/index.php/Wav_File_Source">https://wiki.gnuradio.org/index.php/Wav_File_Source</a></li><li><a href="https://charlesreid1.com/wiki/Gnuradio/Wav_to_Waterfall">https://charlesreid1.com/wiki/Gnuradio/Wav_to_Waterfall</a></li><li><a href="https://medium.com/analytics-vidhya/get-secret-message-from-audio-file-8769421205c3">https://medium.com/analytics-vidhya/get-secret-message-from-audio-file-8769421205c3</a></li><li><a href="https://trailofbits.github.io/ctf/forensics/">https://trailofbits.github.io/ctf/forensics/</a></li></ul>
+        </section>
+
+
+    </article>
+</main>
+
+
+    <section class="footer-cta ">
+        <div class="inner">
+            <h2>Sign up for more like this.</h2>
+            <a class="footer-cta-button" href="index.html#/portal" data-portal>
+                <div class="footer-cta-input">Enter your email</div>
+                <span>Subscribe</span>
+            </a>
+        </div>
     </section>
 
 
-</article>
 
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
+
+            <aside class="read-more-wrap">
+                <div class="read-more inner">
+                        
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/03/android-image.png 300w,
+                   ../content/images/size/w600/2022/03/android-image.png 600w,
+                  ../content/images/size/w1000/2022/03/android-image.png 1000w,
+                 ../content/images/size/w2000/2022/03/android-image.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/03/android-image.png"
+            alt="Exploiting a vulnerable WebView to steal all the files (Android)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-vulnerable-webviews-to-access-non-exported-components/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting a vulnerable WebView to steal all the files (Android)</h2>
+            </header>
+            <div class="post-card-excerpt">
+                <p>During a recent research project, I came across an application that contained a vulnerable WebView, which enabled an attacker to access non-exported activities and content providers, as well as steal all of its files. Some of these files included contact information, photos, search history and even third-party cookies, so the</p>
+            </div>
         </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-03-05">Mar 5, 2022</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
     </div>
-</section>
 
-
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
+</article>
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-previse/index.html">
@@ -341,21 +397,21 @@ Stream size                              : 10.6 MiB (100%)</code></pre><p>After 
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | Previse</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -363,7 +419,7 @@ Stream size                              : 10.6 MiB (100%)</code></pre><p>After 
     </div>
 
 </article>
-                    
+                        
 <article class="post-card post ">
 
     <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
@@ -385,21 +441,21 @@ Stream size                              : 10.6 MiB (100%)</code></pre><p>After 
             <header class="post-card-header">
                 <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
             </header>
-            <section class="post-card-excerpt">
+            <div class="post-card-excerpt">
                 <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
-            </section>
+            </div>
         </a>
 
         <footer class="post-card-meta">
             <ul class="author-list">
                 <li class="author-list-item">
                     <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" loading="lazy" />
                     </a>
                 </li>
             </ul>
             <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-author"><a href="../author/ines/index.html">Inês Martins</a></span>
                 <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
             </div>
         </footer>
@@ -407,56 +463,12 @@ Stream size                              : 10.6 MiB (100%)</code></pre><p>After 
     </div>
 
 </article>
-                    
-<article class="post-card post ">
+                </div>
+            </aside>
 
-    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
-                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
-                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
-                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
-            alt="HTB Write-up | Explore"
-            loading="lazy"
-        />
-    </a>
 
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Explore</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
 
     </div>
-
-</article>
-
-    </div>
-</aside>
-
-
-    </main>
 
     <footer class="site-footer outer">
         <div class="inner">
@@ -476,7 +488,7 @@ Stream size                              : 10.6 MiB (100%)</code></pre><p>After 
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js%3Fv=67a0b9d52b"></script>
+<script src="../assets/built/casper.js%3Fv=49f7696012"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
