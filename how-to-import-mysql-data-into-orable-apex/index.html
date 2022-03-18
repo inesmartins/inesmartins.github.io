@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>How to import mySQL data into Oracle APEX (the hard way)</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=14f9250a3a.css" />
+
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="How to import mySQL data into Oracle APEX (the hard way)" />
+    <meta property="og:description" content="Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.Recently I was asked to import a mySQL database into APEX.  Although support for mySQL databases is on the roadmap, it seems like for" />
+    <meta property="og:url" content="inesmartins.github.io/how-to-import-mysql-data-into-orable-apex/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-18-at-10.18.27.png" />
+    <meta property="article:published_time" content="2022-03-18T10:16:10.000Z" />
+    <meta property="article:modified_time" content="2022-03-18T10:19:11.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to import mySQL data into Oracle APEX (the hard way)" />
+    <meta name="twitter:description" content="Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.Recently I was asked to import a mySQL database into APEX.  Although support for mySQL databases is on the roadmap, it seems like for" />
+    <meta name="twitter:url" content="inesmartins.github.io/how-to-import-mysql-data-into-orable-apex/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-18-at-10.18.27.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta property="og:image:width" content="1438" />
+    <meta property="og:image:height" content="586" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png",
+            "width": 592,
+            "height": 572
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": []
+    },
+    "headline": "How to import mySQL data into Oracle APEX (the hard way)",
+    "url": "inesmartins.github.io/how-to-import-mysql-data-into-orable-apex/",
+    "datePublished": "2022-03-18T10:16:10.000Z",
+    "dateModified": "2022-03-18T10:19:11.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-18-at-10.18.27.png",
+        "width": 1438,
+        "height": 586
+    },
+    "description": "&gt; Oracle Application Express (APEX) is a low-code development platform that\nenables you to build scalable, secure enterprise apps, with world-class\nfeatures, that can be deployed anywhere.\nRecently I was asked to import a mySQL database into APEX\n[https://apex.oracle.com/en/]. \n\nAlthough support for mySQL databases is on the roadmap\n[https://apex.oracle.com/en/learn/resources/roadmap/], it seems like for now\nthere&#x27;s no straightforward way to import this data ... so here&#x27;s a tutorial on\nhow to do",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-180659126-1');
+</script>
+<script>
+    window.onload = function(e){ 
+	    var copyrightElement = document.getElementsByClassName('copyright')[0];
+    	copyrightElement.innerHTML = '<p>Inês Martins © 2021</p>'
+        copyrightElement.innerHTML += '<p>Contact: <a href="mailto:inesmartins.github.io@pm.me">inesmartins.github.io@pm.me</a></p>'
+	    copyrightElement.innerHTML += '<p>Banner by Josan Gonzalez aka <a href="https://www.artstation.com/josan">Death Burger</a>'
+        var footerNav = document.getElementsByClassName('site-footer-nav')[0];
+        footerNav.innerHTML = '<img src="http://www.hackthebox.eu/badge/image/172261" alt="Hack The Box">'
+	}
+</script>
+<!-- Styles -->
+<style>
+    .gh-head-actions,
+    .footer-cta, 
+    .gh-head-button {
+        display: none;
+    }
+    .article-image img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+    .site-footer-nav {
+        display: block;
+    }
+    @media (max-width: 800px) {    
+	    .site-footer-nav {
+    	    margin: 20px auto;
+	    }
+    }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
+
+</head>
+<body class="post-template">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                </div>
+
+                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post">
+
+    <header class="article-header gh-canvas">
+
+
+        <h1 class="article-title">How to import mySQL data into Oracle APEX (the hard way)</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="../author/ines/index.html" class="author-avatar">
+                            <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2022-03-18">Mar 18, 2022</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2022/03/Screenshot-2022-03-18-at-10.18.27.png 300w,
+                       ../content/images/size/w600/2022/03/Screenshot-2022-03-18-at-10.18.27.png 600w,
+                      ../content/images/size/w1000/2022/03/Screenshot-2022-03-18-at-10.18.27.png 1000w,
+                     ../content/images/size/w2000/2022/03/Screenshot-2022-03-18-at-10.18.27.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2022/03/Screenshot-2022-03-18-at-10.18.27.png"
+                alt="How to import mySQL data into Oracle APEX (the hard way)"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <blockquote>Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.</blockquote><p>Recently I was asked to import a <code>mySQL</code> database into <a href="https://apex.oracle.com/en/">APEX</a>. </p><p>Although support for <code>mySQL</code> databases is on <a href="https://apex.oracle.com/en/learn/resources/roadmap/">the roadmap</a>, it seems like for now there's no straightforward way to import this data ... so here's a tutorial on how to do it the <em>hard way</em>.</p><p>Under "SQL Workshop" &gt; "Utilities" &gt; "Data Workshop" you can see that there's a feature that allows you to load data in multiple formats, including <code>csv</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.48.45.png" class="kg-image" alt loading="lazy"></figure><p>So, I decided to create a Python script to grab the data from each of the tables in the <code>mySQL</code> database and export it as an individual <code>csv</code> file:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/ba54cdd6eadb608ec10744535e1dde77.js"></script><!--kg-card-end: html--><p> In order to run this scrip, make sure to install <a href="https://pypi.org/project/mysql-connector-python/">mysql-connector-python</a>:</p><pre><code class="language-python">python3 -m pip install mysql-connector-python</code></pre><p>Then, you can simply run:</p><pre><code>python3 mysql-to-csv.py</code></pre><p>By the end, you should have a directory full of <code>csv</code> files which you can import, as such:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.56.57-1.png" class="kg-image" alt loading="lazy"></figure><p>Note that you can only load one file at a time, and you also need to manually add the table's name.</p><p>Once you're done with importing the data you can go to "SQL Workshop" &gt; "Object Browser" and see all of your tables, which you can then modify as needed:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.59.39.png" class="kg-image" alt loading="lazy" width="1440" height="689" srcset="../content/images/size/w600/2022/03/Screenshot-2022-03-18-at-09.59.39.png 600w, ../content/images/size/w1000/2022/03/Screenshot-2022-03-18-at-09.59.39.png 1000w, ../content/images/2022/03/Screenshot-2022-03-18-at-09.59.39.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Unfortunately, using this method you need to <strong>add all of the constraints</strong> by hand.</p><p>I'm sure there is a better way to do this, but in the meanwhile here's a bad workaround, hope it helps!</p>
+    </section>
+
+
+</article>
+
+<section class="footer-cta">
+    <div class="inner">
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="index.html#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-previse/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/01/Screenshot-2022-01-05-at-15.03.17.png 300w,
+                   ../content/images/size/w600/2022/01/Screenshot-2022-01-05-at-15.03.17.png 600w,
+                  ../content/images/size/w1000/2022/01/Screenshot-2022-01-05-at-15.03.17.png 1000w,
+                 ../content/images/size/w2000/2022/01/Screenshot-2022-01-05-at-15.03.17.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/01/Screenshot-2022-01-05-at-15.03.17.png"
+            alt="HTB Write-up | Previse"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-previse/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Previse</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/12/Screenshot-2021-12-31-at-11.14.19.png 300w,
+                   ../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.14.19.png 600w,
+                  ../content/images/size/w1000/2021/12/Screenshot-2021-12-31-at-11.14.19.png 1000w,
+                 ../content/images/size/w2000/2021/12/Screenshot-2021-12-31-at-11.14.19.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.14.19.png"
+            alt="HTB Write-up | BountyHunter"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-bountyhunter/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-explore/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-01-at-15.59.58.png 300w,
+                   ../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png 600w,
+                  ../content/images/size/w1000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 1000w,
+                 ../content/images/size/w2000/2021/08/Screenshot-2021-08-01-at-15.59.58.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/08/Screenshot-2021-08-01-at-15.59.58.png"
+            alt="HTB Write-up | Explore"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-explore/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Explore</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.esketitLet's start with some basic scanning: ~ nmap -A 10.10.10.247 PORT     STATE    SERVICE    VERSION 2222/tcp open     ssh     (protocol 2.0) | fingerprint-strings:  |   NULL:  |_    SSH-2.0-SSH Server - Banana Studio | ssh-hostkey:  |_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2021/08/Screenshot-2021-08-22-at-21.31.59.png" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-10-30">Oct 30, 2021</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html"></a> &copy; 2022</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=14f9250a3a"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
