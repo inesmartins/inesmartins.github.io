@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/oposec-baby-xmas-challenge-android-rev/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2020/06/highres_471963990-1-1.jpeg" />
     <meta property="article:published_time" content="2020-06-13T21:33:38.000Z" />
-    <meta property="article:modified_time" content="2020-06-14T07:43:31.000Z" />
+    <meta property="article:modified_time" content="2022-03-20T13:01:26.000Z" />
     <meta property="article:tag" content="android" />
     <meta property="article:tag" content="rev" />
     <meta property="article:tag" content="oposec" />
@@ -50,19 +50,13 @@
     "author": {
         "@type": "Person",
         "name": "Inês Martins",
-        "image": {
-            "@type": "ImageObject",
-            "url": "inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png",
-            "width": 592,
-            "height": 572
-        },
         "url": "inesmartins.github.io/author/ines/",
         "sameAs": []
     },
     "headline": "ØxOPOSɆC Baby Xmas Challenge 2019 | Android Rev",
     "url": "inesmartins.github.io/oposec-baby-xmas-challenge-android-rev/",
     "datePublished": "2020-06-13T21:33:38.000Z",
-    "dateModified": "2020-06-14T07:43:31.000Z",
+    "dateModified": "2022-03-20T13:01:26.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2020/06/highres_471963990-1-1.jpeg",
@@ -688,7 +682,7 @@ drwxr-xr-x@  3 inesmartins  staff       96 Jun 13 20:59 lib
 drwxr-xr-x@ 16 inesmartins  staff      512 Jun 13 20:59 res
 -rw-r--r--@  1 inesmartins  staff   225072 Nov 22  2019 resources.arsc
 </code></pre>
-<p>So, as expected we see <code>AndroidManifest.xml</code>, some .dex files (the source code), the resources, and also one <a href="https://en.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a> (JNI) library that contains some interesting information:</p><pre><code>~ strings lib/armeabi-v7a/libopoctf-jni.so
+<p>So, as expected we see <code>AndroidManifest.xml</code>, some <code>.dex</code> files (the source code), the resources, and also one <a href="https://en.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a> (JNI) library that contains some interesting strings:</p><pre><code>~ strings lib/armeabi-v7a/libopoctf-jni.so
 
 ...
 Java_pt_oposec_ctfzadas_CTFObject_firstFlag
@@ -705,38 +699,9 @@ This_is_not_the_flag
 This_is_the_flag
 ...
 </code></pre>
-<h2 id="decoding-the-app">Decoding the app</h2><p><a href="https://ibotpeaches.github.io/Apktool/">apktool</a> is able to rebuild some of the resources of the Android project back to their original format, which is very useful when trying to read the <code>AndroidManifest.xml</code> file:</p><pre><code>~ apktool decode xmas_ctfzadas.apk
-
-~ cat xmas_ctfzadas/AndroidManifest.xml
-
-&lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
-&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          android:compileSdkVersion="23"
-          android:compileSdkVersionCodename="6.0-2438415"
-          package="pt.oposec.ctfzadas"
-          platformBuildVersionCode="1"
-          platformBuildVersionName="1.0"&gt;
-    &lt;uses-permission android:name="android.permission.INTERNET"/&gt;
-    &lt;application android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
-                 android:allowBackup="true"
-                 android:debuggable="true"
-                 android:exported="true"
-                 android:icon="@mipmap/ic_launcher"
-                 android:label="@string/app_name"
-                 android:supportsRtl="true"
-                 android:theme="@style/AppTheme"&gt;
-        &lt;activity android:name="pt.oposec.ctfzadas.MainActivity"&gt;
-            &lt;intent-filter&gt;
-                &lt;action android:name="android.intent.action.MAIN"/&gt;
-                &lt;category android:name="android.intent.category.LAUNCHER"/&gt;
-            &lt;/intent-filter&gt;
-        &lt;/activity&gt;
-    &lt;/application&gt;
-&lt;/manifest&gt;
+<h2 id="static-analysis-with-jadx">Static analysis with Jadx</h2><p>To be able to use <code>jadx</code> we need to transform the <code>.dex</code> files into a single <code>.jar</code> file, which we can achieve using the <a href="https://sourceforge.net/projects/dex2jar/files/">dex2jar</a> script:</p><pre><code>~ sh dex2jar-2.0/d2j-dex2jar.sh -f xmas_ctfzadas.apk
 </code></pre>
-<p>As you can see, this application has only one <a href="https://developer.android.com/reference/android/app/Activity">Activity</a> - MainActivity.</p><h2 id="static-analysis-with-jd-gui">Static analysis with JD-GUI</h2><p>We start by transforming the .dex files into a single .jar file using the <a href="https://sourceforge.net/projects/dex2jar/files/">dex2jar</a> script:</p><pre><code>~ sh dex2jar-2.0/d2j-dex2jar.sh -f xmas_ctfzadas.apk
-</code></pre>
-<p>To go through the .jar we use <a href="http://java-decompiler.github.io/">JD-GUI</a>.</p><figure class="kg-card kg-image-card"></figure><p>The <code>pt.oposec.ctfzadas</code> package contains 4 classes:</p><ul><li><code>BuildConfig.class</code> and <code>R.class</code> are both automatically generated files: the first lists the project configs and the second identifies all the project assets;</li><li>this leaves only 2 interesting files: <code>MainActivity.class</code> and <code>CTFObject.class</code>.</li></ul><h3 id="mainactivity-class">MainActivity.class</h3><p>As we can see below, on app start the MainActivity loads the <code>opoctf-jni</code> library, then creates a <a href="https://developer.android.com/reference/android/webkit/WebView">Webview</a> that has access to an instance of the <code>CTFObject</code> class called <code>ctfObj</code>. The webview's URL depends on the Intent's <code>open_sesame</code> query string.</p><figure class="kg-card kg-image-card"></figure><h3 id="ctfobject-class">CTFObject.class</h3><p>This class is quite interesting:</p><ol><li>There is a function called <code>um</code> that returns the output of the <code>firstFlag</code> JNI function:</li></ol><pre><code class="language-java">public class CTFObject {
+<figure class="kg-card kg-image-card"></figure><p>The <code>pt.oposec.ctfzadas</code> package contains 4 classes:</p><ul><li><code>BuildConfig.class</code> and <code>R.class</code> are automatically generated files: the first lists the project configs and the second identifies all the project assets;</li><li>this leaves us with only 2 interesting files: <code>MainActivity.class</code> and <code>CTFObject.class</code>.</li></ul><h3 id="mainactivity-class">MainActivity.class</h3><p>As we can see below, on app start the MainActivity loads the <code>opoctf-jni</code> library, then creates a <a href="https://developer.android.com/reference/android/webkit/WebView">Webview</a> that has access to an instance of the <code>CTFObject</code> class called <code>ctfObj</code>. The webview's URL depends on the Intent's <code>open_sesame</code> query string.</p><figure class="kg-card kg-image-card"></figure><h3 id="ctfobject-class">CTFObject.class</h3><p>This class is quite interesting:</p><ol><li>There is a function called <code>um</code> that returns the output of the <code>firstFlag</code> JNI function:</li></ol><pre><code class="language-java">public class CTFObject {
 ...
 	
     public native String firstFlag();
@@ -786,7 +751,7 @@ This_is_the_flag
 
 ...
 }
-</code></pre><p>Note that functions <code>um</code>, <code>dois</code> and <code>tres</code> are accessible on the MainActivity's webview since they're marked with the <a href="https://developer.android.com/reference/android/webkit/JavascriptInterface">JavascriptInterface notation</a>.</p><h2 id="re-creating-the-android-project">Re-Creating the Android project</h2><p>After installing <a href="https://developer.android.com/studio/?gclid=CjwKCAjw8pH3BRAXEiwA1pvMsX1EY3uC8enHJFsoQM2iuA4gUypWFvBJ7tUuhjy1dcuRjtUnVzUa3RoCvdcQAvD_BwE&amp;gclsrc=aw.ds">Android Studio</a> we create a new Android project and then:</p><ul><li>add the <code>CTFObject</code> class to <code>src/main/java/pt.oposec.ctfzadas</code> - I ended up changing the Java code to Kotlin, since I'm more familiar with it.</li><li>add the <code>libopoctf-jni.so</code> library under <code>/src/main/jniLibs/armeabi-v7a</code> (this path is extremely important).</li></ul><figure class="kg-card kg-image-card"></figure><h2 id="getting-the-first-flag">Getting the first flag</h2><p>The first flag is very simple, all we need is an instance of <code>CTFObject</code> and then we can simply print the result of calling either <code>um</code> or the <code>firstFlag</code> function directly, as shown below.</p><pre><code class="language-kotlin">package pt.oposec.ctfzadas
+</code></pre><p>Note that functions <code>um</code>, <code>dois</code> and <code>tres</code> are accessible on the MainActivity's webview since they're marked with the <a href="https://developer.android.com/reference/android/webkit/JavascriptInterface">JavascriptInterface notation</a>.</p><h2 id="re-creating-the-android-project">Re-Creating the Android project</h2><p>After installing <a href="https://developer.android.com/studio/?gclid=CjwKCAjw8pH3BRAXEiwA1pvMsX1EY3uC8enHJFsoQM2iuA4gUypWFvBJ7tUuhjy1dcuRjtUnVzUa3RoCvdcQAvD_BwE&amp;gclsrc=aw.ds">Android Studio</a> we create a new Android project and then:</p><ul><li>add the <code>CTFObject</code> class to <code>src/main/java/pt.oposec.ctfzadas</code> (I ended up changing the Java code to Kotlin, since I'm more familiar with it);</li><li>add the <code>libopoctf-jni.so</code> library under <code>/src/main/jniLibs/armeabi-v7a</code> (<strong>this path is extremely important</strong>).</li></ul><figure class="kg-card kg-image-card"></figure><h2 id="getting-the-first-flag">Getting the first flag</h2><p>The first flag is very simple, all we need is an instance of <code>CTFObject</code> and then we can simply print the result of calling either <code>um</code> or the <code>firstFlag</code> function directly, as shown below.</p><pre><code class="language-kotlin">package pt.oposec.ctfzadas
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
