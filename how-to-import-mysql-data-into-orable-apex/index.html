@@ -8,7 +8,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=5d45e9fecb.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=8f22d63ad0.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -20,7 +20,7 @@
     <meta property="og:url" content="inesmartins.github.io/how-to-import-mysql-data-into-orable-apex/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-18-at-10.18.27.png" />
     <meta property="article:published_time" content="2022-03-18T10:16:10.000Z" />
-    <meta property="article:modified_time" content="2022-03-18T10:25:29.000Z" />
+    <meta property="article:modified_time" content="2022-03-22T18:37:35.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="How to import mySQL data into Oracle APEX (the hard way)" />
     <meta name="twitter:description" content="Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.Recently I was asked to import a mySQL database into APEX.  Although support for mySQL databases is on the roadmap, it seems like for" />
@@ -55,7 +55,7 @@
     "headline": "How to import mySQL data into Oracle APEX (the hard way)",
     "url": "inesmartins.github.io/how-to-import-mysql-data-into-orable-apex/",
     "datePublished": "2022-03-18T10:16:10.000Z",
-    "dateModified": "2022-03-18T10:25:29.000Z",
+    "dateModified": "2022-03-22T18:37:35.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-18-at-10.18.27.png",
@@ -254,7 +254,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <blockquote>Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.</blockquote><p>Recently I was asked to import a <code>mySQL</code> database into <a href="https://apex.oracle.com/en/">APEX</a>. </p><p>Although support for <code>mySQL</code> databases is on <a href="https://apex.oracle.com/en/learn/resources/roadmap/">the roadmap</a>, it seems like for now there's no straightforward way to import this data ... so here's a tutorial on how to do it the <em>hard way</em>.</p><p>Under "SQL Workshop" &gt; "Utilities" &gt; "Data Workshop" you can see that there's a feature that allows you to load data in multiple formats, including <code>csv</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.48.45.png" class="kg-image" alt loading="lazy"></figure><p>So, I decided to create a Python script to grab the data from each of the tables in the <code>mySQL</code> database and export it as an individual <code>csv</code> file:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/ba54cdd6eadb608ec10744535e1dde77.js"></script><!--kg-card-end: html--><p> In order to run this scrip, make sure to install <a href="https://pypi.org/project/mysql-connector-python/">mysql-connector-python</a>:</p><pre><code class="language-python">python3 -m pip install mysql-connector-python</code></pre><p>Then, you can simply run:</p><pre><code>python3 mysql-to-csv.py</code></pre><p>By the end, you should have a directory full of <code>csv</code> files which you can import, as such:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.56.57-1.png" class="kg-image" alt loading="lazy"></figure><p>Note that you can only load one file at a time, and you also need to manually add the table's name.</p><p>Once you're done with importing the data you can go to "SQL Workshop" &gt; "Object Browser" and see all of your tables, which you can then modify as needed:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png" class="kg-image" alt loading="lazy" width="1440" height="689" srcset="../content/images/size/w600/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png 600w, ../content/images/size/w1000/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png 1000w, ../content/images/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Unfortunately, using this method you also need to <strong>add all of the constraints</strong> by hand.</p><p>I'm sure there is a better way to do this, but in the meanwhile here's a bad workaround, hope it helps!</p>
+        <blockquote>Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.</blockquote><p>Recently I was asked to import a <code>mySQL</code> database into <a href="https://apex.oracle.com/en/">APEX</a>. </p><p>Although support for <code>mySQL</code> databases is on <a href="https://apex.oracle.com/en/learn/resources/roadmap/">the roadmap</a>, it seems like for now there's no straightforward way to import this data ... so here's a tutorial on how to do it the <em>hard way</em>.</p><p>Under "SQL Workshop" &gt; "Utilities" &gt; "Data Workshop" you can see that there's a feature that allows you to load data in multiple formats, including <code>csv</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.48.45.png" class="kg-image" alt loading="lazy"></figure><p>So, I decided to create a Python script to grab the data from each of the tables in the <code>mySQL</code> database and export it as an individual <code>csv</code> file:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/ba54cdd6eadb608ec10744535e1dde77.js"></script><!--kg-card-end: html--><p> In order to run this script, make sure to install <a href="https://pypi.org/project/mysql-connector-python/">mysql-connector-python</a>:</p><pre><code class="language-python">python3 -m pip install mysql-connector-python</code></pre><p>Then, you can simply run:</p><pre><code>python3 mysql-to-csv.py</code></pre><p>By the end, you should have a directory full of <code>csv</code> files which you can import, as such:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.56.57-1.png" class="kg-image" alt loading="lazy"></figure><p>Note that you can only load one file at a time, and you also need to manually add the table's name.</p><p>Once you're done with importing the data you can go to "SQL Workshop" &gt; "Object Browser" and see all of your tables, which you can then modify as needed:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png" class="kg-image" alt loading="lazy" width="1440" height="689" srcset="../content/images/size/w600/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png 600w, ../content/images/size/w1000/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png 1000w, ../content/images/2022/03/Screenshot-2022-03-18-at-09.59.39-1.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Unfortunately, using this method you also need to <strong>add all of the constraints</strong> by hand.</p><p>I'm sure there is a better way to do this, but in the meanwhile here's a bad workaround, hope it helps!</p>
     </section>
 
 
@@ -429,7 +429,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js%3Fv=5d45e9fecb"></script>
+<script src="../assets/built/casper.js%3Fv=8f22d63ad0"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
