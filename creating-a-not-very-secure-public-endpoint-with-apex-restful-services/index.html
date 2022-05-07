@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Creating a (not very secure) public endpoint with Oracle APEX Restful Services</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=1942860626.css" />
+
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Creating a (not very secure) public endpoint with Oracle APEX Restful Services" />
+    <meta property="og:description" content="I&#x27;m currently helping an organisation that has a very simple (front-end only) website. They were interested in adding a contact form to the website, and wanted the data to be sent to their APEX-managed database. Building an entire back-end service for this purpose seemed like too much work,  so I" />
+    <meta property="og:url" content="inesmartins.github.io/creating-a-not-very-secure-public-endpoint-with-apex-restful-services/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png" />
+    <meta property="article:published_time" content="2022-05-07T15:35:26.000Z" />
+    <meta property="article:modified_time" content="2022-05-07T16:07:35.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Creating a (not very secure) public endpoint with Oracle APEX Restful Services" />
+    <meta name="twitter:description" content="I&#x27;m currently helping an organisation that has a very simple (front-end only) website. They were interested in adding a contact form to the website, and wanted the data to be sent to their APEX-managed database. Building an entire back-end service for this purpose seemed like too much work,  so I" />
+    <meta name="twitter:url" content="inesmartins.github.io/creating-a-not-very-secure-public-endpoint-with-apex-restful-services/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="934" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": []
+    },
+    "headline": "Creating a (not very secure) public endpoint with Oracle APEX Restful Services",
+    "url": "inesmartins.github.io/creating-a-not-very-secure-public-endpoint-with-apex-restful-services/",
+    "datePublished": "2022-05-07T15:35:26.000Z",
+    "dateModified": "2022-05-07T16:07:35.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png",
+        "width": 2000,
+        "height": 934
+    },
+    "description": "I&#x27;m currently helping an organisation that has a very simple (front-end only)\nwebsite. They were interested in adding a contact form to the website, and\nwanted the data to be sent to their APEX-managed database.\n\nBuilding an entire back-end service for this purpose seemed like too much work,\n so I decided to give APEX&#x27;s RESTful Services\n[https://docs.oracle.com/database/apex-18.1/AEUTL/using-RESTful-services.htm#AEUTL445] \na try:\n\nRESTful Services enable the creation of a set of standards-based ",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180659126-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-180659126-1');
+</script>
+<!-- Injects copyright and footer -->
+<script>
+    window.onload = function(e){ 
+	    var copyrightElement = document.getElementsByClassName('copyright')[0];
+    	copyrightElement.innerHTML = '<p>Inês Martins © 2021</p>'
+        copyrightElement.innerHTML += '<p>Contact: <a href="mailto:inesmartins.github.io@pm.me">inesmartins.github.io@pm.me</a></p>'
+	    copyrightElement.innerHTML += '<p>Banner by Josan Gonzalez aka <a href="https://www.artstation.com/josan">Death Burger</a>'
+        var footerNav = document.getElementsByClassName('site-footer-nav')[0];
+        footerNav.innerHTML = '<img src="http://www.hackthebox.eu/badge/image/172261" alt="Hack The Box">'
+	}
+</script>
+<!-- Styles -->
+<style>
+    .gh-head-actions,
+    .footer-cta, 
+    .gh-head-button {
+        display: none;
+    }
+    .article-image img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+    .site-footer-nav {
+        display: block;
+    }
+    @media (max-width: 800px) {    
+	    .site-footer-nav {
+    	    margin: 20px auto;
+	    }
+    }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
+
+</head>
+<body class="post-template">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                </div>
+
+                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post">
+
+    <header class="article-header gh-canvas">
+
+
+        <h1 class="article-title">Creating a (not very secure) public endpoint with Oracle APEX Restful Services</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="../author/ines/index.html" class="author-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2022-05-07">May 7, 2022</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png 300w,
+                       ../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png 600w,
+                      ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png 1000w,
+                     ../content/images/size/w2000/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2022/05/Screenshot-2022-05-07-at-16.37.19-1.png"
+                alt="Creating a (not very secure) public endpoint with Oracle APEX Restful Services"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p>I'm currently helping an organisation that has a very simple (front-end only) website. They were interested in adding a contact form to the website, and wanted the data to be sent to their APEX-managed database.</p><p>Building an entire back-end service for this purpose seemed like too much work,  so I decided to give APEX's <a href="https://docs.oracle.com/database/apex-18.1/AEUTL/using-RESTful-services.htm#AEUTL445">RESTful Services</a> a try:</p><p><em>	RESTful Services enable the creation of a set of standards-based API’s on top of database objects available for a workspace. Without connecting directly to the underlying data source these API’s allow external systems to interact securely with the data by querying, inserting, updating or deleting.</em></p><p>I started by creating a new <code>CONTACT_REQUEST</code> table:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-14.34.03.png" class="kg-image" alt loading="lazy" width="1978" height="744" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-14.34.03.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-14.34.03.png 1000w, ../content/images/size/w1600/2022/05/Screenshot-2022-05-07-at-14.34.03.png 1600w, ../content/images/2022/05/Screenshot-2022-05-07-at-14.34.03.png 1978w" sizes="(min-width: 720px) 720px"></figure><p>Then, on the "Restful Data Services" page (under <code>SQL Workshop</code>), I created a new <a href="https://docs.oracle.com/database/apex-5.1/AEUTL/how-to-create-RESTful-service-module-example.htm#AEUTL29134">Module</a> called <code>forms</code>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-17.02.24.png" class="kg-image" alt loading="lazy" width="1616" height="772" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-17.02.24.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-17.02.24.png 1000w, ../content/images/size/w1600/2022/05/Screenshot-2022-05-07-at-17.02.24.png 1600w, ../content/images/2022/05/Screenshot-2022-05-07-at-17.02.24.png 1616w" sizes="(min-width: 720px) 720px"></figure><p>Note that I've added the website's domain in the "<a href="https://oracle-base.com/articles/misc/oracle-rest-data-services-ords-allowed-origins">Origins Allowed</a>" field. </p><p>By doing so, APEX enforces <code>CORS</code> origin validation, which in this case is not really something that I care about, since this is a non-authenticated request that can be executed by anyone.</p><p>Under this module, I created a new <strong>Template</strong> called <code>contact</code>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-16.42.22.png" class="kg-image" alt loading="lazy" width="2000" height="747" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-16.42.22.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-16.42.22.png 1000w, ../content/images/size/w1600/2022/05/Screenshot-2022-05-07-at-16.42.22.png 1600w, ../content/images/2022/05/Screenshot-2022-05-07-at-16.42.22.png 2068w" sizes="(min-width: 720px) 720px"></figure><p>Finally, I created a <strong>Handler</strong> for this template:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-14.19.13.png" class="kg-image" alt loading="lazy" width="1734" height="772" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-14.19.13.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-14.19.13.png 1000w, ../content/images/size/w1600/2022/05/Screenshot-2022-05-07-at-14.19.13.png 1600w, ../content/images/2022/05/Screenshot-2022-05-07-at-14.19.13.png 1734w" sizes="(min-width: 720px) 720px"></figure><p>The most important part of the handler configuration is the <code>PL/SQL</code> block. I used this script to insert the data into the database and define a <code>status</code> variable with value <code>201</code>, which is the success status code:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-15.27.12.png" class="kg-image" alt loading="lazy" width="1326" height="438" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-15.27.12.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-15.27.12.png 1000w, ../content/images/2022/05/Screenshot-2022-05-07-at-15.27.12.png 1326w" sizes="(min-width: 720px) 720px"></figure><p>In order for the status code to be returned, I also needed to add the <code>X-APEX-STATUS-CODE</code> header configuration at the bottom of the page:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-15.28.40.png" class="kg-image" alt loading="lazy" width="2000" height="313" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-15.28.40.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-15.28.40.png 1000w, ../content/images/size/w1600/2022/05/Screenshot-2022-05-07-at-15.28.40.png 1600w, ../content/images/2022/05/Screenshot-2022-05-07-at-15.28.40.png 2070w" sizes="(min-width: 720px) 720px"></figure><p>In just a couple of minutes, I had my new endpoint:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-16.44.00.png" class="kg-image" alt loading="lazy" width="1492" height="758" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-16.44.00.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-16.44.00.png 1000w, ../content/images/2022/05/Screenshot-2022-05-07-at-16.44.00.png 1492w" sizes="(min-width: 720px) 720px"></figure><p>And as you can see the data is added to the new database, as expected:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/05/Screenshot-2022-05-07-at-15.32.56.png" class="kg-image" alt loading="lazy" width="2000" height="424" srcset="../content/images/size/w600/2022/05/Screenshot-2022-05-07-at-15.32.56.png 600w, ../content/images/size/w1000/2022/05/Screenshot-2022-05-07-at-15.32.56.png 1000w, ../content/images/size/w1600/2022/05/Screenshot-2022-05-07-at-15.32.56.png 1600w, ../content/images/2022/05/Screenshot-2022-05-07-at-15.32.56.png 2068w" sizes="(min-width: 720px) 720px"></figure><h2 id="this-doesnt-look-very-secure">This doesn't look very secure</h2><p>It's not.</p><p><strong>APEX doesn't seem to support rate limiting</strong>, so there's not much else I can do to prevent someone from finding this endpoint and spamming it for fun.</p><p>Since this endpoint needs to be called directly from the website, I can't think of any alternative way to throttle requests.</p><p>Finally, if you've been paying attention I've been obscuring the sub-directory that APEX assigned for my organisation, which was based on the "schema" that I set at the start of this process.</p><p>This means that a simple Google Dork may allow you to <strong>enumerate all endpoints of this type</strong>, and most likely you'll find many that don't enforce authorisation, either on purpose (which is the case here), or by mistake.</p>
+    </section>
+
+
+</article>
+
+<section class="footer-cta">
+    <div class="inner">
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="index.html#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../how-to-import-mysql-data-into-orable-apex/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/03/Screenshot-2022-03-18-at-10.18.27.png 300w,
+                   ../content/images/size/w600/2022/03/Screenshot-2022-03-18-at-10.18.27.png 600w,
+                  ../content/images/size/w1000/2022/03/Screenshot-2022-03-18-at-10.18.27.png 1000w,
+                 ../content/images/size/w2000/2022/03/Screenshot-2022-03-18-at-10.18.27.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/03/Screenshot-2022-03-18-at-10.18.27.png"
+            alt="How to import mySQL data into Oracle APEX (the hard way)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../how-to-import-mysql-data-into-orable-apex/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">How to import mySQL data into Oracle APEX (the hard way)</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Oracle Application Express (APEX) is a low-code development platform that enables you to build scalable, secure enterprise apps, with world-class features, that can be deployed anywhere.Recently I was asked to import a mySQL database into APEX.  Although support for mySQL databases is on the roadmap, it seems like for</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-03-18">Mar 18, 2022</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-previse/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2022/01/Screenshot-2022-01-05-at-15.03.17.png 300w,
+                   ../content/images/size/w600/2022/01/Screenshot-2022-01-05-at-15.03.17.png 600w,
+                  ../content/images/size/w1000/2022/01/Screenshot-2022-01-05-at-15.03.17.png 1000w,
+                 ../content/images/size/w2000/2022/01/Screenshot-2022-01-05-at-15.03.17.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2022/01/Screenshot-2022-01-05-at-15.03.17.png"
+            alt="HTB Write-up | Previse"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-previse/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | Previse</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.ScanningAs always, we start by mapping the previse.htb hostname to the given IP:  ~ sudo nano /etc/hosts 10.10.11.104  previse.htbThe nmap scan is pretty boring, it seems there's a web server running on port 80 and an SSH server on</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2022-01-21">Jan 21, 2022</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-write-up-bountyhunter/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2021/12/Screenshot-2021-12-31-at-11.14.19.png 300w,
+                   ../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.14.19.png 600w,
+                  ../content/images/size/w1000/2021/12/Screenshot-2021-12-31-at-11.14.19.png 1000w,
+                 ../content/images/size/w2000/2021/12/Screenshot-2021-12-31-at-11.14.19.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.14.19.png"
+            alt="HTB Write-up | BountyHunter"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-write-up-bountyhunter/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | BountyHunter</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here.ScanningLike with most HTB machines, a quick scan only disclosed SSH running on port 22 and a web server running on port 80: ~ nmap 10.10.11.100 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http ~ nmap 10.10.11.100</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-11-29">Nov 29, 2021</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html"></a> &copy; 2022</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=1942860626"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
