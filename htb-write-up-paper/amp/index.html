@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-paper/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-20-at-20.20.03.png" />
     <meta property="article:published_time" content="2022-07-16T15:19:29.000Z" />
-    <meta property="article:modified_time" content="2022-07-16T15:19:55.000Z" />
+    <meta property="article:modified_time" content="2022-07-16T15:27:20.000Z" />
     <meta property="article:tag" content="wordpress" />
     <meta property="article:tag" content="wp" />
     <meta property="article:tag" content="wpscan" />
@@ -59,7 +59,7 @@
     "headline": "HTB Write-up | Paper",
     "url": "inesmartins.github.io/htb-write-up-paper/",
     "datePublished": "2022-07-16T15:19:29.000Z",
-    "dateModified": "2022-07-16T15:19:55.000Z",
+    "dateModified": "2022-07-16T15:27:20.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2022/03/Screenshot-2022-03-20-at-20.20.03.png",
@@ -676,19 +676,19 @@ PORT    STATE SERVICE
 443/tcp open  https</code></pre><p>A closer look at these ports doesn't reveal anything too interesting, and both the secure and non-secure versions of the website show the same boilerplate content:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>However, looking at the server response for this page, we can see an interesting header:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>When we configure this virtual host locally, we see a blog for the "Blunder Tiffin Paper Company":</p><pre><code>~ sudo nano /etc/hosts
 
 ...
-10.10.11.143    office.paper</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Going through the posts we can see some hints:</p><figure class="kg-card kg-image-card"></figure><p>So, ... <code>Prisonmike</code> is supposed to be the only user but <code>nick</code> commented that they should "remove the secret content" from the drafts ... interesting.</p><p>Running <code>nikto</code> we can see a lot of clues that this is a Wordpress blog:</p><pre><code>~ nikto -h http://office.paper/
+10.10.11.143    office.paper</code></pre><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Going through the posts we can see some hints:</p><figure class="kg-card kg-image-card"></figure><p>So, ... <code>Prisonmike</code> is supposed to be the only user but <code>nick</code> commented that they should "remove the secret content" from the drafts ... interesting.</p><p>Running <code>nikto</code> we can see that this is a Wordpress blog:</p><pre><code>~ nikto -h http://office.paper/
 ...
 
 + Uncommon header 'link' found, with contents: &lt;http://office.paper/index.php/wp-json/&gt;; rel="https://api.w.org/"
-+ Uncommon header 'x-redirect-by' found, with contents: WordPress</code></pre><p><code>wpscan</code> identified this blog as being built with version <code>5.2.3</code> of Wordpress, which has many known vulnerabilities, however, one stands out, since it doesn't require valid credentials and it has to do with accessing user drafts:</p><pre><code>~ wpscan --url office.paper --api-token &lt;your-api-token&gt;
++ Uncommon header 'x-redirect-by' found, with contents: WordPress</code></pre><p><code>wpscan</code> identified that the blog is using version <code>5.2.3</code> of Wordpress, which has many known vulnerabilities, however, one stands out, since it doesn't require valid credentials and it has to do with accessing user drafts:</p><pre><code>~ wpscan --url office.paper --api-token &lt;your-api-token&gt;
 
 ...
 | [!] Title: WordPress &lt;= 5.2.3 - Unauthenticated View Private/Draft Posts
- ...</code></pre><p>Using the trick described in <a href="https://0day.work/proof-of-concept-for-wordpress-5-2-3-viewing-unauthenticated-posts/">this</a> blog post I found a draft post with some secrets:</p><figure class="kg-card kg-image-card"></figure><p>In order to access the <code>chat.office.paper</code> domain we need to register this new virtual host:</p><pre><code>~ sudo nano /etc/hosts
+...</code></pre><p>Using the trick described in <a href="https://0day.work/proof-of-concept-for-wordpress-5-2-3-viewing-unauthenticated-posts/">this</a> blog post we find a draft post with some secrets:</p><figure class="kg-card kg-image-card"></figure><p>So, there's a "Secret Registration URL of new Employee chat system", which is hosted at <code>chat.office.paper</code>, let's configure this virtual host:</p><pre><code>~ sudo nano /etc/hosts
 
 ...
 10.10.11.143    office.paper
-10.10.11.143    chat.office.paper</code></pre><p>Now, we can see this "new Employee chat system" and register a new account. Turns out this application is an instance of RocketChat:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>After scrolling to the top of the <code>#general</code> channel, we can see that there's a helpful bot called <code>recyclops</code> which, among other things, can fetch files in the local machine:</p><figure class="kg-card kg-image-card"></figure><p>There's even a security-related warning:</p><figure class="kg-card kg-image-card"></figure><p>Ok, let's see what this baby can do:</p><figure class="kg-card kg-image-card"></figure><p>Ok, let's see if we can list other directories:</p><pre><code>~ list ../
+10.10.11.143    chat.office.paper</code></pre><p>Now, we can see the chat system and register a new account. <br />Turns out this application is an instance of RocketChat:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>After scrolling to the top of the <code>#general</code> channel, we can see that there's a helpful bot called <code>recyclops</code> which, among other things, can fetch files in the local machine:</p><figure class="kg-card kg-image-card"></figure><p>There's even a security-related warning:</p><figure class="kg-card kg-image-card"></figure><p>Ok, let's see what this baby can do:</p><figure class="kg-card kg-image-card"></figure><p>Let's see if we can list other directories ...</p><pre><code>~ list ../
 
 total 56
 drwx------ 12 dwight dwight 4096 Mar 20 10:52 .
