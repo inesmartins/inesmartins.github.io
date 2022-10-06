@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>Exfiltrating data from Android devices via WebView Takeover (Open Redirect)</title>
+    <title>Exfiltrating data from Android applications via WebView Takeover (Open Redirect)</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
@@ -15,14 +15,14 @@
     <link rel="amphtml" href="amp/index.html" />
     
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Exfiltrating data from Android devices via WebView Takeover (Open Redirect)" />
+    <meta property="og:title" content="Exfiltrating data from Android applications via WebView Takeover (Open Redirect)" />
     <meta property="og:description" content="In this article, I go through the scenarios in which I&#x27;ve been able to exfiltrate data from real Android applications, after detecting a WebView takeover (aka &quot;Open Redirect&quot;) vulnerability. Typically this vulnerability is the result of allowing an external Intent to control a URI that is loaded onto a WebView," />
     <meta property="og:url" content="inesmartins.github.io/exfiltrating-data-via-webview-takeover/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2022/10/maxresdefault-1-1.jpeg" />
     <meta property="article:published_time" content="2022-10-06T13:45:32.000Z" />
-    <meta property="article:modified_time" content="2022-10-06T13:45:32.000Z" />
+    <meta property="article:modified_time" content="2022-10-06T13:51:23.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Exfiltrating data from Android devices via WebView Takeover (Open Redirect)" />
+    <meta name="twitter:title" content="Exfiltrating data from Android applications via WebView Takeover (Open Redirect)" />
     <meta name="twitter:description" content="In this article, I go through the scenarios in which I&#x27;ve been able to exfiltrate data from real Android applications, after detecting a WebView takeover (aka &quot;Open Redirect&quot;) vulnerability. Typically this vulnerability is the result of allowing an external Intent to control a URI that is loaded onto a WebView," />
     <meta name="twitter:url" content="inesmartins.github.io/exfiltrating-data-via-webview-takeover/" />
     <meta name="twitter:image" content="inesmartins.github.io/content/images/2022/10/maxresdefault-1-1.jpeg" />
@@ -60,17 +60,17 @@
             "https://www.linkedin.com/in/ines-af-martins/"
         ]
     },
-    "headline": "Exfiltrating data from Android devices via WebView Takeover (Open Redirect)",
+    "headline": "Exfiltrating data from Android applications via WebView Takeover (Open Redirect)",
     "url": "inesmartins.github.io/exfiltrating-data-via-webview-takeover/",
     "datePublished": "2022-10-06T13:45:32.000Z",
-    "dateModified": "2022-10-06T13:45:32.000Z",
+    "dateModified": "2022-10-06T13:51:23.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2022/10/maxresdefault-1-1.jpeg",
         "width": 1000,
         "height": 563
     },
-    "description": "In this article, I go through the scenarios in which I&#x27;ve been able to\nexfiltrate data from real Android applications, after detecting a WebView\ntakeover (aka &quot;Open Redirect&quot;) vulnerability.\n\nTypically this vulnerability is the result of allowing an external Intent to\ncontrol a URI that is loaded onto a WebView, declared inside the vulnerable\napplication.\n\nThis Intent can sometimes be triggered via deep link, but more often than not,\nit requires that a malicious application be installed in the v",
+    "description": "In this article, I go through the scenarios in which I&#x27;ve been able to\nexfiltrate data from real Android applications, after detecting a WebView\ntakeover (aka &quot;Open Redirect&quot;) vulnerability.\n\nTypically this vulnerability is the result of allowing an external Intent to\ncontrol a URI that is loaded onto a WebView, declared inside the vulnerable\napplication.\n\nThis Intent can sometimes be triggered via deep link, but more often than not,\nit requires that a malicious application is installed in the v",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -228,7 +228,7 @@
     <header class="article-header gh-canvas">
 
 
-        <h1 class="article-title">Exfiltrating data from Android devices via WebView Takeover (Open Redirect)</h1>
+        <h1 class="article-title">Exfiltrating data from Android applications via WebView Takeover (Open Redirect)</h1>
 
 
         <div class="article-byline">
@@ -258,13 +258,13 @@
                      ../content/images/size/w2000/2022/10/maxresdefault-1-1.jpeg 2000w"
                 sizes="(min-width: 1400px) 1400px, 92vw"
                 src="../content/images/size/w2000/2022/10/maxresdefault-1-1.jpeg"
-                alt="Exfiltrating data from Android devices via WebView Takeover (Open Redirect)"
+                alt="Exfiltrating data from Android applications via WebView Takeover (Open Redirect)"
             />
         </figure>
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>In this article, I go through the scenarios in which I've been able to exfiltrate data from real Android applications, after detecting a WebView takeover (aka "Open Redirect") vulnerability.</p><p>Typically this vulnerability is the result of allowing an external <code>Intent</code> to control a <code>URI</code> that is loaded onto a <code>WebView</code>, declared inside the vulnerable application.</p><p>This <code>Intent</code> can sometimes be triggered via deep link, but more often than not, it requires that a malicious application be installed in the victim's device.</p><p>Note that this article closely relates to the "Exploiting Deep Links in Android" series, particularly with <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part-2/index.html">Part 2</a>.</p><h2 id="1-abusing-javascript-bindings">1. Abusing Javascript Bindings</h2><p>If the vulnerable <code>WebView</code> registers any <a href="https://developer.android.com/develop/ui/views/layout/webapps/webview">web interfaces</a>, and you're able to redirect the <code>WebView</code> to a website you control, then you can simply add JavaScript to your website that interacts with the app's code directly.</p><p>If you can read the app's source code, search for any calls to the  <code>addJavascriptInterface</code> method, to find the name of the interface and then you can find all of the exposed methods annotated with <code>@JavascriptInterface</code>.</p><p>On your website's JS code, you can call all of the exposed methods by using the <code>window.InterfaceName.methodName</code> syntax.</p><p>The impact will vary depending on what the exposed methods allow you to do.</p><p>To see a more detailed example, check out this HackerOne report: <a href="https://hackerone.com/reports/401793">https://hackerone.com/reports/401793</a>.</p><h2 id="2-reading-local-malicious-file-24-sdk">2. Reading local malicious file (&lt; 24 SDK)</h2><p>If the vulnerable <code>WebView</code> accepts <code>file://</code> URIs, and the application can be run in devices with SDK &lt; 24, you might be able exfiltrate all of the app's files with a little help from a malicious application.</p><p>Here are the steps:</p><ol><li>the malicious application installed in the victim's device writes an <code>HTML</code> file to a shared location accessible by the vulnerable app;</li><li>the malicious application sends an <code>Intent</code> to the vulnerable app that contais the <code>file://</code> URI that matches the location of the <code>HTML</code> file;</li><li>the <code>file://</code> URI is loaded by the vulnerable app;</li><li>once the <code>HTML</code> file is loaded on the <code>WebView</code>, the JS code declared inside reads all local files and sends them to a server you control.</li></ol><p>Note that the following conditions need to be present in order for this to work:</p><ul><li>the malicious app needs to be granted the <code>READ_EXTERNAL_STORAGE</code> permission;</li><li>the vulnerable app needs to be granted the <code>READ_EXTERNAL_STORAGE</code> permission;</li><li>the vulnerable <code>WebView</code> needs to have JS enabled;</li></ul>
+        <p>In this article, I go through the scenarios in which I've been able to exfiltrate data from real Android applications, after detecting a WebView takeover (aka "Open Redirect") vulnerability.</p><p>Typically this vulnerability is the result of allowing an external <code>Intent</code> to control a <code>URI</code> that is loaded onto a <code>WebView</code>, declared inside the vulnerable application.</p><p>This <code>Intent</code> can sometimes be triggered via deep link, but more often than not, it requires that a malicious application is installed in the victim's device.</p><p>Note that this article closely relates to the "Exploiting Deep Links in Android" series, particularly with <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part-2/index.html">Part 2</a>.</p><h2 id="1-abusing-javascript-bindings">1. Abusing Javascript Bindings</h2><p>If the vulnerable <code>WebView</code> registers any <a href="https://developer.android.com/develop/ui/views/layout/webapps/webview">web interfaces</a>, and you're able to redirect the <code>WebView</code> to a website you control, then you can simply add JavaScript to your website that interacts with the app's code directly.</p><p>If you can read the app's source code, search for any calls to the  <code>addJavascriptInterface</code> method, to find the name of the interface(s) and then you can find all of the exposed methods annotated with <code>@JavascriptInterface</code>.</p><p>On your website, your JS code can call all of the exposed methods by using the <code>window.interface_name.method_name</code> syntax.</p><p>Of course, the impact will vary depending on what the exposed methods allow you to do.</p><p>To see a more detailed example, check out this HackerOne report: <a href="https://hackerone.com/reports/401793">https://hackerone.com/reports/401793</a>.</p><h2 id="2-via-malicious-app-24-sdk">2. Via Malicious app (&lt; 24 SDK)</h2><p>If the vulnerable <code>WebView</code> accepts <code>file://</code> URIs, and the application can be run in devices with SDK &lt; 24, you might be able exfiltrate all of the app's files with a little help from a malicious application.</p><p>Here are the steps:</p><ol><li>the malicious application installed in the victim's device writes an <code>HTML</code> file to a location accessible by the vulnerable app;</li><li>the malicious application sends an <code>Intent</code> to the vulnerable app that contais the <code>file://</code> URI that matches the location of the <code>HTML</code> file;</li><li>the <code>file://</code> URI is loaded by the vulnerable app;</li><li>once the <code>HTML</code> file is loaded, the JS code declared inside this file reads all local files and sends them to a server you control.</li></ol><p>Note that the following conditions need to be present in order for this to work:</p><ul><li>the malicious app needs to be granted the <code>READ_EXTERNAL_STORAGE</code> permission;</li><li>the vulnerable app needs to be granted the <code>READ_EXTERNAL_STORAGE</code> permission;</li><li>the vulnerable <code>WebView</code> needs to have JS enabled;</li></ul>
     </section>
 
 
