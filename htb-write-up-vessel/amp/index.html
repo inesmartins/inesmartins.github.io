@@ -15,7 +15,7 @@
     <meta property="og:url" content="inesmartins.github.io/htb-write-up-vessel/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2022/11/Screenshot-2022-11-12-at-12.59.26-2.png" />
     <meta property="article:published_time" content="2022-11-12T13:08:15.000Z" />
-    <meta property="article:modified_time" content="2022-11-12T13:08:21.000Z" />
+    <meta property="article:modified_time" content="2022-11-12T13:10:36.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Vessel" />
     <meta name="twitter:description" content="A couple of months ago I gave the Vessel machine a try. I stopped once I got user, and by the time I picked it up again, the machine was already &quot;retired&quot;. Regardless, it was a fun box, so I&#x27;m publishing my path to user, I&#x27;m sure there are many" />
@@ -58,7 +58,7 @@
     "headline": "HTB Write-up | Vessel",
     "url": "inesmartins.github.io/htb-write-up-vessel/",
     "datePublished": "2022-11-12T13:08:15.000Z",
-    "dateModified": "2022-11-12T13:08:21.000Z",
+    "dateModified": "2022-11-12T13:10:36.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2022/11/Screenshot-2022-11-12-at-12.59.26-2.png",
@@ -686,7 +686,7 @@ PORT   STATE SERVICE VERSION
 |_http-title: Vessel
 |_http-trane-info: Problem with XML parsing of /evox/about
 |_http-server-header: Apache/2.4.41 (Ubuntu)
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><p>There's a web service running on port <code>80</code>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Not much to see ... the <a href="https://nmap.org/nsedoc/scripts/http-trane-info.html#:~:text=Script%20http%2Dtrane%2Dinfo&amp;text=Trane%20Tracer%20SC%20is%20an,sensitive%20content%20to%20unauthenticated%20users.">trane-info script</a> detected a "Problem with XML parsing of <code>/evox/about</code>", but this seems to be a false positive.</p><p>We can't even create an account:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>However, <a href="https://github.com/OJ/gobuster">gobuster</a> discloses two interesting directories: <code>admin</code> and <code>dev</code>:</p><pre><code>~ gobuster dir -u http://vessel.htb/ --exclude-length 26 -w big.txt
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><p>There's a web service running on port <code>80</code>:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>Not much to see ... the <a href="https://nmap.org/nsedoc/scripts/http-trane-info.html#:~:text=Script%20http%2Dtrane%2Dinfo&amp;text=Trane%20Tracer%20SC%20is%20an,sensitive%20content%20to%20unauthenticated%20users.">trane-info script</a> detected a "Problem with XML parsing of <code>/evox/about</code>", but this seems to be a false positive.</p><p>We can't even create an account:</p><figure class="kg-card kg-image-card kg-width-wide"></figure><p>However, <a href="https://github.com/OJ/gobuster"><a href="https://github.com/OJ/gobuster">gobuster</a></a> discloses two interesting directories: <code>admin</code> and <code>dev</code>:</p><pre><code>~ gobuster dir -u http://vessel.htb/ --exclude-length 26 -w big.txt
 
 /401                  (Status: 200) [Size: 2400]
 /404                  (Status: 200) [Size: 2393]
@@ -835,7 +835,7 @@ Password: b@mPRNSVTjjLKId1T
 
 ethan@vessel:~$ cat user.txt
 cat user.txt
-8276799bc8884b959b67d5d3c4fb3878</code></pre><p>But ... as it turns out that the password actually worked for <code>SSH</code> the whole time, and so I spent a whole lot of time working on this for nothing.</p><hr></hr><h2 id="resources">Resources</h2><p><a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/git">https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/git</a></p>
+8276799bc8884b959b67d5d3c4fb3878</code></pre><p>But ... as it turns out that the password actually worked for <code>SSH</code> the whole time, and so I spent a whole lot of time working on this for nothing.</p>
 
             </section>
 
