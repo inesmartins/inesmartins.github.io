@@ -16,18 +16,23 @@
     
     <meta property="og:type" content="article" />
     <meta property="og:title" content="HTB Write-up | Blazorized (user-only)" />
-    <meta property="og:description" content="Retired machine can be found here. Enumeration~ nmap -F 10.10.11.22 -Pn PORT     STATE SERVICE 53/tcp   open  domain 80/tcp   open  http 88/tcp   open  kerberos-sec 135/tcp  open  msrpc 139/tcp  open  netbios-ssn 389/tcp  open  ldap 445/tcp  open  microsoft-ds 1433/tcp open  ms-sql-sPort 80" />
+    <meta property="og:description" content="Write-up for Blazorized, a retired HTB Linux machine." />
     <meta property="og:url" content="inesmartins.github.io/htb-writeup-blazorized/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2024/08/Blazorized.png" />
     <meta property="article:published_time" content="2024-11-13T13:30:46.000Z" />
-    <meta property="article:modified_time" content="2024-11-13T13:30:46.000Z" />
+    <meta property="article:modified_time" content="2024-11-13T13:32:43.000Z" />
+    <meta property="article:tag" content="ctf" />
+    <meta property="article:tag" content="htb" />
+    
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTB Write-up | Blazorized (user-only)" />
-    <meta name="twitter:description" content="Retired machine can be found here. Enumeration~ nmap -F 10.10.11.22 -Pn PORT     STATE SERVICE 53/tcp   open  domain 80/tcp   open  http 88/tcp   open  kerberos-sec 135/tcp  open  msrpc 139/tcp  open  netbios-ssn 389/tcp  open  ldap 445/tcp  open  microsoft-ds 1433/tcp open  ms-sql-sPort 80" />
+    <meta name="twitter:description" content="Write-up for Blazorized, a retired HTB Linux machine." />
     <meta name="twitter:url" content="inesmartins.github.io/htb-writeup-blazorized/" />
     <meta name="twitter:image" content="inesmartins.github.io/content/images/2024/08/Blazorized.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Inês Martins" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="ctf, htb" />
     <meta property="og:image:width" content="1400" />
     <meta property="og:image:height" content="1138" />
     
@@ -63,14 +68,15 @@
     "headline": "HTB Write-up | Blazorized (user-only)",
     "url": "inesmartins.github.io/htb-writeup-blazorized/",
     "datePublished": "2024-11-13T13:30:46.000Z",
-    "dateModified": "2024-11-13T13:30:46.000Z",
+    "dateModified": "2024-11-13T13:32:43.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2024/08/Blazorized.png",
         "width": 1400,
         "height": 1138
     },
-    "description": "Retired machine can be found here\n[https://www.hackthebox.com/machines/Blazorized].\n\n\n--------------------------------------------------------------------------------\n\nEnumeration\n~ nmap -F 10.10.11.22 -Pn\n\nPORT     STATE SERVICE\n53/tcp   open  domain\n80/tcp   open  http\n88/tcp   open  kerberos-sec\n135/tcp  open  msrpc\n139/tcp  open  netbios-ssn\n389/tcp  open  ldap\n445/tcp  open  microsoft-ds\n1433/tcp open  ms-sql-s\n\nPort 80 redirects to http://blazorized.htb/, which means this virtual host need",
+    "keywords": "ctf, htb",
+    "description": "Write-up for Blazorized, a retired HTB Linux machine.",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -179,7 +185,7 @@
 </style><style>:root {--ghost-accent-color: #000000;}</style>
 
 </head>
-<body class="post-template">
+<body class="post-template tag-ctf tag-htb">
 <div class="viewport">
 
     <header id="gh-head" class="gh-head has-cover">
@@ -216,13 +222,17 @@
 
 
 
-<article class="article post">
+<article class="article post tag-ctf tag-htb">
 
     <header class="article-header gh-canvas">
 
+        <section class="article-tag">
+            <a href="../tag/ctf/index.html">ctf</a>
+        </section>
 
         <h1 class="article-title">HTB Write-up | Blazorized (user-only)</h1>
 
+        <p class="article-excerpt">Write-up for Blazorized, a retired HTB Linux machine.</p>
 
         <div class="article-byline">
             <section class="article-byline-content">
@@ -445,7 +455,7 @@ C:\Users&gt;type C:\Users\NU_1055\Desktop\user.txt</code></pre><p>We didn't even
                 <h2 class="post-card-title">HTB Write-up | FormulaX (user-only)</h2>
             </header>
             <section class="post-card-excerpt">
-                <p>Retired machine can be found here. Let's start with some basic enumeration: ~ nmap -F 10.10.11.6 PORT   STATE SERVICE 22/tcp open  ssh 80/tcp open  http There's a web application running on port 80: http://10.10.11.6/static/index.htmlThe source code discloses a couple</p>
+                <p>Write-up for FormulaX, a retired HTB Linux machine.</p>
             </section>
         </a>
 
@@ -489,7 +499,7 @@ C:\Users&gt;type C:\Users\NU_1055\Desktop\user.txt</code></pre><p>We didn't even
                 <h2 class="post-card-title">HTB Write-up | iClean (user-only)</h2>
             </header>
             <section class="post-card-excerpt">
-                <p>Retired machine can be found here. Let's start with a basic scan: ~ nmap -F 10.10.11.12 22/tcp open  ssh 80/tcp open  http10.10.11.12 redirects to capiclean.htb, so let's map out this domain. ~ sudo nano /etc/hosts 10.10.11.12 capiclean.htbhttp://capiclean.</p>
+                <p>Write-up for iClean, a retired HTB Linux machine.</p>
             </section>
         </a>
 
