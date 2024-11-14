@@ -20,7 +20,7 @@
     <meta property="og:url" content="inesmartins.github.io/automate-threat-modeling-with-pytm-and-github-actions/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-14-at-12.28.19.png" />
     <meta property="article:published_time" content="2024-11-14T11:48:58.000Z" />
-    <meta property="article:modified_time" content="2024-11-14T12:28:31.000Z" />
+    <meta property="article:modified_time" content="2024-11-14T12:34:50.000Z" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Automate Threat Modeling with pytm and Github Actions" />
     <meta name="twitter:description" content="pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated. I&#x27;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to Python files that describe the project&#x27;s" />
@@ -63,7 +63,7 @@
     "headline": "Automate Threat Modeling with pytm and Github Actions",
     "url": "inesmartins.github.io/automate-threat-modeling-with-pytm-and-github-actions/",
     "datePublished": "2024-11-14T11:48:58.000Z",
-    "dateModified": "2024-11-14T12:28:31.000Z",
+    "dateModified": "2024-11-14T12:34:50.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-14-at-12.28.19.png",
@@ -257,7 +257,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <p><a href="https://github.com/OWASP/pytm">pytm</a> is a OWASP tool that integrates with a <a href="https://chatgpt.com/g/g-soISG24ix-pytmgpt">custom GPT</a> to make the threat modeling process quicker and more automated.</p><p>I've developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to Python files that describe the project's architecture.</p><p>In order to use it, you need a Github repository with the following structure:</p><ul><li>a <code>/models</code> directory, where you're going to keep the Python files;</li><li>a <code>/reports</code> directory, where the reports are going to be stored;</li><li>a <code>pytm_remplate</code> directory, with your <code>template.md</code> and <code>styles.css</code> file - you can find basic examples <a href="https://github.com/OWASP/pytm/tree/master/docs">here</a>.</li></ul><p>The Action works as follows: </p><ul><li>every time you create or update a PR with any changes to the <code>/models/</code> directory, <code>pytm</code> scans the file and generates a Data Flow Diagram (DFD) and HTML report;</li><li>if this runs successfully, for each new HTML report, the tool generates a PDF file and adds both the DFD and the PDF to the <code>/reports/{filename}/</code> directory;</li><li>everything in the <code>/reports/</code> directory is immediately pushed to the <code>main</code> branch, so you can review these artefacts.</li></ul><p>You can find this Github Action below:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/555b3519baae0ea6f158c04516ca0f86.js"></script><!--kg-card-end: html-->
+        <p><a href="https://github.com/OWASP/pytm">pytm</a> is a OWASP tool that integrates with a <a href="https://chatgpt.com/g/g-soISG24ix-pytmgpt">custom GPT</a> to make the threat modeling process quicker and more automated.</p><p>I've developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to Python files that describe the project's architecture.</p><p>In order to use it, you need a Github repository with the following structure:</p><ul><li>a <code>/models</code> directory, where you're going to keep the Python files;</li><li>a <code>/reports</code> directory, where the reports are going to be stored;</li><li>a <code>pytm_template</code> directory, which should contain your <code>template.md</code> and <code>styles.css</code> files (you can find basic examples <a href="https://github.com/OWASP/pytm/tree/master/docs">here</a>).</li></ul><p>The Action works as follows: </p><ul><li>every time you create or update a PR with any changes to the Python files in the  <code>/models</code> directory, <code>pytm</code> scans the modified files and generates a Data Flow Diagram (DFD) and HTML report for each one;</li><li>for each new HTML report, the tool generates a PDF file;</li><li>both the DFD and the PDF files are added to a <code>/reports/{filename}/</code> directory;</li><li>everything in the <code>/reports/</code> directory is immediately pushed to the <code>main</code> branch, so you can review these artefacts.</li></ul><p>You can find this Github Action below:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/555b3519baae0ea6f158c04516ca0f86.js"></script><!--kg-card-end: html-->
     </section>
 
 
