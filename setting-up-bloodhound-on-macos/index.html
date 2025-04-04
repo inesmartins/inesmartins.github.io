@@ -8,7 +8,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=303bf9e8e4.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=aa2daa7cee.css" />
 
     <link rel="canonical" href="index.html" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -16,11 +16,11 @@
     
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Setting up Bloodhound on macOS" />
-    <meta property="og:description" content="On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8 handles multiprocessing in macOS you need to downgrade to Python 3.7.3 to" />
+    <meta property="og:description" content="Edit: This article is now outdated, I recommend that you follow the instructions at https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart to install the latest version of Bloodhound on macOS. On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps" />
     <meta property="og:url" content="inesmartins.github.io/setting-up-bloodhound-on-macos/" />
     <meta property="og:image" content="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" />
     <meta property="article:published_time" content="2021-07-11T13:37:13.000Z" />
-    <meta property="article:modified_time" content="2021-07-18T11:26:29.000Z" />
+    <meta property="article:modified_time" content="2025-04-04T08:42:11.000Z" />
     <meta property="article:tag" content="bloodhound" />
     <meta property="article:tag" content="windows" />
     <meta property="article:tag" content="ad" />
@@ -30,7 +30,7 @@
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Setting up Bloodhound on macOS" />
-    <meta name="twitter:description" content="On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :) Installing a compatible Python versionBecause of the way in which Python 3.8 handles multiprocessing in macOS you need to downgrade to Python 3.7.3 to" />
+    <meta name="twitter:description" content="Edit: This article is now outdated, I recommend that you follow the instructions at https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart to install the latest version of Bloodhound on macOS. On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps" />
     <meta name="twitter:url" content="inesmartins.github.io/setting-up-bloodhound-on-macos/" />
     <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/07/bloodhound-logo.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -72,7 +72,7 @@
     "headline": "Setting up Bloodhound on macOS",
     "url": "inesmartins.github.io/setting-up-bloodhound-on-macos/",
     "datePublished": "2021-07-11T13:37:13.000Z",
-    "dateModified": "2021-07-18T11:26:29.000Z",
+    "dateModified": "2025-04-04T08:42:11.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "inesmartins.github.io/content/images/2021/07/bloodhound-logo.png",
@@ -80,7 +80,7 @@
         "height": 1000
     },
     "keywords": "bloodhound, windows, ad, macOS, tips, troubleshooting",
-    "description": "On a recent CTF I needed to set up Bloodhound on macOS and came across some\nissues. Hope this helps someone in need. :)\n\n\n--------------------------------------------------------------------------------\n\nInstalling a compatible Python version\nBecause of the way in which Python 3.8 handles multiprocessing in macOS you need\nto downgrade to Python 3.7.3 to be able to use Bloodhound.py.\n\nHere&#x27;s a great StackOverflow answer that explains how to do this downgrade using \npyenv:\n\nHow to downgrade python",
+    "description": "Edit: This article is now outdated, I recommend that you follow the instructions\nat \nhttps://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart \nto install the latest version of Bloodhound on macOS.\n\n\n--------------------------------------------------------------------------------\n\nOn a recent CTF I needed to set up Bloodhound on macOS and came across some\nissues. Hope this helps someone in need. :)\n\n\n---------------------------------------------------------------------",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "inesmartins.github.io/"
@@ -270,7 +270,7 @@
     </header>
 
     <section class="gh-content gh-canvas">
-        <p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3</code> to be able to use <code>Bloodhound.py</code>.</p><p>Here's a great StackOverflow answer that explains how to do this downgrade using <code>pyenv</code>:</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/a/62899833"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to downgrade python version from 3.8 to 3.7 (mac)</div><div class="kg-bookmark-description">I’m using Python &amp;amp; okta-aws tools and in order to fetch correct credentials on aws I need to run okta-aws init. But got an error message of Could not read roles from Okta and the system prompte...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v&#x3D;c78bd457575a"><span class="kg-bookmark-author">Stack Overflow</span><span class="kg-bookmark-publisher">user13902742</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v&#x3D;73d79a89bded"></div></a></figure><p>After this process you should now have something like:</p><pre><code>~ python3 --version
+        <p><strong>Edit: This article is now outdated, I recommend that you follow the instructions at <a href="https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart" rel="noreferrer nofollow noopener">https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart</a> to install the latest version of Bloodhound on macOS.</strong></p><hr><p>On a recent CTF I needed to set up Bloodhound on macOS and came across some issues. Hope this helps someone in need. :)</p><hr><h2 id="installing-a-compatible-python-version">Installing a compatible Python version</h2><p>Because of the way in which <code>Python 3.8</code> handles multiprocessing in macOS you need to downgrade to <code>Python 3.7.3</code> to be able to use <code>Bloodhound.py</code>.</p><p>Here's a great StackOverflow answer that explains how to do this downgrade using <code>pyenv</code>:</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://stackoverflow.com/a/62899833"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to downgrade python version from 3.8 to 3.7 (mac)</div><div class="kg-bookmark-description">I’m using Python &amp;amp; okta-aws tools and in order to fetch correct credentials on aws I need to run okta-aws init. But got an error message of Could not read roles from Okta and the system prompte...</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v&#x3D;c78bd457575a"><span class="kg-bookmark-author">Stack Overflow</span><span class="kg-bookmark-publisher">user13902742</span></div></div><div class="kg-bookmark-thumbnail"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v&#x3D;73d79a89bded"></div></a></figure><p>After this process you should now have something like:</p><pre><code>~ python3 --version
 Python 3.7.3</code></pre><hr><h2 id="collecting-the-data">Collecting the data</h2><p>On Windows, data collection is done with <a href="https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound.html">SharpHound</a>:</p><blockquote>SharpHound is the official data collector for BloodHound. It is written in C# and uses native Windows API functions and LDAP namespace functions to collect data from domain controllers and domain-joined Windows systems.</blockquote><p>On macOS, you can use <code>Bloodhoud.py</code>, but you also need an additional tool that resolves the AD domain to its IP. I went with <code>DNSChef</code> but you can choose whatever works best.</p><p>So, start by cloning the <a href="https://github.com/fox-it/BloodHound.py">Bloodhound<a href="https://github.com/fox-it/BloodHound.py">.</a>py</a> and <a href="https://github.com/iphelix/dnschef">dnschef.py</a> projects and install the requirements as specified on the <code>README.md</code> files.</p><p>Once both projects are correctly installed, you need to set up <a href="https://github.com/iphelix/dnschef">dnschef.py</a> so that it resolves your AD domain to its corresponding IP, as previously mentioned:</p><pre><code>~ sudo sh -c 'python3 dnschef.py --fakeip x.x.x.x --fakedomains abc.local -q'
 
 (20:14:25) [*] DNSChef started on interface: 127.0.0.1
@@ -470,7 +470,7 @@ INFO: Done in 00M 08S</code></pre><p>This process should output some <code>.json
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="../assets/built/casper.js%3Fv=303bf9e8e4"></script>
+<script src="../assets/built/casper.js%3Fv=aa2daa7cee"></script>
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
