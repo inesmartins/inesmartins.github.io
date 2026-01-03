@@ -1,4 +1,8 @@
 User-agent: *
 Sitemap: inesmartins.github.io/sitemap.xml
 Disallow: /ghost/
-Disallow: /p/
+Disallow: /email/
+Disallow: /members/api/comments/counts/
+Disallow: /r/
+Disallow: /webmentions/receive/
+Disallow: /.ghost/analytics/api/

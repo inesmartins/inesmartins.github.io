@@ -3,42 +3,87 @@
 <head>
 
     <title>MobSF &quot;IPA Binary Analysis&quot; | Step by Step</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=aa2daa7cee.css" />
-
-    <link rel="canonical" href="index.html" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="amp/index.html" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" />
-    <meta property="og:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret.  Hopefully this article will" />
-    <meta property="og:url" content="inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/" />
-    <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.17.13.png" />
-    <meta property="article:published_time" content="2021-08-21T21:57:25.000Z" />
-    <meta property="article:modified_time" content="2022-02-13T17:23:04.000Z" />
-    <meta property="article:tag" content="ipa" />
-    <meta property="article:tag" content="mobsf" />
-    <meta property="article:tag" content="binary analysis" />
-    <meta property="article:tag" content="rev" />
-    <meta property="article:tag" content="apple" />
-    <meta property="article:tag" content="binary exploitation" />
+    <link rel="preload" as="style" href="../assets/built/screen.css%3Fv=e213fc6d24.css">
+    <link rel="preload" as="script" href="../assets/built/source.js%3Fv=e213fc6d24">
     
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step" />
-    <meta name="twitter:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application. When scanning an .ipa, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret.  Hopefully this article will" />
-    <meta name="twitter:url" content="inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/" />
-    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.17.13.png" />
-    <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="Inês Martins" />
-    <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="ipa, mobsf, binary analysis, rev, apple, binary exploitation" />
-    <meta property="og:image:width" content="1180" />
-    <meta property="og:image:height" content="603" />
+    <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-roman.woff2%3Fv=e213fc6d24" crossorigin="anonymous">
+<style>
+    @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: optional;
+        src: url(../assets/fonts/inter-roman.woff2%3Fv=e213fc6d24) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=e213fc6d24.css">
+
+    <style>
+        :root {
+            --background-color: #ffffff
+        }
+    </style>
+
+    <script>
+        /* The script for calculating the color contrast has been taken from
+        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
+        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+        accentColor = accentColor.trim().slice(1);
+
+        if (accentColor.length === 3) {
+            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
+        }
+
+        var r = parseInt(accentColor.substr(0, 2), 16);
+        var g = parseInt(accentColor.substr(2, 2), 16);
+        var b = parseInt(accentColor.substr(4, 2), 16);
+        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        var textColor = (yiq >= 128) ? 'dark' : 'light';
+
+        document.documentElement.className = `has-${textColor}-text`;
+    </script>
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step">
+    <meta property="og:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.
+
+When scanning an .ipa, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret.
+
+Hopefully this article will">
+    <meta property="og:url" content="inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/">
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.17.13.png">
+    <meta property="article:published_time" content="2021-08-21T21:57:25.000Z">
+    <meta property="article:modified_time" content="2022-02-13T17:23:04.000Z">
+    <meta property="article:tag" content="ipa">
+    <meta property="article:tag" content="mobsf">
+    <meta property="article:tag" content="binary analysis">
+    <meta property="article:tag" content="rev">
+    <meta property="article:tag" content="apple">
+    <meta property="article:tag" content="binary exploitation">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MobSF &quot;IPA Binary Analysis&quot; | Step by Step">
+    <meta name="twitter:description" content="MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.
+
+When scanning an .ipa, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret.
+
+Hopefully this article will">
+    <meta name="twitter:url" content="inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/">
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/08/Screenshot-2021-08-22-at-10.17.13.png">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Inês Martins">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="ipa, mobsf, binary analysis, rev, apple, binary exploitation">
+    <meta property="og:image:width" content="1180">
+    <meta property="og:image:height" content="603">
     
     <script type="application/ld+json">
 {
@@ -58,16 +103,8 @@
     "author": {
         "@type": "Person",
         "name": "Inês Martins",
-        "image": {
-            "@type": "ImageObject",
-            "url": "inesmartins.github.io/content/images/2022/08/1658857349956.jpeg",
-            "width": 420,
-            "height": 420
-        },
         "url": "inesmartins.github.io/author/ines/",
-        "sameAs": [
-            "https://www.linkedin.com/in/ines-af-martins/"
-        ]
+        "sameAs": []
     },
     "headline": "MobSF &quot;IPA Binary Analysis&quot; | Step by Step",
     "url": "inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/",
@@ -80,17 +117,14 @@
         "height": 603
     },
     "keywords": "ipa, mobsf, binary analysis, rev, apple, binary exploitation",
-    "description": "MobSF [https://github.com/MobSF/Mobile-Security-Framework-MobSF] is an open\nsource static and dynamic analysis tool for Android and iOS, which can be used\nto quickly detect major issues on your mobile application.\n\nWhen scanning an .ipa, the &quot;IPA Binary Analysis&quot; section can report multiple\nissues that can be hard to interpret. \n\nHopefully this article will help you understand why each vulnerability was\nreported and how to fix it.\n\n\n---------------------------------------------------------------",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "inesmartins.github.io/"
-    }
+    "description": "MobSF is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.\n\nWhen scanning an .ipa, the &quot;IPA Binary Analysis&quot; section can report multiple issues that can be hard to interpret.\n\nHopefully this article will help you understand why each vulnerability was reported and how to fix it.\n\n\nGetting to the good stuff\n\n.ipa files are actually just zipped files that include the application executable and a bunch of",
+    "mainEntityOfPage": "inesmartins.github.io/mobsf-ipa-binary-analysis-step-by-step/"
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
-    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <meta name="generator" content="Ghost 6.10">
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html">
+    <script defer src="https://cdn.jsdelivr.net/ghost/portal@~2.56/umd/portal.min.js" data-i18n="true" data-ghost="inesmartins.github.io/" data-key="592cb4e4fa1ab0f3f4adbed719" data-api="inesmartins.github.io/ghost/api/content/" data-locale="en" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -154,6 +188,12 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/sodo-search.min.js" data-key="592cb4e4fa1ab0f3f4adbed719" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/main.css" data-sodo-search="inesmartins.github.io/" data-locale="en" crossorigin="anonymous"></script>
+    
+    <link href="inesmartins.github.io/webmentions/receive/" rel="webmention">
+    <script defer src="../public/cards.min.js%3Fv=e213fc6d24"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=e213fc6d24.css">
+    <script defer src="../public/member-attribution.min.js%3Fv=e213fc6d24"></script><style>:root {--ghost-accent-color: #000000;}</style>
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Injects copyright and footer -->
@@ -186,303 +226,300 @@
     	    margin: 20px auto;
 	    }
     }
-</style><style>:root {--ghost-accent-color: #000000;}</style>
+</style>
 
 </head>
-<body class="post-template tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation">
-<div class="viewport">
+<body class="post-template tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation tag-hash-import-2026-01-03-19-09 has-sans-title has-sans-body">
 
-    <header id="gh-head" class="gh-head has-cover">
-        <nav class="gh-head-inner inner gh-container">
+<div class="gh-viewport">
+    
+    <header id="gh-navigation" class="gh-navigation is-middle-logo gh-outer">
+    <div class="gh-navigation-inner gh-inner">
 
-            <div class="gh-head-brand">
-                <a class="gh-head-logo" href="../index.html">
-                        
-                </a>
-                <a class="gh-burger" role="button">
-                    <div class="gh-burger-box">
-                        <div class="gh-burger-inner"></div>
-                    </div>
-                </a>
-            </div>
-            <div class="gh-head-menu">
-                <ul class="nav">
+        <div class="gh-navigation-brand">
+            <a class="gh-navigation-logo is-title" href="../index.html">
+                    
+            </a>
+            <button class="gh-burger gh-icon-button" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>            </button>
+        </div>
+
+        <nav class="gh-navigation-menu">
+            <ul class="nav">
     <li class="nav-home"><a href="../index.html">Home</a></li>
     <li class="nav-about"><a href="../about-me/index.html">About</a></li>
 </ul>
 
-            </div>
-            <div class="gh-head-actions">
-                <div class="gh-social">
-                </div>
-
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
-            </div>
         </nav>
-    </header>
 
-    <main>
-        
-
-
-
-<article class="article post tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation featured">
-
-    <header class="article-header gh-canvas">
-
-        <section class="article-tag">
-            <a href="../tag/ipa/index.html">ipa</a>
-        </section>
-
-        <h1 class="article-title">MobSF &quot;IPA Binary Analysis&quot; | Step by Step</h1>
-
-
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2021-08-21">Aug 21, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 9 min read</span>
-                    </div>
-                </div>
-            </section>
+        <div class="gh-navigation-actions">
         </div>
 
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2021/08/Screenshot-2021-08-22-at-10.17.13.png 300w,
-                       ../content/images/size/w600/2021/08/Screenshot-2021-08-22-at-10.17.13.png 600w,
-                      ../content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-10.17.13.png 1000w,
-                     ../content/images/size/w2000/2021/08/Screenshot-2021-08-22-at-10.17.13.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2021/08/Screenshot-2021-08-22-at-10.17.13.png"
-                alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step"
-            />
-        </figure>
-    </header>
+    </div>
+</header>
 
-    <section class="gh-content gh-canvas">
-        <p><a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">MobSF</a> is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.</p><p>When scanning an <code>.ipa</code>, the "IPA Binary Analysis" section can report multiple issues that can be hard to interpret. </p><p>Hopefully this article will help you understand why each vulnerability was reported and how to fix it.</p><hr><h2 id="getting-to-the-good-stuff">Getting to the good stuff</h2><p><code>.ipa</code> files are actually just zipped files that include the application executable and a bunch of other stuff.</p><p>When we talk about binary analysis, we're actually just talking about analysing this executable file, so the first thing we need to do is <strong>find it</strong>.</p><p>Note that if you don't have access to the <code>.ipa</code> you can extract it from the App Store using <a href="https://github.com/majd/ipatool">ipatool</a>:</p><pre><code>~ brew tap majd/repo
+    
+
+<main class="gh-main">
+
+    <article class="gh-article post tag-ipa tag-mobsf tag-binary-analysis tag-rev tag-apple tag-binary-exploitation tag-hash-import-2026-01-03-19-09 featured">
+
+        <header class="gh-article-header gh-canvas">
+
+                <a class="gh-article-tag" href="../tag/ipa/index.html">ipa</a>
+            <h1 class="gh-article-title is-title">MobSF &quot;IPA Binary Analysis&quot; | Step by Step</h1>
+
+            <div class="gh-article-meta">
+                <div class="gh-article-author-image instapaper_ignore">
+                            <a href="../author/ines/index.html"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </div>
+                <div class="gh-article-meta-wrapper">
+                    <h4 class="gh-article-author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="gh-article-meta-content">
+                        <time class="gh-article-meta-date" datetime="2021-08-21">21 Aug 2021</time>
+                            <span class="gh-article-meta-length"><span class="bull">—</span> 9 min read</span>
+                    </div>
+                </div>
+            </div>
+
+                <figure class="gh-article-image">
+        <img
+            srcset="../content/images/size/w320/2021/08/Screenshot-2021-08-22-at-10.17.13.png 320w,
+                   ../content/images/size/w600/2021/08/Screenshot-2021-08-22-at-10.17.13.png 600w,
+                  ../content/images/size/w960/2021/08/Screenshot-2021-08-22-at-10.17.13.png 960w,
+                 ../content/images/size/w1200/2021/08/Screenshot-2021-08-22-at-10.17.13.png 1200w,
+                ../content/images/size/w2000/2021/08/Screenshot-2021-08-22-at-10.17.13.png.png 2000w"
+            sizes="(max-width: 1200px) 100vw, 1120px"
+            src="../content/images/size/w1200/2021/08/Screenshot-2021-08-22-at-10.17.13.png"
+            alt="MobSF &quot;IPA Binary Analysis&quot; | Step by Step"
+        >
+    </figure>
+
+        </header>
+
+        <section class="gh-content gh-canvas is-body">
+            <p><a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF?ref=localhost">MobSF</a> is an open source static and dynamic analysis tool for Android and iOS, which can be used to quickly detect major issues on your mobile application.</p><p>When scanning an <code>.ipa</code>, the "IPA Binary Analysis" section can report multiple issues that can be hard to interpret. </p><p>Hopefully this article will help you understand why each vulnerability was reported and how to fix it.</p><hr><h2 id="getting-to-the-good-stuff">Getting to the good stuff</h2><p><code>.ipa</code> files are actually just zipped files that include the application executable and a bunch of other stuff.</p><p>When we talk about binary analysis, we're actually just talking about analysing this executable file, so the first thing we need to do is <strong>find it</strong>.</p><p>Note that if you don't have access to the <code>.ipa</code> you can extract it from the App Store using <a href="https://github.com/majd/ipatool?ref=localhost">ipatool</a>:</p><pre><code>~ brew tap majd/repo
 ~ brew install ipatool
 ~ ipatool download --bundle-identifier &lt;app-bundle-id&gt; --email &lt;appstore-account-email&gt; --password &lt;appstore-account-password&gt;
 </code></pre><p>So, now that you have your <code>.ipa</code> it's time to unzip it and look inside:</p><pre><code>~ unzip MyApp.ipa
 ~ cd Payload/
 ~ cd MyApp.app/
 ~ file MyApp
-MyApp: Mach-O 64-bit executable arm64</code></pre><p>As you can see above, the app binary is compiled for <code>ARM</code> and uses the <code>Mach-O</code> file format.</p><p>A more thorough analysis of this binary can be done using <a href="https://www.manpagez.com/man/1/otool/">otool</a>. You should become familiar with this tool since it will help us validate and fix most of the issues reported below.</p><p>Alternatively, I also recommend <a href="https://h3adsh0tzz.com/projects/htool/">htool</a>, which serves the similar purpose of analysing <code>Mach-O</code> binaries.</p><hr><h2 id="arc">ARC</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.12.27.png" class="kg-image" alt loading="lazy" width="1125" height="102" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.12.27.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.12.27.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.12.27.png 1125w"></figure><p>If you're used to working with Swift, then you most likely know <code>ARC</code> or "Automatic Reference Counting" simply as <a href="https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html">one of the core features</a> of the language. </p><p>However, <code>ARC</code> is actually a feature of the Clang compiler, and unlike with Swift, you can<em> </em>(but <a href="https://stackoverflow.com/questions/8760431/to-arc-or-not-to-arc-what-are-the-pros-and-cons/8760820#8760820">shouldn't</a>) use Objective-C without using Automatic Reference Counting.</p><p>If you've never heard of "Automatic Reference Counting" you should basically know that it "automatically frees up the memory used by class instances when those instances are no longer needed". </p><p>The alternative is to leave memory management to the developer, who is always less reliable and can easily make mistakes that can lead to memory corruption vulnerabilities.</p><p>So, if your application is written (at least partially) in Objective-C, you should first make sure that the project is configured to use <code>ARC</code> by checking the <code>"Objective-C Automatic Reference Counting"</code> setting under the <code>"Build Settings"</code> tab:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="../content/images/2021/08/image-6.png" class="kg-image" alt loading="lazy" width="1086" height="432" srcset="../content/images/size/w600/2021/08/image-6.png 600w, ../content/images/size/w1000/2021/08/image-6.png 1000w, ../content/images/2021/08/image-6.png 1086w"><figcaption>https://advancetechtutorial.blogspot.com/2016/07/xcode-arc-automatic-reference-counting.html</figcaption></figure><p>If this property is set to <code>No</code>, you should "Convert" the project, as shown below:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2021/08/image-5.png" class="kg-image" alt loading="lazy" width="561" height="421"><figcaption>https://stackoverflow.com/questions/8969644/tool-for-transitioning-to-arc/8969662</figcaption></figure><p>You can also check the <code>"Compile Sources"</code> section under the <code>"Build Phases"</code> tab for the presence of the <code>-fno-objc-arc</code> flag, which is used to exclude specific files from using <code>ARC</code>, as shown below:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="../content/images/2021/08/flag-1024x434.jpeg" class="kg-image" alt loading="lazy" width="1024" height="434" srcset="../content/images/size/w600/2021/08/flag-1024x434.jpeg 600w, ../content/images/size/w1000/2021/08/flag-1024x434.jpeg 1000w, ../content/images/2021/08/flag-1024x434.jpeg 1024w"><figcaption>https://thomashanning.com/how-to-disable-arc-for-objective-c-files/</figcaption></figure><p>Since there are limitations that come with using <code>ARC</code>, the adequacy of these exceptions should be evaluated on a case by case basis.</p><p>As mentioned above, <code>otool</code> can help us understand our binary files a little better.</p><p>When it comes to <code>ARC</code> we can use this tool to check for the presence of ARC-related symbols, such as <code>_objc_release</code>, <code>_objc_autorelease</code>, <code>_objc_storeStrong</code>, <code>_objc_retain</code>, etc.:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.52.58.png" class="kg-image" alt loading="lazy"></figure><p>Note the usage of <code>otool</code>'s <code>-I</code> and <code>-v</code> flags:</p><pre><code>~ otool
+MyApp: Mach-O 64-bit executable arm64</code></pre><p>As you can see above, the app binary is compiled for <code>ARM</code> and uses the <code>Mach-O</code> file format.</p><p>A more thorough analysis of this binary can be done using <a href="https://www.manpagez.com/man/1/otool/?ref=localhost">otool</a>. You should become familiar with this tool since it will help us validate and fix most of the issues reported below.</p><p>Alternatively, I also recommend <a href="https://h3adsh0tzz.com/projects/htool/?ref=localhost">htool</a>, which serves the similar purpose of analysing <code>Mach-O</code> binaries.</p><hr><h2 id="arc">ARC</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.12.27.png" class="kg-image" alt loading="lazy" width="1125" height="102" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.12.27.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.12.27.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.12.27.png 1125w"></figure><p>If you're used to working with Swift, then you most likely know <code>ARC</code> or "Automatic Reference Counting" simply as <a href="https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html?ref=localhost">one of the core features</a> of the language. </p><p>However, <code>ARC</code> is actually a feature of the Clang compiler, and unlike with Swift, you can<em> </em>(but <a href="https://stackoverflow.com/questions/8760431/to-arc-or-not-to-arc-what-are-the-pros-and-cons/8760820?ref=localhost#8760820">shouldn't</a>) use Objective-C without using Automatic Reference Counting.</p><p>If you've never heard of "Automatic Reference Counting" you should basically know that it "automatically frees up the memory used by class instances when those instances are no longer needed". </p><p>The alternative is to leave memory management to the developer, who is always less reliable and can easily make mistakes that can lead to memory corruption vulnerabilities.</p><p>So, if your application is written (at least partially) in Objective-C, you should first make sure that the project is configured to use <code>ARC</code> by checking the <code>"Objective-C Automatic Reference Counting"</code> setting under the <code>"Build Settings"</code> tab:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="../content/images/2021/08/image-6.png" class="kg-image" alt loading="lazy" width="1086" height="432" srcset="../content/images/size/w600/2021/08/image-6.png 600w, ../content/images/size/w1000/2021/08/image-6.png 1000w, ../content/images/2021/08/image-6.png 1086w"><figcaption>https://advancetechtutorial.blogspot.com/2016/07/xcode-arc-automatic-reference-counting.html</figcaption></figure><p>If this property is set to <code>No</code>, you should "Convert" the project, as shown below:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2021/08/image-5.png" class="kg-image" alt loading="lazy" width="561" height="421"><figcaption>https://stackoverflow.com/questions/8969644/tool-for-transitioning-to-arc/8969662</figcaption></figure><p>You can also check the <code>"Compile Sources"</code> section under the <code>"Build Phases"</code> tab for the presence of the <code>-fno-objc-arc</code> flag, which is used to exclude specific files from using <code>ARC</code>, as shown below:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="../content/images/2021/08/flag-1024x434.jpeg" class="kg-image" alt loading="lazy" width="1024" height="434" srcset="../content/images/size/w600/2021/08/flag-1024x434.jpeg 600w, ../content/images/size/w1000/2021/08/flag-1024x434.jpeg 1000w, ../content/images/2021/08/flag-1024x434.jpeg 1024w"><figcaption>https://thomashanning.com/how-to-disable-arc-for-objective-c-files/</figcaption></figure><p>Since there are limitations that come with using <code>ARC</code>, the adequacy of these exceptions should be evaluated on a case by case basis.</p><p>As mentioned above, <code>otool</code> can help us understand our binary files a little better.</p><p>When it comes to <code>ARC</code> we can use this tool to check for the presence of ARC-related symbols, such as <code>_objc_release</code>, <code>_objc_autorelease</code>, <code>_objc_storeStrong</code>, <code>_objc_retain</code>, etc.:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.52.58.png" class="kg-image" alt loading="lazy"></figure><p>Note the usage of <code>otool</code>'s <code>-I</code> and <code>-v</code> flags:</p><pre><code>~ otool
 	...
 	-I print the indirect symbol table
-	-v print verbosely (symbolically) when possible</code></pre><h2 id="code-signature">Code Signature</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.12.35.png" class="kg-image" alt loading="lazy" width="1123" height="54" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.12.35.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.12.35.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.12.35.png 1123w"></figure><p>From the <a href="https://developer.apple.com/support/code-signing/">Apple docs on Code Signing</a> we can read:</p><blockquote>Before your app can integrate app services, be installed on a device, or be submitted to the App Store, it must be signed with a <a href="https://developer.apple.com/support/certificates/">certificate</a> issued by Apple.</blockquote><p>Also, from the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">iOS Security Guide</a>:</p><blockquote>In order to develop and install apps on iOS devices, developers must register with Apple and join the iOS Developer Program. The real-world identity of each developer, whether an individual or a business, is verified by Apple before their certificate is issued. <br>[...]<br>At runtime, code signature checks of all executable memory pages are made as they are loaded to ensure that an app has not been modified since it was installed or last updated.</blockquote><p>So, code signing is simply the process of signing an application with an appropriate certificate that ensures the author's identity and the app content's integrity.</p><p>Since this process is required by Apple for most operations, if this section is flagged as "False" by MobSF, it's likely that the file you're analysing was generated via some non-traditional method, which seems worth investigating.</p><h2 id="encrypted">Encrypted</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.14.17.png" class="kg-image" alt loading="lazy" width="932" height="55" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.14.17.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.14.17.png 932w"></figure><p>Similarly to the previous section, encryption shouldn't be a concern for most iOS developers, since the <code>App Store</code> takes care of it during the distribution process.</p><p>From <a href="https://iphonedev.wiki/index.php/Crack_prevention">iPhoneDev's Wiki</a>:</p><blockquote>App Store binaries are signed by both their developer and Apple. This encrypts the binary so that decryption keys are needed in order to make the binary readable.</blockquote><p>So, when it comes to the MobSF analysis you should keep in mind the origin of the <code>.ipa</code> you're testing:</p><ul><li>if you simply download it from the <code>App Store</code> (using <code>ipatool</code>, for example), then the binary should be encrypted;</li><li>if you get the <code>.ipa</code> from any other source, then most likely it's not encrypted.</li></ul><p>To confirm the binary's encryption you can use <code>otool</code> to look for the <code>LC_ENCRYPTION_INFO</code> section:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-10.32.27.png" class="kg-image" alt loading="lazy" width="462" height="120"></figure><p>From the <a href="https://iphonedev.wiki/index.php/Crack_prevention">iPhoneDev Wiki</a>:</p><blockquote>iOS can tell the encryption status of a binary via the <code>cryptid</code> struture member of <code>LC_ENCRYPTION_INFO</code> <code>MachO</code> <code>load</code> command. <br>If <code>cryptid</code> is a non-zero value then the binary in encrypted.</blockquote><p>Note that the <code>cryptsize</code> indicates the size of the encrypted segment.</p><p>Also note the usage of <code>otool</code>'s <code>-l</code> flag:</p><pre><code>~ otool
+	-v print verbosely (symbolically) when possible</code></pre><h2 id="code-signature">Code Signature</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.12.35.png" class="kg-image" alt loading="lazy" width="1123" height="54" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.12.35.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.12.35.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.12.35.png 1123w"></figure><p>From the <a href="https://developer.apple.com/support/code-signing/?ref=localhost">Apple docs on Code Signing</a> we can read:</p><blockquote>Before your app can integrate app services, be installed on a device, or be submitted to the App Store, it must be signed with a <a href="https://developer.apple.com/support/certificates/?ref=localhost">certificate</a> issued by Apple.</blockquote><p>Also, from the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf?ref=localhost">iOS Security Guide</a>:</p><blockquote>In order to develop and install apps on iOS devices, developers must register with Apple and join the iOS Developer Program. The real-world identity of each developer, whether an individual or a business, is verified by Apple before their certificate is issued. <br>[...]<br>At runtime, code signature checks of all executable memory pages are made as they are loaded to ensure that an app has not been modified since it was installed or last updated.</blockquote><p>So, code signing is simply the process of signing an application with an appropriate certificate that ensures the author's identity and the app content's integrity.</p><p>Since this process is required by Apple for most operations, if this section is flagged as "False" by MobSF, it's likely that the file you're analysing was generated via some non-traditional method, which seems worth investigating.</p><h2 id="encrypted">Encrypted</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.14.17.png" class="kg-image" alt loading="lazy" width="932" height="55" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.14.17.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.14.17.png 932w"></figure><p>Similarly to the previous section, encryption shouldn't be a concern for most iOS developers, since the <code>App Store</code> takes care of it during the distribution process.</p><p>From <a href="https://iphonedev.wiki/index.php/Crack_prevention?ref=localhost">iPhoneDev's Wiki</a>:</p><blockquote>App Store binaries are signed by both their developer and Apple. This encrypts the binary so that decryption keys are needed in order to make the binary readable.</blockquote><p>So, when it comes to the MobSF analysis you should keep in mind the origin of the <code>.ipa</code> you're testing:</p><ul><li>if you simply download it from the <code>App Store</code> (using <code>ipatool</code>, for example), then the binary should be encrypted;</li><li>if you get the <code>.ipa</code> from any other source, then most likely it's not encrypted.</li></ul><p>To confirm the binary's encryption you can use <code>otool</code> to look for the <code>LC_ENCRYPTION_INFO</code> section:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-10.32.27.png" class="kg-image" alt loading="lazy" width="462" height="120"></figure><p>From the <a href="https://iphonedev.wiki/index.php/Crack_prevention?ref=localhost">iPhoneDev Wiki</a>:</p><blockquote>iOS can tell the encryption status of a binary via the <code>cryptid</code> struture member of <code>LC_ENCRYPTION_INFO</code> <code>MachO</code> <code>load</code> command. <br>If <code>cryptid</code> is a non-zero value then the binary in encrypted.</blockquote><p>Note that the <code>cryptsize</code> indicates the size of the encrypted segment.</p><p>Also note the usage of <code>otool</code>'s <code>-l</code> flag:</p><pre><code>~ otool
 	...
-	-l print the load commands</code></pre><h2 id="nx">NX</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.14.38.png" class="kg-image" alt loading="lazy" width="930" height="76" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.14.38.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.14.38.png 930w"></figure><p>Although the <code>NX bit</code> is specific to the <code>AMD</code> architecture, people tend to use "NX" as a generic way of referring to the feature that enables you to <strong>specify non-executable memory pages</strong>. </p><p>So, in this case, the <code>NX</code> section actually refers to the <code>XN</code> or "eXecute never" feature, since we're dealing with an <code>ARM</code> binary.</p><p>In the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">iOS Security Guide</a>, under "Runtime process security" we can read:</p><blockquote>Further protection is provided by iOS using ARM’s Execute Never (XN) feature, which marks memory pages as non-executable. <br>Memory pages marked as both writable and executable can be used only by apps under tightly controlled conditions: <br>The kernel checks for the presence of the Apple-only dynamic code-signing entitlement. Even then, only a single mmap call can be made to request an executable and writable page, which is given a randomized address. </blockquote><p>So, this section should never be flagged by MobSF, as long as Apple continues to use <code>XN</code> by default.</p><h2 id="pie">PIE</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.15.40.png" class="kg-image" alt loading="lazy" width="932" height="102" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.15.40.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.15.40.png 932w"></figure><p>As explained above, each time you run a "Position Independent Executable" (<code>PIE</code>), the binary and all of its dependencies are loaded into random locations within virtual memory, which make ROP attacks much more difficult to execute reliably.</p><p>We can check for the presence of the <code>PIE</code> flag in our executable with <code>otool</code>: </p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png" class="kg-image" alt loading="lazy" width="1151" height="96" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 1151w"></figure><p>Note the usage of <code>otool</code>'s <code>-h</code> and <code>-v</code> options:</p><pre><code>~ otool
+	-l print the load commands</code></pre><h2 id="nx">NX</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.14.38.png" class="kg-image" alt loading="lazy" width="930" height="76" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.14.38.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.14.38.png 930w"></figure><p>Although the <code>NX bit</code> is specific to the <code>AMD</code> architecture, people tend to use "NX" as a generic way of referring to the feature that enables you to <strong>specify non-executable memory pages</strong>. </p><p>So, in this case, the <code>NX</code> section actually refers to the <code>XN</code> or "eXecute never" feature, since we're dealing with an <code>ARM</code> binary.</p><p>In the <a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf?ref=localhost">iOS Security Guide</a>, under "Runtime process security" we can read:</p><blockquote>Further protection is provided by iOS using ARM’s Execute Never (XN) feature, which marks memory pages as non-executable. <br>Memory pages marked as both writable and executable can be used only by apps under tightly controlled conditions: <br>The kernel checks for the presence of the Apple-only dynamic code-signing entitlement. Even then, only a single mmap call can be made to request an executable and writable page, which is given a randomized address. </blockquote><p>So, this section should never be flagged by MobSF, as long as Apple continues to use <code>XN</code> by default.</p><h2 id="pie">PIE</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.15.40.png" class="kg-image" alt loading="lazy" width="932" height="102" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.15.40.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.15.40.png 932w"></figure><p>As explained above, each time you run a "Position Independent Executable" (<code>PIE</code>), the binary and all of its dependencies are loaded into random locations within virtual memory, which make ROP attacks much more difficult to execute reliably.</p><p>We can check for the presence of the <code>PIE</code> flag in our executable with <code>otool</code>: </p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png" class="kg-image" alt loading="lazy" width="1151" height="96" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.25.18-1.png 1151w"></figure><p>Note the usage of <code>otool</code>'s <code>-h</code> and <code>-v</code> options:</p><pre><code>~ otool
 	...
 	-h print the mach header
 	-v print verbosely (symbolically) when possible</code></pre><p>If this flag is not present in the binary, then you need to review your compilation settings.</p><p>First, ensure that <code>"Don't Create Position Independent Executables"</code>  under <code>"Build Settings"</code> is set to <code>NO</code>:</p><figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="../content/images/2021/08/rHGq2.png" class="kg-image" alt loading="lazy"><figcaption>https://stackoverflow.com/questions/32728783/why-would-xcode-not-use-the-build-configuration-settings-from-my-xcconfig-file</figcaption></figure><p>Then, check that these flags are set:</p><ul><li>In <code>Other C flags</code>: <code>-fPIC</code></li><li>In <code>Other Warning flags</code>: <code>-Wl,--emit-relocs</code> (retains all relocations in the executable file) and <code>-Wl,--warn-shared-textrel</code> (warns if the text segment is not shareable).</li></ul><h2 id="stack-canary">Stack Canary</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.19.33.png" class="kg-image" alt loading="lazy" width="932" height="124" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.19.33.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.19.33.png 932w"></figure><p>Again we can use <code>otool</code> to check whether a binary is using stack canaries by looking for some specific symbols, such as <code>_stack_chk_guard</code> and <code>_stack_chk_fail</code>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-10.44.30.png" class="kg-image" alt loading="lazy" width="434" height="150"></figure><p>Note the usage of <code>otool</code>'s <code>-I</code> and <code>-v</code> flags:</p><pre><code>~ otool
 	...
 	-I print the indirect symbol table
-	-v print verbosely (symbolically) when possible</code></pre><p>If the stack canary is not present, you need to ensure that the <code>-fstack-protector-all</code> flag is set under <code>"Other C Flags"</code>, on your project's <code>"Build Settings"</code> tab, as shown below:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-22.50.58.png" class="kg-image" alt loading="lazy" width="881" height="165" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-22.50.58.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-22.50.58.png 881w" sizes="(min-width: 720px) 720px"></figure><h2 id="rpath">Rpath</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.15.58.png" class="kg-image" alt loading="lazy" width="933" height="103" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.15.58.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.15.58.png 933w"></figure><p>The "Runpath Search Path" instructs the dynamic linker to search for a dynamic library (dylib) on an ordered list of paths ... sort of like how Unix looks for binaries on <code>$PATH</code>.</p><p>This is an issue because it makes it possible for an attacker to place a malicious dylib in one of the first paths that doesn't contain the library that the linker is trying to locate, therefore hijacking it.</p><p>A simple way to check whether or not your application's libraries were compiled using <code>rpath</code> is to run <code>otool</code> with the <code>-L</code> flag, which lists all Mach-O Shared Libraries:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png" class="kg-image" alt loading="lazy" width="1324" height="245" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 1324w" sizes="(min-width: 1200px) 1200px"></figure><p>Note that some of the libraries are prefixed with <code>@rpath</code>, while others are prefixed by the absolute path.</p><p>Also, if you already have access to the full MobSF Static Analysis report, you can simply scroll down to the "Libraries" section and check which are prefixed by <code>@rpath</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-21.27.32.png" class="kg-image" alt loading="lazy" width="990" height="382" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-21.27.32.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-21.27.32.png 990w"></figure><p>If your application uses the <a href="https://www.swift.org/package-manager/">Swift Package Manager</a>, in order to compile the libraries without <code>rpath</code> you need to use some hidden build flags. On your local command line run:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-19-at-19.33.44.png" class="kg-image" alt loading="lazy" width="943" height="92" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-19-at-19.33.44.png 600w, ../content/images/2021/08/Screenshot-2021-08-19-at-19.33.44.png 943w"></figure><p>Note the swift compiler option <code>no-stdlib-rpath</code> which disables <code>rpath</code> entries during compilation.</p><p>Configure your build settings so that the application is built with this configuration flag, e.g.: <code>swift build -c release -Xswiftc -no-toolchain-stdlib-rpath</code>.</p><p>Alternatively, if your application uses <a href="https://cocoapods.org/">Cocoapods</a>, you can first check the install directory of the pods:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-13-at-13.15.10.png" class="kg-image" alt loading="lazy"></figure><p>And then use the following configuration on your <code>Podfile</code>:</p><pre><code class="language-ruby">post_install do |installer|
+	-v print verbosely (symbolically) when possible</code></pre><p>If the stack canary is not present, you need to ensure that the <code>-fstack-protector-all</code> flag is set under <code>"Other C Flags"</code>, on your project's <code>"Build Settings"</code> tab, as shown below:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-22.50.58.png" class="kg-image" alt loading="lazy" width="881" height="165" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-22.50.58.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-22.50.58.png 881w" sizes="(min-width: 720px) 720px"></figure><h2 id="rpath">Rpath</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.15.58.png" class="kg-image" alt loading="lazy" width="933" height="103" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-20.15.58.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-20.15.58.png 933w"></figure><p>The "Runpath Search Path" instructs the dynamic linker to search for a dynamic library (dylib) on an ordered list of paths ... sort of like how Unix looks for binaries on <code>$PATH</code>.</p><p>This is an issue because it makes it possible for an attacker to place a malicious dylib in one of the first paths that doesn't contain the library that the linker is trying to locate, therefore hijacking it.</p><p>A simple way to check whether or not your application's libraries were compiled using <code>rpath</code> is to run <code>otool</code> with the <code>-L</code> flag, which lists all Mach-O Shared Libraries:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png" class="kg-image" alt loading="lazy" width="1324" height="245" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 1000w, ../content/images/2021/08/Screenshot-2021-08-21-at-21.28.28-1.png 1324w" sizes="(min-width: 1200px) 1200px"></figure><p>Note that some of the libraries are prefixed with <code>@rpath</code>, while others are prefixed by the absolute path.</p><p>Also, if you already have access to the full MobSF Static Analysis report, you can simply scroll down to the "Libraries" section and check which are prefixed by <code>@rpath</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-21.27.32.png" class="kg-image" alt loading="lazy" width="990" height="382" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-21-at-21.27.32.png 600w, ../content/images/2021/08/Screenshot-2021-08-21-at-21.27.32.png 990w"></figure><p>If your application uses the <a href="https://www.swift.org/package-manager/?ref=localhost">Swift Package Manager</a>, in order to compile the libraries without <code>rpath</code> you need to use some hidden build flags. On your local command line run:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-19-at-19.33.44.png" class="kg-image" alt loading="lazy" width="943" height="92" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-19-at-19.33.44.png 600w, ../content/images/2021/08/Screenshot-2021-08-19-at-19.33.44.png 943w"></figure><p>Note the swift compiler option <code>no-stdlib-rpath</code> which disables <code>rpath</code> entries during compilation.</p><p>Configure your build settings so that the application is built with this configuration flag, e.g.: <code>swift build -c release -Xswiftc -no-toolchain-stdlib-rpath</code>.</p><p>Alternatively, if your application uses <a href="https://cocoapods.org/?ref=localhost">Cocoapods</a>, you can first check the install directory of the pods:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/Screenshot-2022-01-13-at-13.15.10.png" class="kg-image" alt loading="lazy"></figure><p>And then use the following configuration on your <code>Podfile</code>:</p><pre><code class="language-ruby">post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['DYLIB_INSTALL_NAME_BASE'] = &lt;your-install-directory&gt;
     end
   end
-end</code></pre><p>So, the result would looks something like this:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/01/Screenshot-2022-01-13-at-13.16.08.png" class="kg-image" alt loading="lazy"></figure><h2 id="symbols-stripped">Symbols Stripped</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.19.40.png" class="kg-image" alt loading="lazy"></figure><p>From Apple's <a href="https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information">Building Your App to Include Debugging Information</a>:</p><blockquote>When Xcode compiles your source code into machine code, it generates a list of symbols in your app—class names, global variables, and method and function names. <br>These symbols correspond to the file and line numbers where they’re defined; this association creates a <em><em>debug symbol</em></em>, so you can use the debugger in Xcode, or refer to line numbers reported by a crash report. <br>Debug builds of an app place the debug symbols inside the compiled binary file by default, while <strong>release builds of an app place the debug symbols in a companion <em><em>Debug Symbol file</em></em> </strong>(<code>dSYM</code>) to reduce the size of the distributed app.</blockquote><p>So, the good thing about these <code>dSYM</code> files is that you can store them separately and then use them to <a href="https://developer.apple.com/documentation/xcode/adding-identifiable-symbol-names-to-a-crash-report">symbolicate</a> your logs without actually letting the end user have access to them via App Store:</p><pre><code>~ symbolicatecrash "&lt;path-to-crash-file&gt;" "&lt;path-to-dSYM file&gt;" &gt; symbolicated.crash</code></pre><p>By default, <code>dSYM</code> files are generate for "Release" builds, which you can check by reviewing your <code>"Build Settings"</code>:</p><ul><li><code>Generate Debug Symbols</code> = <code>YES</code></li><li><code>Debug Information Format</code> = <code>DWARF with dSYM File</code></li></ul><p>A simple way to check whether or not your application was compiled with debug symbols is to again run <code>otool</code> with the <code>-Iv</code> flags:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.32.20.png" class="kg-image" alt loading="lazy"></figure><p>Alternatively, you can use <code>nm</code>, which "displays the name list (symbol table) of each  object file in the argument list".</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.43.08.png" class="kg-image" alt loading="lazy" width="1101" height="474" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-22-at-11.43.08.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-11.43.08.png 1000w, ../content/images/2021/08/Screenshot-2021-08-22-at-11.43.08.png 1101w"></figure><p>If MobSF flags you project as containing debug symbols, please ensure that your project's <code>"Build Settings"</code> contain the following <code>"Release"</code> configurations:</p><ul><li><code>Deployment Postprocessing</code> = <code>YES</code>;</li><li><code>Strip Debug Symbols During Copy</code> = <code>YES</code>;</li><li><code>Strip Linked Product</code> = <code>YES</code>;</li><li><code>Strip Style</code> = <code>All Symbols</code>;</li><li><code>Strip Swift Symbols</code> = <code>YES</code></li></ul><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/image-1.png" class="kg-image" alt loading="lazy" width="965" height="709" srcset="../content/images/size/w600/2022/01/image-1.png 600w, ../content/images/2022/01/image-1.png 965w"></figure><p>Finally, note that you can actually manually strip your binary, but as shown below, this invalidates the code signature:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.46.45.png" class="kg-image" alt loading="lazy" width="1410" height="49" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-22-at-11.46.45.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-11.46.45.png 1000w, ../content/images/2021/08/Screenshot-2021-08-22-at-11.46.45.png 1410w" sizes="(min-width: 1200px) 1200px"></figure><hr><h2 id="useful-links">Useful Links</h2><ul><li><a href="http://blog.dornea.nu/2014/10/29/howto-ios-apps-static-analysis/">http://blog.dornea.nu/2014/10/29/howto-ios-apps-static-analysis/</a></li><li><a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf">https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf</a></li><li><a href="https://iphonedev.wiki/index.php/Crack_prevention">https://iphonedev.wiki/index.php/Crack_prevention</a></li><li><a href="https://blog.krzyzanowskim.com/2018/12/05/rpath-what/">https://blog.krzyzanowskim.com/2018/12/05/rpath-what/</a></li><li><a href="https://objective-see.com/blog/blog_0x46.html">https://objective-see.com/blog/blog_0x46.html</a></li><li><a href="https://stackoverflow.com/questions/3656391/whats-the-dsym-and-how-to-use-it-ios-sdk">https://stackoverflow.com/questions/3656391/whats-the-dsym-and-how-to-use-it-ios-sdk</a></li></ul>
-    </section>
+end</code></pre><p>So, the result would looks something like this:</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/01/Screenshot-2022-01-13-at-13.16.08.png" class="kg-image" alt loading="lazy"></figure><h2 id="symbols-stripped">Symbols Stripped</h2><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-21-at-20.19.40.png" class="kg-image" alt loading="lazy"></figure><p>From Apple's <a href="https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information?ref=localhost">Building Your App to Include Debugging Information</a>:</p><blockquote>When Xcode compiles your source code into machine code, it generates a list of symbols in your app—class names, global variables, and method and function names. <br>These symbols correspond to the file and line numbers where they’re defined; this association creates a <em><em>debug symbol</em></em>, so you can use the debugger in Xcode, or refer to line numbers reported by a crash report. <br>Debug builds of an app place the debug symbols inside the compiled binary file by default, while <strong>release builds of an app place the debug symbols in a companion <em><em>Debug Symbol file</em></em> </strong>(<code>dSYM</code>) to reduce the size of the distributed app.</blockquote><p>So, the good thing about these <code>dSYM</code> files is that you can store them separately and then use them to <a href="https://developer.apple.com/documentation/xcode/adding-identifiable-symbol-names-to-a-crash-report?ref=localhost">symbolicate</a> your logs without actually letting the end user have access to them via App Store:</p><pre><code>~ symbolicatecrash "&lt;path-to-crash-file&gt;" "&lt;path-to-dSYM file&gt;" &gt; symbolicated.crash</code></pre><p>By default, <code>dSYM</code> files are generate for "Release" builds, which you can check by reviewing your <code>"Build Settings"</code>:</p><ul><li><code>Generate Debug Symbols</code> = <code>YES</code></li><li><code>Debug Information Format</code> = <code>DWARF with dSYM File</code></li></ul><p>A simple way to check whether or not your application was compiled with debug symbols is to again run <code>otool</code> with the <code>-Iv</code> flags:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.32.20.png" class="kg-image" alt loading="lazy"></figure><p>Alternatively, you can use <code>nm</code>, which "displays the name list (symbol table) of each  object file in the argument list".</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.43.08.png" class="kg-image" alt loading="lazy" width="1101" height="474" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-22-at-11.43.08.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-11.43.08.png 1000w, ../content/images/2021/08/Screenshot-2021-08-22-at-11.43.08.png 1101w"></figure><p>If MobSF flags you project as containing debug symbols, please ensure that your project's <code>"Build Settings"</code> contain the following <code>"Release"</code> configurations:</p><ul><li><code>Deployment Postprocessing</code> = <code>YES</code>;</li><li><code>Strip Debug Symbols During Copy</code> = <code>YES</code>;</li><li><code>Strip Linked Product</code> = <code>YES</code>;</li><li><code>Strip Style</code> = <code>All Symbols</code>;</li><li><code>Strip Swift Symbols</code> = <code>YES</code></li></ul><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2022/01/image-1.png" class="kg-image" alt loading="lazy" width="965" height="709" srcset="../content/images/size/w600/2022/01/image-1.png 600w, ../content/images/2022/01/image-1.png 965w"></figure><p>Finally, note that you can actually manually strip your binary, but as shown below, this invalidates the code signature:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/08/Screenshot-2021-08-22-at-11.46.45.png" class="kg-image" alt loading="lazy" width="1410" height="49" srcset="../content/images/size/w600/2021/08/Screenshot-2021-08-22-at-11.46.45.png 600w, ../content/images/size/w1000/2021/08/Screenshot-2021-08-22-at-11.46.45.png 1000w, ../content/images/2021/08/Screenshot-2021-08-22-at-11.46.45.png 1410w" sizes="(min-width: 1200px) 1200px"></figure><hr><h2 id="useful-links">Useful Links</h2><ul><li><a href="http://blog.dornea.nu/2014/10/29/howto-ios-apps-static-analysis/?ref=localhost">http://blog.dornea.nu/2014/10/29/howto-ios-apps-static-analysis/</a></li><li><a href="https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf?ref=localhost">https://www.apple.com/mx/privacy/docs/iOS_Security_Guide_Oct_2014.pdf</a></li><li><a href="https://iphonedev.wiki/index.php/Crack_prevention?ref=localhost">https://iphonedev.wiki/index.php/Crack_prevention</a></li><li><a href="https://blog.krzyzanowskim.com/2018/12/05/rpath-what/?ref=localhost">https://blog.krzyzanowskim.com/2018/12/05/rpath-what/</a></li><li><a href="https://objective-see.com/blog/blog_0x46.html?ref=localhost">https://objective-see.com/blog/blog_0x46.html</a></li><li><a href="https://stackoverflow.com/questions/3656391/whats-the-dsym-and-how-to-use-it-ios-sdk?ref=localhost">https://stackoverflow.com/questions/3656391/whats-the-dsym-and-how-to-use-it-ios-sdk</a></li></ul>
+        </section>
+
+    </article>
 
 
-</article>
-
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
-        </a>
-    </div>
-</section>
+</main>
 
 
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../htb-write-up-horizontall/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2025/01/Horizontall-1.png 300w,
-                   ../content/images/size/w600/2025/01/Horizontall-1.png 600w,
-                  ../content/images/size/w1000/2025/01/Horizontall-1.png 1000w,
-                 ../content/images/size/w2000/2025/01/Horizontall-1.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2025/01/Horizontall-1.png"
-            alt="HTB Write-up | Horizontall (user-only)"
-            loading="lazy"
-        />
+            <section class="gh-container is-grid gh-outer">
+                <div class="gh-container-inner gh-inner">
+                    <h2 class="gh-container-title">Read more</h2>
+                    <div class="gh-feed">
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-write-up-horizontall/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2025/01/Horizontall-1.png 160w,
+                           ../content/images/size/w320/format/webp/2025/01/Horizontall-1.png 320w,
+                          ../content/images/size/w600/format/webp/2025/01/Horizontall-1.png 600w,
+                         ../content/images/size/w960/format/webp/2025/01/Horizontall-1.png 960w,
+                        ../content/images/size/w1200/format/webp/2025/01/Horizontall-1.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2025/01/Horizontall-1.png1.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2025/01/Horizontall-1.png"
+                    alt="HTB Write-up | Horizontall (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | Horizontall (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for Horizontall, a retired HTB Linux machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2025-01-03">03 Jan 2025</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-horizontall/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Horizontall (user-only)</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for Horizontall, a retired HTB Linux machine.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2025-01-03">Jan 3, 2025</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
-                    
-<article class="post-card post ">
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png1.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png"
+                    alt="Automatic Threat Modeling with pytm and Github Actions"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">Automatic Threat Modeling with pytm and Github Actions</h3>
+                    <p class="gh-card-excerpt is-body">pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated.
 
-    <a class="post-card-image-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 300w,
-                   ../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 600w,
-                  ../content/images/size/w1000/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 1000w,
-                 ../content/images/size/w2000/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png"
-            alt="Automatic Threat Modeling with pytm and Github Actions"
-            loading="lazy"
-        />
+I&#39;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-14">14 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">Automatic Threat Modeling with pytm and Github Actions</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated. I've developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated using the</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2024-11-14">Nov 14, 2024</time> <span class="bull">&bull;</span> 1 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../htb-writeup-formulax/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2024/11/Screenshot-2024-11-13-at-13.35.35.png 300w,
-                   ../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png 600w,
-                  ../content/images/size/w1000/2024/11/Screenshot-2024-11-13-at-13.35.35.png 1000w,
-                 ../content/images/size/w2000/2024/11/Screenshot-2024-11-13-at-13.35.35.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png"
-            alt="HTB Write-up | FormulaX (user-only)"
-            loading="lazy"
-        />
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-writeup-formulax/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png5.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png"
+                    alt="HTB Write-up | FormulaX (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | FormulaX (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for FormulaX, a retired HTB Linux machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-13">13 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-writeup-formulax/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | FormulaX (user-only)</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for FormulaX, a retired HTB Linux machine.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2024-11-13">Nov 13, 2024</time> <span class="bull">&bull;</span> 12 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-writeup-blazorized/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png8.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.48.png"
+                    alt="HTB Write-up | Blazorized (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | Blazorized (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for Blazorized, a retired HTB Windows machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-13">13 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
+    </a>
+</article>
+                    </div>
+                </div>
+            </section>
 
-    </div>
-</aside>
+    
+    <footer class="gh-footer gh-outer">
+    <div class="gh-footer-inner gh-inner">
 
-
-    </main>
-
-    <footer class="site-footer outer">
-        <div class="inner">
-            <section class="copyright"><a href="../index.html"></a> &copy; 2025</section>
-            <nav class="site-footer-nav">
+        <div class="gh-footer-bar">
+            <span class="gh-footer-logo is-title">
+                    
+            </span>
+            <nav class="gh-footer-menu">
                 
             </nav>
-            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+            <div class="gh-footer-copyright">
+                Powered by <a href="https://ghost.org/" target="_blank" rel="noopener">Ghost</a>
+            </div>
         </div>
-    </footer>
 
+    </div>
+</footer>    
 </div>
 
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
 
-<script
-    src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-    crossorigin="anonymous">
-</script>
-<script src="../assets/built/casper.js%3Fv=aa2daa7cee"></script>
-<script>
-$(document).ready(function () {
-    // Mobile Menu Trigger
-    $('.gh-burger').click(function () {
-        $('body').toggleClass('gh-head-open');
-    });
-    // FitVids - Makes video embeds responsive
-    $(".gh-content").fitVids();
-});
-</script>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/built/source.js%3Fv=e213fc6d24"></script>
 
 
 

